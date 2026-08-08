@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>suunto-cards dev harness</title>
+<style>
+  :root {
+    --primary-text-color: #2e3238;
+    --secondary-text-color: #6b7178;
+    --divider-color: #e5e2da;
+    --card-background-color: #ffffff;
+    --ha-card-border-radius: 12px;
+    --ha-card-box-shadow: 0 1px 2px rgba(20, 20, 20, 0.06), 0 4px 14px rgba(20, 20, 20, 0.06);
+    color-scheme: light;
+  }
+  body.dark {
+    --primary-text-color: #ecedee;
+    --secondary-text-color: #9ba1a8;
+    --divider-color: rgba(255, 255, 255, 0.09);
+    --card-background-color: #1e2124;
+    --ha-card-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 6px 20px rgba(0, 0, 0, 0.35);
+    color-scheme: dark;
+  }
+  body {
+    margin: 0;
+    padding: 24px;
+    background: #f4f2ed;
+    font-family: Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  }
+  body.dark {
+    background: #16181b;
+  }
+  h1 {
+    color: var(--primary-text-color);
+    font-size: 1.1rem;
+  }
+  button#toggle {
+    margin-bottom: 20px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--divider-color);
+    background: var(--card-background-color);
+    color: var(--primary-text-color);
+    cursor: pointer;
+  }
+  .section {
+    color: var(--secondary-text-color);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin: 28px 0 10px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+  }
+  ha-card {
+    display: block;
+    background: var(--card-background-color);
+    border-radius: var(--ha-card-border-radius);
+    box-shadow: var(--ha-card-box-shadow);
+    color: var(--primary-text-color);
+  }
+  ha-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1em;
+    height: 1em;
+    font-size: var(--mdc-icon-size, 20px);
+  }
+  ha-icon::after {
+    content: "";
+    width: 0.55em;
+    height: 0.55em;
+    border-radius: 2px;
+    background: currentColor;
+    opacity: 0.55;
+    display: block;
+  }
+</style>
+</head>
+<body>
+  <h1>suunto-cards dev harness (mock hass, no live HA needed)</h1>
+  <button id="toggle" type="button">Toggle dark mode</button>
+
+  <div class="section">Happy path (full device)</div>
+  <div class="grid" id="full"></div>
+
+  <div class="section">Empty / edge states</div>
+  <div class="grid" id="empty"></div>
+
+  <script type="module">
+    // Minimal stand-ins for the real HA frontend elements this bundle expects.
+    customElements.define(
+      "ha-card",
+      class extends HTMLElement {
+        connectedCallback() {
+          if (!this.style.display) this.style.display = "block";
+        }
+      }
+    );
+    customElements.define(
+      "ha-icon",
+      class extends HTMLElement {
+        static get observedAttributes() {
+          return ["icon"];
+        }
+        connectedCallback() {
+          this.title = this.getAttribute("icon") || "";
+        }
+        attributeChangedCallback() {
+          this.title = this.getAttribute("icon") || "";
+        }
+      }
+    );
+
+    import("../dist/suunto-cards.js").then(setup);
+
+    function nowIso(offsetMs = 0) {
+      return new Date(Date.now() + offsetMs).toISOString();
+    }
+
+    function makeHass({ deviceId, entities, callApiImpl }) {
+      const states = {};
+      const registry = {};
+      for (const [translationKey, def] of Object.entries(entities)) {
+        const domain = def.domain || "sensor";
+        const entityId = `${domain}.suunto_${deviceId}_${translationKey}`;
+        states[entityId] = { entity_id: entityId, state: String(def.state), attributes: def.attributes || {} };
+        registry[entityId] = {
+          entity_id: entityId,
+          device_id: deviceId,
+          platform: "suunto_app",
+          translation_key: translationKey,
+        };
+      }
+      return {
+        states,
+        entities: registry,
+        devices: { [deviceId]: { id: deviceId, name: `Suunto (${deviceId})` } },
+        themes: { darkMode: document.body.classList.contains("dark") },
+        language: "en",
+        callApi: callApiImpl || (async () => [[]]),
+      };
+    }
+
+    function ctlHistory(entityId, days = 30, base = 30) {
+      const points = [];
+      const now = Date.now();
+      for (let i = days; i >= 0; i -= 2) {
+        const t = now - i * 86400000;
+        const v = base + (days - i) * 0.6 + Math.sin(i / 3) * 2;
+        points.push({ state: v.toFixed(1), last_updated: new Date(t).toISOString() });
+      }
+      return points;
+    }
+
+    function fullHass() {
+      return makeHass({
+        deviceId: "full",
+        callApiImpl: async (method, path) => {
+          if (path.startsWith("history/period/")) return [ctlHistory("fitness_ctl")];
+          return [[]];
+        },
+        entities: {
+          last_activity: { state: "Cycling" },
+          last_workout_start: { state: nowIso(-2 * 3600 * 1000) },
+          last_distance: { state: 42300 },
+          last_duration: { state: 98 },
+          last_avg_hr: { state: 142 },
+          last_max_hr: { state: 168 },
+          last_avg_speed: { state: 25.9 },
+          last_pte: { state: 1.6 },
+          last_epoc: { state: 11.6 },
+          last_feeling: { state: 4 },
+          last_tss: { state: 132 },
+          last_cal_per_km: { state: 32 },
+          last_workout_weather: {
+            state: 27.2,
+            attributes: { humidity_pct: 58, wind_speed_kmh: 12, wind_direction_deg: 210, condition: "Scattered clouds", icon_code: "03d" },
+          },
+          last_workout_tags: { state: "Commute" },
+          last_workout_achievements: { state: 2, attributes: { achievements: ["2nd fastest"], route_ranking: 2 } },
+          last_zone1: { state: 5, attributes: { upper_limit_bpm: 111 } },
+          last_zone2: { state: 12, attributes: { lower_limit_bpm: 111, upper_limit_bpm: 131 } },
+          last_zone3: { state: 30, attributes: { lower_limit_bpm: 131, upper_limit_bpm: 151 } },
+          last_zone4: { state: 15, attributes: { lower_limit_bpm: 151, upper_limit_bpm: 168 } },
+          last_zone5: { state: 3, attributes: { lower_limit_bpm: 168 } },
+          sleep_duration: { state: 7.53 },
+          sleep_deep: { state: 92 },
+          sleep_light: { state: 210 },
+          sleep_rem: { state: 68 },
+          sleep_quality: { state: 84 },
+          sleep_spo2: { state: 96 },
+          sleep_hrv: { state: 54 },
+          hrv_baseline: { state: 50 },
+          hrv_status: { state: "high" },
+          resting_hr: { state: 48 },
+          resting_hr_baseline: { state: 51 },
+          wake_time: { state: nowIso(-9 * 3600 * 1000) },
+          nap_duration: { state: 32, attributes: { nap_count: 1, date: new Date().toISOString().slice(0, 10) } },
+          readiness: { state: 78 },
+          recovery_balance: { state: 54 },
+          is_recovering: { domain: "binary_sensor", state: "on" },
+          recovery_until: { state: nowIso(3 * 3600 * 1000 + 20 * 60 * 1000) },
+          recovery_time: { state: 8.5 },
+          stress_state: { state: 2 },
+          workout_today: { domain: "binary_sensor", state: "on" },
+          fitness_ctl: { state: 48 },
+          fatigue_atl: { state: 41 },
+          form_tsb: { state: 3.2 },
+          acwr: { state: 1.05 },
+          weekly_distance: { state: 62.4 },
+          weekly_time: { state: 5.2 },
+          workouts_7d: { state: 4 },
+          workouts_30d: { state: 14 },
+          lifetime_by_activity: {
+            state: 5,
+            attributes: {
+              activities: [
+                { activity: "Cycling", workouts: 302, distance_km: 6120, time_hours: 410 },
+                { activity: "Trekking", workouts: 47, distance_km: 512, time_hours: 180 },
+                { activity: "Gym", workouts: 96, distance_km: 0, time_hours: 72 },
+                { activity: "Walking", workouts: 30, distance_km: 145, time_hours: 38 },
+                { activity: "Running", workouts: 3, distance_km: 24, time_hours: 3 },
+              ],
+            },
+          },
+          daily_steps: { state: 8412 },
+          daily_energy: { state: 612 },
+          current_hr: { state: 78 },
+        },
+      });
+    }
+
+    function emptyHass() {
+      return makeHass({
+        deviceId: "empty",
+        entities: {
+          last_activity: { state: "unknown" },
+          sleep_duration: { state: "unknown" },
+          recovery_balance: { state: "unknown" },
+          fitness_ctl: { state: "unknown" },
+        },
+      });
+    }
+
+    function mount(container, tag, hass, label) {
+      const wrap = document.createElement("div");
+      const caption = document.createElement("div");
+      caption.textContent = label;
+      caption.style.cssText = "font-size:11px;color:var(--secondary-text-color);margin-bottom:6px;";
+      const el = document.createElement(tag);
+      el.setConfig({ type: `custom:${tag}` });
+      el.hass = hass;
+      wrap.appendChild(caption);
+      wrap.appendChild(el);
+      container.appendChild(wrap);
+      return el;
+    }
+
+    const CARDS = [
+      "suunto-last-workout-card",
+      "suunto-hr-zones-card",
+      "suunto-sleep-readiness-card",
+      "suunto-recovery-card",
+      "suunto-training-load-card",
+      "suunto-week-stats-card",
+      "suunto-today-card",
+    ];
+
+    function setup() {
+      const full = fullHass();
+      const empty = emptyHass();
+      const fullEl = document.getElementById("full");
+      const emptyEl = document.getElementById("empty");
+
+      for (const tag of CARDS) {
+        mount(fullEl, tag, full, tag);
+        mount(emptyEl, tag, empty, tag);
+      }
+
+      document.getElementById("toggle").addEventListener("click", () => {
+        document.body.classList.toggle("dark");
+        const dark = document.body.classList.contains("dark");
+        for (const el of document.querySelectorAll("[id] > div > *:last-child")) {
+          if (el.hass) el.hass = { ...el.hass, themes: { darkMode: dark } };
+        }
+      });
+    }
+  </script>
+</body>
+</html>

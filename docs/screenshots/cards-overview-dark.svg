@@ -1,0 +1,99 @@
+<svg width="900" height="360" viewBox="0 0 900 360" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Roboto, Helvetica, Arial, sans-serif">
+  <!-- Last Workout -->
+  <g transform="translate(20,20)">
+    <rect x="0" y="0" width="200" height="150" rx="12" fill="#1e2124" stroke="#33373b"/>
+    <rect x="1" y="1" width="198" height="4" rx="2" fill="#f5b44e"/>
+    <text x="16" y="34" font-size="13" font-weight="700" fill="#ecedee">Last Workout</text>
+    <text x="16" y="52" font-size="10" fill="#9ba1a8">Cycling &#183; 2h ago</text>
+    <text x="16" y="86" font-size="22" font-weight="700" fill="#ecedee">42.3 km</text>
+    <text x="16" y="106" font-size="11" fill="#9ba1a8">1:38 h &#183; 142 bpm</text>
+    <text x="16" y="130" font-size="10" fill="#f5b44e">&#127942; 2nd fastest</text>
+  </g>
+
+  <!-- HR Zones -->
+  <g transform="translate(240,20)">
+    <rect x="0" y="0" width="200" height="150" rx="12" fill="#1e2124" stroke="#33373b"/>
+    <rect x="1" y="1" width="198" height="4" rx="2" fill="#6fc3e8"/>
+    <text x="16" y="34" font-size="13" font-weight="700" fill="#ecedee">Heart Rate Zones</text>
+    <text x="16" y="52" font-size="10" fill="#9ba1a8">Last workout</text>
+    <rect x="16" y="66" width="14" height="10" rx="2" fill="#7c8790"/>
+    <rect x="32" y="66" width="34" height="10" fill="#6fb3ea"/>
+    <rect x="66" y="66" width="66" height="10" fill="#5db47f"/>
+    <rect x="132" y="66" width="38" height="10" fill="#f0954f"/>
+    <rect x="170" y="66" width="14" height="10" rx="2" fill="#e05a5a"/>
+    <text x="16" y="96" font-size="10" fill="#9ba1a8">62 min in Zone 3+</text>
+    <text x="16" y="112" font-size="10" fill="#9ba1a8">131&#8211;154 bpm avg range</text>
+  </g>
+
+  <!-- Sleep & Readiness -->
+  <g transform="translate(460,20)">
+    <rect x="0" y="0" width="200" height="150" rx="12" fill="#1e2124" stroke="#33373b"/>
+    <rect x="1" y="1" width="198" height="4" rx="2" fill="#7fb4e0"/>
+    <text x="16" y="34" font-size="13" font-weight="700" fill="#ecedee">Sleep &amp; Readiness</text>
+    <circle cx="42" cy="90" r="22" fill="none" stroke="#33373b" stroke-width="5"/>
+    <circle cx="42" cy="90" r="22" fill="none" stroke="#5db47f" stroke-width="5" stroke-linecap="round"
+      stroke-dasharray="138.2" stroke-dashoffset="30.4" transform="rotate(-90 42 90)"/>
+    <text x="42" y="94" font-size="13" font-weight="700" fill="#5db47f" text-anchor="middle">78</text>
+    <text x="76" y="82" font-size="10" fill="#9ba1a8">Readiness</text>
+    <text x="76" y="99" font-size="13" font-weight="700" fill="#5db47f">Great</text>
+    <text x="76" y="116" font-size="10" fill="#9ba1a8">7:32 h slept</text>
+  </g>
+
+  <!-- Recovery -->
+  <g transform="translate(680,20)">
+    <rect x="0" y="0" width="200" height="150" rx="12" fill="#1e2124" stroke="#33373b"/>
+    <rect x="1" y="1" width="198" height="4" rx="2" fill="#6fc3e8"/>
+    <text x="16" y="34" font-size="13" font-weight="700" fill="#ecedee">Recovery</text>
+    <circle cx="42" cy="90" r="22" fill="none" stroke="#33373b" stroke-width="5"/>
+    <circle cx="42" cy="90" r="22" fill="none" stroke="#f5b44e" stroke-width="5" stroke-linecap="round"
+      stroke-dasharray="138.2" stroke-dashoffset="63.6" transform="rotate(-90 42 90)"/>
+    <text x="42" y="94" font-size="13" font-weight="700" fill="#f5b44e" text-anchor="middle">54</text>
+    <text x="76" y="82" font-size="10" fill="#9ba1a8">Recovering</text>
+    <text x="76" y="99" font-size="12" font-weight="700" fill="#f5b44e">3:20 h left</text>
+    <text x="76" y="116" font-size="10" fill="#9ba1a8">Stress level 2</text>
+  </g>
+
+  <!-- Training Load -->
+  <g transform="translate(20,190)">
+    <rect x="0" y="0" width="200" height="150" rx="12" fill="#1e2124" stroke="#33373b"/>
+    <rect x="1" y="1" width="198" height="4" rx="2" fill="#5db47f"/>
+    <text x="16" y="34" font-size="13" font-weight="700" fill="#ecedee">Training Load</text>
+    <text x="16" y="52" font-size="10" fill="#9ba1a8">30-day fitness trend</text>
+    <polyline points="16,94 44,90 72,92 100,80 128,84 156,72 184,68" fill="none" stroke="#5db47f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="184" cy="68" r="3" fill="#5db47f"/>
+    <text x="16" y="118" font-size="11" font-weight="600" fill="#ecedee">CTL 48 &#183; TSB +3.2</text>
+    <text x="16" y="134" font-size="10" fill="#5db47f">ACWR 1.05 &#183; Safe zone</text>
+  </g>
+
+  <!-- Week & Lifetime -->
+  <g transform="translate(240,190)">
+    <rect x="0" y="0" width="200" height="150" rx="12" fill="#1e2124" stroke="#33373b"/>
+    <rect x="1" y="1" width="198" height="4" rx="2" fill="#f0954f"/>
+    <text x="16" y="34" font-size="13" font-weight="700" fill="#ecedee">This Week</text>
+    <text x="16" y="52" font-size="10" fill="#9ba1a8">Last 7 days</text>
+    <rect x="16" y="66" width="90" height="10" rx="5" fill="#f5b44e"/>
+    <rect x="106" y="66" width="50" height="10" fill="#6fc3e8"/>
+    <rect x="156" y="66" width="28" height="10" rx="5" fill="#5db47f"/>
+    <text x="16" y="96" font-size="12" font-weight="700" fill="#ecedee">162 km &#183; 8 h</text>
+    <text x="16" y="114" font-size="9" fill="#9ba1a8">Cycling &#183; Trekking &#183; Gym</text>
+  </g>
+
+  <!-- Today -->
+  <g transform="translate(460,190)">
+    <rect x="0" y="0" width="200" height="150" rx="12" fill="#1e2124" stroke="#33373b"/>
+    <rect x="1" y="1" width="198" height="4" rx="2" fill="#b89ce0"/>
+    <text x="16" y="34" font-size="13" font-weight="700" fill="#ecedee">Today</text>
+    <text x="16" y="52" font-size="10" fill="#9ba1a8">Live from your watch</text>
+    <text x="16" y="86" font-size="22" font-weight="700" fill="#ecedee">8,412<tspan font-size="11" font-weight="500" fill="#9ba1a8"> steps</tspan></text>
+    <text x="16" y="106" font-size="11" fill="#9ba1a8">142 bpm &#183; 612 kcal</text>
+    <circle cx="16" cy="118" r="3" fill="#6fc3e8"/>
+    <text x="24" y="121" font-size="9" fill="#6fc3e8">live</text>
+  </g>
+
+  <!-- More tile -->
+  <g transform="translate(680,190)">
+    <rect x="0.5" y="0.5" width="199" height="149" rx="12" fill="none" stroke="#f5b44e" stroke-width="1.5" stroke-dasharray="5,5"/>
+    <text x="100" y="80" font-size="34" font-weight="700" fill="#f5b44e" text-anchor="middle">+</text>
+    <text x="100" y="108" font-size="11" fill="#9ba1a8" text-anchor="middle">More widgets coming</text>
+  </g>
+</svg>
