@@ -5,7 +5,7 @@ import type { SuuntoCardConfig } from "./utils/types";
 import { SuuntoBaseCard } from "./utils/base-card";
 import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
 import { activityIcon, weatherIcon } from "./utils/icons";
-import { formatDuration, formatPace, formatRelative } from "./utils/format";
+import { formatDuration, formatPace, formatRelative, formatTime } from "./utils/format";
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
 
@@ -92,7 +92,12 @@ export class SuuntoLastWorkoutCard extends SuuntoBaseCard {
           <div class="icon-badge"><ha-icon .icon=${activityIcon(activity.state)}></ha-icon></div>
           <div class="title-block">
             <div class="title activity">${activity.state}</div>
-            <div class="subtitle">${start ? formatRelative(new Date(start.state), hass.language) : ""}</div>
+            <div class="subtitle">
+              ${start
+                ? html`${formatRelative(new Date(start.state), hass.language)} ·
+                  ${formatTime(new Date(start.state), hass.language)}`
+                : ""}
+            </div>
           </div>
           <ha-icon class="chevron" icon="mdi:chevron-right"></ha-icon>
         </div>
@@ -231,7 +236,7 @@ export class SuuntoLastWorkoutCard extends SuuntoBaseCard {
         width: 13px;
         height: 5px;
         border-radius: 2px;
-        background: var(--sc-sev-1);
+        background: var(--divider-color);
       }
       .severity i.s1 {
         background: var(--sc-sev-1);

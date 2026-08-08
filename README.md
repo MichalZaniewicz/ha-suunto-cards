@@ -5,12 +5,13 @@ Custom Lovelace cards for [`ha-suunto`](https://github.com/MichalZaniewicz/ha-su
 cards to its 74 sensors by hand.
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/cards-overview-dark.svg">
-  <img src="docs/screenshots/cards-overview-light.svg" alt="Preview of all seven Suunto cards">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/cards-overview-dark.png">
+  <img src="docs/screenshots/cards-overview-light.png" alt="Preview of all seven Suunto cards">
 </picture>
 
-*Preview mockups with sample data - not a live screenshot. Every card actually themes with your
-real Home Assistant light/dark theme automatically (see [Design](#design) below).*
+*Real screenshots of the actual compiled cards, rendered against the mock data in
+[`dev/index.html`](dev/index.html) - not mockups. Each card themes with your real Home Assistant
+light/dark theme automatically (see [Design](#design) below).*
 
 ## Cards
 
@@ -68,8 +69,10 @@ npm run typecheck    # tsc --noEmit across the whole src/ tree
 No live Home Assistant instance is needed to work on these cards. Open
 [`dev/index.html`](dev/index.html) in a browser after building - it loads the real compiled
 bundle against a hand-built mock `hass` object covering every card in both its normal and empty
-state, with a light/dark toggle. It stubs just enough of `ha-card`/`ha-icon` to render; it's a
-logic/data-binding check, not a pixel-accurate preview (that's what the mockups above are for).
+state, with a light/dark toggle. `ha-card`/`ha-icon` are re-implemented as real shadow-DOM custom
+elements reading the same theme variables Home Assistant would set, and `ha-icon` renders actual
+glyphs for every icon this card family uses - so what you see here IS what shipped in the
+screenshots above, not a simplified stand-in.
 
 ### Adding a new card
 
