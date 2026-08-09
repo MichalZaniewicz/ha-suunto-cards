@@ -134,4 +134,17 @@ export const nl: Record<keyof typeof en, string> = {
   "fitness.measured": "Gemeten {time} geleden · {activity}",
   "empty.fitness.title": "Nog geen fitheidsgegevens",
   "empty.fitness.subtitle": "Suunto berekent dit alleen op basis van hardloop- of wandeltrainingen.",
+
+  "card.pmc.title": "Prestatiebeheer",
+  "card.pmc.subtitle": "90-dagen trend",
+
+  "card.recovery_trends.title": "Hersteltrends",
+  "card.recovery_trends.subtitle": "30-dagen basiswaarde",
+  "empty.recovery_trends.title": "Nog geen hersteltrendgegevens",
+
+  "card.weekly_volume.title": "Wekelijks Volume",
+  "card.weekly_volume.subtitle": "Laatste 12 weken",
+  "empty.weekly_volume.title": "Nog geen gegevens over wekelijks volume",
+  "stat.average": "Gemiddeld",
+  "stat.total": "Totaal",
 };

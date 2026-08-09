@@ -34,6 +34,9 @@ into <ha-alert> and drops every child whose textContent is empty, which silently
 | Start Location | `custom:suunto-location-card` | Where your last workout started, with a one-tap link to open it in Maps |
 | Fitness | `custom:suunto-fitness-card` | VO2max, estimated VO2max and fitness age, with when they were last measured |
 | Last Workout (compact) | `custom:suunto-last-workout-tile-card` | A single-row summary of your last workout, for denser dashboards |
+| Performance Management | `custom:suunto-pmc-card` | CTL/ATL/TSB plotted together over a 90-day trend - the classic fitness/fatigue/form chart |
+| Recovery Trends | `custom:suunto-recovery-trends-card` | Resting HR and HRV trend lines over 30 days, each against its own baseline |
+| Weekly Volume | `custom:suunto-weekly-volume-card` | A 12-week bar chart of training distance, with the average and total |
 
 Each card auto-detects your Suunto device - **zero YAML required** for the common case of one
 Suunto account. If you ever have more than one, the card's visual editor shows a device picker.
@@ -98,8 +101,11 @@ real shadow-DOM custom elements reading the same theme variables Home Assistant 
    it gives you dark-mode sync, device resolution and a consistent empty/error state for free.
 2. Reuse [`src/utils/style-tokens.ts`](src/utils/style-tokens.ts) (`suuntoTokens` +
    `suuntoSharedStyles`) and [`src/utils/render-helpers.ts`](src/utils/render-helpers.ts)
-   (`segmentedBar`, `progressRing`, `sparkline`) before writing new CSS/SVG - most layouts in this
-   family are built entirely from those two files.
+   (`segmentedBar`, `progressRing`, `sparkline`, `multiLineChart`, `barChart`) before writing new
+   CSS/SVG - most layouts in this family are built entirely from those two files. Any SVG shape
+   built inside a `.map()` (multiple lines/bars) must use Lit's `svg` tag for that inner fragment,
+   not `html` - a nested `html` template creates its elements outside the SVG namespace, so they
+   render invisibly even though their attributes look correct in the DOM.
 3. Register it in [`src/suunto-cards.ts`](src/suunto-cards.ts) (one `import` + one
    `window.customCards.push(...)` entry). `getConfigElement()` can almost always just return
    `document.createElement("suunto-device-editor")` - every card's config is currently just an

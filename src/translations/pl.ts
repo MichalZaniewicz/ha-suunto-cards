@@ -134,4 +134,17 @@ export const pl: Record<keyof typeof en, string> = {
   "fitness.measured": "Zmierzono {time} · {activity}",
   "empty.fitness.title": "Brak jeszcze danych o sprawności",
   "empty.fitness.subtitle": "Suunto oblicza to tylko na podstawie biegania lub marszu.",
+
+  "card.pmc.title": "Zarządzanie formą",
+  "card.pmc.subtitle": "Trend 90-dniowy",
+
+  "card.recovery_trends.title": "Trendy regeneracji",
+  "card.recovery_trends.subtitle": "Poziom bazowy 30 dni",
+  "empty.recovery_trends.title": "Brak jeszcze danych o trendach regeneracji",
+
+  "card.weekly_volume.title": "Wolumen tygodniowy",
+  "card.weekly_volume.subtitle": "Ostatnie 12 tygodni",
+  "empty.weekly_volume.title": "Brak jeszcze danych o wolumenie tygodniowym",
+  "stat.average": "Średnia",
+  "stat.total": "Suma",
 };

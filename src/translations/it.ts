@@ -134,4 +134,17 @@ export const it: Record<keyof typeof en, string> = {
   "fitness.measured": "Misurato {time} fa · {activity}",
   "empty.fitness.title": "Ancora nessun dato sulla forma fisica",
   "empty.fitness.subtitle": "Suunto calcola questo solo dagli allenamenti di corsa o camminata.",
+
+  "card.pmc.title": "Gestione delle Prestazioni",
+  "card.pmc.subtitle": "Andamento di 90 giorni",
+
+  "card.recovery_trends.title": "Tendenze di Recupero",
+  "card.recovery_trends.subtitle": "Riferimento di 30 giorni",
+  "empty.recovery_trends.title": "Ancora nessun dato sulle tendenze di recupero",
+
+  "card.weekly_volume.title": "Volume Settimanale",
+  "card.weekly_volume.subtitle": "Ultime 12 settimane",
+  "empty.weekly_volume.title": "Ancora nessun dato sul volume settimanale",
+  "stat.average": "Media",
+  "stat.total": "Totale",
 };

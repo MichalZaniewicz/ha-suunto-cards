@@ -134,4 +134,17 @@ export const es: Record<keyof typeof en, string> = {
   "fitness.measured": "Medido hace {time} · {activity}",
   "empty.fitness.title": "Aún sin datos de forma física",
   "empty.fitness.subtitle": "Suunto calcula esto solo a partir de entrenamientos de carrera o caminata.",
+
+  "card.pmc.title": "Gestión del Rendimiento",
+  "card.pmc.subtitle": "Tendencia de 90 días",
+
+  "card.recovery_trends.title": "Tendencias de Recuperación",
+  "card.recovery_trends.subtitle": "Referencia de 30 días",
+  "empty.recovery_trends.title": "Aún sin datos de tendencias de recuperación",
+
+  "card.weekly_volume.title": "Volumen Semanal",
+  "card.weekly_volume.subtitle": "Últimas 12 semanas",
+  "empty.weekly_volume.title": "Aún sin datos de volumen semanal",
+  "stat.average": "Media",
+  "stat.total": "Total",
 };

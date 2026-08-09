@@ -156,4 +156,20 @@ export const en = {
   "fitness.measured": "Measured {time} · {activity}",
   "empty.fitness.title": "No fitness data yet",
   "empty.fitness.subtitle": "Suunto computes this from running or walking workouts only.",
+
+  // -- card 14: performance management chart --
+  "card.pmc.title": "Performance Management",
+  "card.pmc.subtitle": "90-day trend",
+
+  // -- card 15: recovery trends --
+  "card.recovery_trends.title": "Recovery Trends",
+  "card.recovery_trends.subtitle": "30-day baseline",
+  "empty.recovery_trends.title": "No recovery trend data yet",
+
+  // -- card 16: weekly volume --
+  "card.weekly_volume.title": "Weekly Volume",
+  "card.weekly_volume.subtitle": "Last 12 weeks",
+  "empty.weekly_volume.title": "No weekly volume data yet",
+  "stat.average": "Average",
+  "stat.total": "Total",
 } as const;

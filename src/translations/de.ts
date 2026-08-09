@@ -134,4 +134,17 @@ export const de: Record<keyof typeof en, string> = {
   "fitness.measured": "Gemessen {time} · {activity}",
   "empty.fitness.title": "Noch keine Fitnessdaten",
   "empty.fitness.subtitle": "Suunto berechnet dies nur aus Lauf- oder Gehtrainings.",
+
+  "card.pmc.title": "Leistungsmanagement",
+  "card.pmc.subtitle": "90-Tage-Trend",
+
+  "card.recovery_trends.title": "Erholungstrends",
+  "card.recovery_trends.subtitle": "30-Tage-Basiswert",
+  "empty.recovery_trends.title": "Noch keine Erholungstrend-Daten",
+
+  "card.weekly_volume.title": "Wöchentliches Volumen",
+  "card.weekly_volume.subtitle": "Letzte 12 Wochen",
+  "empty.weekly_volume.title": "Noch keine Daten zum wöchentlichen Volumen",
+  "stat.average": "Durchschnitt",
+  "stat.total": "Gesamt",
 };

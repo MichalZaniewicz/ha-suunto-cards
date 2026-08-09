@@ -1,3 +1,22 @@
+import type { SparklinePoint } from "./render-helpers";
+
+export interface RawHistoryPoint {
+  state: string;
+  last_updated?: string;
+  last_changed?: string;
+}
+
+/** Turns one entity's raw `history/period` response into chart-ready points, dropping unavailable/non-numeric samples. */
+export function parseHistorySeries(points: RawHistoryPoint[] | undefined): SparklinePoint[] {
+  return (points ?? [])
+    .map((p) => {
+      const t = new Date(p.last_updated ?? p.last_changed ?? "").getTime();
+      const v = Number(p.state);
+      return { t, v };
+    })
+    .filter((p) => Number.isFinite(p.t) && Number.isFinite(p.v));
+}
+
 /** 98.4 -> "1:38 h"; 42 -> "42 min". Mirrors how the sketch reads at a glance. */
 export function formatDuration(minutes: number): { value: string; unit: string } {
   if (minutes >= 60) {

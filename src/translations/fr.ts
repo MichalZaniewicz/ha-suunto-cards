@@ -134,4 +134,17 @@ export const fr: Record<keyof typeof en, string> = {
   "fitness.measured": "Mesuré il y a {time} · {activity}",
   "empty.fitness.title": "Pas encore de données de forme physique",
   "empty.fitness.subtitle": "Suunto calcule ceci uniquement à partir des séances de course ou de marche.",
+
+  "card.pmc.title": "Gestion de la Performance",
+  "card.pmc.subtitle": "Tendance sur 90 jours",
+
+  "card.recovery_trends.title": "Tendances de Récupération",
+  "card.recovery_trends.subtitle": "Référence sur 30 jours",
+  "empty.recovery_trends.title": "Pas encore de données de tendances de récupération",
+
+  "card.weekly_volume.title": "Volume Hebdomadaire",
+  "card.weekly_volume.subtitle": "12 dernières semaines",
+  "empty.weekly_volume.title": "Pas encore de données de volume hebdomadaire",
+  "stat.average": "Moyenne",
+  "stat.total": "Total",
 };

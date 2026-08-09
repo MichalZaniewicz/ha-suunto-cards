@@ -12,6 +12,9 @@ import "./suunto-elevation-card";
 import "./suunto-location-card";
 import "./suunto-fitness-card";
 import "./suunto-last-workout-tile-card";
+import "./suunto-pmc-card";
+import "./suunto-recovery-trends-card";
+import "./suunto-weekly-volume-card";
 
 interface CustomCardEntry {
   type: string;
@@ -106,12 +109,30 @@ window.customCards.push(
     name: "Suunto - Last Workout (compact)",
     description: "A single-row summary of your last workout, for denser dashboards.",
     preview: true,
+  },
+  {
+    type: "suunto-pmc-card",
+    name: "Suunto - Performance Management",
+    description: "CTL/ATL/TSB plotted together over 90 days - the classic fitness/fatigue/form chart.",
+    preview: true,
+  },
+  {
+    type: "suunto-recovery-trends-card",
+    name: "Suunto - Recovery Trends",
+    description: "Resting heart rate and HRV trend lines over 30 days, each against its own baseline.",
+    preview: true,
+  },
+  {
+    type: "suunto-weekly-volume-card",
+    name: "Suunto - Weekly Volume",
+    description: "A 12-week bar chart of your training distance, with the average and total.",
+    preview: true,
   }
 );
 
 // eslint-disable-next-line no-console
 console.info(
-  "%c SUUNTO-CARDS %c 13 cards loaded ",
+  "%c SUUNTO-CARDS %c 16 cards loaded ",
   "color: #fff; background: #d98a1d; font-weight: 700; border-radius: 3px 0 0 3px; padding: 2px 6px;",
   "color: #d98a1d; background: transparent; font-weight: 500;"
 );

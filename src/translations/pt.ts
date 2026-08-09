@@ -134,4 +134,17 @@ export const pt: Record<keyof typeof en, string> = {
   "fitness.measured": "Medido há {time} · {activity}",
   "empty.fitness.title": "Ainda sem dados de condição física",
   "empty.fitness.subtitle": "A Suunto calcula isto apenas a partir de treinos de corrida ou caminhada.",
+
+  "card.pmc.title": "Gestão de Desempenho",
+  "card.pmc.subtitle": "Tendência de 90 dias",
+
+  "card.recovery_trends.title": "Tendências de Recuperação",
+  "card.recovery_trends.subtitle": "Referência de 30 dias",
+  "empty.recovery_trends.title": "Ainda sem dados de tendências de recuperação",
+
+  "card.weekly_volume.title": "Volume Semanal",
+  "card.weekly_volume.subtitle": "Últimas 12 semanas",
+  "empty.weekly_volume.title": "Ainda sem dados de volume semanal",
+  "stat.average": "Média",
+  "stat.total": "Total",
 };
