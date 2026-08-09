@@ -1,7 +1,7 @@
 import { html, css, nothing, type TemplateResult } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import type { LovelaceCardEditor } from "custom-card-helpers";
-import type { SuuntoCardConfig } from "./utils/types";
+import type { SuuntoCardConfig, SuuntoHass } from "./utils/types";
 import { SuuntoBaseCard } from "./utils/base-card";
 import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
 import { formatRelative } from "./utils/format";
@@ -9,9 +9,17 @@ import { t } from "./utils/localize";
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
 
+interface HuiMapCardElement extends HTMLElement {
+  hass?: SuuntoHass;
+  setConfig: (config: Record<string, unknown>) => void;
+}
+
 @customElement("suunto-location-card")
 export class SuuntoLocationCard extends SuuntoBaseCard {
   @state() private _config?: SuuntoCardConfig;
+
+  private _mapEl?: HuiMapCardElement;
+  private _mapEntityId?: string;
 
   public static getConfigElement(): LovelaceCardEditor {
     return document.createElement("suunto-device-editor") as LovelaceCardEditor;
@@ -27,7 +35,7 @@ export class SuuntoLocationCard extends SuuntoBaseCard {
   }
 
   public getCardSize(): number {
-    return 3;
+    return 5;
   }
 
   protected render(): TemplateResult | typeof nothing {
@@ -43,6 +51,7 @@ export class SuuntoLocationCard extends SuuntoBaseCard {
     const location = get("last_workout_location");
     const lat = location?.attributes.latitude;
     const lon = location?.attributes.longitude;
+    const entityId = map["last_workout_location"];
 
     if (!location || UNAVAILABLE_STATES.has(location.state) || lat === undefined || lon === undefined) {
       return this._message("mdi:map-marker", t(hass, "empty.location.title"), t(hass, "empty.location.subtitle"));
@@ -51,6 +60,7 @@ export class SuuntoLocationCard extends SuuntoBaseCard {
     const activity = get("last_activity");
     const start = get("last_workout_start");
     const mapsUrl = `https://www.google.com/maps?q=${lat},${lon}`;
+    const mapEl = entityId ? this._getMapElement(entityId) : undefined;
 
     return html`
       <ha-card class="static">
@@ -66,14 +76,45 @@ export class SuuntoLocationCard extends SuuntoBaseCard {
           </div>
         </div>
 
-        <div class="coords">${Number(lat).toFixed(5)}, ${Number(lon).toFixed(5)}</div>
+        ${mapEl ? html`<div class="map-wrap">${mapEl}</div>` : nothing}
 
-        <a class="chip accent link" href=${mapsUrl} target="_blank" rel="noopener noreferrer">
-          <ha-icon icon="mdi:open-in-new"></ha-icon>
-          ${t(hass, "location.open_in_maps")}
-        </a>
+        <div class="footer-row">
+          <div class="coords">${Number(lat).toFixed(5)}, ${Number(lon).toFixed(5)}</div>
+          <a class="chip accent link" href=${mapsUrl} target="_blank" rel="noopener noreferrer">
+            <ha-icon icon="mdi:open-in-new"></ha-icon>
+            ${t(hass, "location.open_in_maps")}
+          </a>
+        </div>
       </ha-card>
     `;
+  }
+
+  /**
+   * Delegates to Home Assistant's own built-in map card (Leaflet + tiles it
+   * already ships) instead of bundling a map library - `last_workout_location`
+   * already exposes `latitude`/`longitude`, which is all `hui-map-card` needs.
+   * Cached across renders so the underlying Leaflet map isn't torn down and
+   * rebuilt on every hass update; only `.hass` is refreshed each time.
+   *
+   * `hui-map-card` is an internal HA element, not a documented public API -
+   * only present inside a real Home Assistant frontend (not this repo's dev
+   * harness), so this degrades to `undefined` there rather than throwing.
+   */
+  private _getMapElement(entityId: string): HuiMapCardElement | undefined {
+    if (!this._mapEl || this._mapEntityId !== entityId) {
+      const ctor = customElements.get("hui-map-card");
+      if (!ctor) return undefined;
+      try {
+        const el = document.createElement("hui-map-card") as HuiMapCardElement;
+        el.setConfig({ type: "map", entities: [entityId], default_zoom: 13 });
+        this._mapEl = el;
+        this._mapEntityId = entityId;
+      } catch {
+        return undefined;
+      }
+    }
+    this._mapEl.hass = this.hass;
+    return this._mapEl;
   }
 
   static styles = [
@@ -84,14 +125,28 @@ export class SuuntoLocationCard extends SuuntoBaseCard {
         opacity: 0.45;
         margin: 0 3px;
       }
+      .map-wrap {
+        height: 220px;
+        border-radius: 10px;
+        overflow: hidden;
+      }
+      .map-wrap > * {
+        height: 100%;
+      }
+      .footer-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
       .coords {
-        font-size: 1.05rem;
-        font-weight: 600;
+        font-size: 0.85rem;
+        color: var(--secondary-text-color);
         font-variant-numeric: tabular-nums;
       }
       .chip.link {
         text-decoration: none;
-        align-self: flex-start;
         cursor: pointer;
       }
     `,

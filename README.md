@@ -9,7 +9,7 @@ cards to its 74 sensors by hand.
 ![Preview of the Suunto cards](docs/screenshots/cards-overview-dark.png)
 
 > [!TIP]
-> ⭐ **Enjoying these cards?** Every star is real motivation to keep building the family out :)
+> ⭐ **Enjoying these cards?** Every star is real motivation to keep building new features :)
 
 <!-- The badge lives OUTSIDE the alert on purpose: Home Assistant/HACS rewrites a GitHub alert
 into <ha-alert> and drops every child whose textContent is empty, which silently removes any
