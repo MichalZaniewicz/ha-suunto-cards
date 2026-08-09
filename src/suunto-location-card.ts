@@ -141,6 +141,7 @@ export class SuuntoLocationCard extends SuuntoBaseCard {
       type: "map",
       auto_fit: true,
       default_zoom: 14,
+      aspect_ratio: "16:9",
       entities: [{ entity: entityId, icon: markerIcon }],
     };
 
@@ -182,13 +183,18 @@ export class SuuntoLocationCard extends SuuntoBaseCard {
         opacity: 0.45;
         margin: 0 3px;
       }
+      /* No explicit height here on purpose: forcing one from outside fought
+         hui-map-card's own sizing (it rendered taller than the box we gave
+         it, and overflow:hidden silently cropped it, pushing the marker -
+         correctly centered within its OWN full height - out of the visible
+         window). aspect_ratio in the card config now sizes it predictably
+         instead, so this wrapper just clips the corners, not the content. */
       .map-wrap {
-        height: 220px;
         border-radius: 10px;
         overflow: hidden;
       }
       .map-wrap > * {
-        height: 100%;
+        display: block;
       }
       .footer-row {
         display: flex;
