@@ -4,14 +4,21 @@ Custom Lovelace cards for [`ha-suunto`](https://github.com/MichalZaniewicz/ha-su
 `suunto_app` integration) - a purpose-built widget family instead of wiring generic entity/gauge
 cards to its 74 sensors by hand.
 
+[![Open your Home Assistant instance and open this repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=MichalZaniewicz&repository=ha-suunto-cards&category=plugin)
+
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/cards-overview-dark.png">
   <img src="docs/screenshots/cards-overview-light.png" alt="Preview of all seven Suunto cards">
 </picture>
 
-*Real screenshots of the actual compiled cards, rendered against the mock data in
-[`dev/index.html`](dev/index.html) - not mockups. Each card themes with your real Home Assistant
-light/dark theme automatically (see [Design](#design) below).*
+> [!TIP]
+> ⭐ **Enjoying these cards?** Every star is real motivation to keep building the family out :)
+
+<!-- The badge lives OUTSIDE the alert on purpose: Home Assistant/HACS rewrites a GitHub alert
+into <ha-alert> and drops every child whose textContent is empty, which silently removes any
+<img> placed inside it. -->
+
+[![Star this repo](https://img.shields.io/github/stars/MichalZaniewicz/ha-suunto-cards?style=for-the-badge&logo=github&label=STAR%20THIS%20REPO&labelColor=555555&color=ffc107)](https://github.com/MichalZaniewicz/ha-suunto-cards)
 
 ## Cards
 
@@ -39,14 +46,24 @@ type: custom:suunto-last-workout-card
 device_id: abcdef0123456789
 ```
 
-## Requirements
+## Languages
 
-- Home Assistant with [`ha-suunto`](https://github.com/MichalZaniewicz/ha-suunto) (`suunto_app`)
-  already set up.
-- HACS, to add this as a custom repository (category: **Dashboard**/Lovelace plugin) once it's
-  pushed to GitHub - not done yet, this repo is currently local-only. Until then, copy
-  `dist/suunto-cards.js` into your `<config>/www/` folder and add it as a Lovelace resource
-  (Settings → Dashboards → Resources → `/local/suunto-cards.js`, type: JavaScript module).
+Every label follows your Home Assistant language automatically - English, Polish, German,
+Portuguese, French, Spanish, Italian and Dutch are built in (`src/translations/`). Anything else
+falls back to English. Adding a language is one new typed file - see
+[Adding a language](#adding-a-language) below.
+
+## Installation
+
+1. HACS → ⋮ → **Custom repositories** → add this repo as category **Dashboard** (or use the
+   badge above) → install **Suunto Cards**.
+2. Add a card to any dashboard with `type: custom:suunto-last-workout-card` (or any other type
+   from the table above) - no other configuration needed for a single Suunto account.
+
+Manual install: copy `dist/suunto-cards.js` into `<config>/www/`, then Settings → Dashboards →
+Resources → add `/local/suunto-cards.js` as a JavaScript module.
+
+Requires [`ha-suunto`](https://github.com/MichalZaniewicz/ha-suunto) (`suunto_app`) already set up.
 
 ## Design
 
@@ -69,10 +86,8 @@ npm run typecheck    # tsc --noEmit across the whole src/ tree
 No live Home Assistant instance is needed to work on these cards. Open
 [`dev/index.html`](dev/index.html) in a browser after building - it loads the real compiled
 bundle against a hand-built mock `hass` object covering every card in both its normal and empty
-state, with a light/dark toggle. `ha-card`/`ha-icon` are re-implemented as real shadow-DOM custom
-elements reading the same theme variables Home Assistant would set, and `ha-icon` renders actual
-glyphs for every icon this card family uses - so what you see here IS what shipped in the
-screenshots above, not a simplified stand-in.
+state, with a light/dark toggle and a language switcher. `ha-card`/`ha-icon` are re-implemented as
+real shadow-DOM custom elements reading the same theme variables Home Assistant would set.
 
 ### Adding a new card
 
@@ -86,13 +101,26 @@ screenshots above, not a simplified stand-in.
    `window.customCards.push(...)` entry). `getConfigElement()` can almost always just return
    `document.createElement("suunto-device-editor")` - every card's config is currently just an
    optional `device_id`.
-4. Add a mock-data entry per new `translation_key` in [`dev/index.html`](dev/index.html) and
+4. Every user-facing string goes through `t(hass, key)` from
+   [`src/utils/localize.ts`](src/utils/localize.ts) - add the key to
+   [`src/translations/en.ts`](src/translations/en.ts) first (the canonical key list) and
+   TypeScript will then require it in all 7 other language files.
+5. Add a mock-data entry per new `translation_key` in [`dev/index.html`](dev/index.html) and
    verify both the happy-path and empty-state render.
+
+### Adding a language
+
+Copy `src/translations/en.ts` to `src/translations/<code>.ts`, translate every value (TypeScript
+will error if a key is missing or extra), then register it in `LANGUAGES` in
+[`src/utils/localize.ts`](src/utils/localize.ts).
 
 ## Status
 
-Local, not yet published. Not on HACS or GitHub yet - that's a deliberate next step, not an
-oversight. Entity discovery reads Home Assistant's entity registry by `translation_key`, which
-this integration sets equal to each sensor's internal key (`last_distance`, `fitness_ctl`, ...) -
-that keeps discovery language-independent and immune to the user renaming entities, instead of
+Entity discovery reads Home Assistant's entity registry by `translation_key`, which this
+integration sets equal to each sensor's internal key (`last_distance`, `fitness_ctl`, ...) - that
+keeps discovery language-independent and immune to the user renaming entities, instead of
 hardcoding `sensor.<device>_last_distance`-style entity IDs.
+
+## Disclaimer
+
+An unofficial companion to an unofficial integration - not affiliated with or endorsed by Suunto.

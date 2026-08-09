@@ -6,10 +6,12 @@ import { SuuntoBaseCard } from "./utils/base-card";
 import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
 import { activityIcon, weatherIcon } from "./utils/icons";
 import { formatDuration, formatPace, formatRelative, formatTime } from "./utils/format";
+import { t, tPlural } from "./utils/localize";
+import type { SuuntoHass } from "./utils/types";
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
 
-function achievementLabel(raw: unknown, count: number): string {
+function achievementLabel(hass: SuuntoHass | undefined, raw: unknown, count: number): string {
   if (Array.isArray(raw) && raw.length) {
     const first = raw[0];
     if (typeof first === "string") return first;
@@ -19,7 +21,7 @@ function achievementLabel(raw: unknown, count: number): string {
       if (typeof label === "string") return label;
     }
   }
-  return `${count} achievement${count === 1 ? "" : "s"}`;
+  return tPlural(hass, count, "achievement.count_one", "achievement.count_other");
 }
 
 @customElement("suunto-last-workout-card")
@@ -58,8 +60,8 @@ export class SuuntoLastWorkoutCard extends SuuntoBaseCard {
     if (!activity || UNAVAILABLE_STATES.has(activity.state)) {
       return this._message(
         "mdi:calendar-blank-outline",
-        "No recent workout",
-        "Sync your watch with the Suunto app to see it here."
+        t(hass, "empty.last_workout.title"),
+        t(hass, "empty.last_workout.subtitle")
       );
     }
 
@@ -104,21 +106,27 @@ export class SuuntoLastWorkoutCard extends SuuntoBaseCard {
 
         <div class="stats">
           ${distance
-            ? this._stat((Number(distance.state) / 1000).toFixed(1), "km", "Distance")
+            ? this._stat((Number(distance.state) / 1000).toFixed(1), "km", t(hass, "stat.distance"))
             : nothing}
-          ${durationParts ? this._stat(durationParts.value, durationParts.unit, "Duration") : nothing}
+          ${durationParts
+            ? this._stat(durationParts.value, durationParts.unit, t(hass, "stat.duration"))
+            : nothing}
           ${pace
-            ? this._stat(formatPace(Number(pace.state)), "/km", "Avg pace")
+            ? this._stat(formatPace(Number(pace.state)), "/km", t(hass, "stat.avg_pace"))
             : hasSpeed
-              ? this._stat(Number(speed!.state).toFixed(1), "km/h", "Avg speed")
+              ? this._stat(Number(speed!.state).toFixed(1), "km/h", t(hass, "stat.avg_speed"))
               : nothing}
-          ${avgHr ? this._stat(String(Math.round(Number(avgHr.state))), "bpm", "Avg HR", true) : nothing}
-          ${maxHr ? this._stat(String(Math.round(Number(maxHr.state))), "bpm", "Max HR", true) : nothing}
+          ${avgHr
+            ? this._stat(String(Math.round(Number(avgHr.state))), "bpm", t(hass, "stat.avg_hr"), true)
+            : nothing}
+          ${maxHr
+            ? this._stat(String(Math.round(Number(maxHr.state))), "bpm", t(hass, "stat.max_hr"), true)
+            : nothing}
           ${pteValue !== undefined
             ? html`
                 <div class="stat">
                   <div class="stat-value">${pteValue.toFixed(1)}</div>
-                  <div class="stat-label">Training effect</div>
+                  <div class="stat-label">${t(hass, "stat.training_effect")}</div>
                   <div class="severity">
                     ${[1, 2, 3, 4, 5].map(
                       (i) => html`<i class=${i <= Math.round(pteValue) ? `on s${i}` : ""}></i>`
@@ -133,20 +141,20 @@ export class SuuntoLastWorkoutCard extends SuuntoBaseCard {
           ? html`
               <hr />
               <div class="secondary">
-                ${tss ? this._secondary(String(Math.round(Number(tss.state))), "TSS") : nothing}
-                ${epoc ? this._secondary(Number(epoc.state).toFixed(1), "EPOC") : nothing}
+                ${tss ? this._secondary(String(Math.round(Number(tss.state))), t(hass, "stat.tss")) : nothing}
+                ${epoc ? this._secondary(Number(epoc.state).toFixed(1), t(hass, "stat.epoc")) : nothing}
                 ${feelingValue !== undefined
                   ? html`
                       <div class="sec-item">
                         <div class="feeling">
                           ${[1, 2, 3, 4, 5].map((i) => html`<i class=${i <= feelingValue ? "on" : ""}></i>`)}
                         </div>
-                        <div class="sec-label">Feeling</div>
+                        <div class="sec-label">${t(hass, "stat.feeling")}</div>
                       </div>
                     `
                   : nothing}
                 ${calPerKm
-                  ? this._secondary(`${Math.round(Number(calPerKm.state))}`, "kcal/km", "Energy")
+                  ? this._secondary(`${Math.round(Number(calPerKm.state))}`, "kcal/km", t(hass, "stat.energy"))
                   : nothing}
               </div>
             `
@@ -180,11 +188,11 @@ export class SuuntoLastWorkoutCard extends SuuntoBaseCard {
                       <span
                         class="chip accent"
                         title=${achievements?.attributes.route_ranking
-                          ? `Rank #${achievements.attributes.route_ranking} on this route`
+                          ? t(hass, "achievement.rank", { rank: achievements.attributes.route_ranking })
                           : ""}
                       >
                         <ha-icon icon="mdi:trophy"></ha-icon>
-                        ${achievementLabel(achievements?.attributes.achievements, achievementCount)}
+                        ${achievementLabel(hass, achievements?.attributes.achievements, achievementCount)}
                       </span>
                     `
                   : nothing}

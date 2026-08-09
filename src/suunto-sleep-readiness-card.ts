@@ -6,14 +6,16 @@ import { SuuntoBaseCard } from "./utils/base-card";
 import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
 import { segmentedBar, progressRing } from "./utils/render-helpers";
 import { formatDuration, formatTime, formatDelta, isToday } from "./utils/format";
+import { t } from "./utils/localize";
+import type { SuuntoHass } from "./utils/types";
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
 
 /** Presentation-only banding for the heuristic readiness score - not a Suunto scale. */
-function readinessBand(pct: number): { colorVar: string; label: string } {
-  if (pct >= 70) return { colorVar: "var(--sc-good)", label: "Great" };
-  if (pct >= 40) return { colorVar: "var(--sc-warn)", label: "Fair" };
-  return { colorVar: "var(--sc-bad)", label: "Low" };
+function readinessBand(hass: SuuntoHass | undefined, pct: number): { colorVar: string; label: string } {
+  if (pct >= 70) return { colorVar: "var(--sc-good)", label: t(hass, "band.readiness.great") };
+  if (pct >= 40) return { colorVar: "var(--sc-warn)", label: t(hass, "band.readiness.fair") };
+  return { colorVar: "var(--sc-bad)", label: t(hass, "band.readiness.low") };
 }
 
 /**
@@ -21,10 +23,10 @@ function readinessBand(pct: number): { colorVar: string; label: string } {
  * good/bad in themselves - low usually tracks fatigue, high is often a fully
  * recovered reading, so only "low" gets a warning tone here.
  */
-function hrvStatusChip(status: string): { colorVar: string; label: string } {
-  if (status === "low") return { colorVar: "var(--sc-warn)", label: "HRV low" };
-  if (status === "high") return { colorVar: "var(--sc-pulse)", label: "HRV high" };
-  return { colorVar: "var(--sc-good)", label: "HRV balanced" };
+function hrvStatusChip(hass: SuuntoHass | undefined, status: string): { colorVar: string; label: string } {
+  if (status === "low") return { colorVar: "var(--sc-warn)", label: t(hass, "band.hrv.low") };
+  if (status === "high") return { colorVar: "var(--sc-pulse)", label: t(hass, "band.hrv.high") };
+  return { colorVar: "var(--sc-good)", label: t(hass, "band.hrv.balanced") };
 }
 
 @customElement("suunto-sleep-readiness-card")
@@ -60,7 +62,11 @@ export class SuuntoSleepReadinessCard extends SuuntoBaseCard {
 
     const duration = get("sleep_duration");
     if (!duration || UNAVAILABLE_STATES.has(duration.state)) {
-      return this._message("mdi:sleep", "No sleep data yet", "Wear your watch to bed to see it here.");
+      return this._message(
+        "mdi:sleep",
+        t(hass, "empty.sleep_readiness.title"),
+        t(hass, "empty.sleep_readiness.subtitle")
+      );
     }
 
     const wake = get("wake_time");
@@ -79,7 +85,7 @@ export class SuuntoSleepReadinessCard extends SuuntoBaseCard {
 
     const readinessValue =
       readiness && !UNAVAILABLE_STATES.has(readiness.state) ? Number(readiness.state) : undefined;
-    const band = readinessValue !== undefined ? readinessBand(readinessValue) : undefined;
+    const band = readinessValue !== undefined ? readinessBand(hass, readinessValue) : undefined;
 
     const hrvDelta =
       hrv && hrvBaseline && !UNAVAILABLE_STATES.has(hrvBaseline.state)
@@ -92,29 +98,34 @@ export class SuuntoSleepReadinessCard extends SuuntoBaseCard {
 
     const stageSegments = [
       deep && !UNAVAILABLE_STATES.has(deep.state)
-        ? { flexGrow: Number(deep.state), colorVar: "var(--sc-sleep-deep)", title: "Deep" }
+        ? { flexGrow: Number(deep.state), colorVar: "var(--sc-sleep-deep)", title: t(hass, "label.deep") }
         : undefined,
       light && !UNAVAILABLE_STATES.has(light.state)
-        ? { flexGrow: Number(light.state), colorVar: "var(--sc-sleep-light)", title: "Light" }
+        ? { flexGrow: Number(light.state), colorVar: "var(--sc-sleep-light)", title: t(hass, "label.light") }
         : undefined,
       rem && !UNAVAILABLE_STATES.has(rem.state)
-        ? { flexGrow: Number(rem.state), colorVar: "var(--sc-sleep-rem)", title: "REM" }
+        ? { flexGrow: Number(rem.state), colorVar: "var(--sc-sleep-rem)", title: t(hass, "label.rem") }
         : undefined,
     ].filter((s): s is NonNullable<typeof s> => s !== undefined);
 
     const durationParts = formatDuration(Number(duration.state) * 60);
     const napMinutes = nap && !UNAVAILABLE_STATES.has(nap.state) ? Number(nap.state) : undefined;
     const napToday = nap?.attributes.date ? isToday(new Date(nap.attributes.date)) : false;
+    const durationLabel = { duration: `${durationParts.value} ${durationParts.unit}` };
 
     return html`
       <ha-card class="static">
         <div class="header">
           <div class="icon-badge pulse"><ha-icon icon="mdi:sleep"></ha-icon></div>
           <div class="title-block">
-            <div class="title">Sleep &amp; Readiness</div>
+            <div class="title">${t(hass, "card.sleep_readiness.title")}</div>
             <div class="subtitle">
-              ${durationParts.value} ${durationParts.unit} slept
-              ${wake ? html` · woke ${formatTime(new Date(wake.state), hass.language)}` : nothing}
+              ${wake
+                ? t(hass, "card.sleep_readiness.subtitle_with_wake", {
+                    ...durationLabel,
+                    time: formatTime(new Date(wake.state), hass.language),
+                  })
+                : t(hass, "card.sleep_readiness.subtitle_no_wake", durationLabel)}
             </div>
           </div>
         </div>
@@ -127,7 +138,7 @@ export class SuuntoSleepReadinessCard extends SuuntoBaseCard {
                   <div class="ring-value" style="color:${band.colorVar}">${Math.round(readinessValue)}</div>
                 </div>
                 <div class="readiness-text">
-                  <div class="readiness-label">Readiness</div>
+                  <div class="readiness-label">${t(hass, "stat.readiness")}</div>
                   <div class="readiness-band" style="color:${band.colorVar}">${band.label}</div>
                 </div>
               </div>
@@ -136,13 +147,15 @@ export class SuuntoSleepReadinessCard extends SuuntoBaseCard {
 
         <div class="stats">
           ${quality
-            ? this._stat(String(Math.round(Number(quality.state))), "%", "Quality")
+            ? this._stat(String(Math.round(Number(quality.state))), "%", t(hass, "stat.quality"))
             : nothing}
           ${hrv
             ? this._stat(
                 String(Math.round(Number(hrv.state))),
                 "ms",
-                hrvDelta !== undefined ? `HRV (${formatDelta(hrvDelta)})` : "HRV",
+                hrvDelta !== undefined
+                  ? t(hass, "stat.hrv_delta", { delta: formatDelta(hrvDelta) })
+                  : t(hass, "stat.hrv"),
                 hrvDelta !== undefined ? (hrvDelta >= 0 ? "good" : "bad") : undefined
               )
             : nothing}
@@ -150,11 +163,13 @@ export class SuuntoSleepReadinessCard extends SuuntoBaseCard {
             ? this._stat(
                 String(Math.round(Number(restingHr.state))),
                 "bpm",
-                rhrDelta !== undefined ? `Resting HR (${formatDelta(rhrDelta)})` : "Resting HR",
+                rhrDelta !== undefined
+                  ? t(hass, "stat.resting_hr_delta", { delta: formatDelta(rhrDelta) })
+                  : t(hass, "stat.resting_hr"),
                 rhrDelta !== undefined ? (rhrDelta <= 0 ? "good" : "bad") : undefined
               )
             : nothing}
-          ${spo2 ? this._stat(String(Math.round(Number(spo2.state))), "%", "SpO2") : nothing}
+          ${spo2 ? this._stat(String(Math.round(Number(spo2.state))), "%", t(hass, "stat.spo2")) : nothing}
         </div>
 
         ${stageSegments.length
@@ -180,7 +195,7 @@ export class SuuntoSleepReadinessCard extends SuuntoBaseCard {
               <div class="footer">
                 ${hrvStatus && !UNAVAILABLE_STATES.has(hrvStatus.state)
                   ? (() => {
-                      const chip = hrvStatusChip(hrvStatus.state);
+                      const chip = hrvStatusChip(hass, hrvStatus.state);
                       return html`<span class="chip" style="color:${chip.colorVar}"
                         ><ha-icon icon="mdi:heart-flash"></ha-icon>${chip.label}</span
                       >`;
@@ -188,7 +203,9 @@ export class SuuntoSleepReadinessCard extends SuuntoBaseCard {
                   : nothing}
                 ${napMinutes
                   ? html`<span class="chip accent">
-                      <ha-icon icon="mdi:power-sleep"></ha-icon>${napMinutes} min nap${napToday ? "" : " (earlier)"}
+                      <ha-icon icon="mdi:power-sleep"></ha-icon>${napToday
+                        ? t(hass, "chip.nap", { minutes: napMinutes })
+                        : t(hass, "chip.nap_earlier", { minutes: napMinutes })}
                     </span>`
                   : nothing}
               </div>

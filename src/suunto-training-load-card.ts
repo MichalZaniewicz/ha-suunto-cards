@@ -6,6 +6,8 @@ import { SuuntoBaseCard } from "./utils/base-card";
 import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
 import { sparkline, type SparklinePoint } from "./utils/render-helpers";
 import { formatDelta } from "./utils/format";
+import { t } from "./utils/localize";
+import type { SuuntoHass } from "./utils/types";
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
 const HISTORY_DAYS = 30;
@@ -18,18 +20,18 @@ interface RawHistoryPoint {
 }
 
 /** Presentation-only banding for Training Stress Balance (form). */
-function formBand(tsb: number): { colorVar: string; label: string } {
-  if (tsb > 5) return { colorVar: "var(--sc-good)", label: "Fresh" };
-  if (tsb < -20) return { colorVar: "var(--sc-bad)", label: "Very fatigued" };
-  if (tsb < -5) return { colorVar: "var(--sc-warn)", label: "Fatigued" };
-  return { colorVar: "var(--sc-pulse)", label: "Neutral" };
+function formBand(hass: SuuntoHass | undefined, tsb: number): { colorVar: string; label: string } {
+  if (tsb > 5) return { colorVar: "var(--sc-good)", label: t(hass, "band.form.fresh") };
+  if (tsb < -20) return { colorVar: "var(--sc-bad)", label: t(hass, "band.form.very_fatigued") };
+  if (tsb < -5) return { colorVar: "var(--sc-warn)", label: t(hass, "band.form.fatigued") };
+  return { colorVar: "var(--sc-pulse)", label: t(hass, "band.form.neutral") };
 }
 
 /** ACWR safe zone (~0.8-1.3) mirrors the thresholds the integration itself uses. */
-function acwrBand(acwr: number): { colorVar: string; label: string } {
-  if (acwr > 1.3) return { colorVar: "var(--sc-bad)", label: "High load - injury risk" };
-  if (acwr < 0.8) return { colorVar: "var(--sc-warn)", label: "Low load" };
-  return { colorVar: "var(--sc-good)", label: "Safe zone" };
+function acwrBand(hass: SuuntoHass | undefined, acwr: number): { colorVar: string; label: string } {
+  if (acwr > 1.3) return { colorVar: "var(--sc-bad)", label: t(hass, "band.acwr.high") };
+  if (acwr < 0.8) return { colorVar: "var(--sc-warn)", label: t(hass, "band.acwr.low") };
+  return { colorVar: "var(--sc-good)", label: t(hass, "band.acwr.safe") };
 }
 
 @customElement("suunto-training-load-card")
@@ -110,8 +112,8 @@ export class SuuntoTrainingLoadCard extends SuuntoBaseCard {
     if (!ctl || UNAVAILABLE_STATES.has(ctl.state)) {
       return this._message(
         "mdi:arm-flex",
-        "Building your training load",
-        "Needs a bit of workout history to compute - check back after a few sessions."
+        t(hass, "empty.training_load.title"),
+        t(hass, "empty.training_load.subtitle")
       );
     }
 
@@ -120,27 +122,27 @@ export class SuuntoTrainingLoadCard extends SuuntoBaseCard {
     const acwr = get("acwr");
 
     const tsbValue = tsb && !UNAVAILABLE_STATES.has(tsb.state) ? Number(tsb.state) : undefined;
-    const band = tsbValue !== undefined ? formBand(tsbValue) : undefined;
+    const band = tsbValue !== undefined ? formBand(hass, tsbValue) : undefined;
     const acwrValue = acwr && !UNAVAILABLE_STATES.has(acwr.state) ? Number(acwr.state) : undefined;
-    const acwrInfo = acwrValue !== undefined ? acwrBand(acwrValue) : undefined;
+    const acwrInfo = acwrValue !== undefined ? acwrBand(hass, acwrValue) : undefined;
 
     return html`
       <ha-card class="static">
         <div class="header">
           <div class="icon-badge"><ha-icon icon="mdi:arm-flex"></ha-icon></div>
           <div class="title-block">
-            <div class="title">Training Load</div>
-            <div class="subtitle">${band ? band.label : "Fitness (CTL) trend"}</div>
+            <div class="title">${t(hass, "card.training_load.title")}</div>
+            <div class="subtitle">${band ? band.label : t(hass, "card.training_load.subtitle_fallback")}</div>
           </div>
         </div>
 
         ${sparkline(this._history, "var(--sc-amber)")}
 
         <div class="stats three">
-          ${this._stat(Number(ctl.state).toFixed(0), "CTL · fitness")}
-          ${atl ? this._stat(Number(atl.state).toFixed(0), "ATL · fatigue") : nothing}
+          ${this._stat(Number(ctl.state).toFixed(0), t(hass, "stat.ctl"))}
+          ${atl ? this._stat(Number(atl.state).toFixed(0), t(hass, "stat.atl")) : nothing}
           ${tsbValue !== undefined
-            ? this._stat(formatDelta(tsbValue, 1), "TSB · form", band?.colorVar)
+            ? this._stat(formatDelta(tsbValue, 1), t(hass, "stat.tsb"), band?.colorVar)
             : nothing}
         </div>
 
@@ -149,7 +151,7 @@ export class SuuntoTrainingLoadCard extends SuuntoBaseCard {
               <div class="footer">
                 <span class="chip" style="color:${acwrInfo.colorVar}">
                   <ha-icon icon="mdi:scale-balance"></ha-icon>
-                  ACWR ${acwrValue.toFixed(2)} · ${acwrInfo.label}
+                  ${t(hass, "chip.acwr", { value: acwrValue.toFixed(2), label: acwrInfo.label })}
                 </span>
               </div>
             `

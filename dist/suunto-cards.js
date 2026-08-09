@@ -1,65 +1,65 @@
-function t(t,e,s,i){var a,r=arguments.length,o=r<3?e:null===i?i=Object.getOwnPropertyDescriptor(e,s):i;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)o=Reflect.decorate(t,e,s,i);else for(var n=t.length-1;n>=0;n--)(a=t[n])&&(o=(r<3?a(o):r>3?a(e,s,o):a(e,s))||o);return r>3&&o&&Object.defineProperty(e,s,o),o}"function"==typeof SuppressedError&&SuppressedError;
+function e(e,t,a,i){var s,r=arguments.length,n=r<3?t:null===i?i=Object.getOwnPropertyDescriptor(t,a):i;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)n=Reflect.decorate(e,t,a,i);else for(var o=e.length-1;o>=0;o--)(s=e[o])&&(n=(r<3?s(n):r>3?s(t,a,n):s(t,a))||n);return r>3&&n&&Object.defineProperty(t,a,n),n}"function"==typeof SuppressedError&&SuppressedError;
 /**
  * @license
  * Copyright 2019 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-const e=globalThis,s=e.ShadowRoot&&(void 0===e.ShadyCSS||e.ShadyCSS.nativeShadow)&&"adoptedStyleSheets"in Document.prototype&&"replace"in CSSStyleSheet.prototype,i=Symbol(),a=new WeakMap;let r=class{constructor(t,e,s){if(this._$cssResult$=!0,s!==i)throw Error("CSSResult is not constructable. Use `unsafeCSS` or `css` instead.");this.cssText=t,this.t=e}get styleSheet(){let t=this.o;const e=this.t;if(s&&void 0===t){const s=void 0!==e&&1===e.length;s&&(t=a.get(e)),void 0===t&&((this.o=t=new CSSStyleSheet).replaceSync(this.cssText),s&&a.set(e,t))}return t}toString(){return this.cssText}};const o=(t,...e)=>{const s=1===t.length?t[0]:e.reduce((e,s,i)=>e+(t=>{if(!0===t._$cssResult$)return t.cssText;if("number"==typeof t)return t;throw Error("Value passed to 'css' function must be a 'css' function result: "+t+". Use 'unsafeCSS' to pass non-literal values, but take care to ensure page security.")})(s)+t[i+1],t[0]);return new r(s,t,i)},n=s?t=>t:t=>t instanceof CSSStyleSheet?(t=>{let e="";for(const s of t.cssRules)e+=s.cssText;return(t=>new r("string"==typeof t?t:t+"",void 0,i))(e)})(t):t,{is:c,defineProperty:l,getOwnPropertyDescriptor:d,getOwnPropertyNames:h,getOwnPropertySymbols:u,getPrototypeOf:p}=Object,v=globalThis,g=v.trustedTypes,m=g?g.emptyScript:"",f=v.reactiveElementPolyfillSupport,$=(t,e)=>t,b={toAttribute(t,e){switch(e){case Boolean:t=t?m:null;break;case Object:case Array:t=null==t?t:JSON.stringify(t)}return t},fromAttribute(t,e){let s=t;switch(e){case Boolean:s=null!==t;break;case Number:s=null===t?null:Number(t);break;case Object:case Array:try{s=JSON.parse(t)}catch(t){s=null}}return s}},_=(t,e)=>!c(t,e),y={attribute:!0,type:String,converter:b,reflect:!1,useDefault:!1,hasChanged:_};
+const t=globalThis,a=t.ShadowRoot&&(void 0===t.ShadyCSS||t.ShadyCSS.nativeShadow)&&"adoptedStyleSheets"in Document.prototype&&"replace"in CSSStyleSheet.prototype,i=Symbol(),s=new WeakMap;let r=class{constructor(e,t,a){if(this._$cssResult$=!0,a!==i)throw Error("CSSResult is not constructable. Use `unsafeCSS` or `css` instead.");this.cssText=e,this.t=t}get styleSheet(){let e=this.o;const t=this.t;if(a&&void 0===e){const a=void 0!==t&&1===t.length;a&&(e=s.get(t)),void 0===e&&((this.o=e=new CSSStyleSheet).replaceSync(this.cssText),a&&s.set(t,e))}return e}toString(){return this.cssText}};const n=(e,...t)=>{const a=1===e.length?e[0]:t.reduce((t,a,i)=>t+(e=>{if(!0===e._$cssResult$)return e.cssText;if("number"==typeof e)return e;throw Error("Value passed to 'css' function must be a 'css' function result: "+e+". Use 'unsafeCSS' to pass non-literal values, but take care to ensure page security.")})(a)+e[i+1],e[0]);return new r(a,e,i)},o=a?e=>e:e=>e instanceof CSSStyleSheet?(e=>{let t="";for(const a of e.cssRules)t+=a.cssText;return(e=>new r("string"==typeof e?e:e+"",void 0,i))(t)})(e):e,{is:c,defineProperty:l,getOwnPropertyDescriptor:d,getOwnPropertyNames:u,getOwnPropertySymbols:h,getPrototypeOf:p}=Object,v=globalThis,g=v.trustedTypes,m=g?g.emptyScript:"",_=v.reactiveElementPolyfillSupport,b=(e,t)=>e,f={toAttribute(e,t){switch(t){case Boolean:e=e?m:null;break;case Object:case Array:e=null==e?e:JSON.stringify(e)}return e},fromAttribute(e,t){let a=e;switch(t){case Boolean:a=null!==e;break;case Number:a=null===e?null:Number(e);break;case Object:case Array:try{a=JSON.parse(e)}catch(e){a=null}}return a}},y=(e,t)=>!c(e,t),w={attribute:!0,type:String,converter:f,reflect:!1,useDefault:!1,hasChanged:y};
 /**
  * @license
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
- */Symbol.metadata??=Symbol("metadata"),v.litPropertyMetadata??=new WeakMap;let w=class extends HTMLElement{static addInitializer(t){this._$Ei(),(this.l??=[]).push(t)}static get observedAttributes(){return this.finalize(),this._$Eh&&[...this._$Eh.keys()]}static createProperty(t,e=y){if(e.state&&(e.attribute=!1),this._$Ei(),this.prototype.hasOwnProperty(t)&&((e=Object.create(e)).wrapped=!0),this.elementProperties.set(t,e),!e.noAccessor){const s=Symbol(),i=this.getPropertyDescriptor(t,s,e);void 0!==i&&l(this.prototype,t,i)}}static getPropertyDescriptor(t,e,s){const{get:i,set:a}=d(this.prototype,t)??{get(){return this[e]},set(t){this[e]=t}};return{get:i,set(e){const r=i?.call(this);a?.call(this,e),this.requestUpdate(t,r,s)},configurable:!0,enumerable:!0}}static getPropertyOptions(t){return this.elementProperties.get(t)??y}static _$Ei(){if(this.hasOwnProperty($("elementProperties")))return;const t=p(this);t.finalize(),void 0!==t.l&&(this.l=[...t.l]),this.elementProperties=new Map(t.elementProperties)}static finalize(){if(this.hasOwnProperty($("finalized")))return;if(this.finalized=!0,this._$Ei(),this.hasOwnProperty($("properties"))){const t=this.properties,e=[...h(t),...u(t)];for(const s of e)this.createProperty(s,t[s])}const t=this[Symbol.metadata];if(null!==t){const e=litPropertyMetadata.get(t);if(void 0!==e)for(const[t,s]of e)this.elementProperties.set(t,s)}this._$Eh=new Map;for(const[t,e]of this.elementProperties){const s=this._$Eu(t,e);void 0!==s&&this._$Eh.set(s,t)}this.elementStyles=this.finalizeStyles(this.styles)}static finalizeStyles(t){const e=[];if(Array.isArray(t)){const s=new Set(t.flat(1/0).reverse());for(const t of s)e.unshift(n(t))}else void 0!==t&&e.push(n(t));return e}static _$Eu(t,e){const s=e.attribute;return!1===s?void 0:"string"==typeof s?s:"string"==typeof t?t.toLowerCase():void 0}constructor(){super(),this._$Ep=void 0,this.isUpdatePending=!1,this.hasUpdated=!1,this._$Em=null,this._$Ev()}_$Ev(){this._$ES=new Promise(t=>this.enableUpdating=t),this._$AL=new Map,this._$E_(),this.requestUpdate(),this.constructor.l?.forEach(t=>t(this))}addController(t){(this._$EO??=new Set).add(t),void 0!==this.renderRoot&&this.isConnected&&t.hostConnected?.()}removeController(t){this._$EO?.delete(t)}_$E_(){const t=new Map,e=this.constructor.elementProperties;for(const s of e.keys())this.hasOwnProperty(s)&&(t.set(s,this[s]),delete this[s]);t.size>0&&(this._$Ep=t)}createRenderRoot(){const t=this.shadowRoot??this.attachShadow(this.constructor.shadowRootOptions);return((t,i)=>{if(s)t.adoptedStyleSheets=i.map(t=>t instanceof CSSStyleSheet?t:t.styleSheet);else for(const s of i){const i=document.createElement("style"),a=e.litNonce;void 0!==a&&i.setAttribute("nonce",a),i.textContent=s.cssText,t.appendChild(i)}})(t,this.constructor.elementStyles),t}connectedCallback(){this.renderRoot??=this.createRenderRoot(),this.enableUpdating(!0),this._$EO?.forEach(t=>t.hostConnected?.())}enableUpdating(t){}disconnectedCallback(){this._$EO?.forEach(t=>t.hostDisconnected?.())}attributeChangedCallback(t,e,s){this._$AK(t,s)}_$ET(t,e){const s=this.constructor.elementProperties.get(t),i=this.constructor._$Eu(t,s);if(void 0!==i&&!0===s.reflect){const a=(void 0!==s.converter?.toAttribute?s.converter:b).toAttribute(e,s.type);this._$Em=t,null==a?this.removeAttribute(i):this.setAttribute(i,a),this._$Em=null}}_$AK(t,e){const s=this.constructor,i=s._$Eh.get(t);if(void 0!==i&&this._$Em!==i){const t=s.getPropertyOptions(i),a="function"==typeof t.converter?{fromAttribute:t.converter}:void 0!==t.converter?.fromAttribute?t.converter:b;this._$Em=i;const r=a.fromAttribute(e,t.type);this[i]=r??this._$Ej?.get(i)??r,this._$Em=null}}requestUpdate(t,e,s,i=!1,a){if(void 0!==t){const r=this.constructor;if(!1===i&&(a=this[t]),s??=r.getPropertyOptions(t),!((s.hasChanged??_)(a,e)||s.useDefault&&s.reflect&&a===this._$Ej?.get(t)&&!this.hasAttribute(r._$Eu(t,s))))return;this.C(t,e,s)}!1===this.isUpdatePending&&(this._$ES=this._$EP())}C(t,e,{useDefault:s,reflect:i,wrapped:a},r){s&&!(this._$Ej??=new Map).has(t)&&(this._$Ej.set(t,r??e??this[t]),!0!==a||void 0!==r)||(this._$AL.has(t)||(this.hasUpdated||s||(e=void 0),this._$AL.set(t,e)),!0===i&&this._$Em!==t&&(this._$Eq??=new Set).add(t))}async _$EP(){this.isUpdatePending=!0;try{await this._$ES}catch(t){Promise.reject(t)}const t=this.scheduleUpdate();return null!=t&&await t,!this.isUpdatePending}scheduleUpdate(){return this.performUpdate()}performUpdate(){if(!this.isUpdatePending)return;if(!this.hasUpdated){if(this.renderRoot??=this.createRenderRoot(),this._$Ep){for(const[t,e]of this._$Ep)this[t]=e;this._$Ep=void 0}const t=this.constructor.elementProperties;if(t.size>0)for(const[e,s]of t){const{wrapped:t}=s,i=this[e];!0!==t||this._$AL.has(e)||void 0===i||this.C(e,void 0,s,i)}}let t=!1;const e=this._$AL;try{t=this.shouldUpdate(e),t?(this.willUpdate(e),this._$EO?.forEach(t=>t.hostUpdate?.()),this.update(e)):this._$EM()}catch(e){throw t=!1,this._$EM(),e}t&&this._$AE(e)}willUpdate(t){}_$AE(t){this._$EO?.forEach(t=>t.hostUpdated?.()),this.hasUpdated||(this.hasUpdated=!0,this.firstUpdated(t)),this.updated(t)}_$EM(){this._$AL=new Map,this.isUpdatePending=!1}get updateComplete(){return this.getUpdateComplete()}getUpdateComplete(){return this._$ES}shouldUpdate(t){return!0}update(t){this._$Eq&&=this._$Eq.forEach(t=>this._$ET(t,this[t])),this._$EM()}updated(t){}firstUpdated(t){}};w.elementStyles=[],w.shadowRootOptions={mode:"open"},w[$("elementProperties")]=new Map,w[$("finalized")]=new Map,f?.({ReactiveElement:w}),(v.reactiveElementVersions??=[]).push("2.1.2");
-/**
- * @license
- * Copyright 2017 Google LLC
- * SPDX-License-Identifier: BSD-3-Clause
- */
-const x=globalThis,k=t=>t,A=x.trustedTypes,S=A?A.createPolicy("lit-html",{createHTML:t=>t}):void 0,E="$lit$",C=`lit$${Math.random().toFixed(9).slice(2)}$`,N="?"+C,z=`<${N}>`,M=document,T=()=>M.createComment(""),R=t=>null===t||"object"!=typeof t&&"function"!=typeof t,P=Array.isArray,H="[ \t\n\f\r]",O=/<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g,U=/-->/g,D=/>/g,V=RegExp(`>|${H}(?:([^\\s"'>=/]+)(${H}*=${H}*(?:[^ \t\n\f\r"'\`<>=]|("|')|))|$)`,"g"),L=/'/g,F=/"/g,j=/^(?:script|style|textarea|title)$/i,I=(t=>(e,...s)=>({_$litType$:t,strings:e,values:s}))(1),B=Symbol.for("lit-noChange"),W=Symbol.for("lit-nothing"),q=new WeakMap,G=M.createTreeWalker(M,129);function Z(t,e){if(!P(t)||!t.hasOwnProperty("raw"))throw Error("invalid template strings array");return void 0!==S?S.createHTML(e):e}const Y=(t,e)=>{const s=t.length-1,i=[];let a,r=2===e?"<svg>":3===e?"<math>":"",o=O;for(let e=0;e<s;e++){const s=t[e];let n,c,l=-1,d=0;for(;d<s.length&&(o.lastIndex=d,c=o.exec(s),null!==c);)d=o.lastIndex,o===O?"!--"===c[1]?o=U:void 0!==c[1]?o=D:void 0!==c[2]?(j.test(c[2])&&(a=RegExp("</"+c[2],"g")),o=V):void 0!==c[3]&&(o=V):o===V?">"===c[0]?(o=a??O,l=-1):void 0===c[1]?l=-2:(l=o.lastIndex-c[2].length,n=c[1],o=void 0===c[3]?V:'"'===c[3]?F:L):o===F||o===L?o=V:o===U||o===D?o=O:(o=V,a=void 0);const h=o===V&&t[e+1].startsWith("/>")?" ":"";r+=o===O?s+z:l>=0?(i.push(n),s.slice(0,l)+E+s.slice(l)+C+h):s+C+(-2===l?e:h)}return[Z(t,r+(t[s]||"<?>")+(2===e?"</svg>":3===e?"</math>":"")),i]};class J{constructor({strings:t,_$litType$:e},s){let i;this.parts=[];let a=0,r=0;const o=t.length-1,n=this.parts,[c,l]=Y(t,e);if(this.el=J.createElement(c,s),G.currentNode=this.el.content,2===e||3===e){const t=this.el.content.firstChild;t.replaceWith(...t.childNodes)}for(;null!==(i=G.nextNode())&&n.length<o;){if(1===i.nodeType){if(i.hasAttributes())for(const t of i.getAttributeNames())if(t.endsWith(E)){const e=l[r++],s=i.getAttribute(t).split(C),o=/([.?@])?(.*)/.exec(e);n.push({type:1,index:a,name:o[2],strings:s,ctor:"."===o[1]?et:"?"===o[1]?st:"@"===o[1]?it:tt}),i.removeAttribute(t)}else t.startsWith(C)&&(n.push({type:6,index:a}),i.removeAttribute(t));if(j.test(i.tagName)){const t=i.textContent.split(C),e=t.length-1;if(e>0){i.textContent=A?A.emptyScript:"";for(let s=0;s<e;s++)i.append(t[s],T()),G.nextNode(),n.push({type:2,index:++a});i.append(t[e],T())}}}else if(8===i.nodeType)if(i.data===N)n.push({type:2,index:a});else{let t=-1;for(;-1!==(t=i.data.indexOf(C,t+1));)n.push({type:7,index:a}),t+=C.length-1}a++}}static createElement(t,e){const s=M.createElement("template");return s.innerHTML=t,s}}function K(t,e,s=t,i){if(e===B)return e;let a=void 0!==i?s._$Co?.[i]:s._$Cl;const r=R(e)?void 0:e._$litDirective$;return a?.constructor!==r&&(a?._$AO?.(!1),void 0===r?a=void 0:(a=new r(t),a._$AT(t,s,i)),void 0!==i?(s._$Co??=[])[i]=a:s._$Cl=a),void 0!==a&&(e=K(t,a._$AS(t,e.values),a,i)),e}class Q{constructor(t,e){this._$AV=[],this._$AN=void 0,this._$AD=t,this._$AM=e}get parentNode(){return this._$AM.parentNode}get _$AU(){return this._$AM._$AU}u(t){const{el:{content:e},parts:s}=this._$AD,i=(t?.creationScope??M).importNode(e,!0);G.currentNode=i;let a=G.nextNode(),r=0,o=0,n=s[0];for(;void 0!==n;){if(r===n.index){let e;2===n.type?e=new X(a,a.nextSibling,this,t):1===n.type?e=new n.ctor(a,n.name,n.strings,this,t):6===n.type&&(e=new at(a,this,t)),this._$AV.push(e),n=s[++o]}r!==n?.index&&(a=G.nextNode(),r++)}return G.currentNode=M,i}p(t){let e=0;for(const s of this._$AV)void 0!==s&&(void 0!==s.strings?(s._$AI(t,s,e),e+=s.strings.length-2):s._$AI(t[e])),e++}}class X{get _$AU(){return this._$AM?._$AU??this._$Cv}constructor(t,e,s,i){this.type=2,this._$AH=W,this._$AN=void 0,this._$AA=t,this._$AB=e,this._$AM=s,this.options=i,this._$Cv=i?.isConnected??!0}get parentNode(){let t=this._$AA.parentNode;const e=this._$AM;return void 0!==e&&11===t?.nodeType&&(t=e.parentNode),t}get startNode(){return this._$AA}get endNode(){return this._$AB}_$AI(t,e=this){t=K(this,t,e),R(t)?t===W||null==t||""===t?(this._$AH!==W&&this._$AR(),this._$AH=W):t!==this._$AH&&t!==B&&this._(t):void 0!==t._$litType$?this.$(t):void 0!==t.nodeType?this.T(t):(t=>P(t)||"function"==typeof t?.[Symbol.iterator])(t)?this.k(t):this._(t)}O(t){return this._$AA.parentNode.insertBefore(t,this._$AB)}T(t){this._$AH!==t&&(this._$AR(),this._$AH=this.O(t))}_(t){this._$AH!==W&&R(this._$AH)?this._$AA.nextSibling.data=t:this.T(M.createTextNode(t)),this._$AH=t}$(t){const{values:e,_$litType$:s}=t,i="number"==typeof s?this._$AC(t):(void 0===s.el&&(s.el=J.createElement(Z(s.h,s.h[0]),this.options)),s);if(this._$AH?._$AD===i)this._$AH.p(e);else{const t=new Q(i,this),s=t.u(this.options);t.p(e),this.T(s),this._$AH=t}}_$AC(t){let e=q.get(t.strings);return void 0===e&&q.set(t.strings,e=new J(t)),e}k(t){P(this._$AH)||(this._$AH=[],this._$AR());const e=this._$AH;let s,i=0;for(const a of t)i===e.length?e.push(s=new X(this.O(T()),this.O(T()),this,this.options)):s=e[i],s._$AI(a),i++;i<e.length&&(this._$AR(s&&s._$AB.nextSibling,i),e.length=i)}_$AR(t=this._$AA.nextSibling,e){for(this._$AP?.(!1,!0,e);t!==this._$AB;){const e=k(t).nextSibling;k(t).remove(),t=e}}setConnected(t){void 0===this._$AM&&(this._$Cv=t,this._$AP?.(t))}}class tt{get tagName(){return this.element.tagName}get _$AU(){return this._$AM._$AU}constructor(t,e,s,i,a){this.type=1,this._$AH=W,this._$AN=void 0,this.element=t,this.name=e,this._$AM=i,this.options=a,s.length>2||""!==s[0]||""!==s[1]?(this._$AH=Array(s.length-1).fill(new String),this.strings=s):this._$AH=W}_$AI(t,e=this,s,i){const a=this.strings;let r=!1;if(void 0===a)t=K(this,t,e,0),r=!R(t)||t!==this._$AH&&t!==B,r&&(this._$AH=t);else{const i=t;let o,n;for(t=a[0],o=0;o<a.length-1;o++)n=K(this,i[s+o],e,o),n===B&&(n=this._$AH[o]),r||=!R(n)||n!==this._$AH[o],n===W?t=W:t!==W&&(t+=(n??"")+a[o+1]),this._$AH[o]=n}r&&!i&&this.j(t)}j(t){t===W?this.element.removeAttribute(this.name):this.element.setAttribute(this.name,t??"")}}class et extends tt{constructor(){super(...arguments),this.type=3}j(t){this.element[this.name]=t===W?void 0:t}}class st extends tt{constructor(){super(...arguments),this.type=4}j(t){this.element.toggleAttribute(this.name,!!t&&t!==W)}}class it extends tt{constructor(t,e,s,i,a){super(t,e,s,i,a),this.type=5}_$AI(t,e=this){if((t=K(this,t,e,0)??W)===B)return;const s=this._$AH,i=t===W&&s!==W||t.capture!==s.capture||t.once!==s.once||t.passive!==s.passive,a=t!==W&&(s===W||i);i&&this.element.removeEventListener(this.name,this,s),a&&this.element.addEventListener(this.name,this,t),this._$AH=t}handleEvent(t){"function"==typeof this._$AH?this._$AH.call(this.options?.host??this.element,t):this._$AH.handleEvent(t)}}class at{constructor(t,e,s){this.element=t,this.type=6,this._$AN=void 0,this._$AM=e,this.options=s}get _$AU(){return this._$AM._$AU}_$AI(t){K(this,t)}}const rt=x.litHtmlPolyfillSupport;rt?.(J,X),(x.litHtmlVersions??=[]).push("3.3.3");const ot=globalThis;
-/**
- * @license
- * Copyright 2017 Google LLC
- * SPDX-License-Identifier: BSD-3-Clause
- */class nt extends w{constructor(){super(...arguments),this.renderOptions={host:this},this._$Do=void 0}createRenderRoot(){const t=super.createRenderRoot();return this.renderOptions.renderBefore??=t.firstChild,t}update(t){const e=this.render();this.hasUpdated||(this.renderOptions.isConnected=this.isConnected),super.update(t),this._$Do=((t,e,s)=>{const i=s?.renderBefore??e;let a=i._$litPart$;if(void 0===a){const t=s?.renderBefore??null;i._$litPart$=a=new X(e.insertBefore(T(),t),t,void 0,s??{})}return a._$AI(t),a})(e,this.renderRoot,this.renderOptions)}connectedCallback(){super.connectedCallback(),this._$Do?.setConnected(!0)}disconnectedCallback(){super.disconnectedCallback(),this._$Do?.setConnected(!1)}render(){return B}}nt._$litElement$=!0,nt.finalized=!0,ot.litElementHydrateSupport?.({LitElement:nt});const ct=ot.litElementPolyfillSupport;ct?.({LitElement:nt}),(ot.litElementVersions??=[]).push("4.2.2");
+ */Symbol.metadata??=Symbol("metadata"),v.litPropertyMetadata??=new WeakMap;let $=class extends HTMLElement{static addInitializer(e){this._$Ei(),(this.l??=[]).push(e)}static get observedAttributes(){return this.finalize(),this._$Eh&&[...this._$Eh.keys()]}static createProperty(e,t=w){if(t.state&&(t.attribute=!1),this._$Ei(),this.prototype.hasOwnProperty(e)&&((t=Object.create(t)).wrapped=!0),this.elementProperties.set(e,t),!t.noAccessor){const a=Symbol(),i=this.getPropertyDescriptor(e,a,t);void 0!==i&&l(this.prototype,e,i)}}static getPropertyDescriptor(e,t,a){const{get:i,set:s}=d(this.prototype,e)??{get(){return this[t]},set(e){this[t]=e}};return{get:i,set(t){const r=i?.call(this);s?.call(this,t),this.requestUpdate(e,r,a)},configurable:!0,enumerable:!0}}static getPropertyOptions(e){return this.elementProperties.get(e)??w}static _$Ei(){if(this.hasOwnProperty(b("elementProperties")))return;const e=p(this);e.finalize(),void 0!==e.l&&(this.l=[...e.l]),this.elementProperties=new Map(e.elementProperties)}static finalize(){if(this.hasOwnProperty(b("finalized")))return;if(this.finalized=!0,this._$Ei(),this.hasOwnProperty(b("properties"))){const e=this.properties,t=[...u(e),...h(e)];for(const a of t)this.createProperty(a,e[a])}const e=this[Symbol.metadata];if(null!==e){const t=litPropertyMetadata.get(e);if(void 0!==t)for(const[e,a]of t)this.elementProperties.set(e,a)}this._$Eh=new Map;for(const[e,t]of this.elementProperties){const a=this._$Eu(e,t);void 0!==a&&this._$Eh.set(a,e)}this.elementStyles=this.finalizeStyles(this.styles)}static finalizeStyles(e){const t=[];if(Array.isArray(e)){const a=new Set(e.flat(1/0).reverse());for(const e of a)t.unshift(o(e))}else void 0!==e&&t.push(o(e));return t}static _$Eu(e,t){const a=t.attribute;return!1===a?void 0:"string"==typeof a?a:"string"==typeof e?e.toLowerCase():void 0}constructor(){super(),this._$Ep=void 0,this.isUpdatePending=!1,this.hasUpdated=!1,this._$Em=null,this._$Ev()}_$Ev(){this._$ES=new Promise(e=>this.enableUpdating=e),this._$AL=new Map,this._$E_(),this.requestUpdate(),this.constructor.l?.forEach(e=>e(this))}addController(e){(this._$EO??=new Set).add(e),void 0!==this.renderRoot&&this.isConnected&&e.hostConnected?.()}removeController(e){this._$EO?.delete(e)}_$E_(){const e=new Map,t=this.constructor.elementProperties;for(const a of t.keys())this.hasOwnProperty(a)&&(e.set(a,this[a]),delete this[a]);e.size>0&&(this._$Ep=e)}createRenderRoot(){const e=this.shadowRoot??this.attachShadow(this.constructor.shadowRootOptions);return((e,i)=>{if(a)e.adoptedStyleSheets=i.map(e=>e instanceof CSSStyleSheet?e:e.styleSheet);else for(const a of i){const i=document.createElement("style"),s=t.litNonce;void 0!==s&&i.setAttribute("nonce",s),i.textContent=a.cssText,e.appendChild(i)}})(e,this.constructor.elementStyles),e}connectedCallback(){this.renderRoot??=this.createRenderRoot(),this.enableUpdating(!0),this._$EO?.forEach(e=>e.hostConnected?.())}enableUpdating(e){}disconnectedCallback(){this._$EO?.forEach(e=>e.hostDisconnected?.())}attributeChangedCallback(e,t,a){this._$AK(e,a)}_$ET(e,t){const a=this.constructor.elementProperties.get(e),i=this.constructor._$Eu(e,a);if(void 0!==i&&!0===a.reflect){const s=(void 0!==a.converter?.toAttribute?a.converter:f).toAttribute(t,a.type);this._$Em=e,null==s?this.removeAttribute(i):this.setAttribute(i,s),this._$Em=null}}_$AK(e,t){const a=this.constructor,i=a._$Eh.get(e);if(void 0!==i&&this._$Em!==i){const e=a.getPropertyOptions(i),s="function"==typeof e.converter?{fromAttribute:e.converter}:void 0!==e.converter?.fromAttribute?e.converter:f;this._$Em=i;const r=s.fromAttribute(t,e.type);this[i]=r??this._$Ej?.get(i)??r,this._$Em=null}}requestUpdate(e,t,a,i=!1,s){if(void 0!==e){const r=this.constructor;if(!1===i&&(s=this[e]),a??=r.getPropertyOptions(e),!((a.hasChanged??y)(s,t)||a.useDefault&&a.reflect&&s===this._$Ej?.get(e)&&!this.hasAttribute(r._$Eu(e,a))))return;this.C(e,t,a)}!1===this.isUpdatePending&&(this._$ES=this._$EP())}C(e,t,{useDefault:a,reflect:i,wrapped:s},r){a&&!(this._$Ej??=new Map).has(e)&&(this._$Ej.set(e,r??t??this[e]),!0!==s||void 0!==r)||(this._$AL.has(e)||(this.hasUpdated||a||(t=void 0),this._$AL.set(e,t)),!0===i&&this._$Em!==e&&(this._$Eq??=new Set).add(e))}async _$EP(){this.isUpdatePending=!0;try{await this._$ES}catch(e){Promise.reject(e)}const e=this.scheduleUpdate();return null!=e&&await e,!this.isUpdatePending}scheduleUpdate(){return this.performUpdate()}performUpdate(){if(!this.isUpdatePending)return;if(!this.hasUpdated){if(this.renderRoot??=this.createRenderRoot(),this._$Ep){for(const[e,t]of this._$Ep)this[e]=t;this._$Ep=void 0}const e=this.constructor.elementProperties;if(e.size>0)for(const[t,a]of e){const{wrapped:e}=a,i=this[t];!0!==e||this._$AL.has(t)||void 0===i||this.C(t,void 0,a,i)}}let e=!1;const t=this._$AL;try{e=this.shouldUpdate(t),e?(this.willUpdate(t),this._$EO?.forEach(e=>e.hostUpdate?.()),this.update(t)):this._$EM()}catch(t){throw e=!1,this._$EM(),t}e&&this._$AE(t)}willUpdate(e){}_$AE(e){this._$EO?.forEach(e=>e.hostUpdated?.()),this.hasUpdated||(this.hasUpdated=!0,this.firstUpdated(e)),this.updated(e)}_$EM(){this._$AL=new Map,this.isUpdatePending=!1}get updateComplete(){return this.getUpdateComplete()}getUpdateComplete(){return this._$ES}shouldUpdate(e){return!0}update(e){this._$Eq&&=this._$Eq.forEach(e=>this._$ET(e,this[e])),this._$EM()}updated(e){}firstUpdated(e){}};$.elementStyles=[],$.shadowRootOptions={mode:"open"},$[b("elementProperties")]=new Map,$[b("finalized")]=new Map,_?.({ReactiveElement:$}),(v.reactiveElementVersions??=[]).push("2.1.2");
 /**
  * @license
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-const lt=t=>(e,s)=>{void 0!==s?s.addInitializer(()=>{customElements.define(t,e)}):customElements.define(t,e)},dt={attribute:!0,type:String,converter:b,reflect:!1,hasChanged:_},ht=(t=dt,e,s)=>{const{kind:i,metadata:a}=s;let r=globalThis.litPropertyMetadata.get(a);if(void 0===r&&globalThis.litPropertyMetadata.set(a,r=new Map),"setter"===i&&((t=Object.create(t)).wrapped=!0),r.set(s.name,t),"accessor"===i){const{name:i}=s;return{set(s){const a=e.get.call(this);e.set.call(this,s),this.requestUpdate(i,a,t,!0,s)},init(e){return void 0!==e&&this.C(i,void 0,t,e),e}}}if("setter"===i){const{name:i}=s;return function(s){const a=this[i];e.call(this,s),this.requestUpdate(i,a,t,!0,s)}}throw Error("Unsupported decorator location: "+i)};
+const k=globalThis,S=e=>e,x=k.trustedTypes,z=x?x.createPolicy("lit-html",{createHTML:e=>e}):void 0,A="$lit$",E=`lit$${Math.random().toFixed(9).slice(2)}$`,C="?"+E,T=`<${C}>`,R=document,N=()=>R.createComment(""),P=e=>null===e||"object"!=typeof e&&"function"!=typeof e,H=Array.isArray,M="[ \t\n\f\r]",V=/<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g,j=/-->/g,L=/>/g,D=RegExp(`>|${M}(?:([^\\s"'>=/]+)(${M}*=${M}*(?:[^ \t\n\f\r"'\`<>=]|("|')|))|$)`,"g"),F=/'/g,O=/"/g,q=/^(?:script|style|textarea|title)$/i,U=(e=>(t,...a)=>({_$litType$:e,strings:t,values:a}))(1),B=Symbol.for("lit-noChange"),I=Symbol.for("lit-nothing"),G=new WeakMap,W=R.createTreeWalker(R,129);function Z(e,t){if(!H(e)||!e.hasOwnProperty("raw"))throw Error("invalid template strings array");return void 0!==z?z.createHTML(t):t}const K=(e,t)=>{const a=e.length-1,i=[];let s,r=2===t?"<svg>":3===t?"<math>":"",n=V;for(let t=0;t<a;t++){const a=e[t];let o,c,l=-1,d=0;for(;d<a.length&&(n.lastIndex=d,c=n.exec(a),null!==c);)d=n.lastIndex,n===V?"!--"===c[1]?n=j:void 0!==c[1]?n=L:void 0!==c[2]?(q.test(c[2])&&(s=RegExp("</"+c[2],"g")),n=D):void 0!==c[3]&&(n=D):n===D?">"===c[0]?(n=s??V,l=-1):void 0===c[1]?l=-2:(l=n.lastIndex-c[2].length,o=c[1],n=void 0===c[3]?D:'"'===c[3]?O:F):n===O||n===F?n=D:n===j||n===L?n=V:(n=D,s=void 0);const u=n===D&&e[t+1].startsWith("/>")?" ":"";r+=n===V?a+T:l>=0?(i.push(o),a.slice(0,l)+A+a.slice(l)+E+u):a+E+(-2===l?t:u)}return[Z(e,r+(e[a]||"<?>")+(2===t?"</svg>":3===t?"</math>":"")),i]};class Q{constructor({strings:e,_$litType$:t},a){let i;this.parts=[];let s=0,r=0;const n=e.length-1,o=this.parts,[c,l]=K(e,t);if(this.el=Q.createElement(c,a),W.currentNode=this.el.content,2===t||3===t){const e=this.el.content.firstChild;e.replaceWith(...e.childNodes)}for(;null!==(i=W.nextNode())&&o.length<n;){if(1===i.nodeType){if(i.hasAttributes())for(const e of i.getAttributeNames())if(e.endsWith(A)){const t=l[r++],a=i.getAttribute(e).split(E),n=/([.?@])?(.*)/.exec(t);o.push({type:1,index:s,name:n[2],strings:a,ctor:"."===n[1]?te:"?"===n[1]?ae:"@"===n[1]?ie:ee}),i.removeAttribute(e)}else e.startsWith(E)&&(o.push({type:6,index:s}),i.removeAttribute(e));if(q.test(i.tagName)){const e=i.textContent.split(E),t=e.length-1;if(t>0){i.textContent=x?x.emptyScript:"";for(let a=0;a<t;a++)i.append(e[a],N()),W.nextNode(),o.push({type:2,index:++s});i.append(e[t],N())}}}else if(8===i.nodeType)if(i.data===C)o.push({type:2,index:s});else{let e=-1;for(;-1!==(e=i.data.indexOf(E,e+1));)o.push({type:7,index:s}),e+=E.length-1}s++}}static createElement(e,t){const a=R.createElement("template");return a.innerHTML=e,a}}function J(e,t,a=e,i){if(t===B)return t;let s=void 0!==i?a._$Co?.[i]:a._$Cl;const r=P(t)?void 0:t._$litDirective$;return s?.constructor!==r&&(s?._$AO?.(!1),void 0===r?s=void 0:(s=new r(e),s._$AT(e,a,i)),void 0!==i?(a._$Co??=[])[i]=s:a._$Cl=s),void 0!==s&&(t=J(e,s._$AS(e,t.values),s,i)),t}class Y{constructor(e,t){this._$AV=[],this._$AN=void 0,this._$AD=e,this._$AM=t}get parentNode(){return this._$AM.parentNode}get _$AU(){return this._$AM._$AU}u(e){const{el:{content:t},parts:a}=this._$AD,i=(e?.creationScope??R).importNode(t,!0);W.currentNode=i;let s=W.nextNode(),r=0,n=0,o=a[0];for(;void 0!==o;){if(r===o.index){let t;2===o.type?t=new X(s,s.nextSibling,this,e):1===o.type?t=new o.ctor(s,o.name,o.strings,this,e):6===o.type&&(t=new se(s,this,e)),this._$AV.push(t),o=a[++n]}r!==o?.index&&(s=W.nextNode(),r++)}return W.currentNode=R,i}p(e){let t=0;for(const a of this._$AV)void 0!==a&&(void 0!==a.strings?(a._$AI(e,a,t),t+=a.strings.length-2):a._$AI(e[t])),t++}}class X{get _$AU(){return this._$AM?._$AU??this._$Cv}constructor(e,t,a,i){this.type=2,this._$AH=I,this._$AN=void 0,this._$AA=e,this._$AB=t,this._$AM=a,this.options=i,this._$Cv=i?.isConnected??!0}get parentNode(){let e=this._$AA.parentNode;const t=this._$AM;return void 0!==t&&11===e?.nodeType&&(e=t.parentNode),e}get startNode(){return this._$AA}get endNode(){return this._$AB}_$AI(e,t=this){e=J(this,e,t),P(e)?e===I||null==e||""===e?(this._$AH!==I&&this._$AR(),this._$AH=I):e!==this._$AH&&e!==B&&this._(e):void 0!==e._$litType$?this.$(e):void 0!==e.nodeType?this.T(e):(e=>H(e)||"function"==typeof e?.[Symbol.iterator])(e)?this.k(e):this._(e)}O(e){return this._$AA.parentNode.insertBefore(e,this._$AB)}T(e){this._$AH!==e&&(this._$AR(),this._$AH=this.O(e))}_(e){this._$AH!==I&&P(this._$AH)?this._$AA.nextSibling.data=e:this.T(R.createTextNode(e)),this._$AH=e}$(e){const{values:t,_$litType$:a}=e,i="number"==typeof a?this._$AC(e):(void 0===a.el&&(a.el=Q.createElement(Z(a.h,a.h[0]),this.options)),a);if(this._$AH?._$AD===i)this._$AH.p(t);else{const e=new Y(i,this),a=e.u(this.options);e.p(t),this.T(a),this._$AH=e}}_$AC(e){let t=G.get(e.strings);return void 0===t&&G.set(e.strings,t=new Q(e)),t}k(e){H(this._$AH)||(this._$AH=[],this._$AR());const t=this._$AH;let a,i=0;for(const s of e)i===t.length?t.push(a=new X(this.O(N()),this.O(N()),this,this.options)):a=t[i],a._$AI(s),i++;i<t.length&&(this._$AR(a&&a._$AB.nextSibling,i),t.length=i)}_$AR(e=this._$AA.nextSibling,t){for(this._$AP?.(!1,!0,t);e!==this._$AB;){const t=S(e).nextSibling;S(e).remove(),e=t}}setConnected(e){void 0===this._$AM&&(this._$Cv=e,this._$AP?.(e))}}class ee{get tagName(){return this.element.tagName}get _$AU(){return this._$AM._$AU}constructor(e,t,a,i,s){this.type=1,this._$AH=I,this._$AN=void 0,this.element=e,this.name=t,this._$AM=i,this.options=s,a.length>2||""!==a[0]||""!==a[1]?(this._$AH=Array(a.length-1).fill(new String),this.strings=a):this._$AH=I}_$AI(e,t=this,a,i){const s=this.strings;let r=!1;if(void 0===s)e=J(this,e,t,0),r=!P(e)||e!==this._$AH&&e!==B,r&&(this._$AH=e);else{const i=e;let n,o;for(e=s[0],n=0;n<s.length-1;n++)o=J(this,i[a+n],t,n),o===B&&(o=this._$AH[n]),r||=!P(o)||o!==this._$AH[n],o===I?e=I:e!==I&&(e+=(o??"")+s[n+1]),this._$AH[n]=o}r&&!i&&this.j(e)}j(e){e===I?this.element.removeAttribute(this.name):this.element.setAttribute(this.name,e??"")}}class te extends ee{constructor(){super(...arguments),this.type=3}j(e){this.element[this.name]=e===I?void 0:e}}class ae extends ee{constructor(){super(...arguments),this.type=4}j(e){this.element.toggleAttribute(this.name,!!e&&e!==I)}}class ie extends ee{constructor(e,t,a,i,s){super(e,t,a,i,s),this.type=5}_$AI(e,t=this){if((e=J(this,e,t,0)??I)===B)return;const a=this._$AH,i=e===I&&a!==I||e.capture!==a.capture||e.once!==a.once||e.passive!==a.passive,s=e!==I&&(a===I||i);i&&this.element.removeEventListener(this.name,this,a),s&&this.element.addEventListener(this.name,this,e),this._$AH=e}handleEvent(e){"function"==typeof this._$AH?this._$AH.call(this.options?.host??this.element,e):this._$AH.handleEvent(e)}}class se{constructor(e,t,a){this.element=e,this.type=6,this._$AN=void 0,this._$AM=t,this.options=a}get _$AU(){return this._$AM._$AU}_$AI(e){J(this,e)}}const re=k.litHtmlPolyfillSupport;re?.(Q,X),(k.litHtmlVersions??=[]).push("3.3.3");const ne=globalThis;
 /**
  * @license
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
- */function ut(t){return(e,s)=>"object"==typeof s?ht(t,e,s):((t,e,s)=>{const i=e.hasOwnProperty(s);return e.constructor.createProperty(s,t),i?Object.getOwnPropertyDescriptor(e,s):void 0})(t,e,s)}
+ */class oe extends ${constructor(){super(...arguments),this.renderOptions={host:this},this._$Do=void 0}createRenderRoot(){const e=super.createRenderRoot();return this.renderOptions.renderBefore??=e.firstChild,e}update(e){const t=this.render();this.hasUpdated||(this.renderOptions.isConnected=this.isConnected),super.update(e),this._$Do=((e,t,a)=>{const i=a?.renderBefore??t;let s=i._$litPart$;if(void 0===s){const e=a?.renderBefore??null;i._$litPart$=s=new X(t.insertBefore(N(),e),e,void 0,a??{})}return s._$AI(e),s})(t,this.renderRoot,this.renderOptions)}connectedCallback(){super.connectedCallback(),this._$Do?.setConnected(!0)}disconnectedCallback(){super.disconnectedCallback(),this._$Do?.setConnected(!1)}render(){return B}}oe._$litElement$=!0,oe.finalized=!0,ne.litElementHydrateSupport?.({LitElement:oe});const ce=ne.litElementPolyfillSupport;ce?.({LitElement:oe}),(ne.litElementVersions??=[]).push("4.2.2");
 /**
  * @license
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
- */function pt(t){return ut({...t,state:!0,attribute:!1})}var vt,gt;!function(t){t.language="language",t.system="system",t.comma_decimal="comma_decimal",t.decimal_comma="decimal_comma",t.space_comma="space_comma",t.none="none"}(vt||(vt={})),function(t){t.language="language",t.system="system",t.am_pm="12",t.twenty_four="24"}(gt||(gt={}));var mt=function(t,e,s,i){i=i||{},s=null==s?{}:s;var a=new Event(e,{bubbles:void 0===i.bubbles||i.bubbles,cancelable:Boolean(i.cancelable),composed:void 0===i.composed||i.composed});return a.detail=s,t.dispatchEvent(a),a};const ft="suunto_app";class $t extends Error{}function bt(t){const e=new Set;for(const s of Object.values(t.entities??{}))s.platform===ft&&s.device_id&&e.add(s.device_id);return[...e]}function _t(t,e){const s={};for(const i of Object.values(t.entities??{}))i.device_id===e&&i.platform===ft&&i.translation_key&&(s[i.translation_key]=i.entity_id);return s}let yt=class extends nt{setConfig(t){this._config=t}render(){if(!this.hass||!this._config)return W;return bt(this.hass).length<=1?I`<div class="hint">This card auto-detects your Suunto device - no configuration needed.</div>`:I`
+ */
+const le=e=>(t,a)=>{void 0!==a?a.addInitializer(()=>{customElements.define(e,t)}):customElements.define(e,t)},de={attribute:!0,type:String,converter:f,reflect:!1,hasChanged:y},ue=(e=de,t,a)=>{const{kind:i,metadata:s}=a;let r=globalThis.litPropertyMetadata.get(s);if(void 0===r&&globalThis.litPropertyMetadata.set(s,r=new Map),"setter"===i&&((e=Object.create(e)).wrapped=!0),r.set(a.name,e),"accessor"===i){const{name:i}=a;return{set(a){const s=t.get.call(this);t.set.call(this,a),this.requestUpdate(i,s,e,!0,a)},init(t){return void 0!==t&&this.C(i,void 0,e,t),t}}}if("setter"===i){const{name:i}=a;return function(a){const s=this[i];t.call(this,a),this.requestUpdate(i,s,e,!0,a)}}throw Error("Unsupported decorator location: "+i)};
+/**
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */function he(e){return(t,a)=>"object"==typeof a?ue(e,t,a):((e,t,a)=>{const i=t.hasOwnProperty(a);return t.constructor.createProperty(a,e),i?Object.getOwnPropertyDescriptor(t,a):void 0})(e,t,a)}
+/**
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */function pe(e){return he({...e,state:!0,attribute:!1})}var ve,ge;!function(e){e.language="language",e.system="system",e.comma_decimal="comma_decimal",e.decimal_comma="decimal_comma",e.space_comma="space_comma",e.none="none"}(ve||(ve={})),function(e){e.language="language",e.system="system",e.am_pm="12",e.twenty_four="24"}(ge||(ge={}));var me=function(e,t,a,i){i=i||{},a=null==a?{}:a;var s=new Event(t,{bubbles:void 0===i.bubbles||i.bubbles,cancelable:Boolean(i.cancelable),composed:void 0===i.composed||i.composed});return s.detail=a,e.dispatchEvent(s),s};const _e="suunto_app";class be extends Error{constructor(e,t){super(e),this.code=e,this.deviceId=t}}function fe(e){const t=new Set;for(const a of Object.values(e.entities??{}))a.platform===_e&&a.device_id&&t.add(a.device_id);return[...t]}function ye(e,t){const a={};for(const i of Object.values(e.entities??{}))i.device_id===t&&i.platform===_e&&i.translation_key&&(a[i.translation_key]=i.entity_id);return a}const we={"stat.distance":"Distance","stat.duration":"Duration","stat.avg_speed":"Avg speed","stat.avg_pace":"Avg pace","stat.avg_hr":"Avg HR","stat.max_hr":"Max HR","stat.training_effect":"Training effect","stat.tss":"TSS","stat.epoc":"EPOC","stat.feeling":"Feeling","stat.energy":"Energy","stat.time":"Time","stat.workouts":"Workouts","stat.steps":"Steps","stat.heart_rate":"Heart rate","stat.quality":"Quality","stat.hrv":"HRV","stat.hrv_delta":"HRV ({delta})","stat.resting_hr":"Resting HR","stat.resting_hr_delta":"Resting HR ({delta})","stat.spo2":"SpO2","stat.stress_level":"Stress level","stat.recovery_window":"Recovery window","stat.ctl":"CTL · fitness","stat.atl":"ATL · fatigue","stat.tsb":"TSB · form","stat.readiness":"Readiness","stat.recovery_balance":"Recovery balance","card.hr_zones.title":"Heart Rate Zones","card.hr_zones.last_workout":"Last workout","card.sleep_readiness.title":"Sleep & Readiness","card.sleep_readiness.subtitle_no_wake":"{duration} slept","card.sleep_readiness.subtitle_with_wake":"{duration} slept · woke {time}","card.recovery.title":"Recovery","card.training_load.title":"Training Load","card.training_load.subtitle_fallback":"Fitness (CTL) trend","card.week_stats.title":"This Week & Lifetime","card.week_stats.subtitle":"Last 7 days","card.week_stats.lifetime_title":"Lifetime by activity","card.today.title":"Today","card.today.subtitle":"Live from your watch","empty.last_workout.title":"No recent workout","empty.last_workout.subtitle":"Sync your watch with the Suunto app to see it here.","empty.hr_zones.title":"No zone data","empty.hr_zones.subtitle":"Your next outdoor workout with a heart-rate strap will fill this in.","empty.sleep_readiness.title":"No sleep data yet","empty.sleep_readiness.subtitle":"Wear your watch to bed to see it here.","empty.recovery.title":"No recovery data yet","empty.training_load.title":"Building your training load","empty.training_load.subtitle":"Needs a bit of workout history to compute - check back after a few sessions.","empty.week_stats.title":"No workout history yet","empty.today.title":"No live data yet","empty.loading":"Loading...","empty.generic_error":"Could not load Suunto data.","error.no_device":"No Suunto device found - is the suunto_app integration set up?","error.multiple_devices":'Multiple Suunto devices found - set "device_id" in the card configuration.',"error.device_missing":'Configured device "{device}" has no suunto_app entities.',"band.readiness.great":"Great","band.readiness.fair":"Fair","band.readiness.low":"Low","band.recovery.well":"Well recovered","band.recovery.partial":"Partially recovered","band.recovery.low":"Low recovery","band.recovery.fully":"Fully recovered","band.recovery.recovering":"Recovering · {time} left","band.hrv.low":"HRV low","band.hrv.high":"HRV high","band.hrv.balanced":"HRV balanced","band.form.fresh":"Fresh","band.form.neutral":"Neutral","band.form.fatigued":"Fatigued","band.form.very_fatigued":"Very fatigued","band.acwr.safe":"Safe zone","band.acwr.low":"Low load","band.acwr.high":"High load - injury risk","chip.workout_logged_today":"Workout logged today","chip.workout_today":"Workout today","chip.recovering":"Recovering","chip.nap":"{minutes} min nap","chip.nap_earlier":"{minutes} min nap (earlier)","chip.workouts_30d":"{count} workouts in the last 30 days","chip.acwr":"ACWR {value} · {label}","chip.more_activity_one":"+{count} more activity type","chip.more_activity_other":"+{count} more activity types","achievement.count_one":"{count} achievement","achievement.count_other":"{count} achievements","achievement.rank":"Rank #{rank} on this route","label.zone":"Zone {n}","label.deep":"Deep","label.light":"Light","label.rem":"REM","editor.auto_detect":"This card auto-detects your Suunto device - no configuration needed.","editor.pick_device":"Multiple Suunto devices were found - pick which one this card should read.","editor.device_label":"Suunto device"},$e={en:we,pl:{"stat.distance":"Dystans","stat.duration":"Czas trwania","stat.avg_speed":"Śr. prędkość","stat.avg_pace":"Śr. tempo","stat.avg_hr":"Śr. tętno","stat.max_hr":"Maks. tętno","stat.training_effect":"Efekt treningowy","stat.tss":"TSS","stat.epoc":"EPOC","stat.feeling":"Samopoczucie","stat.energy":"Energia","stat.time":"Czas","stat.workouts":"Treningi","stat.steps":"Kroki","stat.heart_rate":"Tętno","stat.quality":"Jakość","stat.hrv":"HRV","stat.hrv_delta":"HRV ({delta})","stat.resting_hr":"Tętno spocz.","stat.resting_hr_delta":"Tętno spocz. ({delta})","stat.spo2":"SpO2","stat.stress_level":"Poziom stresu","stat.recovery_window":"Czas regeneracji","stat.ctl":"CTL · forma","stat.atl":"ATL · zmęczenie","stat.tsb":"TSB · forma","stat.readiness":"Gotowość","stat.recovery_balance":"Bilans regeneracji","card.hr_zones.title":"Strefy tętna","card.hr_zones.last_workout":"Ostatni trening","card.sleep_readiness.title":"Sen i gotowość","card.sleep_readiness.subtitle_no_wake":"{duration} snu","card.sleep_readiness.subtitle_with_wake":"{duration} snu · pobudka {time}","card.recovery.title":"Regeneracja","card.training_load.title":"Obciążenie treningowe","card.training_load.subtitle_fallback":"Trend formy (CTL)","card.week_stats.title":"Ten tydzień i statystyki życiowe","card.week_stats.subtitle":"Ostatnie 7 dni","card.week_stats.lifetime_title":"Statystyki życiowe wg dyscypliny","card.today.title":"Dziś","card.today.subtitle":"Na żywo z zegarka","empty.last_workout.title":"Brak ostatniego treningu","empty.last_workout.subtitle":"Zsynchronizuj zegarek z aplikacją Suunto, aby zobaczyć go tutaj.","empty.hr_zones.title":"Brak danych o strefach","empty.hr_zones.subtitle":"Twój następny trening na zewnątrz z pasem do pomiaru tętna uzupełni te dane.","empty.sleep_readiness.title":"Brak jeszcze danych o śnie","empty.sleep_readiness.subtitle":"Noś zegarek podczas snu, aby zobaczyć dane tutaj.","empty.recovery.title":"Brak jeszcze danych o regeneracji","empty.training_load.title":"Obliczanie obciążenia treningowego","empty.training_load.subtitle":"Potrzebna jest historia treningów do wyliczenia - sprawdź ponownie po kilku sesjach.","empty.week_stats.title":"Brak jeszcze historii treningów","empty.today.title":"Brak jeszcze danych na żywo","empty.loading":"Wczytywanie...","empty.generic_error":"Nie udało się wczytać danych Suunto.","error.no_device":"Nie znaleziono urządzenia Suunto - czy integracja suunto_app jest skonfigurowana?","error.multiple_devices":'Znaleziono wiele urządzeń Suunto - ustaw "device_id" w konfiguracji karty.',"error.device_missing":'Skonfigurowane urządzenie "{device}" nie ma encji suunto_app.',"band.readiness.great":"Świetna","band.readiness.fair":"Przeciętna","band.readiness.low":"Niska","band.recovery.well":"Dobrze zregenerowany","band.recovery.partial":"Częściowo zregenerowany","band.recovery.low":"Niska regeneracja","band.recovery.fully":"W pełni zregenerowany","band.recovery.recovering":"Regeneracja · pozostało {time}","band.hrv.low":"HRV niskie","band.hrv.high":"HRV wysokie","band.hrv.balanced":"HRV wyrównane","band.form.fresh":"Wypoczęty","band.form.neutral":"Neutralna","band.form.fatigued":"Zmęczony","band.form.very_fatigued":"Bardzo zmęczony","band.acwr.safe":"Strefa bezpieczna","band.acwr.low":"Niskie obciążenie","band.acwr.high":"Wysokie obciążenie - ryzyko kontuzji","chip.workout_logged_today":"Trening zarejestrowany dziś","chip.workout_today":"Trening dziś","chip.recovering":"Regeneracja","chip.nap":"{minutes} min drzemki","chip.nap_earlier":"{minutes} min drzemki (wcześniej)","chip.workouts_30d":"{count} treningów w ciągu ostatnich 30 dni","chip.acwr":"ACWR {value} · {label}","chip.more_activity_one":"+{count} inna dyscyplina","chip.more_activity_other":"+{count} inne dyscypliny","achievement.count_one":"{count} osiągnięcie","achievement.count_other":"{count} osiągnięcia","achievement.rank":"Miejsce #{rank} na tej trasie","label.zone":"Strefa {n}","label.deep":"Głęboki","label.light":"Płytki","label.rem":"REM","editor.auto_detect":"Ta karta automatycznie wykrywa Twoje urządzenie Suunto - konfiguracja nie jest potrzebna.","editor.pick_device":"Znaleziono wiele urządzeń Suunto - wybierz, z którego ta karta ma korzystać.","editor.device_label":"Urządzenie Suunto"},de:{"stat.distance":"Distanz","stat.duration":"Dauer","stat.avg_speed":"Ø-Geschwindigkeit","stat.avg_pace":"Ø-Pace","stat.avg_hr":"Ø-Puls","stat.max_hr":"Max. Puls","stat.training_effect":"Trainingseffekt","stat.tss":"TSS","stat.epoc":"EPOC","stat.feeling":"Gefühl","stat.energy":"Energie","stat.time":"Zeit","stat.workouts":"Workouts","stat.steps":"Schritte","stat.heart_rate":"Herzfrequenz","stat.quality":"Qualität","stat.hrv":"HRV","stat.hrv_delta":"HRV ({delta})","stat.resting_hr":"Ruhepuls","stat.resting_hr_delta":"Ruhepuls ({delta})","stat.spo2":"SpO2","stat.stress_level":"Stresslevel","stat.recovery_window":"Erholungsfenster","stat.ctl":"CTL · Fitness","stat.atl":"ATL · Ermüdung","stat.tsb":"TSB · Form","stat.readiness":"Bereitschaft","stat.recovery_balance":"Erholungsbalance","card.hr_zones.title":"Herzfrequenzzonen","card.hr_zones.last_workout":"Letztes Training","card.sleep_readiness.title":"Schlaf & Bereitschaft","card.sleep_readiness.subtitle_no_wake":"{duration} geschlafen","card.sleep_readiness.subtitle_with_wake":"{duration} geschlafen · aufgewacht um {time}","card.recovery.title":"Erholung","card.training_load.title":"Trainingsbelastung","card.training_load.subtitle_fallback":"Fitness-Trend (CTL)","card.week_stats.title":"Diese Woche & Gesamt","card.week_stats.subtitle":"Letzte 7 Tage","card.week_stats.lifetime_title":"Gesamt nach Sportart","card.today.title":"Heute","card.today.subtitle":"Live von deiner Uhr","empty.last_workout.title":"Kein aktuelles Training","empty.last_workout.subtitle":"Synchronisiere deine Uhr mit der Suunto-App, um es hier zu sehen.","empty.hr_zones.title":"Keine Zonendaten","empty.hr_zones.subtitle":"Dein nächstes Outdoor-Training mit Brustgurt füllt das hier aus.","empty.sleep_readiness.title":"Noch keine Schlafdaten","empty.sleep_readiness.subtitle":"Trage deine Uhr beim Schlafen, um sie hier zu sehen.","empty.recovery.title":"Noch keine Erholungsdaten","empty.training_load.title":"Trainingsbelastung wird berechnet","empty.training_load.subtitle":"Benötigt etwas Trainingshistorie zur Berechnung - schau nach ein paar Einheiten wieder vorbei.","empty.week_stats.title":"Noch keine Trainingshistorie","empty.today.title":"Noch keine Live-Daten","empty.loading":"Wird geladen...","empty.generic_error":"Suunto-Daten konnten nicht geladen werden.","error.no_device":"Kein Suunto-Gerät gefunden - ist die suunto_app-Integration eingerichtet?","error.multiple_devices":'Mehrere Suunto-Geräte gefunden - lege "device_id" in der Kartenkonfiguration fest.',"error.device_missing":'Konfiguriertes Gerät "{device}" hat keine suunto_app-Entitäten.',"band.readiness.great":"Sehr gut","band.readiness.fair":"Mittel","band.readiness.low":"Niedrig","band.recovery.well":"Gut erholt","band.recovery.partial":"Teilweise erholt","band.recovery.low":"Geringe Erholung","band.recovery.fully":"Vollständig erholt","band.recovery.recovering":"Erholung läuft · {time} verbleibend","band.hrv.low":"HRV niedrig","band.hrv.high":"HRV hoch","band.hrv.balanced":"HRV ausgeglichen","band.form.fresh":"Frisch","band.form.neutral":"Neutral","band.form.fatigued":"Ermüdet","band.form.very_fatigued":"Sehr ermüdet","band.acwr.safe":"Sicherer Bereich","band.acwr.low":"Geringe Belastung","band.acwr.high":"Hohe Belastung - Verletzungsrisiko","chip.workout_logged_today":"Heute Training erfasst","chip.workout_today":"Training heute","chip.recovering":"Erholung","chip.nap":"{minutes} Min. Nickerchen","chip.nap_earlier":"{minutes} Min. Nickerchen (früher)","chip.workouts_30d":"{count} Trainings in den letzten 30 Tagen","chip.acwr":"ACWR {value} · {label}","chip.more_activity_one":"+{count} weitere Sportart","chip.more_activity_other":"+{count} weitere Sportarten","achievement.count_one":"{count} Erfolg","achievement.count_other":"{count} Erfolge","achievement.rank":"Platz #{rank} auf dieser Strecke","label.zone":"Zone {n}","label.deep":"Tiefschlaf","label.light":"Leichtschlaf","label.rem":"REM","editor.auto_detect":"Diese Karte erkennt dein Suunto-Gerät automatisch - keine Konfiguration nötig.","editor.pick_device":"Mehrere Suunto-Geräte gefunden - wähle aus, welches diese Karte verwenden soll.","editor.device_label":"Suunto-Gerät"},pt:{"stat.distance":"Distância","stat.duration":"Duração","stat.avg_speed":"Vel. média","stat.avg_pace":"Ritmo médio","stat.avg_hr":"FC média","stat.max_hr":"FC máx.","stat.training_effect":"Efeito do treino","stat.tss":"TSS","stat.epoc":"EPOC","stat.feeling":"Sensação","stat.energy":"Energia","stat.time":"Tempo","stat.workouts":"Treinos","stat.steps":"Passos","stat.heart_rate":"Frequência cardíaca","stat.quality":"Qualidade","stat.hrv":"HRV","stat.hrv_delta":"HRV ({delta})","stat.resting_hr":"FC repouso","stat.resting_hr_delta":"FC repouso ({delta})","stat.spo2":"SpO2","stat.stress_level":"Nível de stress","stat.recovery_window":"Janela de recuperação","stat.ctl":"CTL · condição","stat.atl":"ATL · fadiga","stat.tsb":"TSB · forma","stat.readiness":"Prontidão","stat.recovery_balance":"Equilíbrio de recuperação","card.hr_zones.title":"Zonas de Frequência Cardíaca","card.hr_zones.last_workout":"Último treino","card.sleep_readiness.title":"Sono e Prontidão","card.sleep_readiness.subtitle_no_wake":"{duration} de sono","card.sleep_readiness.subtitle_with_wake":"{duration} de sono · acordou às {time}","card.recovery.title":"Recuperação","card.training_load.title":"Carga de Treino","card.training_load.subtitle_fallback":"Tendência de condição (CTL)","card.week_stats.title":"Esta Semana e Histórico Total","card.week_stats.subtitle":"Últimos 7 dias","card.week_stats.lifetime_title":"Total por atividade","card.today.title":"Hoje","card.today.subtitle":"Ao vivo do teu relógio","empty.last_workout.title":"Sem treino recente","empty.last_workout.subtitle":"Sincroniza o teu relógio com a app Suunto para o veres aqui.","empty.hr_zones.title":"Sem dados de zonas","empty.hr_zones.subtitle":"O teu próximo treino ao ar livre com cinta cardíaca vai preencher isto.","empty.sleep_readiness.title":"Ainda sem dados de sono","empty.sleep_readiness.subtitle":"Usa o relógio para dormir para veres isto aqui.","empty.recovery.title":"Ainda sem dados de recuperação","empty.training_load.title":"A calcular a carga de treino","empty.training_load.subtitle":"Precisa de algum histórico de treinos para calcular - volta a verificar após algumas sessões.","empty.week_stats.title":"Ainda sem histórico de treinos","empty.today.title":"Ainda sem dados em direto","empty.loading":"A carregar...","empty.generic_error":"Não foi possível carregar os dados Suunto.","error.no_device":"Nenhum dispositivo Suunto encontrado - a integração suunto_app está configurada?","error.multiple_devices":'Foram encontrados vários dispositivos Suunto - define "device_id" na configuração do cartão.',"error.device_missing":'O dispositivo configurado "{device}" não tem entidades suunto_app.',"band.readiness.great":"Ótima","band.readiness.fair":"Razoável","band.readiness.low":"Baixa","band.recovery.well":"Bem recuperado","band.recovery.partial":"Parcialmente recuperado","band.recovery.low":"Baixa recuperação","band.recovery.fully":"Totalmente recuperado","band.recovery.recovering":"A recuperar · faltam {time}","band.hrv.low":"HRV baixa","band.hrv.high":"HRV alta","band.hrv.balanced":"HRV equilibrada","band.form.fresh":"Descansado","band.form.neutral":"Neutro","band.form.fatigued":"Fatigado","band.form.very_fatigued":"Muito fatigado","band.acwr.safe":"Zona segura","band.acwr.low":"Carga baixa","band.acwr.high":"Carga alta - risco de lesão","chip.workout_logged_today":"Treino registado hoje","chip.workout_today":"Treino hoje","chip.recovering":"A recuperar","chip.nap":"{minutes} min de sesta","chip.nap_earlier":"{minutes} min de sesta (mais cedo)","chip.workouts_30d":"{count} treinos nos últimos 30 dias","chip.acwr":"ACWR {value} · {label}","chip.more_activity_one":"+{count} outra modalidade","chip.more_activity_other":"+{count} outras modalidades","achievement.count_one":"{count} conquista","achievement.count_other":"{count} conquistas","achievement.rank":"Posição #{rank} nesta rota","label.zone":"Zona {n}","label.deep":"Profundo","label.light":"Leve","label.rem":"REM","editor.auto_detect":"Este cartão deteta automaticamente o teu dispositivo Suunto - não é necessária configuração.","editor.pick_device":"Foram encontrados vários dispositivos Suunto - escolhe qual este cartão deve usar.","editor.device_label":"Dispositivo Suunto"},fr:{"stat.distance":"Distance","stat.duration":"Durée","stat.avg_speed":"Vitesse moy.","stat.avg_pace":"Allure moy.","stat.avg_hr":"FC moy.","stat.max_hr":"FC max","stat.training_effect":"Effet d'entraînement","stat.tss":"TSS","stat.epoc":"EPOC","stat.feeling":"Ressenti","stat.energy":"Énergie","stat.time":"Temps","stat.workouts":"Séances","stat.steps":"Pas","stat.heart_rate":"Fréquence cardiaque","stat.quality":"Qualité","stat.hrv":"HRV","stat.hrv_delta":"HRV ({delta})","stat.resting_hr":"FC repos","stat.resting_hr_delta":"FC repos ({delta})","stat.spo2":"SpO2","stat.stress_level":"Niveau de stress","stat.recovery_window":"Fenêtre de récupération","stat.ctl":"CTL · forme","stat.atl":"ATL · fatigue","stat.tsb":"TSB · forme","stat.readiness":"Préparation","stat.recovery_balance":"Équilibre de récupération","card.hr_zones.title":"Zones de Fréquence Cardiaque","card.hr_zones.last_workout":"Dernière séance","card.sleep_readiness.title":"Sommeil et Préparation","card.sleep_readiness.subtitle_no_wake":"{duration} de sommeil","card.sleep_readiness.subtitle_with_wake":"{duration} de sommeil · réveil à {time}","card.recovery.title":"Récupération","card.training_load.title":"Charge d'Entraînement","card.training_load.subtitle_fallback":"Tendance de forme (CTL)","card.week_stats.title":"Cette Semaine et Cumul Total","card.week_stats.subtitle":"7 derniers jours","card.week_stats.lifetime_title":"Cumul par activité","card.today.title":"Aujourd'hui","card.today.subtitle":"En direct de ta montre","empty.last_workout.title":"Aucune séance récente","empty.last_workout.subtitle":"Synchronise ta montre avec l'appli Suunto pour la voir ici.","empty.hr_zones.title":"Aucune donnée de zone","empty.hr_zones.subtitle":"Ta prochaine séance en extérieur avec ceinture cardiaque remplira ceci.","empty.sleep_readiness.title":"Pas encore de données de sommeil","empty.sleep_readiness.subtitle":"Porte ta montre pour dormir afin de le voir ici.","empty.recovery.title":"Pas encore de données de récupération","empty.training_load.title":"Calcul de la charge d'entraînement","empty.training_load.subtitle":"Nécessite un peu d'historique d'entraînement pour être calculé - reviens après quelques séances.","empty.week_stats.title":"Pas encore d'historique d'entraînement","empty.today.title":"Pas encore de données en direct","empty.loading":"Chargement...","empty.generic_error":"Impossible de charger les données Suunto.","error.no_device":"Aucun appareil Suunto trouvé - l'intégration suunto_app est-elle configurée ?","error.multiple_devices":'Plusieurs appareils Suunto trouvés - définis "device_id" dans la configuration de la carte.',"error.device_missing":"L'appareil configuré \"{device}\" n'a aucune entité suunto_app.","band.readiness.great":"Excellente","band.readiness.fair":"Correcte","band.readiness.low":"Faible","band.recovery.well":"Bien récupéré","band.recovery.partial":"Partiellement récupéré","band.recovery.low":"Faible récupération","band.recovery.fully":"Entièrement récupéré","band.recovery.recovering":"Récupération · {time} restant","band.hrv.low":"HRV basse","band.hrv.high":"HRV élevée","band.hrv.balanced":"HRV équilibrée","band.form.fresh":"Frais","band.form.neutral":"Neutre","band.form.fatigued":"Fatigué","band.form.very_fatigued":"Très fatigué","band.acwr.safe":"Zone sûre","band.acwr.low":"Charge faible","band.acwr.high":"Charge élevée - risque de blessure","chip.workout_logged_today":"Séance enregistrée aujourd'hui","chip.workout_today":"Séance aujourd'hui","chip.recovering":"Récupération","chip.nap":"{minutes} min de sieste","chip.nap_earlier":"{minutes} min de sieste (plus tôt)","chip.workouts_30d":"{count} séances au cours des 30 derniers jours","chip.acwr":"ACWR {value} · {label}","chip.more_activity_one":"+{count} autre activité","chip.more_activity_other":"+{count} autres activités","achievement.count_one":"{count} exploit","achievement.count_other":"{count} exploits","achievement.rank":"Rang #{rank} sur cet itinéraire","label.zone":"Zone {n}","label.deep":"Profond","label.light":"Léger","label.rem":"REM","editor.auto_detect":"Cette carte détecte automatiquement ton appareil Suunto - aucune configuration nécessaire.","editor.pick_device":"Plusieurs appareils Suunto trouvés - choisis celui que cette carte doit utiliser.","editor.device_label":"Appareil Suunto"},es:{"stat.distance":"Distancia","stat.duration":"Duración","stat.avg_speed":"Vel. media","stat.avg_pace":"Ritmo medio","stat.avg_hr":"FC media","stat.max_hr":"FC máx.","stat.training_effect":"Efecto del entrenamiento","stat.tss":"TSS","stat.epoc":"EPOC","stat.feeling":"Sensación","stat.energy":"Energía","stat.time":"Tiempo","stat.workouts":"Entrenamientos","stat.steps":"Pasos","stat.heart_rate":"Frecuencia cardíaca","stat.quality":"Calidad","stat.hrv":"HRV","stat.hrv_delta":"HRV ({delta})","stat.resting_hr":"FC reposo","stat.resting_hr_delta":"FC reposo ({delta})","stat.spo2":"SpO2","stat.stress_level":"Nivel de estrés","stat.recovery_window":"Ventana de recuperación","stat.ctl":"CTL · forma","stat.atl":"ATL · fatiga","stat.tsb":"TSB · forma","stat.readiness":"Preparación","stat.recovery_balance":"Equilibrio de recuperación","card.hr_zones.title":"Zonas de Frecuencia Cardíaca","card.hr_zones.last_workout":"Último entrenamiento","card.sleep_readiness.title":"Sueño y Preparación","card.sleep_readiness.subtitle_no_wake":"{duration} de sueño","card.sleep_readiness.subtitle_with_wake":"{duration} de sueño · despertar a las {time}","card.recovery.title":"Recuperación","card.training_load.title":"Carga de Entrenamiento","card.training_load.subtitle_fallback":"Tendencia de forma (CTL)","card.week_stats.title":"Esta Semana y Total Histórico","card.week_stats.subtitle":"Últimos 7 días","card.week_stats.lifetime_title":"Total por actividad","card.today.title":"Hoy","card.today.subtitle":"En vivo desde tu reloj","empty.last_workout.title":"Sin entrenamiento reciente","empty.last_workout.subtitle":"Sincroniza tu reloj con la app Suunto para verlo aquí.","empty.hr_zones.title":"Sin datos de zonas","empty.hr_zones.subtitle":"Tu próximo entrenamiento al aire libre con banda de frecuencia cardíaca completará esto.","empty.sleep_readiness.title":"Aún sin datos de sueño","empty.sleep_readiness.subtitle":"Usa tu reloj para dormir para verlo aquí.","empty.recovery.title":"Aún sin datos de recuperación","empty.training_load.title":"Calculando la carga de entrenamiento","empty.training_load.subtitle":"Necesita algo de historial de entrenamientos para calcularse - vuelve a comprobarlo tras algunas sesiones.","empty.week_stats.title":"Aún sin historial de entrenamientos","empty.today.title":"Aún sin datos en vivo","empty.loading":"Cargando...","empty.generic_error":"No se pudieron cargar los datos de Suunto.","error.no_device":"No se encontró ningún dispositivo Suunto - ¿está configurada la integración suunto_app?","error.multiple_devices":'Se encontraron varios dispositivos Suunto - define "device_id" en la configuración de la tarjeta.',"error.device_missing":'El dispositivo configurado "{device}" no tiene entidades suunto_app.',"band.readiness.great":"Excelente","band.readiness.fair":"Aceptable","band.readiness.low":"Baja","band.recovery.well":"Bien recuperado","band.recovery.partial":"Parcialmente recuperado","band.recovery.low":"Baja recuperación","band.recovery.fully":"Totalmente recuperado","band.recovery.recovering":"Recuperando · quedan {time}","band.hrv.low":"HRV baja","band.hrv.high":"HRV alta","band.hrv.balanced":"HRV equilibrada","band.form.fresh":"Fresco","band.form.neutral":"Neutro","band.form.fatigued":"Fatigado","band.form.very_fatigued":"Muy fatigado","band.acwr.safe":"Zona segura","band.acwr.low":"Carga baja","band.acwr.high":"Carga alta - riesgo de lesión","chip.workout_logged_today":"Entrenamiento registrado hoy","chip.workout_today":"Entrenamiento hoy","chip.recovering":"Recuperando","chip.nap":"{minutes} min de siesta","chip.nap_earlier":"{minutes} min de siesta (antes)","chip.workouts_30d":"{count} entrenamientos en los últimos 30 días","chip.acwr":"ACWR {value} · {label}","chip.more_activity_one":"+{count} actividad más","chip.more_activity_other":"+{count} actividades más","achievement.count_one":"{count} logro","achievement.count_other":"{count} logros","achievement.rank":"Puesto #{rank} en esta ruta","label.zone":"Zona {n}","label.deep":"Profundo","label.light":"Ligero","label.rem":"REM","editor.auto_detect":"Esta tarjeta detecta automáticamente tu dispositivo Suunto - no se necesita configuración.","editor.pick_device":"Se encontraron varios dispositivos Suunto - elige cuál debe usar esta tarjeta.","editor.device_label":"Dispositivo Suunto"},it:{"stat.distance":"Distanza","stat.duration":"Durata","stat.avg_speed":"Vel. media","stat.avg_pace":"Passo medio","stat.avg_hr":"FC media","stat.max_hr":"FC max","stat.training_effect":"Effetto allenamento","stat.tss":"TSS","stat.epoc":"EPOC","stat.feeling":"Sensazione","stat.energy":"Energia","stat.time":"Tempo","stat.workouts":"Allenamenti","stat.steps":"Passi","stat.heart_rate":"Frequenza cardiaca","stat.quality":"Qualità","stat.hrv":"HRV","stat.hrv_delta":"HRV ({delta})","stat.resting_hr":"FC riposo","stat.resting_hr_delta":"FC riposo ({delta})","stat.spo2":"SpO2","stat.stress_level":"Livello di stress","stat.recovery_window":"Finestra di recupero","stat.ctl":"CTL · forma","stat.atl":"ATL · affaticamento","stat.tsb":"TSB · forma","stat.readiness":"Prontezza","stat.recovery_balance":"Equilibrio di recupero","card.hr_zones.title":"Zone di Frequenza Cardiaca","card.hr_zones.last_workout":"Ultimo allenamento","card.sleep_readiness.title":"Sonno e Prontezza","card.sleep_readiness.subtitle_no_wake":"{duration} di sonno","card.sleep_readiness.subtitle_with_wake":"{duration} di sonno · sveglia alle {time}","card.recovery.title":"Recupero","card.training_load.title":"Carico di Allenamento","card.training_load.subtitle_fallback":"Andamento forma (CTL)","card.week_stats.title":"Questa Settimana e Totale","card.week_stats.subtitle":"Ultimi 7 giorni","card.week_stats.lifetime_title":"Totale per attività","card.today.title":"Oggi","card.today.subtitle":"In diretta dall'orologio","empty.last_workout.title":"Nessun allenamento recente","empty.last_workout.subtitle":"Sincronizza l'orologio con l'app Suunto per vederlo qui.","empty.hr_zones.title":"Nessun dato sulle zone","empty.hr_zones.subtitle":"Il tuo prossimo allenamento all'aperto con fascia cardio completerà questi dati.","empty.sleep_readiness.title":"Ancora nessun dato sul sonno","empty.sleep_readiness.subtitle":"Indossa l'orologio per dormire per vederlo qui.","empty.recovery.title":"Ancora nessun dato sul recupero","empty.training_load.title":"Calcolo del carico di allenamento","empty.training_load.subtitle":"Serve un po' di storico allenamenti per calcolarlo - ricontrolla dopo qualche sessione.","empty.week_stats.title":"Ancora nessuno storico allenamenti","empty.today.title":"Ancora nessun dato in tempo reale","empty.loading":"Caricamento...","empty.generic_error":"Impossibile caricare i dati Suunto.","error.no_device":"Nessun dispositivo Suunto trovato - l'integrazione suunto_app è configurata?","error.multiple_devices":'Trovati più dispositivi Suunto - imposta "device_id" nella configurazione della scheda.',"error.device_missing":'Il dispositivo configurato "{device}" non ha entità suunto_app.',"band.readiness.great":"Ottima","band.readiness.fair":"Discreta","band.readiness.low":"Bassa","band.recovery.well":"Ben recuperato","band.recovery.partial":"Parzialmente recuperato","band.recovery.low":"Basso recupero","band.recovery.fully":"Completamente recuperato","band.recovery.recovering":"Recupero in corso · {time} rimanenti","band.hrv.low":"HRV bassa","band.hrv.high":"HRV alta","band.hrv.balanced":"HRV bilanciata","band.form.fresh":"Fresco","band.form.neutral":"Neutro","band.form.fatigued":"Affaticato","band.form.very_fatigued":"Molto affaticato","band.acwr.safe":"Zona sicura","band.acwr.low":"Carico basso","band.acwr.high":"Carico alto - rischio di infortunio","chip.workout_logged_today":"Allenamento registrato oggi","chip.workout_today":"Allenamento oggi","chip.recovering":"In recupero","chip.nap":"{minutes} min di pisolino","chip.nap_earlier":"{minutes} min di pisolino (prima)","chip.workouts_30d":"{count} allenamenti negli ultimi 30 giorni","chip.acwr":"ACWR {value} · {label}","chip.more_activity_one":"+{count} altra attività","chip.more_activity_other":"+{count} altre attività","achievement.count_one":"{count} traguardo","achievement.count_other":"{count} traguardi","achievement.rank":"Posizione #{rank} su questo percorso","label.zone":"Zona {n}","label.deep":"Profondo","label.light":"Leggero","label.rem":"REM","editor.auto_detect":"Questa scheda rileva automaticamente il tuo dispositivo Suunto - nessuna configurazione necessaria.","editor.pick_device":"Trovati più dispositivi Suunto - scegli quale deve usare questa scheda.","editor.device_label":"Dispositivo Suunto"},nl:{"stat.distance":"Afstand","stat.duration":"Duur","stat.avg_speed":"Gem. snelheid","stat.avg_pace":"Gem. tempo","stat.avg_hr":"Gem. hartslag","stat.max_hr":"Max. hartslag","stat.training_effect":"Trainingseffect","stat.tss":"TSS","stat.epoc":"EPOC","stat.feeling":"Gevoel","stat.energy":"Energie","stat.time":"Tijd","stat.workouts":"Work-outs","stat.steps":"Stappen","stat.heart_rate":"Hartslag","stat.quality":"Kwaliteit","stat.hrv":"HRV","stat.hrv_delta":"HRV ({delta})","stat.resting_hr":"Rusthartslag","stat.resting_hr_delta":"Rusthartslag ({delta})","stat.spo2":"SpO2","stat.stress_level":"Stressniveau","stat.recovery_window":"Hersteltijd","stat.ctl":"CTL · fitheid","stat.atl":"ATL · vermoeidheid","stat.tsb":"TSB · vorm","stat.readiness":"Gereedheid","stat.recovery_balance":"Herstelbalans","card.hr_zones.title":"Hartslagzones","card.hr_zones.last_workout":"Laatste training","card.sleep_readiness.title":"Slaap & Gereedheid","card.sleep_readiness.subtitle_no_wake":"{duration} geslapen","card.sleep_readiness.subtitle_with_wake":"{duration} geslapen · wakker om {time}","card.recovery.title":"Herstel","card.training_load.title":"Trainingsbelasting","card.training_load.subtitle_fallback":"Fitheidstrend (CTL)","card.week_stats.title":"Deze Week & Totaal","card.week_stats.subtitle":"Laatste 7 dagen","card.week_stats.lifetime_title":"Totaal per activiteit","card.today.title":"Vandaag","card.today.subtitle":"Live vanaf je horloge","empty.last_workout.title":"Geen recente training","empty.last_workout.subtitle":"Synchroniseer je horloge met de Suunto-app om het hier te zien.","empty.hr_zones.title":"Geen zonegegevens","empty.hr_zones.subtitle":"Je volgende buitentraining met hartslagband vult dit aan.","empty.sleep_readiness.title":"Nog geen slaapgegevens","empty.sleep_readiness.subtitle":"Draag je horloge tijdens het slapen om dit hier te zien.","empty.recovery.title":"Nog geen herstelgegevens","empty.training_load.title":"Trainingsbelasting wordt berekend","empty.training_load.subtitle":"Heeft wat trainingsgeschiedenis nodig om te berekenen - kijk later nog eens na een paar trainingen.","empty.week_stats.title":"Nog geen traininggeschiedenis","empty.today.title":"Nog geen live gegevens","empty.loading":"Laden...","empty.generic_error":"Suunto-gegevens konden niet worden geladen.","error.no_device":"Geen Suunto-apparaat gevonden - is de suunto_app-integratie ingesteld?","error.multiple_devices":'Meerdere Suunto-apparaten gevonden - stel "device_id" in de kaartconfiguratie in.',"error.device_missing":'Geconfigureerd apparaat "{device}" heeft geen suunto_app-entiteiten.',"band.readiness.great":"Uitstekend","band.readiness.fair":"Redelijk","band.readiness.low":"Laag","band.recovery.well":"Goed hersteld","band.recovery.partial":"Gedeeltelijk hersteld","band.recovery.low":"Laag herstel","band.recovery.fully":"Volledig hersteld","band.recovery.recovering":"Aan het herstellen · {time} resterend","band.hrv.low":"HRV laag","band.hrv.high":"HRV hoog","band.hrv.balanced":"HRV in balans","band.form.fresh":"Fris","band.form.neutral":"Neutraal","band.form.fatigued":"Vermoeid","band.form.very_fatigued":"Erg vermoeid","band.acwr.safe":"Veilige zone","band.acwr.low":"Lage belasting","band.acwr.high":"Hoge belasting - blessurerisico","chip.workout_logged_today":"Training vandaag geregistreerd","chip.workout_today":"Training vandaag","chip.recovering":"Herstellen","chip.nap":"{minutes} min dutje","chip.nap_earlier":"{minutes} min dutje (eerder)","chip.workouts_30d":"{count} trainingen in de laatste 30 dagen","chip.acwr":"ACWR {value} · {label}","chip.more_activity_one":"+{count} andere activiteit","chip.more_activity_other":"+{count} andere activiteiten","achievement.count_one":"{count} prestatie","achievement.count_other":"{count} prestaties","achievement.rank":"Positie #{rank} op deze route","label.zone":"Zone {n}","label.deep":"Diep","label.light":"Licht","label.rem":"REM","editor.auto_detect":"Deze kaart detecteert automatisch je Suunto-apparaat - geen configuratie nodig.","editor.pick_device":"Meerdere Suunto-apparaten gevonden - kies welke deze kaart moet gebruiken.","editor.device_label":"Suunto-apparaat"}};function ke(e,t,a){let i=function(e){const t=e?.language??"en",a=t.split("-")[0]?.toLowerCase();return $e[a]??we}(e)[t]??we[t];if(a)for(const[e,t]of Object.entries(a))i=i.replace(`{${e}}`,String(t));return i}function Se(e,t,a,i,s){return ke(e,1===t?a:i,{count:t,...s})}let xe=class extends oe{setConfig(e){this._config=e}render(){if(!this.hass||!this._config)return I;return fe(this.hass).length<=1?U`<div class="hint">${ke(this.hass,"editor.auto_detect")}</div>`:U`
       <ha-device-picker
         .hass=${this.hass}
         .value=${this._config.device_id??""}
-        .label=${"Suunto device"}
+        .label=${ke(this.hass,"editor.device_label")}
         .includeDeviceClasses=${void 0}
         @value-changed=${this._deviceChanged}
       ></ha-device-picker>
-      <div class="hint">Multiple Suunto devices were found - pick which one this card should read.</div>
-    `}_deviceChanged(t){if(!this._config)return;const e=t.detail.value,s={...this._config,device_id:e||void 0};mt(this,"config-changed",{config:s})}};yt.styles=o`
+      <div class="hint">${ke(this.hass,"editor.pick_device")}</div>
+    `}_deviceChanged(e){if(!this._config)return;const t=e.detail.value,a={...this._config,device_id:t||void 0};me(this,"config-changed",{config:a})}};xe.styles=n`
     .hint {
       font-size: 0.85rem;
       color: var(--secondary-text-color);
       padding: 8px 2px 2px;
     }
-  `,t([ut({attribute:!1})],yt.prototype,"hass",void 0),t([pt()],yt.prototype,"_config",void 0),yt=t([lt("suunto-device-editor")],yt);class wt extends nt{_syncTheme(){this.classList.toggle("dark",Boolean(this.hass?.themes?.darkMode))}_resolveEntities(){if(!this.hass)return{error:this._message("mdi:alert-circle-outline","Loading...")};try{const t=function(t,e){const s=bt(t);if(e){if(!s.includes(e))throw new $t(`Configured device "${e}" has no suunto_app entities.`);return e}if(1===s.length)return s[0];if(0===s.length)throw new $t("No Suunto device found - is the suunto_app integration set up?");throw new $t('Multiple Suunto devices found - set "device_id" in the card configuration.')}(this.hass,this._configuredDeviceId);return{map:_t(this.hass,t)}}catch(t){return{error:this._message("mdi:alert-circle-outline",t instanceof $t?t.message:"Could not load Suunto data.")}}}_message(t,e,s){return I`
+  `,e([he({attribute:!1})],xe.prototype,"hass",void 0),e([pe()],xe.prototype,"_config",void 0),xe=e([le("suunto-device-editor")],xe);class ze extends oe{_syncTheme(){this.classList.toggle("dark",Boolean(this.hass?.themes?.darkMode))}_resolveEntities(){if(!this.hass)return{error:this._message("mdi:alert-circle-outline",ke(this.hass,"empty.loading"))};try{const e=function(e,t){const a=fe(e);if(t){if(!a.includes(t))throw new be("device_missing",t);return t}if(1===a.length)return a[0];if(0===a.length)throw new be("no_device");throw new be("multiple_devices")}(this.hass,this._configuredDeviceId);return{map:ye(this.hass,e)}}catch(e){return{error:this._message("mdi:alert-circle-outline",this._configErrorMessage(e))}}}_configErrorMessage(e){return e instanceof be?"device_missing"===e.code?ke(this.hass,"error.device_missing",{device:e.deviceId??""}):"multiple_devices"===e.code?ke(this.hass,"error.multiple_devices"):ke(this.hass,"error.no_device"):ke(this.hass,"empty.generic_error")}_message(e,t,a){return U`
       <ha-card class="static">
         <div class="empty">
-          <ha-icon .icon=${t}></ha-icon>
-          <div class="t1">${e}</div>
-          ${s?I`<div class="t2">${s}</div>`:W}
+          <ha-icon .icon=${e}></ha-icon>
+          <div class="t1">${t}</div>
+          ${a?U`<div class="t2">${a}</div>`:I}
         </div>
       </ha-card>
-    `}}t([ut({attribute:!1})],wt.prototype,"hass",void 0);const xt=o`
+    `}}e([he({attribute:!1})],ze.prototype,"hass",void 0);const Ae=n`
   :host {
     --sc-amber: #d98a1d;
     --sc-amber-bg: #fbeed9;
@@ -112,7 +112,7 @@ const lt=t=>(e,s)=>{void 0!==s?s.addInitializer(()=>{customElements.define(t,e)}
     --sc-sleep-light: #7fb4e0;
     --sc-sleep-rem: #b89ce0;
   }
-`,kt=o`
+`,Ee=n`
   ha-card {
     cursor: pointer;
     padding: 16px;
@@ -321,122 +321,122 @@ const lt=t=>(e,s)=>{void 0!==s?s.addInitializer(()=>{customElements.define(t,e)}
     font-size: 0.78rem;
     max-width: 26ch;
   }
-`,At=[[/cycl|bik/i,"mdi:bike"],[/run/i,"mdi:run"],[/trek|hik/i,"mdi:hiking"],[/walk/i,"mdi:walk"],[/gym|strength|weight/i,"mdi:dumbbell"],[/swim/i,"mdi:swim"],[/ski/i,"mdi:ski"],[/row/i,"mdi:rowing"]];function St(t){if(t)for(const[e,s]of At)if(e.test(t))return s;return"mdi:run-fast"}const Et={"01":"mdi:weather-sunny","02":"mdi:weather-partly-cloudy","03":"mdi:weather-cloudy","04":"mdi:weather-cloudy","09":"mdi:weather-pouring",10:"mdi:weather-rainy",11:"mdi:weather-lightning",13:"mdi:weather-snowy",50:"mdi:weather-fog"};function Ct(t){if(t>=60){const e=Math.floor(t/60),s=Math.round(t%60);return{value:`${e}:${String(s).padStart(2,"0")}`,unit:"h"}}return{value:String(Math.round(t)),unit:"min"}}function Nt(t,e){return new Intl.DateTimeFormat(e,{hour:"numeric",minute:"2-digit"}).format(t)}function zt(t,e=0){const s=Number(t.toFixed(e));return 0===s?"±0":s>0?`+${s}`:String(s)}const Mt=[["year",31536e3],["month",2592e3],["day",86400],["hour",3600],["minute",60]];function Tt(t,e){const s=(t.getTime()-Date.now())/1e3,i=new Intl.RelativeTimeFormat(e,{numeric:"auto"});for(const[t,e]of Mt)if(Math.abs(s)>=e)return i.format(Math.round(s/e),t);return i.format(Math.round(s/60),"minute")}const Rt=new Set(["unknown","unavailable",""]);let Pt=class extends wt{static getConfigElement(){return document.createElement("suunto-device-editor")}static getStubConfig(){return{type:"custom:suunto-last-workout-card"}}setConfig(t){this._config=t,this._configuredDeviceId=t.device_id}getCardSize(){return 4}render(){if(!this._config||!this.hass)return W;this._syncTheme();const t=this._resolveEntities();if("error"in t)return t.error;const{map:e}=t,s=this.hass,i=t=>e[t]?s.states[e[t]]:void 0,a=i("last_activity");if(!a||Rt.has(a.state))return this._message("mdi:calendar-blank-outline","No recent workout","Sync your watch with the Suunto app to see it here.");const r=i("last_workout_start"),o=i("last_distance"),n=i("last_duration"),c=i("last_avg_hr"),l=i("last_max_hr"),d=i("last_avg_pace"),h=i("last_avg_speed"),u=i("last_pte"),p=i("last_epoc"),v=i("last_feeling"),g=i("last_tss"),m=i("last_cal_per_km"),f=i("last_workout_weather"),$=i("last_workout_tags"),b=i("last_workout_achievements"),_=n?Ct(Number(n.state)):void 0,y=void 0===d&&void 0!==h,w=v&&!Rt.has(v.state)?Number(v.state):void 0,x=u&&!Rt.has(u.state)?Number(u.state):void 0,k=b?Number(b.state):0;return I`
-      <ha-card @click=${()=>this._openMoreInfo(e.last_activity)}>
+`,Ce=[[/cycl|bik/i,"mdi:bike"],[/run/i,"mdi:run"],[/trek|hik/i,"mdi:hiking"],[/walk/i,"mdi:walk"],[/gym|strength|weight/i,"mdi:dumbbell"],[/swim/i,"mdi:swim"],[/ski/i,"mdi:ski"],[/row/i,"mdi:rowing"]];function Te(e){if(e)for(const[t,a]of Ce)if(t.test(e))return a;return"mdi:run-fast"}const Re={"01":"mdi:weather-sunny","02":"mdi:weather-partly-cloudy","03":"mdi:weather-cloudy","04":"mdi:weather-cloudy","09":"mdi:weather-pouring",10:"mdi:weather-rainy",11:"mdi:weather-lightning",13:"mdi:weather-snowy",50:"mdi:weather-fog"};function Ne(e){if(e>=60){const t=Math.floor(e/60),a=Math.round(e%60);return{value:`${t}:${String(a).padStart(2,"0")}`,unit:"h"}}return{value:String(Math.round(e)),unit:"min"}}function Pe(e,t){return new Intl.DateTimeFormat(t,{hour:"numeric",minute:"2-digit"}).format(e)}function He(e,t=0){const a=Number(e.toFixed(t));return 0===a?"±0":a>0?`+${a}`:String(a)}const Me=[["year",31536e3],["month",2592e3],["day",86400],["hour",3600],["minute",60]];function Ve(e,t){const a=(e.getTime()-Date.now())/1e3,i=new Intl.RelativeTimeFormat(t,{numeric:"auto"});for(const[e,t]of Me)if(Math.abs(a)>=t)return i.format(Math.round(a/t),e);return i.format(Math.round(a/60),"minute")}const je=new Set(["unknown","unavailable",""]);let Le=class extends ze{static getConfigElement(){return document.createElement("suunto-device-editor")}static getStubConfig(){return{type:"custom:suunto-last-workout-card"}}setConfig(e){this._config=e,this._configuredDeviceId=e.device_id}getCardSize(){return 4}render(){if(!this._config||!this.hass)return I;this._syncTheme();const e=this._resolveEntities();if("error"in e)return e.error;const{map:t}=e,a=this.hass,i=e=>t[e]?a.states[t[e]]:void 0,s=i("last_activity");if(!s||je.has(s.state))return this._message("mdi:calendar-blank-outline",ke(a,"empty.last_workout.title"),ke(a,"empty.last_workout.subtitle"));const r=i("last_workout_start"),n=i("last_distance"),o=i("last_duration"),c=i("last_avg_hr"),l=i("last_max_hr"),d=i("last_avg_pace"),u=i("last_avg_speed"),h=i("last_pte"),p=i("last_epoc"),v=i("last_feeling"),g=i("last_tss"),m=i("last_cal_per_km"),_=i("last_workout_weather"),b=i("last_workout_tags"),f=i("last_workout_achievements"),y=o?Ne(Number(o.state)):void 0,w=void 0===d&&void 0!==u,$=v&&!je.has(v.state)?Number(v.state):void 0,k=h&&!je.has(h.state)?Number(h.state):void 0,S=f?Number(f.state):0;return U`
+      <ha-card @click=${()=>this._openMoreInfo(t.last_activity)}>
         <div class="header">
-          <div class="icon-badge"><ha-icon .icon=${St(a.state)}></ha-icon></div>
+          <div class="icon-badge"><ha-icon .icon=${Te(s.state)}></ha-icon></div>
           <div class="title-block">
-            <div class="title activity">${a.state}</div>
+            <div class="title activity">${s.state}</div>
             <div class="subtitle">
-              ${r?I`${Tt(new Date(r.state),s.language)} ·
-                  ${Nt(new Date(r.state),s.language)}`:""}
+              ${r?U`${Ve(new Date(r.state),a.language)} ·
+                  ${Pe(new Date(r.state),a.language)}`:""}
             </div>
           </div>
           <ha-icon class="chevron" icon="mdi:chevron-right"></ha-icon>
         </div>
 
         <div class="stats">
-          ${o?this._stat((Number(o.state)/1e3).toFixed(1),"km","Distance"):W}
-          ${_?this._stat(_.value,_.unit,"Duration"):W}
-          ${d?this._stat(function(t){const e=Math.round(60*t);return`${Math.floor(e/60)}:${String(e%60).padStart(2,"0")}`}(Number(d.state)),"/km","Avg pace"):y?this._stat(Number(h.state).toFixed(1),"km/h","Avg speed"):W}
-          ${c?this._stat(String(Math.round(Number(c.state))),"bpm","Avg HR",!0):W}
-          ${l?this._stat(String(Math.round(Number(l.state))),"bpm","Max HR",!0):W}
-          ${void 0!==x?I`
+          ${n?this._stat((Number(n.state)/1e3).toFixed(1),"km",ke(a,"stat.distance")):I}
+          ${y?this._stat(y.value,y.unit,ke(a,"stat.duration")):I}
+          ${d?this._stat(function(e){const t=Math.round(60*e);return`${Math.floor(t/60)}:${String(t%60).padStart(2,"0")}`}(Number(d.state)),"/km",ke(a,"stat.avg_pace")):w?this._stat(Number(u.state).toFixed(1),"km/h",ke(a,"stat.avg_speed")):I}
+          ${c?this._stat(String(Math.round(Number(c.state))),"bpm",ke(a,"stat.avg_hr"),!0):I}
+          ${l?this._stat(String(Math.round(Number(l.state))),"bpm",ke(a,"stat.max_hr"),!0):I}
+          ${void 0!==k?U`
                 <div class="stat">
-                  <div class="stat-value">${x.toFixed(1)}</div>
-                  <div class="stat-label">Training effect</div>
+                  <div class="stat-value">${k.toFixed(1)}</div>
+                  <div class="stat-label">${ke(a,"stat.training_effect")}</div>
                   <div class="severity">
-                    ${[1,2,3,4,5].map(t=>I`<i class=${t<=Math.round(x)?`on s${t}`:""}></i>`)}
+                    ${[1,2,3,4,5].map(e=>U`<i class=${e<=Math.round(k)?`on s${e}`:""}></i>`)}
                   </div>
                 </div>
-              `:W}
+              `:I}
         </div>
 
-        ${g||p||void 0!==w||m?I`
+        ${g||p||void 0!==$||m?U`
               <hr />
               <div class="secondary">
-                ${g?this._secondary(String(Math.round(Number(g.state))),"TSS"):W}
-                ${p?this._secondary(Number(p.state).toFixed(1),"EPOC"):W}
-                ${void 0!==w?I`
+                ${g?this._secondary(String(Math.round(Number(g.state))),ke(a,"stat.tss")):I}
+                ${p?this._secondary(Number(p.state).toFixed(1),ke(a,"stat.epoc")):I}
+                ${void 0!==$?U`
                       <div class="sec-item">
                         <div class="feeling">
-                          ${[1,2,3,4,5].map(t=>I`<i class=${t<=w?"on":""}></i>`)}
+                          ${[1,2,3,4,5].map(e=>U`<i class=${e<=$?"on":""}></i>`)}
                         </div>
-                        <div class="sec-label">Feeling</div>
+                        <div class="sec-label">${ke(a,"stat.feeling")}</div>
                       </div>
-                    `:W}
-                ${m?this._secondary(`${Math.round(Number(m.state))}`,"kcal/km","Energy"):W}
+                    `:I}
+                ${m?this._secondary(`${Math.round(Number(m.state))}`,"kcal/km",ke(a,"stat.energy")):I}
               </div>
-            `:W}
-        ${f&&!Rt.has(f.state)?I`
+            `:I}
+        ${_&&!je.has(_.state)?U`
               <div class="weather">
-                <ha-icon .icon=${function(t){const e=t?.slice(0,2);return e&&Et[e]||"mdi:weather-cloudy"}(f.attributes.icon_code)}></ha-icon>
-                <strong>${f.state}°C</strong>
-                ${f.attributes.condition?I`<span class="sep">·</span><span class="cond">${f.attributes.condition}</span>`:W}
-                ${void 0!==f.attributes.wind_speed_kmh?I`
+                <ha-icon .icon=${function(e){const t=e?.slice(0,2);return t&&Re[t]||"mdi:weather-cloudy"}(_.attributes.icon_code)}></ha-icon>
+                <strong>${_.state}°C</strong>
+                ${_.attributes.condition?U`<span class="sep">·</span><span class="cond">${_.attributes.condition}</span>`:I}
+                ${void 0!==_.attributes.wind_speed_kmh?U`
                       <span class="sep">·</span>
                       <ha-icon icon="mdi:weather-windy"></ha-icon>
-                      <span class="cond">${Math.round(f.attributes.wind_speed_kmh)} km/h</span>
-                    `:W}
+                      <span class="cond">${Math.round(_.attributes.wind_speed_kmh)} km/h</span>
+                    `:I}
               </div>
-            `:W}
-        ${$&&!Rt.has($.state)||k>0?I`
+            `:I}
+        ${b&&!je.has(b.state)||S>0?U`
               <div class="footer">
-                ${$&&!Rt.has($.state)?I`<span class="chip"><ha-icon icon="mdi:tag-outline"></ha-icon>${$.state}</span>`:W}
-                ${k>0?I`
+                ${b&&!je.has(b.state)?U`<span class="chip"><ha-icon icon="mdi:tag-outline"></ha-icon>${b.state}</span>`:I}
+                ${S>0?U`
                       <span
                         class="chip accent"
-                        title=${b?.attributes.route_ranking?`Rank #${b.attributes.route_ranking} on this route`:""}
+                        title=${f?.attributes.route_ranking?ke(a,"achievement.rank",{rank:f.attributes.route_ranking}):""}
                       >
                         <ha-icon icon="mdi:trophy"></ha-icon>
-                        ${function(t,e){if(Array.isArray(t)&&t.length){const e=t[0];if("string"==typeof e)return e;if(e&&"object"==typeof e){const t=e,s=t.name??t.title??t.type;if("string"==typeof s)return s}}return`${e} achievement${1===e?"":"s"}`}(b?.attributes.achievements,k)}
+                        ${function(e,t,a){if(Array.isArray(t)&&t.length){const e=t[0];if("string"==typeof e)return e;if(e&&"object"==typeof e){const t=e,a=t.name??t.title??t.type;if("string"==typeof a)return a}}return Se(e,a,"achievement.count_one","achievement.count_other")}(a,f?.attributes.achievements,S)}
                       </span>
-                    `:W}
+                    `:I}
               </div>
-            `:W}
+            `:I}
       </ha-card>
-    `}_stat(t,e,s,i=!1){return I`
+    `}_stat(e,t,a,i=!1){return U`
       <div class="stat ${i?"hr":""}">
-        <div class="stat-value">${t}<span class="unit">${e}</span></div>
-        <div class="stat-label">${s}</div>
+        <div class="stat-value">${e}<span class="unit">${t}</span></div>
+        <div class="stat-label">${a}</div>
       </div>
-    `}_secondary(t,e,s){return I`
+    `}_secondary(e,t,a){return U`
       <div class="sec-item">
-        <div class="sec-value">${t}${s?W:I`<span class="sec-unit">${e}</span>`}</div>
-        <div class="sec-label">${s??e}</div>
+        <div class="sec-value">${e}${a?I:U`<span class="sec-unit">${t}</span>`}</div>
+        <div class="sec-label">${a??t}</div>
       </div>
-    `}_openMoreInfo(t){t&&mt(this,"hass-more-info",{entityId:t})}};function Ht(t){return I`
+    `}_openMoreInfo(e){e&&me(this,"hass-more-info",{entityId:e})}};function De(e){return U`
     <div class="bar">
-      ${t.map(t=>I`<div
+      ${e.map(e=>U`<div
             class="seg"
-            style="flex-grow:${t.flexGrow};background:${t.colorVar}"
-            title=${t.title??""}
+            style="flex-grow:${e.flexGrow};background:${e.colorVar}"
+            title=${e.title??""}
           ></div>`)}
     </div>
-  `}function Ot(t,e,s=64,i=6){const a=Math.max(0,Math.min(100,t)),r=(s-i)/2,o=2*Math.PI*r,n=s/2;return I`
-    <svg width=${s} height=${s} viewBox="0 0 ${s} ${s}" class="ring">
+  `}function Fe(e,t,a=64,i=6){const s=Math.max(0,Math.min(100,e)),r=(a-i)/2,n=2*Math.PI*r,o=a/2;return U`
+    <svg width=${a} height=${a} viewBox="0 0 ${a} ${a}" class="ring">
       <circle
-        cx=${n}
-        cy=${n}
+        cx=${o}
+        cy=${o}
         r=${r}
         fill="none"
         stroke="var(--divider-color)"
         stroke-width=${i}
       ></circle>
       <circle
-        cx=${n}
-        cy=${n}
+        cx=${o}
+        cy=${o}
         r=${r}
         fill="none"
-        stroke=${e}
+        stroke=${t}
         stroke-width=${i}
         stroke-linecap="round"
-        stroke-dasharray=${o}
-        stroke-dashoffset=${o-a/100*o}
-        transform="rotate(-90 ${n} ${n})"
+        stroke-dasharray=${n}
+        stroke-dashoffset=${n-s/100*n}
+        transform="rotate(-90 ${o} ${o})"
       ></circle>
     </svg>
-  `}Pt.styles=[xt,kt,o`
+  `}Le.styles=[Ae,Ee,n`
       .activity {
         text-transform: capitalize;
       }
@@ -516,33 +516,33 @@ const lt=t=>(e,s)=>{void 0!==s?s.addInitializer(()=>{customElements.define(t,e)}
         gap: 8px;
         flex-wrap: wrap;
       }
-    `],t([pt()],Pt.prototype,"_config",void 0),Pt=t([lt("suunto-last-workout-card")],Pt);const Ut=t=>`var(--sc-zone-${t})`;let Dt=class extends wt{static getConfigElement(){return document.createElement("suunto-device-editor")}static getStubConfig(){return{type:"custom:suunto-hr-zones-card"}}setConfig(t){this._config=t,this._configuredDeviceId=t.device_id}getCardSize(){return 3}render(){if(!this._config||!this.hass)return W;this._syncTheme();const t=this._resolveEntities();if("error"in t)return t.error;const{map:e}=t,s=this.hass,i=[];for(let t=1;t<=5;t++){const a=e[`last_zone${t}`],r=a?s.states[a]:void 0;r&&!Number.isNaN(Number(r.state))&&i.push({n:t,minutes:Number(r.state),lower:r.attributes.lower_limit_bpm,upper:r.attributes.upper_limit_bpm})}const a=i.reduce((t,e)=>t+e.minutes,0);if(0===i.length||a<=0)return this._message("mdi:heart-pulse","No zone data","Your next outdoor workout with a heart-rate strap will fill this in.");const r=e.last_workout_start,o=r?s.states[r]:void 0;return I`
+    `],e([pe()],Le.prototype,"_config",void 0),Le=e([le("suunto-last-workout-card")],Le);const Oe=e=>`var(--sc-zone-${e})`;let qe=class extends ze{static getConfigElement(){return document.createElement("suunto-device-editor")}static getStubConfig(){return{type:"custom:suunto-hr-zones-card"}}setConfig(e){this._config=e,this._configuredDeviceId=e.device_id}getCardSize(){return 3}render(){if(!this._config||!this.hass)return I;this._syncTheme();const e=this._resolveEntities();if("error"in e)return e.error;const{map:t}=e,a=this.hass,i=[];for(let e=1;e<=5;e++){const s=t[`last_zone${e}`],r=s?a.states[s]:void 0;r&&!Number.isNaN(Number(r.state))&&i.push({n:e,minutes:Number(r.state),lower:r.attributes.lower_limit_bpm,upper:r.attributes.upper_limit_bpm})}const s=i.reduce((e,t)=>e+t.minutes,0);if(0===i.length||s<=0)return this._message("mdi:heart-pulse",ke(a,"empty.hr_zones.title"),ke(a,"empty.hr_zones.subtitle"));const r=t.last_workout_start,n=r?a.states[r]:void 0,o=ke(a,"card.hr_zones.last_workout");return U`
       <ha-card class="static">
         <div class="header">
           <div class="icon-badge pulse"><ha-icon icon="mdi:heart-pulse"></ha-icon></div>
           <div class="title-block">
-            <div class="title">Heart Rate Zones</div>
+            <div class="title">${ke(a,"card.hr_zones.title")}</div>
             <div class="subtitle">
-              ${o?`Last workout · ${Tt(new Date(o.state),s.language)}`:"Last workout"}
+              ${n?`${o} · ${Ve(new Date(n.state),a.language)}`:o}
             </div>
           </div>
         </div>
 
-        ${Ht(i.map(t=>({flexGrow:t.minutes,colorVar:Ut(t.n),title:`Zone ${t.n}`})))}
+        ${De(i.map(e=>({flexGrow:e.minutes,colorVar:Oe(e.n),title:ke(a,"label.zone",{n:e.n})})))}
 
         <div class="rows">
-          ${i.map(t=>{const e=Ct(t.minutes),s=Math.round(t.minutes/a*100);return I`
+          ${i.map(e=>{const t=Ne(e.minutes),i=Math.round(e.minutes/s*100);return U`
               <div class="row">
-                <i class="dot" style="background:${Ut(t.n)}"></i>
-                <span class="zone-label">Zone ${t.n}</span>
-                <span class="bpm">${i=t.lower,r=t.upper,void 0!==i&&void 0!==r?`${i}-${r} bpm`:void 0!==i?`${i}+ bpm`:void 0!==r?`<${r} bpm`:""}</span>
-                <span class="time">${e.value} ${e.unit}</span>
-                <span class="pct">${s}%</span>
+                <i class="dot" style="background:${Oe(e.n)}"></i>
+                <span class="zone-label">${ke(a,"label.zone",{n:e.n})}</span>
+                <span class="bpm">${r=e.lower,n=e.upper,void 0!==r&&void 0!==n?`${r}-${n} bpm`:void 0!==r?`${r}+ bpm`:void 0!==n?`<${n} bpm`:""}</span>
+                <span class="time">${t.value} ${t.unit}</span>
+                <span class="pct">${i}%</span>
               </div>
-            `;var i,r})}
+            `;var r,n})}
         </div>
       </ha-card>
-    `}};Dt.styles=[xt,kt,o`
+    `}};qe.styles=[Ae,Ee,n`
       .rows {
         display: flex;
         flex-direction: column;
@@ -572,69 +572,68 @@ const lt=t=>(e,s)=>{void 0!==s?s.addInitializer(()=>{customElements.define(t,e)}
         min-width: 3ch;
         text-align: right;
       }
-    `],t([pt()],Dt.prototype,"_config",void 0),Dt=t([lt("suunto-hr-zones-card")],Dt);const Vt=new Set(["unknown","unavailable",""]);let Lt=class extends wt{static getConfigElement(){return document.createElement("suunto-device-editor")}static getStubConfig(){return{type:"custom:suunto-sleep-readiness-card"}}setConfig(t){this._config=t,this._configuredDeviceId=t.device_id}getCardSize(){return 4}render(){if(!this._config||!this.hass)return W;this._syncTheme();const t=this._resolveEntities();if("error"in t)return t.error;const{map:e}=t,s=this.hass,i=t=>e[t]?s.states[e[t]]:void 0,a=i("sleep_duration");if(!a||Vt.has(a.state))return this._message("mdi:sleep","No sleep data yet","Wear your watch to bed to see it here.");const r=i("wake_time"),o=i("sleep_deep"),n=i("sleep_light"),c=i("sleep_rem"),l=i("sleep_quality"),d=i("sleep_spo2"),h=i("sleep_hrv"),u=i("hrv_baseline"),p=i("hrv_status"),v=i("resting_hr"),g=i("resting_hr_baseline"),m=i("readiness"),f=i("nap_duration"),$=m&&!Vt.has(m.state)?Number(m.state):void 0,b=void 0!==$?(_=$)>=70?{colorVar:"var(--sc-good)",label:"Great"}:_>=40?{colorVar:"var(--sc-warn)",label:"Fair"}:{colorVar:"var(--sc-bad)",label:"Low"}:void 0;var _;const y=h&&u&&!Vt.has(u.state)?Number(h.state)-Number(u.state):void 0,w=v&&g&&!Vt.has(g.state)?Number(v.state)-Number(g.state):void 0,x=[o&&!Vt.has(o.state)?{flexGrow:Number(o.state),colorVar:"var(--sc-sleep-deep)",title:"Deep"}:void 0,n&&!Vt.has(n.state)?{flexGrow:Number(n.state),colorVar:"var(--sc-sleep-light)",title:"Light"}:void 0,c&&!Vt.has(c.state)?{flexGrow:Number(c.state),colorVar:"var(--sc-sleep-rem)",title:"REM"}:void 0].filter(t=>void 0!==t),k=Ct(60*Number(a.state)),A=f&&!Vt.has(f.state)?Number(f.state):void 0,S=!!f?.attributes.date&&function(t){const e=new Date;return t.getFullYear()===e.getFullYear()&&t.getMonth()===e.getMonth()&&t.getDate()===e.getDate()}(new Date(f.attributes.date));return I`
+    `],e([pe()],qe.prototype,"_config",void 0),qe=e([le("suunto-hr-zones-card")],qe);const Ue=new Set(["unknown","unavailable",""]);let Be=class extends ze{static getConfigElement(){return document.createElement("suunto-device-editor")}static getStubConfig(){return{type:"custom:suunto-sleep-readiness-card"}}setConfig(e){this._config=e,this._configuredDeviceId=e.device_id}getCardSize(){return 4}render(){if(!this._config||!this.hass)return I;this._syncTheme();const e=this._resolveEntities();if("error"in e)return e.error;const{map:t}=e,a=this.hass,i=e=>t[e]?a.states[t[e]]:void 0,s=i("sleep_duration");if(!s||Ue.has(s.state))return this._message("mdi:sleep",ke(a,"empty.sleep_readiness.title"),ke(a,"empty.sleep_readiness.subtitle"));const r=i("wake_time"),n=i("sleep_deep"),o=i("sleep_light"),c=i("sleep_rem"),l=i("sleep_quality"),d=i("sleep_spo2"),u=i("sleep_hrv"),h=i("hrv_baseline"),p=i("hrv_status"),v=i("resting_hr"),g=i("resting_hr_baseline"),m=i("readiness"),_=i("nap_duration"),b=m&&!Ue.has(m.state)?Number(m.state):void 0,f=void 0!==b?function(e,t){return t>=70?{colorVar:"var(--sc-good)",label:ke(e,"band.readiness.great")}:t>=40?{colorVar:"var(--sc-warn)",label:ke(e,"band.readiness.fair")}:{colorVar:"var(--sc-bad)",label:ke(e,"band.readiness.low")}}(a,b):void 0,y=u&&h&&!Ue.has(h.state)?Number(u.state)-Number(h.state):void 0,w=v&&g&&!Ue.has(g.state)?Number(v.state)-Number(g.state):void 0,$=[n&&!Ue.has(n.state)?{flexGrow:Number(n.state),colorVar:"var(--sc-sleep-deep)",title:ke(a,"label.deep")}:void 0,o&&!Ue.has(o.state)?{flexGrow:Number(o.state),colorVar:"var(--sc-sleep-light)",title:ke(a,"label.light")}:void 0,c&&!Ue.has(c.state)?{flexGrow:Number(c.state),colorVar:"var(--sc-sleep-rem)",title:ke(a,"label.rem")}:void 0].filter(e=>void 0!==e),k=Ne(60*Number(s.state)),S=_&&!Ue.has(_.state)?Number(_.state):void 0,x=!!_?.attributes.date&&function(e){const t=new Date;return e.getFullYear()===t.getFullYear()&&e.getMonth()===t.getMonth()&&e.getDate()===t.getDate()}(new Date(_.attributes.date)),z={duration:`${k.value} ${k.unit}`};return U`
       <ha-card class="static">
         <div class="header">
           <div class="icon-badge pulse"><ha-icon icon="mdi:sleep"></ha-icon></div>
           <div class="title-block">
-            <div class="title">Sleep &amp; Readiness</div>
+            <div class="title">${ke(a,"card.sleep_readiness.title")}</div>
             <div class="subtitle">
-              ${k.value} ${k.unit} slept
-              ${r?I` · woke ${Nt(new Date(r.state),s.language)}`:W}
+              ${r?ke(a,"card.sleep_readiness.subtitle_with_wake",{...z,time:Pe(new Date(r.state),a.language)}):ke(a,"card.sleep_readiness.subtitle_no_wake",z)}
             </div>
           </div>
         </div>
 
-        ${void 0!==$&&b?I`
+        ${void 0!==b&&f?U`
               <div class="readiness-row">
                 <div class="ring-wrap">
-                  ${Ot($,b.colorVar,60,6)}
-                  <div class="ring-value" style="color:${b.colorVar}">${Math.round($)}</div>
+                  ${Fe(b,f.colorVar,60,6)}
+                  <div class="ring-value" style="color:${f.colorVar}">${Math.round(b)}</div>
                 </div>
                 <div class="readiness-text">
-                  <div class="readiness-label">Readiness</div>
-                  <div class="readiness-band" style="color:${b.colorVar}">${b.label}</div>
+                  <div class="readiness-label">${ke(a,"stat.readiness")}</div>
+                  <div class="readiness-band" style="color:${f.colorVar}">${f.label}</div>
                 </div>
               </div>
-            `:W}
+            `:I}
 
         <div class="stats">
-          ${l?this._stat(String(Math.round(Number(l.state))),"%","Quality"):W}
-          ${h?this._stat(String(Math.round(Number(h.state))),"ms",void 0!==y?`HRV (${zt(y)})`:"HRV",void 0!==y?y>=0?"good":"bad":void 0):W}
-          ${v?this._stat(String(Math.round(Number(v.state))),"bpm",void 0!==w?`Resting HR (${zt(w)})`:"Resting HR",void 0!==w?w<=0?"good":"bad":void 0):W}
-          ${d?this._stat(String(Math.round(Number(d.state))),"%","SpO2"):W}
+          ${l?this._stat(String(Math.round(Number(l.state))),"%",ke(a,"stat.quality")):I}
+          ${u?this._stat(String(Math.round(Number(u.state))),"ms",void 0!==y?ke(a,"stat.hrv_delta",{delta:He(y)}):ke(a,"stat.hrv"),void 0!==y?y>=0?"good":"bad":void 0):I}
+          ${v?this._stat(String(Math.round(Number(v.state))),"bpm",void 0!==w?ke(a,"stat.resting_hr_delta",{delta:He(w)}):ke(a,"stat.resting_hr"),void 0!==w?w<=0?"good":"bad":void 0):I}
+          ${d?this._stat(String(Math.round(Number(d.state))),"%",ke(a,"stat.spo2")):I}
         </div>
 
-        ${x.length?I`
+        ${$.length?U`
               <div class="stages">
-                ${Ht(x)}
+                ${De($)}
                 <div class="stage-legend">
-                  ${x.map(t=>{const e=Ct(t.flexGrow);return I`
+                  ${$.map(e=>{const t=Ne(e.flexGrow);return U`
                       <span class="legend-item">
-                        <i class="dot" style="background:${t.colorVar}"></i>${t.title} ${e.value}${"h"===e.unit?"h":"m"}
+                        <i class="dot" style="background:${e.colorVar}"></i>${e.title} ${t.value}${"h"===t.unit?"h":"m"}
                       </span>
                     `})}
                 </div>
               </div>
-            `:W}
+            `:I}
 
-        ${p&&!Vt.has(p.state)||A?I`
+        ${p&&!Ue.has(p.state)||S?U`
               <div class="footer">
-                ${p&&!Vt.has(p.state)?(()=>{const t="low"===(e=p.state)?{colorVar:"var(--sc-warn)",label:"HRV low"}:"high"===e?{colorVar:"var(--sc-pulse)",label:"HRV high"}:{colorVar:"var(--sc-good)",label:"HRV balanced"};var e;return I`<span class="chip" style="color:${t.colorVar}"
-                        ><ha-icon icon="mdi:heart-flash"></ha-icon>${t.label}</span
-                      >`})():W}
-                ${A?I`<span class="chip accent">
-                      <ha-icon icon="mdi:power-sleep"></ha-icon>${A} min nap${S?"":" (earlier)"}
-                    </span>`:W}
+                ${p&&!Ue.has(p.state)?(()=>{const e=function(e,t){return"low"===t?{colorVar:"var(--sc-warn)",label:ke(e,"band.hrv.low")}:"high"===t?{colorVar:"var(--sc-pulse)",label:ke(e,"band.hrv.high")}:{colorVar:"var(--sc-good)",label:ke(e,"band.hrv.balanced")}}(a,p.state);return U`<span class="chip" style="color:${e.colorVar}"
+                        ><ha-icon icon="mdi:heart-flash"></ha-icon>${e.label}</span
+                      >`})():I}
+                ${S?U`<span class="chip accent">
+                      <ha-icon icon="mdi:power-sleep"></ha-icon>${ke(a,x?"chip.nap":"chip.nap_earlier",{minutes:S})}
+                    </span>`:I}
               </div>
-            `:W}
+            `:I}
       </ha-card>
-    `}_stat(t,e,s,i){return I`
+    `}_stat(e,t,a,i){return U`
       <div class="stat ${i??""}">
-        <div class="stat-value">${t}<span class="unit">${e}</span></div>
-        <div class="stat-label">${s}</div>
+        <div class="stat-value">${e}<span class="unit">${t}</span></div>
+        <div class="stat-label">${a}</div>
       </div>
-    `}};Lt.styles=[xt,kt,o`
+    `}};Be.styles=[Ae,Ee,n`
       .readiness-row {
         display: flex;
         align-items: center;
@@ -689,41 +688,41 @@ const lt=t=>(e,s)=>{void 0!==s?s.addInitializer(()=>{customElements.define(t,e)}
         gap: 8px;
         flex-wrap: wrap;
       }
-    `],t([pt()],Lt.prototype,"_config",void 0),Lt=t([lt("suunto-sleep-readiness-card")],Lt);const Ft=new Set(["unknown","unavailable",""]);let jt=class extends wt{static getConfigElement(){return document.createElement("suunto-device-editor")}static getStubConfig(){return{type:"custom:suunto-recovery-card"}}setConfig(t){this._config=t,this._configuredDeviceId=t.device_id}getCardSize(){return 3}render(){if(!this._config||!this.hass)return W;this._syncTheme();const t=this._resolveEntities();if("error"in t)return t.error;const{map:e}=t,s=this.hass,i=t=>e[t]?s.states[e[t]]:void 0,a=i("recovery_balance");if(!a||Ft.has(a.state))return this._message("mdi:battery-heart-variant","No recovery data yet");const r=i("is_recovering"),o=i("recovery_until"),n=i("recovery_time"),c=i("stress_state"),l=i("workout_today"),d=Number(a.state),h=(u=d)>=60?{colorVar:"var(--sc-good)",label:"Well recovered"}:u>=30?{colorVar:"var(--sc-warn)",label:"Partially recovered"}:{colorVar:"var(--sc-bad)",label:"Low recovery"};var u;let p="Fully recovered";if("on"===r?.state&&o&&!Ft.has(o.state)){const t=new Date(o.state).getTime()-Date.now();if(t>0){const e=Ct(t/6e4);p=`Recovering · ${e.value} ${e.unit} left`}}return I`
+    `],e([pe()],Be.prototype,"_config",void 0),Be=e([le("suunto-sleep-readiness-card")],Be);const Ie=new Set(["unknown","unavailable",""]);let Ge=class extends ze{static getConfigElement(){return document.createElement("suunto-device-editor")}static getStubConfig(){return{type:"custom:suunto-recovery-card"}}setConfig(e){this._config=e,this._configuredDeviceId=e.device_id}getCardSize(){return 3}render(){if(!this._config||!this.hass)return I;this._syncTheme();const e=this._resolveEntities();if("error"in e)return e.error;const{map:t}=e,a=this.hass,i=e=>t[e]?a.states[t[e]]:void 0,s=i("recovery_balance");if(!s||Ie.has(s.state))return this._message("mdi:battery-heart-variant",ke(a,"empty.recovery.title"));const r=i("is_recovering"),n=i("recovery_until"),o=i("recovery_time"),c=i("stress_state"),l=i("workout_today"),d=Number(s.state),u=function(e,t){return t>=60?{colorVar:"var(--sc-good)",label:ke(e,"band.recovery.well")}:t>=30?{colorVar:"var(--sc-warn)",label:ke(e,"band.recovery.partial")}:{colorVar:"var(--sc-bad)",label:ke(e,"band.recovery.low")}}(a,d),h="on"===r?.state;let p=ke(a,"band.recovery.fully");if(h&&n&&!Ie.has(n.state)){const e=new Date(n.state).getTime()-Date.now();if(e>0){const t=Ne(e/6e4);p=ke(a,"band.recovery.recovering",{time:`${t.value} ${t.unit}`})}}return U`
       <ha-card class="static">
         <div class="header">
           <div class="icon-badge pulse"><ha-icon icon="mdi:battery-heart-variant"></ha-icon></div>
           <div class="title-block">
-            <div class="title">Recovery</div>
+            <div class="title">${ke(a,"card.recovery.title")}</div>
             <div class="subtitle">${p}</div>
           </div>
         </div>
 
         <div class="readiness-row">
           <div class="ring-wrap">
-            ${Ot(d,h.colorVar,60,6)}
-            <div class="ring-value" style="color:${h.colorVar}">${Math.round(d)}</div>
+            ${Fe(d,u.colorVar,60,6)}
+            <div class="ring-value" style="color:${u.colorVar}">${Math.round(d)}</div>
           </div>
           <div class="readiness-text">
-            <div class="readiness-label">Recovery balance</div>
-            <div class="readiness-band" style="color:${h.colorVar}">${h.label}</div>
+            <div class="readiness-label">${ke(a,"stat.recovery_balance")}</div>
+            <div class="readiness-band" style="color:${u.colorVar}">${u.label}</div>
           </div>
         </div>
 
-        ${c||n?I`
+        ${c||o?U`
               <div class="stats two">
-                ${c&&!Ft.has(c.state)?this._stat(c.state,"","Stress level"):W}
-                ${n&&!Ft.has(n.state)?this._stat(Number(n.state).toFixed(1),"h","Recovery window"):W}
+                ${c&&!Ie.has(c.state)?this._stat(c.state,"",ke(a,"stat.stress_level")):I}
+                ${o&&!Ie.has(o.state)?this._stat(Number(o.state).toFixed(1),"h",ke(a,"stat.recovery_window")):I}
               </div>
-            `:W}
-        ${"on"===l?.state?I`<div class="footer"><span class="chip accent"><ha-icon icon="mdi:calendar-check"></ha-icon>Workout logged today</span></div>`:W}
+            `:I}
+        ${"on"===l?.state?U`<div class="footer"><span class="chip accent"><ha-icon icon="mdi:calendar-check"></ha-icon>${ke(a,"chip.workout_logged_today")}</span></div>`:I}
       </ha-card>
-    `}_stat(t,e,s){return I`
+    `}_stat(e,t,a){return U`
       <div class="stat">
-        <div class="stat-value">${t}${e?I`<span class="unit">${e}</span>`:W}</div>
-        <div class="stat-label">${s}</div>
+        <div class="stat-value">${e}${t?U`<span class="unit">${t}</span>`:I}</div>
+        <div class="stat-label">${a}</div>
       </div>
-    `}};jt.styles=[xt,kt,o`
+    `}};Ge.styles=[Ae,Ee,n`
       .readiness-row {
         display: flex;
         align-items: center;
@@ -760,100 +759,102 @@ const lt=t=>(e,s)=>{void 0!==s?s.addInitializer(()=>{customElements.define(t,e)}
         display: flex;
         gap: 8px;
       }
-    `],t([pt()],jt.prototype,"_config",void 0),jt=t([lt("suunto-recovery-card")],jt);const It=new Set(["unknown","unavailable",""]);let Bt=class extends wt{constructor(){super(...arguments),this._history=[],this._historyFetchedAt=0}static getConfigElement(){return document.createElement("suunto-device-editor")}static getStubConfig(){return{type:"custom:suunto-training-load-card"}}setConfig(t){this._config=t,this._configuredDeviceId=t.device_id}getCardSize(){return 4}willUpdate(t){t.has("hass")&&this.hass&&this._config&&this._maybeFetchHistory()}async _maybeFetchHistory(){const t=this._resolveEntities();if("error"in t||!this.hass)return;const e=t.map.fitness_ctl;if(!e)return;const s=Date.now();if(!(e===this._historyEntityId&&s-this._historyFetchedAt<6e5)){this._historyEntityId=e,this._historyFetchedAt=s;try{const t=new Date(s-2592e6).toISOString(),i=await this.hass.callApi("GET",`history/period/${t}?filter_entity_id=${e}&no_attributes`),a=(i?.[0]??[]).map(t=>({t:new Date(t.last_updated??t.last_changed??"").getTime(),v:Number(t.state)})).filter(t=>Number.isFinite(t.t)&&Number.isFinite(t.v));this._history=a}catch{this._history=[]}}}render(){if(!this._config||!this.hass)return W;this._syncTheme();const t=this._resolveEntities();if("error"in t)return t.error;const{map:e}=t,s=this.hass,i=t=>e[t]?s.states[e[t]]:void 0,a=i("fitness_ctl");if(!a||It.has(a.state))return this._message("mdi:arm-flex","Building your training load","Needs a bit of workout history to compute - check back after a few sessions.");const r=i("fatigue_atl"),o=i("form_tsb"),n=i("acwr"),c=o&&!It.has(o.state)?Number(o.state):void 0,l=void 0!==c?function(t){return t>5?{colorVar:"var(--sc-good)",label:"Fresh"}:t<-20?{colorVar:"var(--sc-bad)",label:"Very fatigued"}:t<-5?{colorVar:"var(--sc-warn)",label:"Fatigued"}:{colorVar:"var(--sc-pulse)",label:"Neutral"}}(c):void 0,d=n&&!It.has(n.state)?Number(n.state):void 0,h=void 0!==d?function(t){return t>1.3?{colorVar:"var(--sc-bad)",label:"High load - injury risk"}:t<.8?{colorVar:"var(--sc-warn)",label:"Low load"}:{colorVar:"var(--sc-good)",label:"Safe zone"}}(d):void 0;return I`
+    `],e([pe()],Ge.prototype,"_config",void 0),Ge=e([le("suunto-recovery-card")],Ge);const We=new Set(["unknown","unavailable",""]);let Ze=class extends ze{constructor(){super(...arguments),this._history=[],this._historyFetchedAt=0}static getConfigElement(){return document.createElement("suunto-device-editor")}static getStubConfig(){return{type:"custom:suunto-training-load-card"}}setConfig(e){this._config=e,this._configuredDeviceId=e.device_id}getCardSize(){return 4}willUpdate(e){e.has("hass")&&this.hass&&this._config&&this._maybeFetchHistory()}async _maybeFetchHistory(){const e=this._resolveEntities();if("error"in e||!this.hass)return;const t=e.map.fitness_ctl;if(!t)return;const a=Date.now();if(!(t===this._historyEntityId&&a-this._historyFetchedAt<6e5)){this._historyEntityId=t,this._historyFetchedAt=a;try{const e=new Date(a-2592e6).toISOString(),i=await this.hass.callApi("GET",`history/period/${e}?filter_entity_id=${t}&no_attributes`),s=(i?.[0]??[]).map(e=>({t:new Date(e.last_updated??e.last_changed??"").getTime(),v:Number(e.state)})).filter(e=>Number.isFinite(e.t)&&Number.isFinite(e.v));this._history=s}catch{this._history=[]}}}render(){if(!this._config||!this.hass)return I;this._syncTheme();const e=this._resolveEntities();if("error"in e)return e.error;const{map:t}=e,a=this.hass,i=e=>t[e]?a.states[t[e]]:void 0,s=i("fitness_ctl");if(!s||We.has(s.state))return this._message("mdi:arm-flex",ke(a,"empty.training_load.title"),ke(a,"empty.training_load.subtitle"));const r=i("fatigue_atl"),n=i("form_tsb"),o=i("acwr"),c=n&&!We.has(n.state)?Number(n.state):void 0,l=void 0!==c?function(e,t){return t>5?{colorVar:"var(--sc-good)",label:ke(e,"band.form.fresh")}:t<-20?{colorVar:"var(--sc-bad)",label:ke(e,"band.form.very_fatigued")}:t<-5?{colorVar:"var(--sc-warn)",label:ke(e,"band.form.fatigued")}:{colorVar:"var(--sc-pulse)",label:ke(e,"band.form.neutral")}}(a,c):void 0,d=o&&!We.has(o.state)?Number(o.state):void 0,u=void 0!==d?function(e,t){return t>1.3?{colorVar:"var(--sc-bad)",label:ke(e,"band.acwr.high")}:t<.8?{colorVar:"var(--sc-warn)",label:ke(e,"band.acwr.low")}:{colorVar:"var(--sc-good)",label:ke(e,"band.acwr.safe")}}(a,d):void 0;return U`
       <ha-card class="static">
         <div class="header">
           <div class="icon-badge"><ha-icon icon="mdi:arm-flex"></ha-icon></div>
           <div class="title-block">
-            <div class="title">Training Load</div>
-            <div class="subtitle">${l?l.label:"Fitness (CTL) trend"}</div>
+            <div class="title">${ke(a,"card.training_load.title")}</div>
+            <div class="subtitle">${l?l.label:ke(a,"card.training_load.subtitle_fallback")}</div>
           </div>
         </div>
 
-        ${function(t,e,s=300,i=56){if(t.length<2)return W;const a=t.map(t=>t.v),r=Math.min(...a),o=Math.max(...a)-r||1,n=.12*i,c=i-2*n,l=s/(t.length-1),d=t.map((t,e)=>[e*l,n+c-(t.v-r)/o*c]),h=d.map(([t,e],s)=>`${0===s?"M":"L"}${t.toFixed(1)},${e.toFixed(1)}`).join(" "),u=`${h} L${s},${i} L0,${i} Z`,[p,v]=d[d.length-1];return I`
-    <svg viewBox="0 0 ${s} ${i}" preserveAspectRatio="none" class="sparkline">
-      <path d=${u} fill=${e} fill-opacity="0.14" stroke="none"></path>
-      <path d=${h} fill="none" stroke=${e} stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-      <circle cx=${p} cy=${v} r="3" fill=${e}></circle>
+        ${function(e,t,a=300,i=56){if(e.length<2)return I;const s=e.map(e=>e.v),r=Math.min(...s),n=Math.max(...s)-r||1,o=.12*i,c=i-2*o,l=a/(e.length-1),d=e.map((e,t)=>[t*l,o+c-(e.v-r)/n*c]),u=d.map(([e,t],a)=>`${0===a?"M":"L"}${e.toFixed(1)},${t.toFixed(1)}`).join(" "),h=`${u} L${a},${i} L0,${i} Z`,[p,v]=d[d.length-1];return U`
+    <svg viewBox="0 0 ${a} ${i}" preserveAspectRatio="none" class="sparkline">
+      <path d=${h} fill=${t} fill-opacity="0.14" stroke="none"></path>
+      <path d=${u} fill="none" stroke=${t} stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+      <circle cx=${p} cy=${v} r="3" fill=${t}></circle>
     </svg>
   `}(this._history,"var(--sc-amber)")}
 
         <div class="stats three">
-          ${this._stat(Number(a.state).toFixed(0),"CTL · fitness")}
-          ${r?this._stat(Number(r.state).toFixed(0),"ATL · fatigue"):W}
-          ${void 0!==c?this._stat(zt(c,1),"TSB · form",l?.colorVar):W}
+          ${this._stat(Number(s.state).toFixed(0),ke(a,"stat.ctl"))}
+          ${r?this._stat(Number(r.state).toFixed(0),ke(a,"stat.atl")):I}
+          ${void 0!==c?this._stat(He(c,1),ke(a,"stat.tsb"),l?.colorVar):I}
         </div>
 
-        ${void 0!==d&&h?I`
+        ${void 0!==d&&u?U`
               <div class="footer">
-                <span class="chip" style="color:${h.colorVar}">
+                <span class="chip" style="color:${u.colorVar}">
                   <ha-icon icon="mdi:scale-balance"></ha-icon>
-                  ACWR ${d.toFixed(2)} · ${h.label}
+                  ${ke(a,"chip.acwr",{value:d.toFixed(2),label:u.label})}
                 </span>
               </div>
-            `:W}
+            `:I}
       </ha-card>
-    `}_stat(t,e,s){return I`
+    `}_stat(e,t,a){return U`
       <div class="stat">
-        <div class="stat-value" style=${s?`color:${s}`:""}>${t}</div>
-        <div class="stat-label">${e}</div>
+        <div class="stat-value" style=${a?`color:${a}`:""}>${e}</div>
+        <div class="stat-label">${t}</div>
       </div>
-    `}};Bt.styles=[xt,kt,o`
+    `}};Ze.styles=[Ae,Ee,n`
       .stats.three {
         grid-template-columns: repeat(3, 1fr);
       }
       .footer {
         display: flex;
       }
-    `],t([pt()],Bt.prototype,"_config",void 0),t([pt()],Bt.prototype,"_history",void 0),Bt=t([lt("suunto-training-load-card")],Bt);const Wt=new Set(["unknown","unavailable",""]),qt=["var(--sc-amber)","var(--sc-pulse)","var(--sc-good)","var(--sc-sleep-rem)","var(--sc-zone-4)","var(--sc-sleep-deep)"];let Gt=class extends wt{static getConfigElement(){return document.createElement("suunto-device-editor")}static getStubConfig(){return{type:"custom:suunto-week-stats-card"}}setConfig(t){this._config=t,this._configuredDeviceId=t.device_id}getCardSize(){return 4}render(){if(!this._config||!this.hass)return W;this._syncTheme();const t=this._resolveEntities();if("error"in t)return t.error;const{map:e}=t,s=this.hass,i=t=>e[t]?s.states[e[t]]:void 0,a=i("weekly_distance"),r=i("weekly_time"),o=i("workouts_7d"),n=i("workouts_30d"),c=i("lifetime_by_activity");if(!a&&!c)return this._message("mdi:calendar-week","No workout history yet");const l=(c?.attributes.activities??[]).slice().sort((t,e)=>e.distance_km-t.distance_km),d=l.slice(0,5),h=l.length-d.length;return I`
+    `],e([pe()],Ze.prototype,"_config",void 0),e([pe()],Ze.prototype,"_history",void 0),Ze=e([le("suunto-training-load-card")],Ze);const Ke=new Set(["unknown","unavailable",""]),Qe=["var(--sc-amber)","var(--sc-pulse)","var(--sc-good)","var(--sc-sleep-rem)","var(--sc-zone-4)","var(--sc-sleep-deep)"];let Je=class extends ze{static getConfigElement(){return document.createElement("suunto-device-editor")}static getStubConfig(){return{type:"custom:suunto-week-stats-card"}}setConfig(e){this._config=e,this._configuredDeviceId=e.device_id}getCardSize(){return 4}render(){if(!this._config||!this.hass)return I;this._syncTheme();const e=this._resolveEntities();if("error"in e)return e.error;const{map:t}=e,a=this.hass,i=e=>t[e]?a.states[t[e]]:void 0,s=i("weekly_distance"),r=i("weekly_time"),n=i("workouts_7d"),o=i("workouts_30d"),c=i("lifetime_by_activity");if(!s&&!c)return this._message("mdi:calendar-week",ke(a,"empty.week_stats.title"));const l=(c?.attributes.activities??[]).slice().sort((e,t)=>t.distance_km-e.distance_km),d=l.slice(0,5),u=l.length-d.length;return U`
       <ha-card class="static">
         <div class="header">
           <div class="icon-badge"><ha-icon icon="mdi:calendar-week"></ha-icon></div>
           <div class="title-block">
-            <div class="title">This Week &amp; Lifetime</div>
-            <div class="subtitle">Last 7 days</div>
+            <div class="title">${ke(a,"card.week_stats.title")}</div>
+            <div class="subtitle">${ke(a,"card.week_stats.subtitle")}</div>
           </div>
         </div>
 
-        ${a||r||o?I`
+        ${s||r||n?U`
               <div class="stats three">
-                ${a&&!Wt.has(a.state)?this._stat(Number(a.state).toFixed(1),"km","Distance"):W}
-                ${r&&!Wt.has(r.state)?this._stat(Number(r.state).toFixed(1),"h","Time"):W}
-                ${o&&!Wt.has(o.state)?this._stat(o.state,"","Workouts"):W}
+                ${s&&!Ke.has(s.state)?this._stat(Number(s.state).toFixed(1),"km",ke(a,"stat.distance")):I}
+                ${r&&!Ke.has(r.state)?this._stat(Number(r.state).toFixed(1),"h",ke(a,"stat.time")):I}
+                ${n&&!Ke.has(n.state)?this._stat(n.state,"",ke(a,"stat.workouts")):I}
               </div>
-            `:W}
+            `:I}
 
-        ${d.length?I`
+        ${d.length?U`
               <hr />
               <div class="lifetime">
-                <div class="lifetime-title">Lifetime by activity</div>
-                ${Ht(d.map((t,e)=>({flexGrow:t.distance_km,colorVar:qt[e%qt.length],title:t.activity})))}
+                <div class="lifetime-title">${ke(a,"card.week_stats.lifetime_title")}</div>
+                ${De(d.map((e,t)=>({flexGrow:e.distance_km,colorVar:Qe[t%Qe.length],title:e.activity})))}
                 <div class="rows">
-                  ${d.map((t,e)=>{const s=qt[e%qt.length];return I`
+                  ${d.map((e,t)=>{const a=Qe[t%Qe.length];return U`
                       <div class="row">
                         <div
                           class="icon-badge tiny"
-                          style="background:color-mix(in srgb, ${s} 18%, transparent);color:${s}"
+                          style="background:color-mix(in srgb, ${a} 18%, transparent);color:${a}"
                         >
-                          <ha-icon .icon=${St(t.activity)}></ha-icon>
+                          <ha-icon .icon=${Te(e.activity)}></ha-icon>
                         </div>
-                        <span class="name">${t.activity}</span>
-                        <span class="count">${t.workouts}×</span>
-                        <span class="dist">${t.distance_km.toFixed(0)} km</span>
+                        <span class="name">${e.activity}</span>
+                        <span class="count">${e.workouts}×</span>
+                        <span class="dist">${e.distance_km.toFixed(0)} km</span>
                       </div>
                     `})}
-                  ${h>0?I`<div class="row muted">+${h} more activity type${1===h?"":"s"}</div>`:W}
+                  ${u>0?U`<div class="row muted">
+                        ${Se(a,u,"chip.more_activity_one","chip.more_activity_other")}
+                      </div>`:I}
                 </div>
               </div>
-            `:W}
-        ${n&&!Wt.has(n.state)?I`<div class="footer"><span class="chip">${n.state} workouts in the last 30 days</span></div>`:W}
+            `:I}
+        ${o&&!Ke.has(o.state)?U`<div class="footer"><span class="chip">${ke(a,"chip.workouts_30d",{count:o.state})}</span></div>`:I}
       </ha-card>
-    `}_stat(t,e,s){return I`
+    `}_stat(e,t,a){return U`
       <div class="stat">
-        <div class="stat-value">${t}${e?I`<span class="unit">${e}</span>`:W}</div>
-        <div class="stat-label">${s}</div>
+        <div class="stat-value">${e}${t?U`<span class="unit">${t}</span>`:I}</div>
+        <div class="stat-label">${a}</div>
       </div>
-    `}};Gt.styles=[xt,kt,o`
+    `}};Je.styles=[Ae,Ee,n`
       .stats.three {
         grid-template-columns: repeat(3, 1fr);
       }
@@ -910,42 +911,42 @@ const lt=t=>(e,s)=>{void 0!==s?s.addInitializer(()=>{customElements.define(t,e)}
       .footer {
         display: flex;
       }
-    `],t([pt()],Gt.prototype,"_config",void 0),Gt=t([lt("suunto-week-stats-card")],Gt);const Zt=new Set(["unknown","unavailable",""]);let Yt=class extends wt{static getConfigElement(){return document.createElement("suunto-device-editor")}static getStubConfig(){return{type:"custom:suunto-today-card"}}setConfig(t){this._config=t,this._configuredDeviceId=t.device_id}getCardSize(){return 2}render(){if(!this._config||!this.hass)return W;this._syncTheme();const t=this._resolveEntities();if("error"in t)return t.error;const{map:e}=t,s=this.hass,i=t=>e[t]?s.states[e[t]]:void 0,a=i("daily_steps"),r=i("daily_energy"),o=i("current_hr"),n=i("workout_today"),c=i("is_recovering");if(!a&&!r&&!o)return this._message("mdi:pulse","No live data yet");const l=o&&!Zt.has(o.state)?Math.round(Number(o.state)):void 0;return I`
+    `],e([pe()],Je.prototype,"_config",void 0),Je=e([le("suunto-week-stats-card")],Je);const Ye=new Set(["unknown","unavailable",""]);let Xe=class extends ze{static getConfigElement(){return document.createElement("suunto-device-editor")}static getStubConfig(){return{type:"custom:suunto-today-card"}}setConfig(e){this._config=e,this._configuredDeviceId=e.device_id}getCardSize(){return 2}render(){if(!this._config||!this.hass)return I;this._syncTheme();const e=this._resolveEntities();if("error"in e)return e.error;const{map:t}=e,a=this.hass,i=e=>t[e]?a.states[t[e]]:void 0,s=i("daily_steps"),r=i("daily_energy"),n=i("current_hr"),o=i("workout_today"),c=i("is_recovering");if(!s&&!r&&!n)return this._message("mdi:pulse",ke(a,"empty.today.title"));const l=n&&!Ye.has(n.state)?Math.round(Number(n.state)):void 0;return U`
       <ha-card class="static">
         <div class="header">
           <div class="icon-badge pulse"><ha-icon icon="mdi:pulse"></ha-icon></div>
           <div class="title-block">
-            <div class="title">Today</div>
-            <div class="subtitle">Live from your watch</div>
+            <div class="title">${ke(a,"card.today.title")}</div>
+            <div class="subtitle">${ke(a,"card.today.subtitle")}</div>
           </div>
         </div>
 
         <div class="stats three">
-          ${a&&!Zt.has(a.state)?this._stat(Number(a.state).toLocaleString(s.language),"","Steps"):W}
-          ${r&&!Zt.has(r.state)?this._stat(Math.round(Number(r.state)).toLocaleString(s.language),"kcal","Energy"):W}
-          ${void 0!==l?I`
+          ${s&&!Ye.has(s.state)?this._stat(Number(s.state).toLocaleString(a.language),"",ke(a,"stat.steps")):I}
+          ${r&&!Ye.has(r.state)?this._stat(Math.round(Number(r.state)).toLocaleString(a.language),"kcal",ke(a,"stat.energy")):I}
+          ${void 0!==l?U`
                 <div class="stat hr">
                   <div class="stat-value">
                     <span class="live-dot"></span>${l}<span class="unit">bpm</span>
                   </div>
-                  <div class="stat-label">Heart rate</div>
+                  <div class="stat-label">${ke(a,"stat.heart_rate")}</div>
                 </div>
-              `:W}
+              `:I}
         </div>
 
-        ${"on"===n?.state||"on"===c?.state?I`
+        ${"on"===o?.state||"on"===c?.state?U`
               <div class="footer">
-                ${"on"===n?.state?I`<span class="chip accent"><ha-icon icon="mdi:calendar-check"></ha-icon>Workout today</span>`:W}
-                ${"on"===c?.state?I`<span class="chip"><ha-icon icon="mdi:bed-clock"></ha-icon>Recovering</span>`:W}
+                ${"on"===o?.state?U`<span class="chip accent"><ha-icon icon="mdi:calendar-check"></ha-icon>${ke(a,"chip.workout_today")}</span>`:I}
+                ${"on"===c?.state?U`<span class="chip"><ha-icon icon="mdi:bed-clock"></ha-icon>${ke(a,"chip.recovering")}</span>`:I}
               </div>
-            `:W}
+            `:I}
       </ha-card>
-    `}_stat(t,e,s){return I`
+    `}_stat(e,t,a){return U`
       <div class="stat">
-        <div class="stat-value">${t}${e?I`<span class="unit">${e}</span>`:W}</div>
-        <div class="stat-label">${s}</div>
+        <div class="stat-value">${e}${t?U`<span class="unit">${t}</span>`:I}</div>
+        <div class="stat-label">${a}</div>
       </div>
-    `}};Yt.styles=[xt,kt,o`
+    `}};Xe.styles=[Ae,Ee,n`
       .stats.three {
         grid-template-columns: repeat(3, 1fr);
       }
@@ -972,4 +973,4 @@ const lt=t=>(e,s)=>{void 0!==s?s.addInitializer(()=>{customElements.define(t,e)}
         gap: 8px;
         flex-wrap: wrap;
       }
-    `],t([pt()],Yt.prototype,"_config",void 0),Yt=t([lt("suunto-today-card")],Yt),window.customCards=window.customCards||[],window.customCards.push({type:"suunto-last-workout-card",name:"Suunto - Last Workout",description:"Summary of your most recent Suunto workout: distance, HR, training effect, weather and achievements.",preview:!0},{type:"suunto-hr-zones-card",name:"Suunto - Heart Rate Zones",description:"Time spent in each heart-rate zone during your last workout, with bpm thresholds.",preview:!0},{type:"suunto-sleep-readiness-card",name:"Suunto - Sleep & Readiness",description:"Last night's sleep stages, HRV/resting HR vs. baseline, and today's readiness score.",preview:!0},{type:"suunto-recovery-card",name:"Suunto - Recovery",description:"Recovery balance, countdown until fully recovered, and current stress level.",preview:!0},{type:"suunto-training-load-card",name:"Suunto - Training Load",description:"Fitness/fatigue/form (CTL/ATL/TSB) with a 30-day trend line and acute:chronic workload ratio.",preview:!0},{type:"suunto-week-stats-card",name:"Suunto - Week & Lifetime",description:"This week's volume plus a lifetime breakdown by activity.",preview:!0},{type:"suunto-today-card",name:"Suunto - Today",description:"Live steps, energy and heart rate snapshot for today.",preview:!0}),console.info("%c SUUNTO-CARDS %c 7 cards loaded ","color: #fff; background: #d98a1d; font-weight: 700; border-radius: 3px 0 0 3px; padding: 2px 6px;","color: #d98a1d; background: transparent; font-weight: 500;");
+    `],e([pe()],Xe.prototype,"_config",void 0),Xe=e([le("suunto-today-card")],Xe),window.customCards=window.customCards||[],window.customCards.push({type:"suunto-last-workout-card",name:"Suunto - Last Workout",description:"Summary of your most recent Suunto workout: distance, HR, training effect, weather and achievements.",preview:!0},{type:"suunto-hr-zones-card",name:"Suunto - Heart Rate Zones",description:"Time spent in each heart-rate zone during your last workout, with bpm thresholds.",preview:!0},{type:"suunto-sleep-readiness-card",name:"Suunto - Sleep & Readiness",description:"Last night's sleep stages, HRV/resting HR vs. baseline, and today's readiness score.",preview:!0},{type:"suunto-recovery-card",name:"Suunto - Recovery",description:"Recovery balance, countdown until fully recovered, and current stress level.",preview:!0},{type:"suunto-training-load-card",name:"Suunto - Training Load",description:"Fitness/fatigue/form (CTL/ATL/TSB) with a 30-day trend line and acute:chronic workload ratio.",preview:!0},{type:"suunto-week-stats-card",name:"Suunto - Week & Lifetime",description:"This week's volume plus a lifetime breakdown by activity.",preview:!0},{type:"suunto-today-card",name:"Suunto - Today",description:"Live steps, energy and heart rate snapshot for today.",preview:!0}),console.info("%c SUUNTO-CARDS %c 7 cards loaded ","color: #fff; background: #d98a1d; font-weight: 700; border-radius: 3px 0 0 3px; padding: 2px 6px;","color: #d98a1d; background: transparent; font-weight: 500;");

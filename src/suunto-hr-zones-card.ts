@@ -6,6 +6,7 @@ import { SuuntoBaseCard } from "./utils/base-card";
 import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
 import { segmentedBar } from "./utils/render-helpers";
 import { formatDuration, formatRelative } from "./utils/format";
+import { t } from "./utils/localize";
 
 const ZONE_COUNT = 5;
 const ZONE_COLOR = (n: number) => `var(--sc-zone-${n})`;
@@ -71,28 +72,33 @@ export class SuuntoHrZonesCard extends SuuntoBaseCard {
     if (zones.length === 0 || total <= 0) {
       return this._message(
         "mdi:heart-pulse",
-        "No zone data",
-        "Your next outdoor workout with a heart-rate strap will fill this in."
+        t(hass, "empty.hr_zones.title"),
+        t(hass, "empty.hr_zones.subtitle")
       );
     }
 
     const startEntity = map["last_workout_start"];
     const start = startEntity ? hass.states[startEntity] : undefined;
+    const lastWorkout = t(hass, "card.hr_zones.last_workout");
 
     return html`
       <ha-card class="static">
         <div class="header">
           <div class="icon-badge pulse"><ha-icon icon="mdi:heart-pulse"></ha-icon></div>
           <div class="title-block">
-            <div class="title">Heart Rate Zones</div>
+            <div class="title">${t(hass, "card.hr_zones.title")}</div>
             <div class="subtitle">
-              ${start ? `Last workout · ${formatRelative(new Date(start.state), hass.language)}` : "Last workout"}
+              ${start ? `${lastWorkout} · ${formatRelative(new Date(start.state), hass.language)}` : lastWorkout}
             </div>
           </div>
         </div>
 
         ${segmentedBar(
-          zones.map((z) => ({ flexGrow: z.minutes, colorVar: ZONE_COLOR(z.n), title: `Zone ${z.n}` }))
+          zones.map((z) => ({
+            flexGrow: z.minutes,
+            colorVar: ZONE_COLOR(z.n),
+            title: t(hass, "label.zone", { n: z.n }),
+          }))
         )}
 
         <div class="rows">
@@ -102,7 +108,7 @@ export class SuuntoHrZonesCard extends SuuntoBaseCard {
             return html`
               <div class="row">
                 <i class="dot" style="background:${ZONE_COLOR(z.n)}"></i>
-                <span class="zone-label">Zone ${z.n}</span>
+                <span class="zone-label">${t(hass, "label.zone", { n: z.n })}</span>
                 <span class="bpm">${bpmRange(z.lower, z.upper)}</span>
                 <span class="time">${d.value} ${d.unit}</span>
                 <span class="pct">${pct}%</span>

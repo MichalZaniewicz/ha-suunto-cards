@@ -6,14 +6,16 @@ import { SuuntoBaseCard } from "./utils/base-card";
 import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
 import { progressRing } from "./utils/render-helpers";
 import { formatDuration } from "./utils/format";
+import { t } from "./utils/localize";
+import type { SuuntoHass } from "./utils/types";
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
 
 /** Presentation-only banding for the 0-100% recovery balance. */
-function balanceBand(pct: number): { colorVar: string; label: string } {
-  if (pct >= 60) return { colorVar: "var(--sc-good)", label: "Well recovered" };
-  if (pct >= 30) return { colorVar: "var(--sc-warn)", label: "Partially recovered" };
-  return { colorVar: "var(--sc-bad)", label: "Low recovery" };
+function balanceBand(hass: SuuntoHass | undefined, pct: number): { colorVar: string; label: string } {
+  if (pct >= 60) return { colorVar: "var(--sc-good)", label: t(hass, "band.recovery.well") };
+  if (pct >= 30) return { colorVar: "var(--sc-warn)", label: t(hass, "band.recovery.partial") };
+  return { colorVar: "var(--sc-bad)", label: t(hass, "band.recovery.low") };
 }
 
 @customElement("suunto-recovery-card")
@@ -49,7 +51,7 @@ export class SuuntoRecoveryCard extends SuuntoBaseCard {
 
     const balance = get("recovery_balance");
     if (!balance || UNAVAILABLE_STATES.has(balance.state)) {
-      return this._message("mdi:battery-heart-variant", "No recovery data yet");
+      return this._message("mdi:battery-heart-variant", t(hass, "empty.recovery.title"));
     }
 
     const isRecovering = get("is_recovering");
@@ -59,15 +61,15 @@ export class SuuntoRecoveryCard extends SuuntoBaseCard {
     const workoutToday = get("workout_today");
 
     const balanceValue = Number(balance.state);
-    const band = balanceBand(balanceValue);
+    const band = balanceBand(hass, balanceValue);
 
     const recovering = isRecovering?.state === "on";
-    let statusText = "Fully recovered";
+    let statusText = t(hass, "band.recovery.fully");
     if (recovering && recoveryUntil && !UNAVAILABLE_STATES.has(recoveryUntil.state)) {
       const remainingMs = new Date(recoveryUntil.state).getTime() - Date.now();
       if (remainingMs > 0) {
         const d = formatDuration(remainingMs / 60000);
-        statusText = `Recovering · ${d.value} ${d.unit} left`;
+        statusText = t(hass, "band.recovery.recovering", { time: `${d.value} ${d.unit}` });
       }
     }
 
@@ -76,7 +78,7 @@ export class SuuntoRecoveryCard extends SuuntoBaseCard {
         <div class="header">
           <div class="icon-badge pulse"><ha-icon icon="mdi:battery-heart-variant"></ha-icon></div>
           <div class="title-block">
-            <div class="title">Recovery</div>
+            <div class="title">${t(hass, "card.recovery.title")}</div>
             <div class="subtitle">${statusText}</div>
           </div>
         </div>
@@ -87,7 +89,7 @@ export class SuuntoRecoveryCard extends SuuntoBaseCard {
             <div class="ring-value" style="color:${band.colorVar}">${Math.round(balanceValue)}</div>
           </div>
           <div class="readiness-text">
-            <div class="readiness-label">Recovery balance</div>
+            <div class="readiness-label">${t(hass, "stat.recovery_balance")}</div>
             <div class="readiness-band" style="color:${band.colorVar}">${band.label}</div>
           </div>
         </div>
@@ -96,16 +98,16 @@ export class SuuntoRecoveryCard extends SuuntoBaseCard {
           ? html`
               <div class="stats two">
                 ${stressState && !UNAVAILABLE_STATES.has(stressState.state)
-                  ? this._stat(stressState.state, "", "Stress level")
+                  ? this._stat(stressState.state, "", t(hass, "stat.stress_level"))
                   : nothing}
                 ${recoveryTime && !UNAVAILABLE_STATES.has(recoveryTime.state)
-                  ? this._stat(Number(recoveryTime.state).toFixed(1), "h", "Recovery window")
+                  ? this._stat(Number(recoveryTime.state).toFixed(1), "h", t(hass, "stat.recovery_window"))
                   : nothing}
               </div>
             `
           : nothing}
         ${workoutToday?.state === "on"
-          ? html`<div class="footer"><span class="chip accent"><ha-icon icon="mdi:calendar-check"></ha-icon>Workout logged today</span></div>`
+          ? html`<div class="footer"><span class="chip accent"><ha-icon icon="mdi:calendar-check"></ha-icon>${t(hass, "chip.workout_logged_today")}</span></div>`
           : nothing}
       </ha-card>
     `;

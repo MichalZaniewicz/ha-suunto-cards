@@ -4,6 +4,7 @@ import type { LovelaceCardEditor } from "custom-card-helpers";
 import type { SuuntoCardConfig } from "./utils/types";
 import { SuuntoBaseCard } from "./utils/base-card";
 import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
+import { t } from "./utils/localize";
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
 
@@ -45,7 +46,7 @@ export class SuuntoTodayCard extends SuuntoBaseCard {
     const isRecovering = get("is_recovering");
 
     if (!steps && !energy && !currentHr) {
-      return this._message("mdi:pulse", "No live data yet");
+      return this._message("mdi:pulse", t(hass, "empty.today.title"));
     }
 
     const hrValue =
@@ -56,17 +57,21 @@ export class SuuntoTodayCard extends SuuntoBaseCard {
         <div class="header">
           <div class="icon-badge pulse"><ha-icon icon="mdi:pulse"></ha-icon></div>
           <div class="title-block">
-            <div class="title">Today</div>
-            <div class="subtitle">Live from your watch</div>
+            <div class="title">${t(hass, "card.today.title")}</div>
+            <div class="subtitle">${t(hass, "card.today.subtitle")}</div>
           </div>
         </div>
 
         <div class="stats three">
           ${steps && !UNAVAILABLE_STATES.has(steps.state)
-            ? this._stat(Number(steps.state).toLocaleString(hass.language), "", "Steps")
+            ? this._stat(Number(steps.state).toLocaleString(hass.language), "", t(hass, "stat.steps"))
             : nothing}
           ${energy && !UNAVAILABLE_STATES.has(energy.state)
-            ? this._stat(Math.round(Number(energy.state)).toLocaleString(hass.language), "kcal", "Energy")
+            ? this._stat(
+                Math.round(Number(energy.state)).toLocaleString(hass.language),
+                "kcal",
+                t(hass, "stat.energy")
+              )
             : nothing}
           ${hrValue !== undefined
             ? html`
@@ -74,7 +79,7 @@ export class SuuntoTodayCard extends SuuntoBaseCard {
                   <div class="stat-value">
                     <span class="live-dot"></span>${hrValue}<span class="unit">bpm</span>
                   </div>
-                  <div class="stat-label">Heart rate</div>
+                  <div class="stat-label">${t(hass, "stat.heart_rate")}</div>
                 </div>
               `
             : nothing}
@@ -84,10 +89,10 @@ export class SuuntoTodayCard extends SuuntoBaseCard {
           ? html`
               <div class="footer">
                 ${workoutToday?.state === "on"
-                  ? html`<span class="chip accent"><ha-icon icon="mdi:calendar-check"></ha-icon>Workout today</span>`
+                  ? html`<span class="chip accent"><ha-icon icon="mdi:calendar-check"></ha-icon>${t(hass, "chip.workout_today")}</span>`
                   : nothing}
                 ${isRecovering?.state === "on"
-                  ? html`<span class="chip"><ha-icon icon="mdi:bed-clock"></ha-icon>Recovering</span>`
+                  ? html`<span class="chip"><ha-icon icon="mdi:bed-clock"></ha-icon>${t(hass, "chip.recovering")}</span>`
                   : nothing}
               </div>
             `

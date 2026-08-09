@@ -2,8 +2,22 @@ import type { SuuntoHass } from "./types";
 
 export const SUUNTO_PLATFORM = "suunto_app";
 
-/** Thrown for configuration problems that should render as a friendly card error, not a crash. */
-export class SuuntoConfigError extends Error {}
+export type SuuntoConfigErrorCode = "no_device" | "multiple_devices" | "device_missing";
+
+/**
+ * Thrown for configuration problems that should render as a friendly card
+ * error, not a crash. Carries a code rather than a pre-localized message -
+ * the message text is decided at the point that has access to `hass` (see
+ * `SuuntoBaseCard._resolveEntities`), so it can be translated.
+ */
+export class SuuntoConfigError extends Error {
+  constructor(
+    public readonly code: SuuntoConfigErrorCode,
+    public readonly deviceId?: string
+  ) {
+    super(code);
+  }
+}
 
 /** All device_ids that own at least one suunto_app entity. */
 export function findSuuntoDeviceIds(hass: SuuntoHass): string[] {
@@ -26,20 +40,16 @@ export function resolveSuuntoDevice(hass: SuuntoHass, configuredDeviceId?: strin
 
   if (configuredDeviceId) {
     if (!devices.includes(configuredDeviceId)) {
-      throw new SuuntoConfigError(
-        `Configured device "${configuredDeviceId}" has no suunto_app entities.`
-      );
+      throw new SuuntoConfigError("device_missing", configuredDeviceId);
     }
     return configuredDeviceId;
   }
 
   if (devices.length === 1) return devices[0];
   if (devices.length === 0) {
-    throw new SuuntoConfigError("No Suunto device found - is the suunto_app integration set up?");
+    throw new SuuntoConfigError("no_device");
   }
-  throw new SuuntoConfigError(
-    "Multiple Suunto devices found - set \"device_id\" in the card configuration."
-  );
+  throw new SuuntoConfigError("multiple_devices");
 }
 
 /**

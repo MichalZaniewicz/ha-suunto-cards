@@ -6,6 +6,7 @@ import { SuuntoBaseCard } from "./utils/base-card";
 import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
 import { segmentedBar } from "./utils/render-helpers";
 import { activityIcon } from "./utils/icons";
+import { t, tPlural } from "./utils/localize";
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
 const TOP_N = 5;
@@ -64,7 +65,7 @@ export class SuuntoWeekStatsCard extends SuuntoBaseCard {
     const lifetime = get("lifetime_by_activity");
 
     if (!weeklyDistance && !lifetime) {
-      return this._message("mdi:calendar-week", "No workout history yet");
+      return this._message("mdi:calendar-week", t(hass, "empty.week_stats.title"));
     }
 
     const activities: LifetimeActivity[] = (lifetime?.attributes.activities ?? [])
@@ -78,8 +79,8 @@ export class SuuntoWeekStatsCard extends SuuntoBaseCard {
         <div class="header">
           <div class="icon-badge"><ha-icon icon="mdi:calendar-week"></ha-icon></div>
           <div class="title-block">
-            <div class="title">This Week &amp; Lifetime</div>
-            <div class="subtitle">Last 7 days</div>
+            <div class="title">${t(hass, "card.week_stats.title")}</div>
+            <div class="subtitle">${t(hass, "card.week_stats.subtitle")}</div>
           </div>
         </div>
 
@@ -87,13 +88,13 @@ export class SuuntoWeekStatsCard extends SuuntoBaseCard {
           ? html`
               <div class="stats three">
                 ${weeklyDistance && !UNAVAILABLE_STATES.has(weeklyDistance.state)
-                  ? this._stat(Number(weeklyDistance.state).toFixed(1), "km", "Distance")
+                  ? this._stat(Number(weeklyDistance.state).toFixed(1), "km", t(hass, "stat.distance"))
                   : nothing}
                 ${weeklyTime && !UNAVAILABLE_STATES.has(weeklyTime.state)
-                  ? this._stat(Number(weeklyTime.state).toFixed(1), "h", "Time")
+                  ? this._stat(Number(weeklyTime.state).toFixed(1), "h", t(hass, "stat.time"))
                   : nothing}
                 ${workouts7d && !UNAVAILABLE_STATES.has(workouts7d.state)
-                  ? this._stat(workouts7d.state, "", "Workouts")
+                  ? this._stat(workouts7d.state, "", t(hass, "stat.workouts"))
                   : nothing}
               </div>
             `
@@ -103,7 +104,7 @@ export class SuuntoWeekStatsCard extends SuuntoBaseCard {
           ? html`
               <hr />
               <div class="lifetime">
-                <div class="lifetime-title">Lifetime by activity</div>
+                <div class="lifetime-title">${t(hass, "card.week_stats.lifetime_title")}</div>
                 ${segmentedBar(
                   top.map((a, i) => ({
                     flexGrow: a.distance_km,
@@ -129,14 +130,16 @@ export class SuuntoWeekStatsCard extends SuuntoBaseCard {
                     `;
                   })}
                   ${rest > 0
-                    ? html`<div class="row muted">+${rest} more activity type${rest === 1 ? "" : "s"}</div>`
+                    ? html`<div class="row muted">
+                        ${tPlural(hass, rest, "chip.more_activity_one", "chip.more_activity_other")}
+                      </div>`
                     : nothing}
                 </div>
               </div>
             `
           : nothing}
         ${workouts30d && !UNAVAILABLE_STATES.has(workouts30d.state)
-          ? html`<div class="footer"><span class="chip">${workouts30d.state} workouts in the last 30 days</span></div>`
+          ? html`<div class="footer"><span class="chip">${t(hass, "chip.workouts_30d", { count: workouts30d.state })}</span></div>`
           : nothing}
       </ha-card>
     `;

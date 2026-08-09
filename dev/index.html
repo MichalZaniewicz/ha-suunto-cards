@@ -34,14 +34,17 @@
     color: var(--primary-text-color);
     font-size: 1.1rem;
   }
-  button#toggle {
+  button#toggle,
+  select#lang {
     margin-bottom: 20px;
+    margin-right: 8px;
     padding: 6px 14px;
     border-radius: 999px;
     border: 1px solid var(--divider-color);
     background: var(--card-background-color);
     color: var(--primary-text-color);
     cursor: pointer;
+    font-family: inherit;
   }
   .section {
     color: var(--secondary-text-color);
@@ -63,6 +66,16 @@
 <body>
   <h1>suunto-cards dev harness (mock hass, no live HA needed)</h1>
   <button id="toggle" type="button">Toggle dark mode</button>
+  <select id="lang">
+    <option value="en">English</option>
+    <option value="pl">Polski</option>
+    <option value="de">Deutsch</option>
+    <option value="pt">Português</option>
+    <option value="fr">Français</option>
+    <option value="es">Español</option>
+    <option value="it">Italiano</option>
+    <option value="nl">Nederlands</option>
+  </select>
 
   <div class="section">Happy path (full device)</div>
   <div class="grid" id="full"></div>
@@ -339,6 +352,13 @@
         const dark = document.body.classList.contains("dark");
         for (const el of document.querySelectorAll("[id] > div > *:last-child")) {
           if (el.hass) el.hass = { ...el.hass, themes: { darkMode: dark } };
+        }
+      });
+
+      document.getElementById("lang").addEventListener("change", (ev) => {
+        const language = ev.target.value;
+        for (const el of document.querySelectorAll("[id] > div > *:last-child")) {
+          if (el.hass) el.hass = { ...el.hass, language };
         }
       });
     }

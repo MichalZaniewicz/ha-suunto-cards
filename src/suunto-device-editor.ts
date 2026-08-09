@@ -3,6 +3,7 @@ import { customElement, property, state } from "lit/decorators.js";
 import { fireEvent } from "custom-card-helpers";
 import type { SuuntoHass, SuuntoCardConfig } from "./utils/types";
 import { findSuuntoDeviceIds } from "./utils/entities";
+import { t } from "./utils/localize";
 
 /**
  * One generic visual editor shared by every Suunto card - every widget's
@@ -24,18 +25,18 @@ export class SuuntoDeviceEditor extends LitElement {
 
     const devices = findSuuntoDeviceIds(this.hass);
     if (devices.length <= 1) {
-      return html`<div class="hint">This card auto-detects your Suunto device - no configuration needed.</div>`;
+      return html`<div class="hint">${t(this.hass, "editor.auto_detect")}</div>`;
     }
 
     return html`
       <ha-device-picker
         .hass=${this.hass}
         .value=${this._config.device_id ?? ""}
-        .label=${"Suunto device"}
+        .label=${t(this.hass, "editor.device_label")}
         .includeDeviceClasses=${undefined}
         @value-changed=${this._deviceChanged}
       ></ha-device-picker>
-      <div class="hint">Multiple Suunto devices were found - pick which one this card should read.</div>
+      <div class="hint">${t(this.hass, "editor.pick_device")}</div>
     `;
   }
 
