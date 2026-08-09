@@ -102,4 +102,36 @@ export const pl: Record<keyof typeof en, string> = {
   "editor.auto_detect": "Ta karta automatycznie wykrywa Twoje urządzenie Suunto - konfiguracja nie jest potrzebna.",
   "editor.pick_device": "Znaleziono wiele urządzeń Suunto - wybierz, z którego ta karta ma korzystać.",
   "editor.device_label": "Urządzenie Suunto",
+
+  "card.lifetime.title": "Statystyki życiowe",
+  "card.lifetime.subtitle": "Od początku",
+  "stat.active_days": "Aktywne dni",
+  "empty.lifetime.title": "Brak jeszcze danych życiowych",
+
+  "card.recent_workouts.title": "Ostatnie treningi",
+  "empty.recent_workouts.title": "Brak ostatnich treningów",
+
+  "card.elevation.title": "Przewyższenia i podejścia",
+  "stat.ascent": "Podejście",
+  "stat.descent": "Zejście",
+  "stat.ascent_time": "Czas podejścia",
+  "stat.descent_time": "Czas zejścia",
+  "stat.min_altitude": "Min. wysokość",
+  "stat.max_altitude": "Maks. wysokość",
+  "stat.ascent_rate": "Tempo podejścia",
+  "empty.elevation.title": "Brak danych o przewyższeniach",
+  "empty.elevation.subtitle": "Rejestrują to tylko treningi na zewnątrz z barometrem.",
+
+  "card.location.title": "Lokalizacja startu",
+  "location.open_in_maps": "Otwórz w Mapach",
+  "empty.location.title": "Brak danych lokalizacji",
+  "empty.location.subtitle": "Treningi w pomieszczeniu nie mają punktu startu GPS.",
+
+  "card.fitness.title": "Sprawność",
+  "stat.vo2max": "VO2max",
+  "stat.estimated_vo2max": "Szacowane VO2max",
+  "stat.fitness_age": "Wiek sprawnościowy",
+  "fitness.measured": "Zmierzono {time} · {activity}",
+  "empty.fitness.title": "Brak jeszcze danych o sprawności",
+  "empty.fitness.subtitle": "Suunto oblicza to tylko na podstawie biegania lub marszu.",
 };

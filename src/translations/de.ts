@@ -102,4 +102,36 @@ export const de: Record<keyof typeof en, string> = {
   "editor.auto_detect": "Diese Karte erkennt dein Suunto-Gerät automatisch - keine Konfiguration nötig.",
   "editor.pick_device": "Mehrere Suunto-Geräte gefunden - wähle aus, welches diese Karte verwenden soll.",
   "editor.device_label": "Suunto-Gerät",
+
+  "card.lifetime.title": "Gesamtstatistik",
+  "card.lifetime.subtitle": "Seit Beginn",
+  "stat.active_days": "Aktive Tage",
+  "empty.lifetime.title": "Noch keine Gesamtdaten",
+
+  "card.recent_workouts.title": "Letzte Trainings",
+  "empty.recent_workouts.title": "Keine letzten Trainings",
+
+  "card.elevation.title": "Höhenmeter & Aufstieg",
+  "stat.ascent": "Aufstieg",
+  "stat.descent": "Abstieg",
+  "stat.ascent_time": "Aufstiegszeit",
+  "stat.descent_time": "Abstiegszeit",
+  "stat.min_altitude": "Min. Höhe",
+  "stat.max_altitude": "Max. Höhe",
+  "stat.ascent_rate": "Aufstiegsrate",
+  "empty.elevation.title": "Keine Höhendaten",
+  "empty.elevation.subtitle": "Nur Outdoor-Trainings mit Barometer erfassen dies.",
+
+  "card.location.title": "Startort",
+  "location.open_in_maps": "In Karten öffnen",
+  "empty.location.title": "Keine Standortdaten",
+  "empty.location.subtitle": "Indoor-Trainings haben keinen GPS-Startpunkt.",
+
+  "card.fitness.title": "Fitness",
+  "stat.vo2max": "VO2max",
+  "stat.estimated_vo2max": "Geschätztes VO2max",
+  "stat.fitness_age": "Fitnessalter",
+  "fitness.measured": "Gemessen {time} · {activity}",
+  "empty.fitness.title": "Noch keine Fitnessdaten",
+  "empty.fitness.subtitle": "Suunto berechnet dies nur aus Lauf- oder Gehtrainings.",
 };

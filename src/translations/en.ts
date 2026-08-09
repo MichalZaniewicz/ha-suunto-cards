@@ -119,4 +119,41 @@ export const en = {
   "editor.auto_detect": "This card auto-detects your Suunto device - no configuration needed.",
   "editor.pick_device": "Multiple Suunto devices were found - pick which one this card should read.",
   "editor.device_label": "Suunto device",
+
+  // -- card 8: lifetime totals --
+  "card.lifetime.title": "Lifetime Totals",
+  "card.lifetime.subtitle": "Since you started",
+  "stat.active_days": "Active days",
+  "empty.lifetime.title": "No lifetime data yet",
+
+  // -- card 9: recent workouts --
+  "card.recent_workouts.title": "Recent Workouts",
+  "empty.recent_workouts.title": "No recent workouts",
+
+  // -- card 10: elevation & climbing --
+  "card.elevation.title": "Elevation & Climbing",
+  "stat.ascent": "Ascent",
+  "stat.descent": "Descent",
+  "stat.ascent_time": "Ascent time",
+  "stat.descent_time": "Descent time",
+  "stat.min_altitude": "Min altitude",
+  "stat.max_altitude": "Max altitude",
+  "stat.ascent_rate": "Ascent rate",
+  "empty.elevation.title": "No elevation data",
+  "empty.elevation.subtitle": "Only outdoor workouts with a barometer record this.",
+
+  // -- card 11: start location --
+  "card.location.title": "Start Location",
+  "location.open_in_maps": "Open in Maps",
+  "empty.location.title": "No location data",
+  "empty.location.subtitle": "Indoor workouts have no GPS start point.",
+
+  // -- card 12: fitness / VO2max --
+  "card.fitness.title": "Fitness",
+  "stat.vo2max": "VO2max",
+  "stat.estimated_vo2max": "Estimated VO2max",
+  "stat.fitness_age": "Fitness age",
+  "fitness.measured": "Measured {time} · {activity}",
+  "empty.fitness.title": "No fitness data yet",
+  "empty.fitness.subtitle": "Suunto computes this from running or walking workouts only.",
 } as const;

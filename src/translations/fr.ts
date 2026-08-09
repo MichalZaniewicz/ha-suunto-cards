@@ -102,4 +102,36 @@ export const fr: Record<keyof typeof en, string> = {
   "editor.auto_detect": "Cette carte détecte automatiquement ton appareil Suunto - aucune configuration nécessaire.",
   "editor.pick_device": "Plusieurs appareils Suunto trouvés - choisis celui que cette carte doit utiliser.",
   "editor.device_label": "Appareil Suunto",
+
+  "card.lifetime.title": "Cumul Total",
+  "card.lifetime.subtitle": "Depuis le début",
+  "stat.active_days": "Jours actifs",
+  "empty.lifetime.title": "Pas encore de cumul total",
+
+  "card.recent_workouts.title": "Séances Récentes",
+  "empty.recent_workouts.title": "Aucune séance récente",
+
+  "card.elevation.title": "Dénivelé et Montées",
+  "stat.ascent": "Dénivelé positif",
+  "stat.descent": "Dénivelé négatif",
+  "stat.ascent_time": "Temps de montée",
+  "stat.descent_time": "Temps de descente",
+  "stat.min_altitude": "Altitude min.",
+  "stat.max_altitude": "Altitude max.",
+  "stat.ascent_rate": "Vitesse ascensionnelle",
+  "empty.elevation.title": "Aucune donnée d'altitude",
+  "empty.elevation.subtitle": "Seules les séances en extérieur avec un altimètre enregistrent ceci.",
+
+  "card.location.title": "Lieu de Départ",
+  "location.open_in_maps": "Ouvrir dans Maps",
+  "empty.location.title": "Aucune donnée de localisation",
+  "empty.location.subtitle": "Les séances en intérieur n'ont pas de point de départ GPS.",
+
+  "card.fitness.title": "Forme Physique",
+  "stat.vo2max": "VO2max",
+  "stat.estimated_vo2max": "VO2max estimé",
+  "stat.fitness_age": "Âge physique",
+  "fitness.measured": "Mesuré il y a {time} · {activity}",
+  "empty.fitness.title": "Pas encore de données de forme physique",
+  "empty.fitness.subtitle": "Suunto calcule ceci uniquement à partir des séances de course ou de marche.",
 };

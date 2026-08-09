@@ -6,6 +6,12 @@ import "./suunto-recovery-card";
 import "./suunto-training-load-card";
 import "./suunto-week-stats-card";
 import "./suunto-today-card";
+import "./suunto-lifetime-card";
+import "./suunto-recent-workouts-card";
+import "./suunto-elevation-card";
+import "./suunto-location-card";
+import "./suunto-fitness-card";
+import "./suunto-last-workout-tile-card";
 
 interface CustomCardEntry {
   type: string;
@@ -64,12 +70,48 @@ window.customCards.push(
     name: "Suunto - Today",
     description: "Live steps, energy and heart rate snapshot for today.",
     preview: true,
+  },
+  {
+    type: "suunto-lifetime-card",
+    name: "Suunto - Lifetime Totals",
+    description: "Total distance, time, energy, workouts and active days since you started.",
+    preview: true,
+  },
+  {
+    type: "suunto-recent-workouts-card",
+    name: "Suunto - Recent Workouts",
+    description: "A scrollable log of your last 15 workouts - activity, distance and duration.",
+    preview: true,
+  },
+  {
+    type: "suunto-elevation-card",
+    name: "Suunto - Elevation & Climbing",
+    description: "Ascent, descent, climb/descend times, min/max altitude and ascent rate for your last workout.",
+    preview: true,
+  },
+  {
+    type: "suunto-location-card",
+    name: "Suunto - Start Location",
+    description: "Where your last workout started, with a one-tap link to open it in Maps.",
+    preview: true,
+  },
+  {
+    type: "suunto-fitness-card",
+    name: "Suunto - Fitness",
+    description: "VO2max, estimated VO2max and fitness age, with when they were last measured.",
+    preview: true,
+  },
+  {
+    type: "suunto-last-workout-tile-card",
+    name: "Suunto - Last Workout (compact)",
+    description: "A single-row summary of your last workout, for denser dashboards.",
+    preview: true,
   }
 );
 
 // eslint-disable-next-line no-console
 console.info(
-  "%c SUUNTO-CARDS %c 7 cards loaded ",
+  "%c SUUNTO-CARDS %c 13 cards loaded ",
   "color: #fff; background: #d98a1d; font-weight: 700; border-radius: 3px 0 0 3px; padding: 2px 6px;",
   "color: #d98a1d; background: transparent; font-weight: 500;"
 );

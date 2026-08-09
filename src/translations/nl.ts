@@ -102,4 +102,36 @@ export const nl: Record<keyof typeof en, string> = {
   "editor.auto_detect": "Deze kaart detecteert automatisch je Suunto-apparaat - geen configuratie nodig.",
   "editor.pick_device": "Meerdere Suunto-apparaten gevonden - kies welke deze kaart moet gebruiken.",
   "editor.device_label": "Suunto-apparaat",
+
+  "card.lifetime.title": "Totalen Aller Tijden",
+  "card.lifetime.subtitle": "Sinds het begin",
+  "stat.active_days": "Actieve dagen",
+  "empty.lifetime.title": "Nog geen totalen",
+
+  "card.recent_workouts.title": "Recente Trainingen",
+  "empty.recent_workouts.title": "Geen recente trainingen",
+
+  "card.elevation.title": "Hoogtemeters & Klimmen",
+  "stat.ascent": "Stijging",
+  "stat.descent": "Daling",
+  "stat.ascent_time": "Stijgtijd",
+  "stat.descent_time": "Daaltijd",
+  "stat.min_altitude": "Min. hoogte",
+  "stat.max_altitude": "Max. hoogte",
+  "stat.ascent_rate": "Stijgsnelheid",
+  "empty.elevation.title": "Geen hoogtegegevens",
+  "empty.elevation.subtitle": "Alleen buitentrainingen met een barometer registreren dit.",
+
+  "card.location.title": "Startlocatie",
+  "location.open_in_maps": "Openen in Maps",
+  "empty.location.title": "Geen locatiegegevens",
+  "empty.location.subtitle": "Binnentrainingen hebben geen GPS-startpunt.",
+
+  "card.fitness.title": "Fitheid",
+  "stat.vo2max": "VO2max",
+  "stat.estimated_vo2max": "Geschat VO2max",
+  "stat.fitness_age": "Fitheidsleeftijd",
+  "fitness.measured": "Gemeten {time} geleden · {activity}",
+  "empty.fitness.title": "Nog geen fitheidsgegevens",
+  "empty.fitness.subtitle": "Suunto berekent dit alleen op basis van hardloop- of wandeltrainingen.",
 };

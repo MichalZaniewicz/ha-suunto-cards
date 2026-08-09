@@ -190,14 +190,6 @@ export class SuuntoWeekStatsCard extends SuuntoBaseCard {
         color: var(--secondary-text-color);
         font-size: 0.76rem;
       }
-      .icon-badge.tiny {
-        width: 24px;
-        height: 24px;
-        border-radius: 7px;
-      }
-      .icon-badge.tiny ha-icon {
-        --mdc-icon-size: 14px;
-      }
       .name {
         text-transform: capitalize;
         font-weight: 500;

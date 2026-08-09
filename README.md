@@ -6,7 +6,7 @@ cards to its 74 sensors by hand.
 
 [![Open your Home Assistant instance and open this repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=MichalZaniewicz&repository=ha-suunto-cards&category=plugin)
 
-![Preview of all seven Suunto cards](docs/screenshots/cards-overview-dark.png)
+![Preview of the Suunto cards](docs/screenshots/cards-overview-dark.png)
 
 > [!TIP]
 > ⭐ **Enjoying these cards?** Every star is real motivation to keep building the family out :)
@@ -28,6 +28,12 @@ into <ha-alert> and drops every child whose textContent is empty, which silently
 | Training Load | `custom:suunto-training-load-card` | Fitness/Fatigue/Form (CTL/ATL/TSB) with a 30-day trend line, plus ACWR and its safe-zone banding |
 | Week &amp; Lifetime | `custom:suunto-week-stats-card` | This week's distance/time/workout count, and a lifetime breakdown by activity |
 | Today | `custom:suunto-today-card` | Live steps, energy and heart rate for today |
+| Lifetime Totals | `custom:suunto-lifetime-card` | Total distance, time, energy, workouts and active days since you started |
+| Recent Workouts | `custom:suunto-recent-workouts-card` | A scrollable log of your last 15 workouts - activity, distance and duration |
+| Elevation &amp; Climbing | `custom:suunto-elevation-card` | Ascent, descent, climb/descend times, min/max altitude and ascent rate for your last workout |
+| Start Location | `custom:suunto-location-card` | Where your last workout started, with a one-tap link to open it in Maps |
+| Fitness | `custom:suunto-fitness-card` | VO2max, estimated VO2max and fitness age, with when they were last measured |
+| Last Workout (compact) | `custom:suunto-last-workout-tile-card` | A single-row summary of your last workout, for denser dashboards |
 
 Each card auto-detects your Suunto device - **zero YAML required** for the common case of one
 Suunto account. If you ever have more than one, the card's visual editor shows a device picker.

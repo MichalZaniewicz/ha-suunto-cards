@@ -93,6 +93,14 @@ export const suuntoSharedStyles = css`
     background: var(--sc-pulse-bg);
     color: var(--sc-pulse);
   }
+  .icon-badge.tiny {
+    width: 24px;
+    height: 24px;
+    border-radius: 7px;
+  }
+  .icon-badge.tiny ha-icon {
+    --mdc-icon-size: 14px;
+  }
   .title-block {
     min-width: 0;
     flex: 1;
@@ -141,6 +149,14 @@ export const suuntoSharedStyles = css`
     width: 100%;
     height: 56px;
     display: block;
+  }
+
+  .scroll-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 320px;
+    overflow-y: auto;
   }
 
   .dot {

@@ -102,4 +102,36 @@ export const es: Record<keyof typeof en, string> = {
   "editor.auto_detect": "Esta tarjeta detecta automáticamente tu dispositivo Suunto - no se necesita configuración.",
   "editor.pick_device": "Se encontraron varios dispositivos Suunto - elige cuál debe usar esta tarjeta.",
   "editor.device_label": "Dispositivo Suunto",
+
+  "card.lifetime.title": "Totales Históricos",
+  "card.lifetime.subtitle": "Desde el inicio",
+  "stat.active_days": "Días activos",
+  "empty.lifetime.title": "Aún sin totales históricos",
+
+  "card.recent_workouts.title": "Entrenamientos Recientes",
+  "empty.recent_workouts.title": "Sin entrenamientos recientes",
+
+  "card.elevation.title": "Altitud y Ascensos",
+  "stat.ascent": "Ascenso",
+  "stat.descent": "Descenso",
+  "stat.ascent_time": "Tiempo de ascenso",
+  "stat.descent_time": "Tiempo de descenso",
+  "stat.min_altitude": "Altitud mín.",
+  "stat.max_altitude": "Altitud máx.",
+  "stat.ascent_rate": "Velocidad de ascenso",
+  "empty.elevation.title": "Sin datos de altitud",
+  "empty.elevation.subtitle": "Solo los entrenamientos al aire libre con altímetro registran esto.",
+
+  "card.location.title": "Ubicación de Inicio",
+  "location.open_in_maps": "Abrir en Maps",
+  "empty.location.title": "Sin datos de ubicación",
+  "empty.location.subtitle": "Los entrenamientos en interiores no tienen punto de inicio GPS.",
+
+  "card.fitness.title": "Forma Física",
+  "stat.vo2max": "VO2max",
+  "stat.estimated_vo2max": "VO2max estimado",
+  "stat.fitness_age": "Edad física",
+  "fitness.measured": "Medido hace {time} · {activity}",
+  "empty.fitness.title": "Aún sin datos de forma física",
+  "empty.fitness.subtitle": "Suunto calcula esto solo a partir de entrenamientos de carrera o caminata.",
 };

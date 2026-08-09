@@ -138,6 +138,13 @@
       "mdi:alert-circle-outline": '<circle cx="12" cy="12" r="8.5"/><path d="M12 8v5"/><circle cx="12" cy="16" r="0.6" fill="currentColor" stroke="none"/>',
       "mdi:bed-clock": '<path d="M3 18v-5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v5"/><path d="M3 18v2M21 18v2"/><path d="M5 11V8a2 2 0 0 1 2-2h3"/><circle cx="17" cy="7" r="3.4"/><path d="M17 5.5V7l1.2.8"/>',
       "mdi:weather-windy": '<path d="M3 8h11a2.2 2.2 0 1 0-2.2-2.6"/><path d="M3 12h15a2.2 2.2 0 1 1-2.2 2.6"/><path d="M3 16h9"/>',
+      "mdi:trophy-variant": '<path d="M7 4h10v4a5 5 0 0 1-10 0V4Z"/><path d="M7 5H4.5A2.5 2.5 0 0 0 7 9"/><path d="M17 5h2.5A2.5 2.5 0 0 1 17 9"/><path d="M12 13v3"/><path d="M9 20h6"/>',
+      "mdi:format-list-bulleted": '<circle cx="4" cy="6" r="1" fill="currentColor" stroke="none"/><path d="M8 6h12"/><circle cx="4" cy="12" r="1" fill="currentColor" stroke="none"/><path d="M8 12h12"/><circle cx="4" cy="18" r="1" fill="currentColor" stroke="none"/><path d="M8 18h12"/>',
+      "mdi:image-filter-hdr": '<path d="M3 18l5-7 3 4 4-6 6 9Z"/>',
+      "mdi:map-marker": '<path d="M12 21s7-6.5 7-11.5A7 7 0 0 0 5 9.5C5 14.5 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.2"/>',
+      "mdi:open-in-new": '<path d="M9 5H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"/><path d="M14 4h6v6"/><path d="M20 4 11 13"/>',
+      "mdi:lungs": '<path d="M12 3v7"/><path d="M12 10c-1 0-1.5 1-1.5 3v4c0 1.5-1 2.5-2.5 2.5S5.5 18.5 5.5 17v-5c0-2 1-3.5 3-3.5"/><path d="M12 10c1 0 1.5 1 1.5 3v4c0 1.5 1 2.5 2.5 2.5S18.5 18.5 18.5 17v-5c0-2-1-3.5-3-3.5"/>',
+      "mdi:trending-up": '<path d="M4 16l5-4.5 3.3 3 7-8"/><path d="M14.5 6.5h5v5"/>',
     };
     const DEFAULT_ICON = '<circle cx="12" cy="12" r="8.5"/>';
     const WEATHER_ICON = '<path d="M7 18h10a3.5 3.5 0 0 0 0-7 5 5 0 0 0-9.6-1.5A3.8 3.8 0 0 0 7 18Z"/>';
@@ -296,6 +303,35 @@
           daily_steps: { state: 8412 },
           daily_energy: { state: 612 },
           current_hr: { state: 78 },
+          lifetime_distance: { state: 6801 },
+          lifetime_time: { state: 623 },
+          lifetime_energy: { state: 185000 },
+          lifetime_workouts: { state: 478 },
+          lifetime_days: { state: 312 },
+          workouts_recent: {
+            state: 3,
+            attributes: {
+              workouts: [
+                { start: nowIso(-2 * 3600 * 1000), activity: "Cycling", distance_km: 42.3, duration_min: 98, avg_hr: 142, max_hr: 168, tss: 132 },
+                { start: nowIso(-30 * 3600 * 1000), activity: "Gym", distance_km: null, duration_min: 52, avg_hr: 118, max_hr: 145, tss: 61 },
+                { start: nowIso(-78 * 3600 * 1000), activity: "Trekking", distance_km: 12.8, duration_min: 165, avg_hr: 126, max_hr: 158, tss: 110 },
+              ],
+            },
+          },
+          last_ascent: { state: 842 },
+          last_descent: { state: 810 },
+          last_ascent_time: { state: 38 },
+          last_descent_time: { state: 22 },
+          last_min_altitude: { state: 68 },
+          last_max_altitude: { state: 412 },
+          last_ascent_rate: { state: 680 },
+          last_workout_location: {
+            state: "52.40632, 16.92592",
+            attributes: { latitude: 52.40632, longitude: 16.92592 },
+          },
+          vo2max: { state: 49, attributes: { measured_at: nowIso(-20 * 86400000), measured_from: "Walking" } },
+          estimated_vo2max: { state: 49.4, attributes: { measured_at: nowIso(-20 * 86400000), measured_from: "Walking" } },
+          fitness_age: { state: 20, attributes: { measured_at: nowIso(-20 * 86400000), measured_from: "Walking" } },
         },
       });
     }
@@ -334,6 +370,12 @@
       "suunto-training-load-card",
       "suunto-week-stats-card",
       "suunto-today-card",
+      "suunto-lifetime-card",
+      "suunto-recent-workouts-card",
+      "suunto-elevation-card",
+      "suunto-location-card",
+      "suunto-fitness-card",
+      "suunto-last-workout-tile-card",
     ];
 
     function setup() {

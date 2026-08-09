@@ -154,7 +154,7 @@ export class SuuntoLastWorkoutCard extends SuuntoBaseCard {
                     `
                   : nothing}
                 ${calPerKm
-                  ? this._secondary(`${Math.round(Number(calPerKm.state))}`, "kcal/km", t(hass, "stat.energy"))
+                  ? this._secondary(`${Math.round(Number(calPerKm.state))}`, t(hass, "stat.energy"), "kcal/km")
                   : nothing}
               </div>
             `
@@ -212,11 +212,11 @@ export class SuuntoLastWorkoutCard extends SuuntoBaseCard {
     `;
   }
 
-  private _secondary(value: string, unit: string, label?: string) {
+  private _secondary(value: string, label: string, unit?: string) {
     return html`
       <div class="sec-item">
-        <div class="sec-value">${value}${label ? nothing : html`<span class="sec-unit">${unit}</span>`}</div>
-        <div class="sec-label">${label ?? unit}</div>
+        <div class="sec-value">${value}${unit ? html` <span class="sec-unit">${unit}</span>` : nothing}</div>
+        <div class="sec-label">${label}</div>
       </div>
     `;
   }
