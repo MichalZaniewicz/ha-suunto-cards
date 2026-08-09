@@ -6,10 +6,7 @@ cards to its 74 sensors by hand.
 
 [![Open your Home Assistant instance and open this repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=MichalZaniewicz&repository=ha-suunto-cards&category=plugin)
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/cards-overview-dark.png">
-  <img src="docs/screenshots/cards-overview-light.png" alt="Preview of all seven Suunto cards">
-</picture>
+![Preview of all seven Suunto cards](docs/screenshots/cards-overview-dark.png)
 
 > [!TIP]
 > ⭐ **Enjoying these cards?** Every star is real motivation to keep building the family out :)
