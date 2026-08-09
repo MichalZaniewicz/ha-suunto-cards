@@ -4,6 +4,7 @@ import type { LovelaceCardEditor } from "custom-card-helpers";
 import type { SuuntoCardConfig, SuuntoHass } from "./utils/types";
 import { SuuntoBaseCard } from "./utils/base-card";
 import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
+import { activityIcon } from "./utils/icons";
 import { formatRelative } from "./utils/format";
 import { t } from "./utils/localize";
 
@@ -14,12 +15,30 @@ interface HuiMapCardElement extends HTMLElement {
   setConfig: (config: Record<string, unknown>) => void;
 }
 
+interface CardHelpers {
+  createCardElement: (config: Record<string, unknown>) => HuiMapCardElement;
+}
+
+declare global {
+  interface Window {
+    // Documented HA frontend API for embedding a native Lovelace card inside
+    // a custom one - unlike a plain customElements.get() check, this actually
+    // triggers the (code-split, lazy-loaded) card module to load if it hasn't
+    // been already. Dashboards that never otherwise use `type: map` never
+    // trigger that load on their own, which is exactly the gap that made the
+    // embedded map work in the card editor preview (already warm) but not
+    // after a fresh page load.
+    loadCardHelpers?: () => Promise<CardHelpers>;
+  }
+}
+
 @customElement("suunto-location-card")
 export class SuuntoLocationCard extends SuuntoBaseCard {
   @state() private _config?: SuuntoCardConfig;
+  @state() private _mapEl?: HuiMapCardElement;
 
-  private _mapEl?: HuiMapCardElement;
-  private _mapEntityId?: string;
+  private _mapKey?: string;
+  private _mapLoading = false;
 
   public static getConfigElement(): LovelaceCardEditor {
     return document.createElement("suunto-device-editor") as LovelaceCardEditor;
@@ -60,7 +79,10 @@ export class SuuntoLocationCard extends SuuntoBaseCard {
     const activity = get("last_activity");
     const start = get("last_workout_start");
     const mapsUrl = `https://www.google.com/maps?q=${lat},${lon}`;
-    const mapEl = entityId ? this._getMapElement(entityId) : undefined;
+    const markerIcon = activityIcon(activity?.state);
+
+    if (entityId) void this._ensureMapElement(entityId, markerIcon);
+    if (this._mapEl) this._mapEl.hass = hass;
 
     return html`
       <ha-card class="static">
@@ -76,7 +98,9 @@ export class SuuntoLocationCard extends SuuntoBaseCard {
           </div>
         </div>
 
-        ${mapEl ? html`<div class="map-wrap">${mapEl}</div>` : nothing}
+        ${this._mapEl && this._mapKey === `${entityId}:${markerIcon}`
+          ? html`<div class="map-wrap">${this._mapEl}</div>`
+          : nothing}
 
         <div class="footer-row">
           <div class="coords">${Number(lat).toFixed(5)}, ${Number(lon).toFixed(5)}</div>
@@ -92,29 +116,62 @@ export class SuuntoLocationCard extends SuuntoBaseCard {
   /**
    * Delegates to Home Assistant's own built-in map card (Leaflet + tiles it
    * already ships) instead of bundling a map library - `last_workout_location`
-   * already exposes `latitude`/`longitude`, which is all `hui-map-card` needs.
-   * Cached across renders so the underlying Leaflet map isn't torn down and
-   * rebuilt on every hass update; only `.hass` is refreshed each time.
+   * already exposes `latitude`/`longitude`, which is all the map card needs.
    *
-   * `hui-map-card` is an internal HA element, not a documented public API -
-   * only present inside a real Home Assistant frontend (not this repo's dev
-   * harness), so this degrades to `undefined` there rather than throwing.
+   * Goes through `window.loadCardHelpers()` rather than a bare
+   * `document.createElement("hui-map-card")`: that only works if the map
+   * card's module happens to already be loaded elsewhere (e.g. the card
+   * editor's picker, which is why it worked there but not after a fresh
+   * dashboard load with no other `type: map` card on the page).
+   * `loadCardHelpers()` guarantees the module loads and returns a fully
+   * configured element - no separate `setConfig()` call needed.
+   *
+   * The element is cached across renders (`_mapEl`/`_mapKey`) so the
+   * underlying Leaflet map isn't destroyed and rebuilt on every hass update -
+   * only `.hass` is refreshed (done in `render()`). `auto_fit` centers the
+   * map tightly on the marker instead of leaving it off-center; the entity's
+   * `icon` override shows the workout's activity glyph on the map instead of
+   * the sensor's own generic pin icon.
    */
-  private _getMapElement(entityId: string): HuiMapCardElement | undefined {
-    if (!this._mapEl || this._mapEntityId !== entityId) {
+  private async _ensureMapElement(entityId: string, markerIcon: string): Promise<void> {
+    const key = `${entityId}:${markerIcon}`;
+    if ((this._mapEl && this._mapKey === key) || this._mapLoading) return;
+
+    const config = {
+      type: "map",
+      auto_fit: true,
+      default_zoom: 14,
+      entities: [{ entity: entityId, icon: markerIcon }],
+    };
+
+    const loadHelpers = window.loadCardHelpers;
+    if (!loadHelpers) {
+      // Very old frontend without the helper API - fall back to a direct
+      // check; only works if something else already loaded the module.
       const ctor = customElements.get("hui-map-card");
-      if (!ctor) return undefined;
+      if (!ctor) return;
       try {
         const el = document.createElement("hui-map-card") as HuiMapCardElement;
-        el.setConfig({ type: "map", entities: [entityId], default_zoom: 13 });
+        el.setConfig(config);
+        this._mapKey = key;
         this._mapEl = el;
-        this._mapEntityId = entityId;
       } catch {
-        return undefined;
+        /* leave unset - footer coordinates + link still work */
       }
+      return;
     }
-    this._mapEl.hass = this.hass;
-    return this._mapEl;
+
+    this._mapLoading = true;
+    try {
+      const helpers = await loadHelpers();
+      const el = helpers.createCardElement(config);
+      this._mapKey = key;
+      this._mapEl = el;
+    } catch {
+      /* leave unset - footer coordinates + link still work */
+    } finally {
+      this._mapLoading = false;
+    }
   }
 
   static styles = [
