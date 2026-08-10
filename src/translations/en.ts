@@ -230,4 +230,59 @@ export const en = {
   "stat.sleep_avg_hr": "Sleep avg HR",
   "stat.sleep_min_hr": "Sleep min HR",
   "chip.bedtime": "Bedtime {time}",
+
+  // -- card 25: activity calendar --
+  "card.activity_calendar.title": "Activity Calendar",
+  "card.activity_calendar.subtitle": "Last 6 weeks",
+  "empty.activity_calendar.title": "No workout history yet",
+  "activity_calendar.active_days_one": "{count} active day",
+  "activity_calendar.active_days_other": "{count} active days",
+
+  // -- card 26: workout comparison --
+  "card.workout_comparison.title": "Workout Comparison",
+  "card.workout_comparison.vs": "vs {time}",
+  "empty.workout_comparison.title": "Not enough matching workouts yet",
+  "empty.workout_comparison.subtitle": "Do the same activity twice to see a comparison.",
+  "stat.distance_delta": "Distance ({delta})",
+  "stat.duration_delta": "Duration ({delta})",
+  "stat.avg_hr_delta": "Avg HR ({delta})",
+  "stat.pace_delta": "Pace ({delta})",
+
+  // -- card 27: by the numbers --
+  "card.milestones.title": "By The Numbers",
+  "card.milestones.subtitle": "Since you started",
+  "empty.milestones.title": "No lifetime data yet",
+  "stat.earth_laps": "Earth laps",
+  "stat.marathons": "Marathons",
+  "stat.moon_pct": "% to the Moon",
+  "stat.burgers": "Burgers",
+
+  // -- card 28: training personality --
+  "card.athlete_profile.title": "Training Personality",
+  "empty.athlete_profile.title": "Not enough data yet",
+  "personality.activity.cycling": "Cyclist",
+  "personality.activity.running": "Runner",
+  "personality.activity.trekking": "Hiker",
+  "personality.activity.walking": "Walker",
+  "personality.activity.gym": "Strength Athlete",
+  "personality.activity.swim": "Swimmer",
+  "personality.activity.ski": "Skier",
+  "personality.activity.row": "Rower",
+  "personality.activity.other": "Multi-Sport Athlete",
+  "personality.schedule.weekend": "Weekend Warrior",
+  "personality.schedule.weekday": "Weekday Regular",
+  "personality.schedule.balanced": "Balanced Scheduler",
+  "personality.time.morning": "Early Bird",
+  "personality.time.afternoon": "Midday Mover",
+  "personality.time.evening": "Evening Athlete",
+  "personality.time.night": "Night Owl",
+
+  // -- card 29: pace trend --
+  "card.pace_trend.title": "Pace Trend",
+  "card.pace_trend.subtitle": "{activity} · last {count} sessions",
+  "empty.pace_trend.title": "Not enough matching workouts yet",
+  "empty.pace_trend.subtitle": "Do the same activity a few times to see a trend.",
+  "pace_trend.faster": "Getting faster",
+  "pace_trend.slower": "Getting slower",
+  "pace_trend.steady": "Holding steady",
 } as const;

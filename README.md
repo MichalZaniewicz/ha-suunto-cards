@@ -45,6 +45,11 @@ into <ha-alert> and drops every child whose textContent is empty, which silently
 | Activity Trends | `custom:suunto-activity-trends-card` | Daily steps and energy over the last 14 days |
 | Recovery Balance Trend | `custom:suunto-recovery-balance-trend-card` | Recovery balance and stress level over the last 14 days |
 | Readiness Trend | `custom:suunto-readiness-trend-card` | Your readiness score over the last 30 days |
+| Activity Calendar | `custom:suunto-activity-calendar-card` | A GitHub-style heatmap of your active days over the last 6 weeks |
+| Workout Comparison | `custom:suunto-workout-comparison-card` | Your last workout vs the previous one of the same activity, side by side |
+| By The Numbers | `custom:suunto-milestones-card` | Your lifetime distance and energy converted into fun equivalents |
+| Training Personality | `custom:suunto-athlete-profile-card` | Your dominant sport, schedule pattern and time-of-day, computed from your history |
+| Pace Trend | `custom:suunto-pace-trend-card` | Whether your pace is improving over your recent same-activity workouts |
 
 Each card auto-detects your Suunto device - **zero YAML required** for the common case of one
 Suunto account. If you ever have more than one, the card's visual editor shows a device picker.

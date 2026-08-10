@@ -24,6 +24,11 @@ import "./suunto-just-finished-card";
 import "./suunto-activity-trends-card";
 import "./suunto-recovery-balance-trend-card";
 import "./suunto-readiness-trend-card";
+import "./suunto-activity-calendar-card";
+import "./suunto-workout-comparison-card";
+import "./suunto-milestones-card";
+import "./suunto-athlete-profile-card";
+import "./suunto-pace-trend-card";
 
 interface CustomCardEntry {
   type: string;
@@ -184,12 +189,42 @@ window.customCards.push(
     name: "Suunto - Readiness Trend",
     description: "Your readiness score over the last 30 days.",
     preview: true,
+  },
+  {
+    type: "suunto-activity-calendar-card",
+    name: "Suunto - Activity Calendar",
+    description: "A GitHub-style heatmap of your active days over the last 6 weeks.",
+    preview: true,
+  },
+  {
+    type: "suunto-workout-comparison-card",
+    name: "Suunto - Workout Comparison",
+    description: "Your last workout vs the previous one of the same activity, side by side.",
+    preview: true,
+  },
+  {
+    type: "suunto-milestones-card",
+    name: "Suunto - By The Numbers",
+    description: "Your lifetime distance and energy converted into fun equivalents.",
+    preview: true,
+  },
+  {
+    type: "suunto-athlete-profile-card",
+    name: "Suunto - Training Personality",
+    description: "Your dominant sport, schedule pattern and time-of-day, computed from your history.",
+    preview: true,
+  },
+  {
+    type: "suunto-pace-trend-card",
+    name: "Suunto - Pace Trend",
+    description: "Whether your pace is improving over your recent same-activity workouts.",
+    preview: true,
   }
 );
 
 // eslint-disable-next-line no-console
 console.info(
-  "%c SUUNTO-CARDS %c 24 cards loaded ",
+  "%c SUUNTO-CARDS %c 29 cards loaded ",
   "color: #fff; background: #d98a1d; font-weight: 700; border-radius: 3px 0 0 3px; padding: 2px 6px;",
   "color: #d98a1d; background: transparent; font-weight: 500;"
 );

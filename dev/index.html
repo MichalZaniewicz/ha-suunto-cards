@@ -148,6 +148,12 @@
       "mdi:chart-timeline-variant": '<path d="M3 17l4-6 3 3 4-8 3 5 4-4"/><path d="M3 20h18"/>',
       "mdi:chart-bar": '<path d="M4 20V10M9 20V6M14 20V13M19 20V4"/><path d="M3 20h18"/>',
       "mdi:chart-bell-curve": '<path d="M3 19h18"/><path d="M4 19c2.5-.3 3.5-9 8-9s5.5 8.7 8 9"/>',
+      "mdi:calendar-month": '<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 9h16M8 3v4M16 3v4"/><circle cx="8" cy="13.2" r="0.8" fill="currentColor" stroke="none"/><circle cx="12" cy="13.2" r="0.8" fill="currentColor" stroke="none"/><circle cx="16" cy="13.2" r="0.8" fill="currentColor" stroke="none"/><circle cx="8" cy="17" r="0.8" fill="currentColor" stroke="none"/><circle cx="12" cy="17" r="0.8" fill="currentColor" stroke="none"/>',
+      "mdi:calendar-weekend": '<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 9h16M8 3v4M16 3v4"/><rect x="14" y="11" width="4.3" height="9" fill="currentColor" fill-opacity="0.28" stroke="none"/>',
+      "mdi:compare": '<rect x="3" y="4" width="8.5" height="16" rx="1.5"/><rect x="12.5" y="4" width="8.5" height="16" rx="1.5"/>',
+      "mdi:earth": '<circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c3 2.5 3 15.5 0 18M12 3c-3 2.5-3 15.5 0 18"/>',
+      "mdi:account-star": '<circle cx="10" cy="8" r="3.2"/><path d="M4.5 20c0-3.5 2.5-6 5.5-6s5.5 2.5 5.5 6"/><path d="M18 4.3l.9 1.9 2 .3-1.5 1.4.4 2-1.8-1-1.8 1 .3-2-1.4-1.4 2-.3Z"/>',
+      "mdi:speedometer": '<path d="M12 4a8.5 8.5 0 0 0-7 13.3"/><path d="M20 17.3A8.5 8.5 0 0 0 12 4"/><path d="M12 12l4-3.5"/><circle cx="12" cy="12" r="1.3" fill="currentColor" stroke="none"/>',
       "mdi:target": '<circle cx="12" cy="12" r="8.2"/><circle cx="12" cy="12" r="4.6"/><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/>',
       "mdi:fire": '<path d="M12 21a5.6 5.6 0 0 0 5.6-5.6c0-2.7-1.7-4.2-2.6-6.4-.2 1.8-1.3 2.5-2 1.3-.9-1.5-.4-3.4.4-5.8-3 1.6-4.9 4.3-4.9 7.6 0 1 .2 1.9.7 2.7-1-.4-1.7-1.3-1.9-2.4-.8 1.4-1.2 2.9-1.2 4.6A5.6 5.6 0 0 0 12 21Z"/>',
       "mdi:party-popper": '<path d="M4 20l2.6-7.8 5.2 5.2L4 20Z"/><path d="M12.5 6l1.5 1.5M16.5 4l.5 2M19.5 7.5l-2 1"/><circle cx="17.5" cy="11" r="0.9" fill="currentColor" stroke="none"/><circle cx="13.5" cy="15" r="0.9" fill="currentColor" stroke="none"/>',
@@ -413,12 +419,27 @@
           lifetime_workouts: { state: 478 },
           lifetime_days: { state: 312 },
           workouts_recent: {
-            state: 3,
+            state: 13,
             attributes: {
+              // Spans ~6 weeks with repeated activities (4 Cycling rides with
+              // a deliberately improving pace, for suunto-pace-trend-card /
+              // suunto-workout-comparison-card) and one same-day double
+              // (day -9, two workouts) so suunto-activity-calendar-card shows
+              // more than one intensity level.
               workouts: [
                 { start: nowIso(-2 * 3600 * 1000), activity: "Cycling", distance_km: 42.3, duration_min: 98, avg_hr: 142, max_hr: 168, tss: 132 },
-                { start: nowIso(-30 * 3600 * 1000), activity: "Gym", distance_km: null, duration_min: 52, avg_hr: 118, max_hr: 145, tss: 61 },
-                { start: nowIso(-78 * 3600 * 1000), activity: "Trekking", distance_km: 12.8, duration_min: 165, avg_hr: 126, max_hr: 158, tss: 110 },
+                { start: nowIso(-(24 + 3) * 3600 * 1000), activity: "Gym", distance_km: null, duration_min: 52, avg_hr: 118, max_hr: 145, tss: 61 },
+                { start: nowIso(-(3 * 24 + 6) * 3600 * 1000), activity: "Trekking", distance_km: 12.8, duration_min: 165, avg_hr: 126, max_hr: 158, tss: 110 },
+                { start: nowIso(-(9 * 24 + 4) * 3600 * 1000), activity: "Cycling", distance_km: 40.1, duration_min: 104, avg_hr: 138, max_hr: 165, tss: 121 },
+                { start: nowIso(-(9 * 24 + 8) * 3600 * 1000), activity: "Gym", distance_km: null, duration_min: 45, avg_hr: 115, max_hr: 140, tss: 55 },
+                { start: nowIso(-(15 * 24 + 5) * 3600 * 1000), activity: "Trekking", distance_km: 15.2, duration_min: 190, avg_hr: 128, max_hr: 160, tss: 128 },
+                { start: nowIso(-(17 * 24 + 3) * 3600 * 1000), activity: "Running", distance_km: 8.2, duration_min: 42, avg_hr: 152, max_hr: 172, tss: 88 },
+                { start: nowIso(-(18 * 24 + 6) * 3600 * 1000), activity: "Cycling", distance_km: 38.5, duration_min: 108, avg_hr: 135, max_hr: 162, tss: 118 },
+                { start: nowIso(-(22 * 24 + 4) * 3600 * 1000), activity: "Gym", distance_km: null, duration_min: 50, avg_hr: 120, max_hr: 148, tss: 58 },
+                { start: nowIso(-(25 * 24 + 7) * 3600 * 1000), activity: "Walking", distance_km: 5.4, duration_min: 68, avg_hr: 102, max_hr: 118, tss: 22 },
+                { start: nowIso(-(30 * 24 + 5) * 3600 * 1000), activity: "Cycling", distance_km: 36.9, duration_min: 112, avg_hr: 133, max_hr: 160, tss: 115 },
+                { start: nowIso(-(33 * 24 + 6) * 3600 * 1000), activity: "Trekking", distance_km: 18.0, duration_min: 210, avg_hr: 130, max_hr: 165, tss: 140 },
+                { start: nowIso(-(38 * 24 + 4) * 3600 * 1000), activity: "Running", distance_km: 7.5, duration_min: 40, avg_hr: 148, max_hr: 168, tss: 82 },
               ],
             },
           },
@@ -491,6 +512,11 @@
       "suunto-activity-trends-card",
       "suunto-recovery-balance-trend-card",
       "suunto-readiness-trend-card",
+      "suunto-activity-calendar-card",
+      "suunto-workout-comparison-card",
+      "suunto-milestones-card",
+      "suunto-athlete-profile-card",
+      "suunto-pace-trend-card",
     ];
 
     function setup() {
