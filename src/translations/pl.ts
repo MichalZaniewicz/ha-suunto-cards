@@ -147,4 +147,32 @@ export const pl: Record<keyof typeof en, string> = {
   "empty.weekly_volume.title": "Brak jeszcze danych o wolumenie tygodniowym",
   "stat.average": "Średnia",
   "stat.total": "Suma",
+
+  "card.hr_curve.title": "Krzywa tętna",
+  "card.hr_curve.subtitle": "Ostatnie 24 godziny",
+  "stat.hr_now": "Teraz",
+  "stat.hr_min": "Min. dzisiaj",
+  "stat.hr_max": "Maks. dzisiaj",
+  "empty.hr_curve.title": "Brak jeszcze danych o tętnie na żywo",
+  "empty.hr_curve.subtitle": "Noś zegarek i zsynchronizuj go, aby zobaczyć tu dzisiejszą krzywą.",
+
+  "card.sleep_trends.title": "Trendy snu",
+  "card.sleep_trends.subtitle": "Ostatnie 30 nocy",
+  "empty.sleep_trends.title": "Brak jeszcze danych o trendach snu",
+
+  "card.weekly_goal.title": "Cel tygodniowy",
+  "card.weekly_goal.subtitle": "{value} z {goal} km",
+  "empty.weekly_goal.title": "Brak jeszcze danych o dystansie tygodniowym",
+  "editor.goal_label": "Cel tygodniowy (km)",
+
+  "card.streak.title": "Seria aktywności",
+  "streak.days_one": "{count} dzień serii",
+  "streak.days_other": "{count} dni serii",
+  "streak.none": "Brak aktywnej serii - zacznij dziś",
+  "empty.streak.title": "Brak jeszcze historii treningów",
+
+  "just_finished.title": "Świetna robota!",
+  "just_finished.idle.title": "Czekanie na kolejny trening",
+  "just_finished.idle.subtitle": "Ta karta zaświeci się zaraz po synchronizacji nowego treningu.",
+  "empty.just_finished.title": "Brak ostatniego treningu",
 };

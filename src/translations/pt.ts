@@ -147,4 +147,32 @@ export const pt: Record<keyof typeof en, string> = {
   "empty.weekly_volume.title": "Ainda sem dados de volume semanal",
   "stat.average": "Média",
   "stat.total": "Total",
+
+  "card.hr_curve.title": "Curva de Frequência Cardíaca",
+  "card.hr_curve.subtitle": "Últimas 24 horas",
+  "stat.hr_now": "Agora",
+  "stat.hr_min": "Mín. de hoje",
+  "stat.hr_max": "Máx. de hoje",
+  "empty.hr_curve.title": "Ainda sem dados de FC em direto",
+  "empty.hr_curve.subtitle": "Usa e sincroniza o teu relógio para veres aqui a curva de hoje.",
+
+  "card.sleep_trends.title": "Tendências de Sono",
+  "card.sleep_trends.subtitle": "Últimas 30 noites",
+  "empty.sleep_trends.title": "Ainda sem dados de tendências de sono",
+
+  "card.weekly_goal.title": "Meta Semanal",
+  "card.weekly_goal.subtitle": "{value} de {goal} km",
+  "empty.weekly_goal.title": "Ainda sem distância semanal",
+  "editor.goal_label": "Meta semanal (km)",
+
+  "card.streak.title": "Sequência de Atividade",
+  "streak.days_one": "{count} dia de sequência",
+  "streak.days_other": "{count} dias de sequência",
+  "streak.none": "Sem sequência ativa - começa hoje",
+  "empty.streak.title": "Ainda sem histórico de treinos",
+
+  "just_finished.title": "Bom trabalho!",
+  "just_finished.idle.title": "À espera do teu próximo treino",
+  "just_finished.idle.subtitle": "Este cartão acende assim que o teu relógio sincronizar um treino novo.",
+  "empty.just_finished.title": "Sem treino recente",
 };

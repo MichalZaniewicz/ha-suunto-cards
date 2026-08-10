@@ -13,6 +13,11 @@ export interface SuuntoCardConfig extends LovelaceCardConfig {
   device_id?: string;
 }
 
+/** suunto-weekly-goal-card's config: same device selection, plus a user-set target. */
+export interface SuuntoGoalCardConfig extends SuuntoCardConfig {
+  goal_km?: number;
+}
+
 /** Entity registry entry shape available on `hass.entities` (HA 2024.8+). */
 export interface EntityRegistryEntry {
   entity_id: string;

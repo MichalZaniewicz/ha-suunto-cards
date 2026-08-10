@@ -147,6 +147,10 @@
       "mdi:trending-up": '<path d="M4 16l5-4.5 3.3 3 7-8"/><path d="M14.5 6.5h5v5"/>',
       "mdi:chart-timeline-variant": '<path d="M3 17l4-6 3 3 4-8 3 5 4-4"/><path d="M3 20h18"/>',
       "mdi:chart-bar": '<path d="M4 20V10M9 20V6M14 20V13M19 20V4"/><path d="M3 20h18"/>',
+      "mdi:chart-bell-curve": '<path d="M3 19h18"/><path d="M4 19c2.5-.3 3.5-9 8-9s5.5 8.7 8 9"/>',
+      "mdi:target": '<circle cx="12" cy="12" r="8.2"/><circle cx="12" cy="12" r="4.6"/><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/>',
+      "mdi:fire": '<path d="M12 21a5.6 5.6 0 0 0 5.6-5.6c0-2.7-1.7-4.2-2.6-6.4-.2 1.8-1.3 2.5-2 1.3-.9-1.5-.4-3.4.4-5.8-3 1.6-4.9 4.3-4.9 7.6 0 1 .2 1.9.7 2.7-1-.4-1.7-1.3-1.9-2.4-.8 1.4-1.2 2.9-1.2 4.6A5.6 5.6 0 0 0 12 21Z"/>',
+      "mdi:party-popper": '<path d="M4 20l2.6-7.8 5.2 5.2L4 20Z"/><path d="M12.5 6l1.5 1.5M16.5 4l.5 2M19.5 7.5l-2 1"/><circle cx="17.5" cy="11" r="0.9" fill="currentColor" stroke="none"/><circle cx="13.5" cy="15" r="0.9" fill="currentColor" stroke="none"/>',
     };
     const DEFAULT_ICON = '<circle cx="12" cy="12" r="8.5"/>';
     const WEATHER_ICON = '<path d="M7 18h10a3.5 3.5 0 0 0 0-7 5 5 0 0 0-9.6-1.5A3.8 3.8 0 0 0 7 18Z"/>';
@@ -196,13 +200,20 @@
       return new Date(Date.now() + offsetMs).toISOString();
     }
 
-    function makeHass({ deviceId, entities, callApiImpl }) {
+    function makeHass({ deviceId, entities, callApiImpl, callWSImpl }) {
       const states = {};
       const registry = {};
       for (const [translationKey, def] of Object.entries(entities)) {
         const domain = def.domain || "sensor";
         const entityId = `${domain}.suunto_${deviceId}_${translationKey}`;
-        states[entityId] = { entity_id: entityId, state: String(def.state), attributes: def.attributes || {} };
+        states[entityId] = {
+          entity_id: entityId,
+          state: String(def.state),
+          attributes: def.attributes || {},
+          // Real HA always sets this; cards that gate on "how fresh is this
+          // value" (e.g. suunto-just-finished-card) need it in the mock too.
+          last_changed: def.last_changed || nowIso(),
+        };
         registry[entityId] = {
           entity_id: entityId,
           device_id: deviceId,
@@ -217,6 +228,7 @@
         themes: { darkMode: document.body.classList.contains("dark") },
         language: "en",
         callApi: callApiImpl || (async () => [[]]),
+        callWS: callWSImpl || (async () => ({})),
       };
     }
 
@@ -261,10 +273,43 @@
       );
     }
 
+    // Mock `recorder/statistics_during_period` - the external long-term
+    // statistics that suunto-hr-curve-card / suunto-sleep-trends-card read
+    // (separate from history/period above, which only covers live entities).
+    // stepHours matches real import density: hourly for the 24/7 HR stream,
+    // one point per day for the daily sleep stats (ha-suunto only ever
+    // writes one non-null hour per night for those) - using the wrong step
+    // makes the mock look far noisier than a real account ever would.
+    function statisticsTrend(hours, base, stepDrift, amplitude, noiseSeed = 1, stepHours = 2) {
+      const points = [];
+      const now = Date.now();
+      for (let i = hours; i >= 0; i -= stepHours) {
+        const t = now - i * 3600000;
+        const step = (hours - i) / stepHours;
+        const v = base + step * stepDrift + Math.sin((step + noiseSeed) / 4) * amplitude;
+        points.push({ start: t, mean: Number(v.toFixed(1)), min: Number((v - 3).toFixed(1)), max: Number((v + 4).toFixed(1)) });
+      }
+      return points;
+    }
+
+    const STATISTICS_GENERATORS = {
+      "suunto_app:hr": () => statisticsTrend(26, 68, 0.2, 14, 1, 2),
+      "suunto_app:sleep_duration": () => statisticsTrend(30 * 24, 7.2, 0, 0.6, 2, 24),
+      "suunto_app:sleep_quality": () => statisticsTrend(30 * 24, 80, 0, 6, 3, 24),
+    };
+
+    function statisticsWSImpl(msg) {
+      if (msg.type !== "recorder/statistics_during_period") return Promise.resolve({});
+      const id = (msg.statistic_ids || [])[0];
+      const gen = STATISTICS_GENERATORS[id];
+      return Promise.resolve(gen ? { [id]: gen() } : {});
+    }
+
     function fullHass() {
       return makeHass({
         deviceId: "full",
         callApiImpl: historyApiImpl,
+        callWSImpl: statisticsWSImpl,
         entities: {
           last_activity: { state: "Cycling" },
           last_workout_start: { state: nowIso(-2 * 3600 * 1000) },
@@ -408,6 +453,11 @@
       "suunto-pmc-card",
       "suunto-recovery-trends-card",
       "suunto-weekly-volume-card",
+      "suunto-hr-curve-card",
+      "suunto-sleep-trends-card",
+      "suunto-weekly-goal-card",
+      "suunto-streak-card",
+      "suunto-just-finished-card",
     ];
 
     function setup() {

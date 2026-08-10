@@ -147,4 +147,32 @@ export const nl: Record<keyof typeof en, string> = {
   "empty.weekly_volume.title": "Nog geen gegevens over wekelijks volume",
   "stat.average": "Gemiddeld",
   "stat.total": "Totaal",
+
+  "card.hr_curve.title": "Hartslagcurve",
+  "card.hr_curve.subtitle": "Laatste 24 uur",
+  "stat.hr_now": "Nu",
+  "stat.hr_min": "Min. vandaag",
+  "stat.hr_max": "Max. vandaag",
+  "empty.hr_curve.title": "Nog geen live hartslaggegevens",
+  "empty.hr_curve.subtitle": "Draag en synchroniseer je horloge om de curve van vandaag hier te zien.",
+
+  "card.sleep_trends.title": "Slaaptrends",
+  "card.sleep_trends.subtitle": "Laatste 30 nachten",
+  "empty.sleep_trends.title": "Nog geen slaaptrendgegevens",
+
+  "card.weekly_goal.title": "Weekdoel",
+  "card.weekly_goal.subtitle": "{value} van {goal} km",
+  "empty.weekly_goal.title": "Nog geen wekelijkse afstand",
+  "editor.goal_label": "Weekdoel (km)",
+
+  "card.streak.title": "Activiteitenreeks",
+  "streak.days_one": "{count} dag op rij",
+  "streak.days_other": "{count} dagen op rij",
+  "streak.none": "Geen actieve reeks - kom vandaag in beweging",
+  "empty.streak.title": "Nog geen traininggeschiedenis",
+
+  "just_finished.title": "Goed gedaan!",
+  "just_finished.idle.title": "Wachten op je volgende training",
+  "just_finished.idle.subtitle": "Deze kaart licht op zodra je horloge een nieuwe training synchroniseert.",
+  "empty.just_finished.title": "Geen recente training",
 };

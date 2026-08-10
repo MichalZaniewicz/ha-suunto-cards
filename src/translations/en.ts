@@ -172,4 +172,37 @@ export const en = {
   "empty.weekly_volume.title": "No weekly volume data yet",
   "stat.average": "Average",
   "stat.total": "Total",
+
+  // -- card 17: HR curve --
+  "card.hr_curve.title": "Heart Rate Curve",
+  "card.hr_curve.subtitle": "Last 24 hours",
+  "stat.hr_now": "Now",
+  "stat.hr_min": "Today's min",
+  "stat.hr_max": "Today's max",
+  "empty.hr_curve.title": "No live HR data yet",
+  "empty.hr_curve.subtitle": "Wear your watch and sync to see today's curve here.",
+
+  // -- card 18: sleep trends --
+  "card.sleep_trends.title": "Sleep Trends",
+  "card.sleep_trends.subtitle": "Last 30 nights",
+  "empty.sleep_trends.title": "No sleep trend data yet",
+
+  // -- card 19: weekly goal --
+  "card.weekly_goal.title": "Weekly Goal",
+  "card.weekly_goal.subtitle": "{value} of {goal} km",
+  "empty.weekly_goal.title": "No weekly distance yet",
+  "editor.goal_label": "Weekly goal (km)",
+
+  // -- card 20: activity streak --
+  "card.streak.title": "Activity Streak",
+  "streak.days_one": "{count} day streak",
+  "streak.days_other": "{count} days streak",
+  "streak.none": "No active streak - get moving today",
+  "empty.streak.title": "No workout history yet",
+
+  // -- card 21: just finished --
+  "just_finished.title": "Nice work!",
+  "just_finished.idle.title": "Waiting for your next workout",
+  "just_finished.idle.subtitle": "This lights up right after your watch syncs a new one.",
+  "empty.just_finished.title": "No recent workout",
 } as const;

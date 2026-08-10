@@ -1,4 +1,5 @@
 import "./suunto-device-editor";
+import "./suunto-goal-editor";
 import "./suunto-last-workout-card";
 import "./suunto-hr-zones-card";
 import "./suunto-sleep-readiness-card";
@@ -15,6 +16,11 @@ import "./suunto-last-workout-tile-card";
 import "./suunto-pmc-card";
 import "./suunto-recovery-trends-card";
 import "./suunto-weekly-volume-card";
+import "./suunto-hr-curve-card";
+import "./suunto-sleep-trends-card";
+import "./suunto-weekly-goal-card";
+import "./suunto-streak-card";
+import "./suunto-just-finished-card";
 
 interface CustomCardEntry {
   type: string;
@@ -127,12 +133,42 @@ window.customCards.push(
     name: "Suunto - Weekly Volume",
     description: "A 12-week bar chart of your training distance, with the average and total.",
     preview: true,
+  },
+  {
+    type: "suunto-hr-curve-card",
+    name: "Suunto - Heart Rate Curve",
+    description: "Today's 24/7 heart rate curve, from your watch's continuous heart rate tracking.",
+    preview: true,
+  },
+  {
+    type: "suunto-sleep-trends-card",
+    name: "Suunto - Sleep Trends",
+    description: "Sleep duration and quality over the last 30 nights.",
+    preview: true,
+  },
+  {
+    type: "suunto-weekly-goal-card",
+    name: "Suunto - Weekly Goal",
+    description: "This week's distance against a target you set.",
+    preview: true,
+  },
+  {
+    type: "suunto-streak-card",
+    name: "Suunto - Activity Streak",
+    description: "How many consecutive days you've been active.",
+    preview: true,
+  },
+  {
+    type: "suunto-just-finished-card",
+    name: "Suunto - Just Finished",
+    description: "Lights up right after your watch syncs a new workout, then goes quiet again.",
+    preview: true,
   }
 );
 
 // eslint-disable-next-line no-console
 console.info(
-  "%c SUUNTO-CARDS %c 16 cards loaded ",
+  "%c SUUNTO-CARDS %c 21 cards loaded ",
   "color: #fff; background: #d98a1d; font-weight: 700; border-radius: 3px 0 0 3px; padding: 2px 6px;",
   "color: #d98a1d; background: transparent; font-weight: 500;"
 );

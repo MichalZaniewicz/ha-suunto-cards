@@ -37,6 +37,11 @@ into <ha-alert> and drops every child whose textContent is empty, which silently
 | Performance Management | `custom:suunto-pmc-card` | CTL/ATL/TSB plotted together over a 90-day trend - the classic fitness/fatigue/form chart |
 | Recovery Trends | `custom:suunto-recovery-trends-card` | Resting HR and HRV trend lines over 30 days, each against its own baseline |
 | Weekly Volume | `custom:suunto-weekly-volume-card` | A 12-week bar chart of training distance, with the average and total |
+| Heart Rate Curve | `custom:suunto-hr-curve-card` | Today's 24/7 heart rate curve, from your watch's continuous heart rate tracking |
+| Sleep Trends | `custom:suunto-sleep-trends-card` | Sleep duration and quality over the last 30 nights |
+| Weekly Goal | `custom:suunto-weekly-goal-card` | This week's distance against a target you set |
+| Activity Streak | `custom:suunto-streak-card` | How many consecutive days you've been active |
+| Just Finished | `custom:suunto-just-finished-card` | Lights up right after your watch syncs a new workout, then goes quiet again |
 
 Each card auto-detects your Suunto device - **zero YAML required** for the common case of one
 Suunto account. If you ever have more than one, the card's visual editor shows a device picker.
@@ -51,6 +56,18 @@ Optional config (only needed with multiple Suunto devices):
 type: custom:suunto-last-workout-card
 device_id: abcdef0123456789
 ```
+
+**Weekly Goal** takes one extra field, editable from its visual editor too:
+
+```yaml
+type: custom:suunto-weekly-goal-card
+goal_km: 50
+```
+
+**Heart Rate Curve** and **Sleep Trends** read from `ha-suunto`'s long-term statistics
+(`suunto_app:hr`, `suunto_app:sleep_duration`, `suunto_app:sleep_quality`) rather than live sensor
+state, so they need a little history to accumulate after you first install the integration before
+they show anything.
 
 ## Languages
 

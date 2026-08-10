@@ -1,4 +1,5 @@
 import type { SparklinePoint } from "./render-helpers";
+import type { SuuntoHass } from "./types";
 
 export interface RawHistoryPoint {
   state: string;
@@ -14,6 +15,43 @@ export function parseHistorySeries(points: RawHistoryPoint[] | undefined): Spark
       const v = Number(p.state);
       return { t, v };
     })
+    .filter((p) => Number.isFinite(p.t) && Number.isFinite(p.v));
+}
+
+/** One point of a `recorder/statistics_during_period` response - `start` is epoch ms. */
+export interface RawStatisticPoint {
+  start: number;
+  mean?: number | null;
+  min?: number | null;
+  max?: number | null;
+  sum?: number | null;
+  state?: number | null;
+}
+
+/**
+ * Fetches one external long-term statistic (`suunto_app:hr`, `suunto_app:sleep_duration`, ...)
+ * over the last `hours`. These are EXTERNAL statistics, not entity history - they persist
+ * indefinitely (unlike recorder state history, which is purged after ~10 days by default),
+ * which is exactly why they're the right source for a multi-day/multi-week trend chart.
+ */
+export async function fetchStatisticsSeries(
+  hass: SuuntoHass,
+  statisticId: string,
+  hours: number,
+  field: "mean" | "sum" | "state" = "mean"
+): Promise<SparklinePoint[]> {
+  const end = new Date();
+  const start = new Date(end.getTime() - hours * 3600000);
+  const result = await hass.callWS<Record<string, RawStatisticPoint[]>>({
+    type: "recorder/statistics_during_period",
+    start_time: start.toISOString(),
+    end_time: end.toISOString(),
+    statistic_ids: [statisticId],
+    period: "hour",
+    types: ["mean", "min", "max", "sum"],
+  });
+  return (result?.[statisticId] ?? [])
+    .map((p) => ({ t: p.start, v: Number(p[field]) }))
     .filter((p) => Number.isFinite(p.t) && Number.isFinite(p.v));
 }
 

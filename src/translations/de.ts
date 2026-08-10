@@ -147,4 +147,32 @@ export const de: Record<keyof typeof en, string> = {
   "empty.weekly_volume.title": "Noch keine Daten zum wöchentlichen Volumen",
   "stat.average": "Durchschnitt",
   "stat.total": "Gesamt",
+
+  "card.hr_curve.title": "Herzfrequenz-Kurve",
+  "card.hr_curve.subtitle": "Letzte 24 Stunden",
+  "stat.hr_now": "Jetzt",
+  "stat.hr_min": "Tagesminimum",
+  "stat.hr_max": "Tagesmaximum",
+  "empty.hr_curve.title": "Noch keine Live-Herzfrequenzdaten",
+  "empty.hr_curve.subtitle": "Trage deine Uhr und synchronisiere sie, um die heutige Kurve hier zu sehen.",
+
+  "card.sleep_trends.title": "Schlaftrends",
+  "card.sleep_trends.subtitle": "Letzte 30 Nächte",
+  "empty.sleep_trends.title": "Noch keine Schlaftrend-Daten",
+
+  "card.weekly_goal.title": "Wochenziel",
+  "card.weekly_goal.subtitle": "{value} von {goal} km",
+  "empty.weekly_goal.title": "Noch keine wöchentliche Distanz",
+  "editor.goal_label": "Wochenziel (km)",
+
+  "card.streak.title": "Aktivitätsserie",
+  "streak.days_one": "{count} Tag in Folge",
+  "streak.days_other": "{count} Tage in Folge",
+  "streak.none": "Keine aktive Serie - starte heute",
+  "empty.streak.title": "Noch keine Trainingshistorie",
+
+  "just_finished.title": "Gut gemacht!",
+  "just_finished.idle.title": "Warten auf dein nächstes Training",
+  "just_finished.idle.subtitle": "Diese Karte leuchtet auf, sobald deine Uhr ein neues Training synchronisiert.",
+  "empty.just_finished.title": "Kein aktuelles Training",
 };

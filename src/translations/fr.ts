@@ -147,4 +147,32 @@ export const fr: Record<keyof typeof en, string> = {
   "empty.weekly_volume.title": "Pas encore de données de volume hebdomadaire",
   "stat.average": "Moyenne",
   "stat.total": "Total",
+
+  "card.hr_curve.title": "Courbe de Fréquence Cardiaque",
+  "card.hr_curve.subtitle": "Dernières 24 heures",
+  "stat.hr_now": "Maintenant",
+  "stat.hr_min": "Min. du jour",
+  "stat.hr_max": "Max. du jour",
+  "empty.hr_curve.title": "Pas encore de données de FC en direct",
+  "empty.hr_curve.subtitle": "Porte et synchronise ta montre pour voir la courbe du jour ici.",
+
+  "card.sleep_trends.title": "Tendances de Sommeil",
+  "card.sleep_trends.subtitle": "30 dernières nuits",
+  "empty.sleep_trends.title": "Pas encore de données de tendances de sommeil",
+
+  "card.weekly_goal.title": "Objectif Hebdomadaire",
+  "card.weekly_goal.subtitle": "{value} sur {goal} km",
+  "empty.weekly_goal.title": "Pas encore de distance hebdomadaire",
+  "editor.goal_label": "Objectif hebdomadaire (km)",
+
+  "card.streak.title": "Série d'Activité",
+  "streak.days_one": "{count} jour de série",
+  "streak.days_other": "{count} jours de série",
+  "streak.none": "Aucune série active - bouge aujourd'hui",
+  "empty.streak.title": "Pas encore d'historique d'entraînement",
+
+  "just_finished.title": "Bien joué !",
+  "just_finished.idle.title": "En attente de ta prochaine séance",
+  "just_finished.idle.subtitle": "Cette carte s'allume dès que ta montre synchronise une nouvelle séance.",
+  "empty.just_finished.title": "Aucune séance récente",
 };
