@@ -175,4 +175,22 @@ export const nl: Record<keyof typeof en, string> = {
   "just_finished.idle.title": "Wachten op je volgende training",
   "just_finished.idle.subtitle": "Deze kaart licht op zodra je horloge een nieuwe training synchroniseert.",
   "empty.just_finished.title": "Geen recente training",
+
+  "card.activity_trends.title": "Activiteitstrends",
+  "card.activity_trends.subtitle": "Laatste 14 dagen",
+  "empty.activity_trends.title": "Nog geen activiteitstrendgegevens",
+
+  "card.recovery_balance_trend.title": "Herstelbalanstrend",
+  "card.recovery_balance_trend.subtitle": "Laatste 14 dagen",
+  "empty.recovery_balance_trend.title": "Nog geen hersteltrendgegevens",
+
+  "card.readiness_trend.title": "Gereedheidstrend",
+  "card.readiness_trend.subtitle": "Laatste 30 dagen",
+  "empty.readiness_trend.title": "Nog geen gereedheidstrendgegevens",
+
+  "stat.cadence": "Cadans",
+  "stat.pct_hrmax": "% van max. hartslag",
+  "stat.sleep_avg_hr": "Gem. hartslag slaap",
+  "stat.sleep_min_hr": "Min. hartslag slaap",
+  "chip.bedtime": "Naar bed {time}",
 };

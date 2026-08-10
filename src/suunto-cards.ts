@@ -21,6 +21,9 @@ import "./suunto-sleep-trends-card";
 import "./suunto-weekly-goal-card";
 import "./suunto-streak-card";
 import "./suunto-just-finished-card";
+import "./suunto-activity-trends-card";
+import "./suunto-recovery-balance-trend-card";
+import "./suunto-readiness-trend-card";
 
 interface CustomCardEntry {
   type: string;
@@ -163,12 +166,30 @@ window.customCards.push(
     name: "Suunto - Just Finished",
     description: "Lights up right after your watch syncs a new workout, then goes quiet again.",
     preview: true,
+  },
+  {
+    type: "suunto-activity-trends-card",
+    name: "Suunto - Activity Trends",
+    description: "Daily steps and energy over the last 14 days.",
+    preview: true,
+  },
+  {
+    type: "suunto-recovery-balance-trend-card",
+    name: "Suunto - Recovery Balance Trend",
+    description: "Recovery balance and stress level over the last 14 days.",
+    preview: true,
+  },
+  {
+    type: "suunto-readiness-trend-card",
+    name: "Suunto - Readiness Trend",
+    description: "Your readiness score over the last 30 days.",
+    preview: true,
   }
 );
 
 // eslint-disable-next-line no-console
 console.info(
-  "%c SUUNTO-CARDS %c 21 cards loaded ",
+  "%c SUUNTO-CARDS %c 24 cards loaded ",
   "color: #fff; background: #d98a1d; font-weight: 700; border-radius: 3px 0 0 3px; padding: 2px 6px;",
   "color: #d98a1d; background: transparent; font-weight: 500;"
 );

@@ -82,6 +82,9 @@ export class SuuntoSleepReadinessCard extends SuuntoBaseCard {
     const restingHrBaseline = get("resting_hr_baseline");
     const readiness = get("readiness");
     const nap = get("nap_duration");
+    const sleepAvgHr = get("sleep_avg_hr");
+    const sleepMinHr = get("sleep_min_hr");
+    const sleepTime = get("sleep_time");
 
     const readinessValue =
       readiness && !UNAVAILABLE_STATES.has(readiness.state) ? Number(readiness.state) : undefined;
@@ -170,6 +173,12 @@ export class SuuntoSleepReadinessCard extends SuuntoBaseCard {
               )
             : nothing}
           ${spo2 ? this._stat(String(Math.round(Number(spo2.state))), "%", t(hass, "stat.spo2")) : nothing}
+          ${sleepAvgHr
+            ? this._stat(String(Math.round(Number(sleepAvgHr.state))), "bpm", t(hass, "stat.sleep_avg_hr"))
+            : nothing}
+          ${sleepMinHr
+            ? this._stat(String(Math.round(Number(sleepMinHr.state))), "bpm", t(hass, "stat.sleep_min_hr"))
+            : nothing}
         </div>
 
         ${stageSegments.length
@@ -190,7 +199,9 @@ export class SuuntoSleepReadinessCard extends SuuntoBaseCard {
             `
           : nothing}
 
-        ${(hrvStatus && !UNAVAILABLE_STATES.has(hrvStatus.state)) || napMinutes
+        ${(hrvStatus && !UNAVAILABLE_STATES.has(hrvStatus.state)) ||
+        napMinutes ||
+        (sleepTime && !UNAVAILABLE_STATES.has(sleepTime.state))
           ? html`
               <div class="footer">
                 ${hrvStatus && !UNAVAILABLE_STATES.has(hrvStatus.state)
@@ -206,6 +217,13 @@ export class SuuntoSleepReadinessCard extends SuuntoBaseCard {
                       <ha-icon icon="mdi:power-sleep"></ha-icon>${napToday
                         ? t(hass, "chip.nap", { minutes: napMinutes })
                         : t(hass, "chip.nap_earlier", { minutes: napMinutes })}
+                    </span>`
+                  : nothing}
+                ${sleepTime && !UNAVAILABLE_STATES.has(sleepTime.state)
+                  ? html`<span class="chip">
+                      <ha-icon icon="mdi:bed-clock"></ha-icon>${t(hass, "chip.bedtime", {
+                        time: formatTime(new Date(sleepTime.state), hass.language),
+                      })}
                     </span>`
                   : nothing}
               </div>

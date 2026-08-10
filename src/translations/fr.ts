@@ -175,4 +175,22 @@ export const fr: Record<keyof typeof en, string> = {
   "just_finished.idle.title": "En attente de ta prochaine séance",
   "just_finished.idle.subtitle": "Cette carte s'allume dès que ta montre synchronise une nouvelle séance.",
   "empty.just_finished.title": "Aucune séance récente",
+
+  "card.activity_trends.title": "Tendances d'Activité",
+  "card.activity_trends.subtitle": "14 derniers jours",
+  "empty.activity_trends.title": "Pas encore de données de tendances d'activité",
+
+  "card.recovery_balance_trend.title": "Tendance de l'Équilibre de Récupération",
+  "card.recovery_balance_trend.subtitle": "14 derniers jours",
+  "empty.recovery_balance_trend.title": "Pas encore de données de tendances de récupération",
+
+  "card.readiness_trend.title": "Tendance de Préparation",
+  "card.readiness_trend.subtitle": "30 derniers jours",
+  "empty.readiness_trend.title": "Pas encore de données de tendances de préparation",
+
+  "stat.cadence": "Cadence",
+  "stat.pct_hrmax": "% FC max",
+  "stat.sleep_avg_hr": "FC moy. sommeil",
+  "stat.sleep_min_hr": "FC min. sommeil",
+  "chip.bedtime": "Coucher {time}",
 };

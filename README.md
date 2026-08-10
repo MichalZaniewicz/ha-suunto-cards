@@ -42,6 +42,9 @@ into <ha-alert> and drops every child whose textContent is empty, which silently
 | Weekly Goal | `custom:suunto-weekly-goal-card` | This week's distance against a target you set |
 | Activity Streak | `custom:suunto-streak-card` | How many consecutive days you've been active |
 | Just Finished | `custom:suunto-just-finished-card` | Lights up right after your watch syncs a new workout, then goes quiet again |
+| Activity Trends | `custom:suunto-activity-trends-card` | Daily steps and energy over the last 14 days |
+| Recovery Balance Trend | `custom:suunto-recovery-balance-trend-card` | Recovery balance and stress level over the last 14 days |
+| Readiness Trend | `custom:suunto-readiness-trend-card` | Your readiness score over the last 30 days |
 
 Each card auto-detects your Suunto device - **zero YAML required** for the common case of one
 Suunto account. If you ever have more than one, the card's visual editor shows a device picker.

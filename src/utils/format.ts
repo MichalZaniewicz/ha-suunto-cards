@@ -55,6 +55,42 @@ export async function fetchStatisticsSeries(
     .filter((p) => Number.isFinite(p.t) && Number.isFinite(p.v));
 }
 
+/**
+ * Collapses an hourly "sum"-class statistic (a running, ever-increasing
+ * cumulative total, per ha-suunto's statistics.py) into one point per LOCAL
+ * day - the day's actual increase. Diffs consecutive hourly cumulative
+ * values rather than requesting period="day" server-side, so it reuses the
+ * same hourly fetch every other trend card already uses.
+ */
+export function dailyTotalsFromCumulative(points: SparklinePoint[]): SparklinePoint[] {
+  const sorted = [...points].sort((a, b) => a.t - b.t);
+  const byDay = new Map<string, number>();
+  for (let i = 1; i < sorted.length; i++) {
+    const delta = sorted[i].v - sorted[i - 1].v;
+    if (!Number.isFinite(delta) || delta < 0) continue;
+    const day = new Date(sorted[i].t).toDateString();
+    byDay.set(day, (byDay.get(day) ?? 0) + delta);
+  }
+  return [...byDay.entries()]
+    .map(([day, v]) => ({ t: new Date(day).getTime(), v }))
+    .sort((a, b) => a.t - b.t);
+}
+
+/** Collapses an hourly "mean"-class statistic into one point per LOCAL day (that day's average) - for a multi-week trend without an intraday-noisy line. */
+export function dailyMeanFromHourly(points: SparklinePoint[]): SparklinePoint[] {
+  const byDay = new Map<string, { sum: number; count: number }>();
+  for (const p of points) {
+    const day = new Date(p.t).toDateString();
+    const bucket = byDay.get(day) ?? { sum: 0, count: 0 };
+    bucket.sum += p.v;
+    bucket.count += 1;
+    byDay.set(day, bucket);
+  }
+  return [...byDay.entries()]
+    .map(([day, { sum, count }]) => ({ t: new Date(day).getTime(), v: sum / count }))
+    .sort((a, b) => a.t - b.t);
+}
+
 /** 98.4 -> "1:38 h"; 42 -> "42 min". Mirrors how the sketch reads at a glance. */
 export function formatDuration(minutes: number): { value: string; unit: string } {
   if (minutes >= 60) {

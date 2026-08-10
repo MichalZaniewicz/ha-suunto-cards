@@ -77,6 +77,8 @@ export class SuuntoLastWorkoutCard extends SuuntoBaseCard {
     const feeling = get("last_feeling");
     const tss = get("last_tss");
     const calPerKm = get("last_cal_per_km");
+    const cadence = get("last_cadence");
+    const pctHrmax = get("last_pct_hrmax");
     const weather = get("last_workout_weather");
     const tags = get("last_workout_tags");
     const achievements = get("last_workout_achievements");
@@ -137,7 +139,7 @@ export class SuuntoLastWorkoutCard extends SuuntoBaseCard {
             : nothing}
         </div>
 
-        ${tss || epoc || feelingValue !== undefined || calPerKm
+        ${tss || epoc || feelingValue !== undefined || calPerKm || cadence || pctHrmax
           ? html`
               <hr />
               <div class="secondary">
@@ -155,6 +157,12 @@ export class SuuntoLastWorkoutCard extends SuuntoBaseCard {
                   : nothing}
                 ${calPerKm
                   ? this._secondary(`${Math.round(Number(calPerKm.state))}`, t(hass, "stat.energy"), "kcal/km")
+                  : nothing}
+                ${cadence
+                  ? this._secondary(String(Math.round(Number(cadence.state))), t(hass, "stat.cadence"), "rpm")
+                  : nothing}
+                ${pctHrmax
+                  ? this._secondary(String(Math.round(Number(pctHrmax.state))), t(hass, "stat.pct_hrmax"), "%")
                   : nothing}
               </div>
             `

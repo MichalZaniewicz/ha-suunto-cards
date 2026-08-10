@@ -175,4 +175,22 @@ export const it: Record<keyof typeof en, string> = {
   "just_finished.idle.title": "In attesa del tuo prossimo allenamento",
   "just_finished.idle.subtitle": "Questa scheda si attiva appena l'orologio sincronizza un nuovo allenamento.",
   "empty.just_finished.title": "Nessun allenamento recente",
+
+  "card.activity_trends.title": "Andamento dell'Attività",
+  "card.activity_trends.subtitle": "Ultimi 14 giorni",
+  "empty.activity_trends.title": "Ancora nessun dato sull'andamento dell'attività",
+
+  "card.recovery_balance_trend.title": "Andamento dell'Equilibrio di Recupero",
+  "card.recovery_balance_trend.subtitle": "Ultimi 14 giorni",
+  "empty.recovery_balance_trend.title": "Ancora nessun dato sull'andamento del recupero",
+
+  "card.readiness_trend.title": "Andamento della Prontezza",
+  "card.readiness_trend.subtitle": "Ultimi 30 giorni",
+  "empty.readiness_trend.title": "Ancora nessun dato sull'andamento della prontezza",
+
+  "stat.cadence": "Cadenza",
+  "stat.pct_hrmax": "% FC max",
+  "stat.sleep_avg_hr": "FC media nel sonno",
+  "stat.sleep_min_hr": "FC min. nel sonno",
+  "chip.bedtime": "A letto alle {time}",
 };

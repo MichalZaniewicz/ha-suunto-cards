@@ -205,4 +205,26 @@ export const en = {
   "just_finished.idle.title": "Waiting for your next workout",
   "just_finished.idle.subtitle": "This lights up right after your watch syncs a new one.",
   "empty.just_finished.title": "No recent workout",
+
+  // -- card 22: activity trends --
+  "card.activity_trends.title": "Activity Trends",
+  "card.activity_trends.subtitle": "Last 14 days",
+  "empty.activity_trends.title": "No activity trend data yet",
+
+  // -- card 23: recovery balance trend --
+  "card.recovery_balance_trend.title": "Recovery Balance Trend",
+  "card.recovery_balance_trend.subtitle": "Last 14 days",
+  "empty.recovery_balance_trend.title": "No recovery trend data yet",
+
+  // -- card 24: readiness trend --
+  "card.readiness_trend.title": "Readiness Trend",
+  "card.readiness_trend.subtitle": "Last 30 days",
+  "empty.readiness_trend.title": "No readiness trend data yet",
+
+  // -- last-workout / sleep-readiness enrichments --
+  "stat.cadence": "Cadence",
+  "stat.pct_hrmax": "% of max HR",
+  "stat.sleep_avg_hr": "Sleep avg HR",
+  "stat.sleep_min_hr": "Sleep min HR",
+  "chip.bedtime": "Bedtime {time}",
 } as const;

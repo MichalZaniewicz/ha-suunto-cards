@@ -151,6 +151,8 @@
       "mdi:target": '<circle cx="12" cy="12" r="8.2"/><circle cx="12" cy="12" r="4.6"/><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/>',
       "mdi:fire": '<path d="M12 21a5.6 5.6 0 0 0 5.6-5.6c0-2.7-1.7-4.2-2.6-6.4-.2 1.8-1.3 2.5-2 1.3-.9-1.5-.4-3.4.4-5.8-3 1.6-4.9 4.3-4.9 7.6 0 1 .2 1.9.7 2.7-1-.4-1.7-1.3-1.9-2.4-.8 1.4-1.2 2.9-1.2 4.6A5.6 5.6 0 0 0 12 21Z"/>',
       "mdi:party-popper": '<path d="M4 20l2.6-7.8 5.2 5.2L4 20Z"/><path d="M12.5 6l1.5 1.5M16.5 4l.5 2M19.5 7.5l-2 1"/><circle cx="17.5" cy="11" r="0.9" fill="currentColor" stroke="none"/><circle cx="13.5" cy="15" r="0.9" fill="currentColor" stroke="none"/>',
+      "mdi:shoe-print": '<ellipse cx="9" cy="7" rx="3.5" ry="4.2"/><path d="M6 12c-1.5 1-2.5 3-2.5 5.5C3.5 20 5.5 21 8 21h8c2 0 3-1 3-2.5 0-2-1.5-3-3.5-3.5l-6-1.5c-1.5-.4-2.5-1-3.5-1.5Z"/>',
+      "mdi:gauge": '<path d="M12 4a8.5 8.5 0 0 0-7 13.3"/><path d="M20 17.3A8.5 8.5 0 0 0 12 4"/><path d="M12 12l4-3.5"/><circle cx="12" cy="12" r="1.3" fill="currentColor" stroke="none"/>',
     };
     const DEFAULT_ICON = '<circle cx="12" cy="12" r="8.5"/>';
     const WEATHER_ICON = '<path d="M7 18h10a3.5 3.5 0 0 0 0-7 5 5 0 0 0-9.6-1.5A3.8 3.8 0 0 0 7 18Z"/>';
@@ -280,14 +282,32 @@
     // one point per day for the daily sleep stats (ha-suunto only ever
     // writes one non-null hour per night for those) - using the wrong step
     // makes the mock look far noisier than a real account ever would.
-    function statisticsTrend(hours, base, stepDrift, amplitude, noiseSeed = 1, stepHours = 2) {
+    function statisticsTrend(hours, base, stepDrift, amplitude, noiseSeed = 1, stepHours = 2, waveDivisor = 4) {
       const points = [];
       const now = Date.now();
       for (let i = hours; i >= 0; i -= stepHours) {
         const t = now - i * 3600000;
         const step = (hours - i) / stepHours;
-        const v = base + step * stepDrift + Math.sin((step + noiseSeed) / 4) * amplitude;
+        const v = base + step * stepDrift + Math.sin((step + noiseSeed) / waveDivisor) * amplitude;
         points.push({ start: t, mean: Number(v.toFixed(1)), min: Number((v - 3).toFixed(1)), max: Number((v + 4).toFixed(1)) });
+      }
+      return points;
+    }
+
+    // suunto_app:steps / :energy are "sum"-class (ever-increasing cumulative,
+    // see dailyTotalsFromCumulative) - the mock must grow monotonically per
+    // hour, not oscillate, or the card's client-side diffing goes negative
+    // and every day looks empty.
+    function cumulativeTrend(hours, dailyTotal, stepHours = 2) {
+      const points = [];
+      const now = Date.now();
+      const perStep = (dailyTotal / 24) * stepHours;
+      let cumulative = 100000;
+      const steps = [];
+      for (let i = hours; i >= 0; i -= stepHours) steps.push(i);
+      for (const i of steps) {
+        cumulative += perStep * (0.6 + Math.random() * 0.8);
+        points.push({ start: now - i * 3600000, sum: Number(cumulative.toFixed(1)) });
       }
       return points;
     }
@@ -296,6 +316,11 @@
       "suunto_app:hr": () => statisticsTrend(26, 68, 0.2, 14, 1, 2),
       "suunto_app:sleep_duration": () => statisticsTrend(30 * 24, 7.2, 0, 0.6, 2, 24),
       "suunto_app:sleep_quality": () => statisticsTrend(30 * 24, 80, 0, 6, 3, 24),
+      "suunto_app:steps": () => cumulativeTrend(14 * 24, 8500, 2),
+      "suunto_app:energy": () => cumulativeTrend(14 * 24, 620, 2),
+      "suunto_app:recovery_balance": () => statisticsTrend(14 * 24, 58, 0, 12, 4, 2, 40),
+      "suunto_app:stress": () => statisticsTrend(14 * 24, 2, 0, 1, 5, 2, 40),
+      "suunto_app:readiness": () => statisticsTrend(30 * 24, 72, 0, 10, 6, 24),
     };
 
     function statisticsWSImpl(msg) {
@@ -323,6 +348,8 @@
           last_feeling: { state: 4 },
           last_tss: { state: 132 },
           last_cal_per_km: { state: 32 },
+          last_cadence: { state: 83 },
+          last_pct_hrmax: { state: 78 },
           last_workout_weather: {
             state: 27.2,
             attributes: { humidity_pct: 58, wind_speed_kmh: 12, wind_direction_deg: 210, condition: "Scattered clouds", icon_code: "03d" },
@@ -341,6 +368,9 @@
           sleep_quality: { state: 84 },
           sleep_spo2: { state: 96 },
           sleep_hrv: { state: 54 },
+          sleep_avg_hr: { state: 52 },
+          sleep_min_hr: { state: 44 },
+          sleep_time: { state: nowIso(-16 * 3600 * 1000) },
           hrv_baseline: { state: 50 },
           hrv_status: { state: "high" },
           resting_hr: { state: 48 },
@@ -458,6 +488,9 @@
       "suunto-weekly-goal-card",
       "suunto-streak-card",
       "suunto-just-finished-card",
+      "suunto-activity-trends-card",
+      "suunto-recovery-balance-trend-card",
+      "suunto-readiness-trend-card",
     ];
 
     function setup() {

@@ -175,4 +175,22 @@ export const pl: Record<keyof typeof en, string> = {
   "just_finished.idle.title": "Czekanie na kolejny trening",
   "just_finished.idle.subtitle": "Ta karta zaświeci się zaraz po synchronizacji nowego treningu.",
   "empty.just_finished.title": "Brak ostatniego treningu",
+
+  "card.activity_trends.title": "Trendy aktywności",
+  "card.activity_trends.subtitle": "Ostatnie 14 dni",
+  "empty.activity_trends.title": "Brak jeszcze danych o trendach aktywności",
+
+  "card.recovery_balance_trend.title": "Trend bilansu regeneracji",
+  "card.recovery_balance_trend.subtitle": "Ostatnie 14 dni",
+  "empty.recovery_balance_trend.title": "Brak jeszcze danych o trendzie regeneracji",
+
+  "card.readiness_trend.title": "Trend gotowości",
+  "card.readiness_trend.subtitle": "Ostatnie 30 dni",
+  "empty.readiness_trend.title": "Brak jeszcze danych o trendzie gotowości",
+
+  "stat.cadence": "Kadencja",
+  "stat.pct_hrmax": "% tętna maks.",
+  "stat.sleep_avg_hr": "Śr. tętno snu",
+  "stat.sleep_min_hr": "Min. tętno snu",
+  "chip.bedtime": "Zaśnięcie {time}",
 };
