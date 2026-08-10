@@ -59,7 +59,7 @@ export class SuuntoLifetimeCard extends SuuntoBaseCard {
           </div>
         </div>
 
-        <div class="stats three">
+        <div class="stats">
           ${this._stat(Number(distance.state).toFixed(0), "km", t(hass, "stat.distance"))}
           ${time ? this._stat(Number(time.state).toFixed(0), "h", t(hass, "stat.time")) : nothing}
           ${energy
@@ -85,9 +85,6 @@ export class SuuntoLifetimeCard extends SuuntoBaseCard {
     suuntoTokens,
     suuntoSharedStyles,
     css`
-      .stats.three {
-        grid-template-columns: repeat(3, 1fr);
-      }
     `,
   ];
 }

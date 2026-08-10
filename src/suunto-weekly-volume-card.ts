@@ -130,7 +130,7 @@ export class SuuntoWeeklyVolumeCard extends SuuntoBaseCard {
 
         ${barChart(bars, "var(--sc-amber)", 300, 80)}
 
-        <div class="stats three">
+        <div class="stats">
           ${this._stat(Number(current.state).toFixed(1), "km", t(hass, "stat.distance"))}
           ${this._stat(average.toFixed(1), "km", t(hass, "stat.average"))}
           ${this._stat(total.toFixed(0), "km", t(hass, "stat.total"))}
@@ -152,9 +152,6 @@ export class SuuntoWeeklyVolumeCard extends SuuntoBaseCard {
     suuntoTokens,
     suuntoSharedStyles,
     css`
-      .stats.three {
-        grid-template-columns: repeat(3, 1fr);
-      }
     `,
   ];
 }

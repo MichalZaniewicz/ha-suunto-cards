@@ -23,7 +23,7 @@ export const fr: Record<keyof typeof en, string> = {
   "stat.resting_hr_delta": "FC repos ({delta})",
   "stat.spo2": "SpO2",
   "stat.stress_level": "Niveau de stress",
-  "stat.recovery_window": "Fenêtre de récupération",
+  "stat.recovery_window": "Temps de récupération",
   "stat.ctl": "CTL · forme",
   "stat.atl": "ATL · fatigue",
   "stat.tsb": "TSB · forme",
@@ -112,10 +112,10 @@ export const fr: Record<keyof typeof en, string> = {
   "empty.recent_workouts.title": "Aucune séance récente",
 
   "card.elevation.title": "Dénivelé et Montées",
-  "stat.ascent": "Dénivelé positif",
-  "stat.descent": "Dénivelé négatif",
-  "stat.ascent_time": "Temps de montée",
-  "stat.descent_time": "Temps de descente",
+  "stat.ascent": "Montée",
+  "stat.descent": "Descente",
+  "stat.ascent_time": "Temps montée",
+  "stat.descent_time": "Temps descente",
   "stat.min_altitude": "Altitude min.",
   "stat.max_altitude": "Altitude max.",
   "stat.ascent_rate": "Vitesse ascensionnelle",
@@ -129,9 +129,9 @@ export const fr: Record<keyof typeof en, string> = {
 
   "card.fitness.title": "Forme Physique",
   "stat.vo2max": "VO2max",
-  "stat.estimated_vo2max": "VO2max estimé",
+  "stat.estimated_vo2max": "VO2max est.",
   "stat.fitness_age": "Âge physique",
-  "fitness.measured": "Mesuré il y a {time} · {activity}",
+  "fitness.measured": "Mesuré {time} · {activity}",
   "empty.fitness.title": "Pas encore de données de forme physique",
   "empty.fitness.subtitle": "Suunto calcule ceci uniquement à partir des séances de course ou de marche.",
 
@@ -166,6 +166,9 @@ export const fr: Record<keyof typeof en, string> = {
   "editor.goal_label": "Objectif hebdomadaire (km)",
 
   "card.streak.title": "Série d'Activité",
+  "card.streak.subtitle": "14 derniers jours",
+  "streak.window_count_one": "{count} jour actif",
+  "streak.window_count_other": "{count} jours actifs",
   "streak.days_one": "{count} jour de série",
   "streak.days_other": "{count} jours de série",
   "streak.none": "Aucune série active - bouge aujourd'hui",
@@ -190,7 +193,7 @@ export const fr: Record<keyof typeof en, string> = {
 
   "stat.cadence": "Cadence",
   "stat.pct_hrmax": "% FC max",
-  "stat.sleep_avg_hr": "FC moy. sommeil",
-  "stat.sleep_min_hr": "FC min. sommeil",
+  "stat.sleep_avg_hr": "FC moy. som.",
+  "stat.sleep_min_hr": "FC min. som.",
   "chip.bedtime": "Coucher {time}",
 };

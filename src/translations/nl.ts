@@ -19,8 +19,8 @@ export const nl: Record<keyof typeof en, string> = {
   "stat.quality": "Kwaliteit",
   "stat.hrv": "HRV",
   "stat.hrv_delta": "HRV ({delta})",
-  "stat.resting_hr": "Rusthartslag",
-  "stat.resting_hr_delta": "Rusthartslag ({delta})",
+  "stat.resting_hr": "Rustpols",
+  "stat.resting_hr_delta": "Rustpols ({delta})",
   "stat.spo2": "SpO2",
   "stat.stress_level": "Stressniveau",
   "stat.recovery_window": "Hersteltijd",
@@ -129,9 +129,9 @@ export const nl: Record<keyof typeof en, string> = {
 
   "card.fitness.title": "Fitheid",
   "stat.vo2max": "VO2max",
-  "stat.estimated_vo2max": "Geschat VO2max",
+  "stat.estimated_vo2max": "Gesch. VO2max",
   "stat.fitness_age": "Fitheidsleeftijd",
-  "fitness.measured": "Gemeten {time} geleden · {activity}",
+  "fitness.measured": "Gemeten {time} · {activity}",
   "empty.fitness.title": "Nog geen fitheidsgegevens",
   "empty.fitness.subtitle": "Suunto berekent dit alleen op basis van hardloop- of wandeltrainingen.",
 
@@ -166,6 +166,9 @@ export const nl: Record<keyof typeof en, string> = {
   "editor.goal_label": "Weekdoel (km)",
 
   "card.streak.title": "Activiteitenreeks",
+  "card.streak.subtitle": "Laatste 14 dagen",
+  "streak.window_count_one": "{count} actieve dag",
+  "streak.window_count_other": "{count} actieve dagen",
   "streak.days_one": "{count} dag op rij",
   "streak.days_other": "{count} dagen op rij",
   "streak.none": "Geen actieve reeks - kom vandaag in beweging",
@@ -190,7 +193,7 @@ export const nl: Record<keyof typeof en, string> = {
 
   "stat.cadence": "Cadans",
   "stat.pct_hrmax": "% van max. hartslag",
-  "stat.sleep_avg_hr": "Gem. hartslag slaap",
-  "stat.sleep_min_hr": "Min. hartslag slaap",
+  "stat.sleep_avg_hr": "Gem. slaappols",
+  "stat.sleep_min_hr": "Min. slaappols",
   "chip.bedtime": "Naar bed {time}",
 };

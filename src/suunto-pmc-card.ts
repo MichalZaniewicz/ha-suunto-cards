@@ -130,7 +130,7 @@ export class SuuntoPmcCard extends SuuntoBaseCard {
           <span class="legend-item"><i class="dot" style="background:var(--sc-amber)"></i>${t(hass, "stat.tsb")}</span>
         </div>
 
-        <div class="stats three">
+        <div class="stats">
           ${this._stat(Number(ctl.state).toFixed(0), t(hass, "stat.ctl"))}
           ${atl && !UNAVAILABLE_STATES.has(atl.state) ? this._stat(Number(atl.state).toFixed(0), t(hass, "stat.atl")) : nothing}
           ${tsb && !UNAVAILABLE_STATES.has(tsb.state)
@@ -154,9 +154,6 @@ export class SuuntoPmcCard extends SuuntoBaseCard {
     suuntoTokens,
     suuntoSharedStyles,
     css`
-      .stats.three {
-        grid-template-columns: repeat(3, 1fr);
-      }
       .chart-legend {
         display: flex;
         gap: 14px;

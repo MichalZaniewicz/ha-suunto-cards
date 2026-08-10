@@ -113,7 +113,7 @@ export class SuuntoActivityTrendsCard extends SuuntoBaseCard {
           <span class="legend-item"><i class="dot" style="background:var(--sc-amber)"></i>${t(hass, "stat.energy")}</span>
         </div>
 
-        <div class="stats two">
+        <div class="stats">
           ${this._stat(Math.round(Number(steps.state)).toLocaleString(hass.language), t(hass, "stat.steps"))}
           ${energy && !UNAVAILABLE_STATES.has(energy.state)
             ? this._stat(`${Math.round(Number(energy.state))} kcal`, t(hass, "stat.energy"))
@@ -136,9 +136,6 @@ export class SuuntoActivityTrendsCard extends SuuntoBaseCard {
     suuntoTokens,
     suuntoSharedStyles,
     css`
-      .stats.two {
-        grid-template-columns: repeat(2, 1fr);
-      }
       .chart-legend {
         display: flex;
         gap: 14px;

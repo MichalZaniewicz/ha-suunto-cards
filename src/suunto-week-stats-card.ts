@@ -86,7 +86,7 @@ export class SuuntoWeekStatsCard extends SuuntoBaseCard {
 
         ${weeklyDistance || weeklyTime || workouts7d
           ? html`
-              <div class="stats three">
+              <div class="stats">
                 ${weeklyDistance && !UNAVAILABLE_STATES.has(weeklyDistance.state)
                   ? this._stat(Number(weeklyDistance.state).toFixed(1), "km", t(hass, "stat.distance"))
                   : nothing}
@@ -158,9 +158,6 @@ export class SuuntoWeekStatsCard extends SuuntoBaseCard {
     suuntoTokens,
     suuntoSharedStyles,
     css`
-      .stats.three {
-        grid-template-columns: repeat(3, 1fr);
-      }
       .lifetime {
         display: flex;
         flex-direction: column;

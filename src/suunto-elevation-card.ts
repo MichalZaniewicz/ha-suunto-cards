@@ -74,7 +74,7 @@ export class SuuntoElevationCard extends SuuntoBaseCard {
           </div>
         </div>
 
-        <div class="stats three">
+        <div class="stats">
           ${ascent && !UNAVAILABLE_STATES.has(ascent.state)
             ? this._stat(Math.round(Number(ascent.state)).toString(), "m", t(hass, "stat.ascent"))
             : nothing}
@@ -128,9 +128,6 @@ export class SuuntoElevationCard extends SuuntoBaseCard {
     suuntoTokens,
     suuntoSharedStyles,
     css`
-      .stats.three {
-        grid-template-columns: repeat(3, 1fr);
-      }
       .footer {
         display: flex;
       }

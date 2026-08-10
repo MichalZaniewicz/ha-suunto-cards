@@ -84,7 +84,7 @@ export class SuuntoJustFinishedCard extends SuuntoBaseCard {
           </div>
         </div>
 
-        <div class="stats three">
+        <div class="stats">
           ${distance
             ? this._stat((Number(distance.state) / 1000).toFixed(1), "km", t(hass, "stat.distance"))
             : nothing}
@@ -126,8 +126,12 @@ export class SuuntoJustFinishedCard extends SuuntoBaseCard {
         font-weight: 600;
         color: var(--primary-text-color);
       }
-      .stats.three {
-        grid-template-columns: repeat(3, 1fr);
+      /* Force exactly 2 per row: these 4 stats always arrive together (same
+         last-workout data), so a responsive wrap would leave a lone 4th
+         stat on its own half-empty row. A fixed-count card can commit to a
+         clean 2x2 in a way a card with conditionally-present stats can't. */
+      .stats .stat {
+        flex-basis: 45%;
       }
     `,
   ];

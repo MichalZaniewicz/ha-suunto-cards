@@ -167,12 +167,25 @@ export const suuntoSharedStyles = css`
     flex: none;
   }
 
+  /*
+   * Flexbox, not CSS Grid: a grid with a fixed column count reserves that
+   * many track cells per row regardless of how many stats actually render,
+   * so a conditionally-hidden stat (or any count that doesn't divide evenly
+   * by the column count) leaves visibly empty cells in a trailing row - the
+   * "wasted space" bug found 2026-08-10. flex-wrap has no such reserved
+   * cells: each row's items always grow to share exactly that row's width,
+   * so a partial last row still looks intentional. flex-basis 80px is a
+   * minimum, not a fixed width, so this also adapts to the card's real
+   * rendered width instead of hardcoding 3-per-row.
+   */
   .stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
+    flex-wrap: wrap;
     gap: 12px 8px;
   }
   .stat {
+    flex: 1 1 80px;
+    min-width: 0;
     display: flex;
     flex-direction: column;
     gap: 2px;

@@ -23,7 +23,7 @@ export const it: Record<keyof typeof en, string> = {
   "stat.resting_hr_delta": "FC riposo ({delta})",
   "stat.spo2": "SpO2",
   "stat.stress_level": "Livello di stress",
-  "stat.recovery_window": "Finestra di recupero",
+  "stat.recovery_window": "Tempo di recupero",
   "stat.ctl": "CTL · forma",
   "stat.atl": "ATL · affaticamento",
   "stat.tsb": "TSB · forma",
@@ -112,10 +112,10 @@ export const it: Record<keyof typeof en, string> = {
   "empty.recent_workouts.title": "Nessun allenamento recente",
 
   "card.elevation.title": "Altitudine e Salite",
-  "stat.ascent": "Dislivello positivo",
-  "stat.descent": "Dislivello negativo",
-  "stat.ascent_time": "Tempo di salita",
-  "stat.descent_time": "Tempo di discesa",
+  "stat.ascent": "Salita",
+  "stat.descent": "Discesa",
+  "stat.ascent_time": "Tempo salita",
+  "stat.descent_time": "Tempo discesa",
   "stat.min_altitude": "Altitudine min.",
   "stat.max_altitude": "Altitudine max.",
   "stat.ascent_rate": "Velocità di salita",
@@ -129,9 +129,9 @@ export const it: Record<keyof typeof en, string> = {
 
   "card.fitness.title": "Forma Fisica",
   "stat.vo2max": "VO2max",
-  "stat.estimated_vo2max": "VO2max stimato",
+  "stat.estimated_vo2max": "VO2max stim.",
   "stat.fitness_age": "Età fisica",
-  "fitness.measured": "Misurato {time} fa · {activity}",
+  "fitness.measured": "Misurato {time} · {activity}",
   "empty.fitness.title": "Ancora nessun dato sulla forma fisica",
   "empty.fitness.subtitle": "Suunto calcola questo solo dagli allenamenti di corsa o camminata.",
 
@@ -166,6 +166,9 @@ export const it: Record<keyof typeof en, string> = {
   "editor.goal_label": "Obiettivo settimanale (km)",
 
   "card.streak.title": "Serie di Attività",
+  "card.streak.subtitle": "Ultimi 14 giorni",
+  "streak.window_count_one": "{count} giorno attivo",
+  "streak.window_count_other": "{count} giorni attivi",
   "streak.days_one": "{count} giorno di serie",
   "streak.days_other": "{count} giorni di serie",
   "streak.none": "Nessuna serie attiva - inizia oggi",
@@ -190,7 +193,7 @@ export const it: Record<keyof typeof en, string> = {
 
   "stat.cadence": "Cadenza",
   "stat.pct_hrmax": "% FC max",
-  "stat.sleep_avg_hr": "FC media nel sonno",
-  "stat.sleep_min_hr": "FC min. nel sonno",
+  "stat.sleep_avg_hr": "FC med. sonno",
+  "stat.sleep_min_hr": "FC min. sonno",
   "chip.bedtime": "A letto alle {time}",
 };

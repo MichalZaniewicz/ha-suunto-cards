@@ -23,7 +23,7 @@ export const de: Record<keyof typeof en, string> = {
   "stat.resting_hr_delta": "Ruhepuls ({delta})",
   "stat.spo2": "SpO2",
   "stat.stress_level": "Stresslevel",
-  "stat.recovery_window": "Erholungsfenster",
+  "stat.recovery_window": "Erholungszeit",
   "stat.ctl": "CTL · Fitness",
   "stat.atl": "ATL · Ermüdung",
   "stat.tsb": "TSB · Form",
@@ -129,7 +129,7 @@ export const de: Record<keyof typeof en, string> = {
 
   "card.fitness.title": "Fitness",
   "stat.vo2max": "VO2max",
-  "stat.estimated_vo2max": "Geschätztes VO2max",
+  "stat.estimated_vo2max": "Gesch. VO2max",
   "stat.fitness_age": "Fitnessalter",
   "fitness.measured": "Gemessen {time} · {activity}",
   "empty.fitness.title": "Noch keine Fitnessdaten",
@@ -166,6 +166,9 @@ export const de: Record<keyof typeof en, string> = {
   "editor.goal_label": "Wochenziel (km)",
 
   "card.streak.title": "Aktivitätsserie",
+  "card.streak.subtitle": "Letzte 14 Tage",
+  "streak.window_count_one": "{count} aktiver Tag",
+  "streak.window_count_other": "{count} aktive Tage",
   "streak.days_one": "{count} Tag in Folge",
   "streak.days_other": "{count} Tage in Folge",
   "streak.none": "Keine aktive Serie - starte heute",
@@ -190,7 +193,7 @@ export const de: Record<keyof typeof en, string> = {
 
   "stat.cadence": "Trittfrequenz",
   "stat.pct_hrmax": "% der max. Herzfrequenz",
-  "stat.sleep_avg_hr": "Ø-Puls im Schlaf",
-  "stat.sleep_min_hr": "Min.-Puls im Schlaf",
+  "stat.sleep_avg_hr": "Ø-Puls",
+  "stat.sleep_min_hr": "Min-Puls",
   "chip.bedtime": "Zubettgehen {time}",
 };

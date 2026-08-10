@@ -33,7 +33,7 @@ export const en = {
   "stat.resting_hr_delta": "Resting HR ({delta})",
   "stat.spo2": "SpO2",
   "stat.stress_level": "Stress level",
-  "stat.recovery_window": "Recovery window",
+  "stat.recovery_window": "Recovery time",
   "stat.ctl": "CTL · fitness",
   "stat.atl": "ATL · fatigue",
   "stat.tsb": "TSB · form",
@@ -151,7 +151,7 @@ export const en = {
   // -- card 12: fitness / VO2max --
   "card.fitness.title": "Fitness",
   "stat.vo2max": "VO2max",
-  "stat.estimated_vo2max": "Estimated VO2max",
+  "stat.estimated_vo2max": "Est. VO2max",
   "stat.fitness_age": "Fitness age",
   "fitness.measured": "Measured {time} · {activity}",
   "empty.fitness.title": "No fitness data yet",
@@ -195,6 +195,9 @@ export const en = {
 
   // -- card 20: activity streak --
   "card.streak.title": "Activity Streak",
+  "card.streak.subtitle": "Last 14 days",
+  "streak.window_count_one": "{count} active day",
+  "streak.window_count_other": "{count} active days",
   "streak.days_one": "{count} day streak",
   "streak.days_other": "{count} days streak",
   "streak.none": "No active streak - get moving today",

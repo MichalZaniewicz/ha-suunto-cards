@@ -11,7 +11,7 @@ interface RecentWorkout {
   start: string | null;
 }
 
-const DOTS = 7;
+const DOTS = 14;
 
 /**
  * Consecutive-days-active streak, computed client-side from
@@ -79,10 +79,12 @@ export class SuuntoStreakCard extends SuuntoBaseCard {
     const { streak, activeDates } = computeStreak(workouts);
 
     const dots: TemplateResult[] = [];
+    let windowCount = 0;
     const cursor = new Date();
     cursor.setDate(cursor.getDate() - (DOTS - 1));
     for (let i = 0; i < DOTS; i++) {
       const active = activeDates.has(cursor.toDateString());
+      if (active) windowCount++;
       dots.push(
         html`<span
           class="dot"
@@ -98,6 +100,7 @@ export class SuuntoStreakCard extends SuuntoBaseCard {
           <div class="icon-badge"><ha-icon icon="mdi:fire"></ha-icon></div>
           <div class="title-block">
             <div class="title">${t(hass, "card.streak.title")}</div>
+            <div class="subtitle">${t(hass, "card.streak.subtitle")}</div>
           </div>
         </div>
 
@@ -111,6 +114,13 @@ export class SuuntoStreakCard extends SuuntoBaseCard {
         </div>
 
         <div class="week-dots">${dots}</div>
+
+        <div class="footer">
+          <span class="chip">
+            <ha-icon icon="mdi:calendar-check"></ha-icon>
+            ${tPlural(hass, windowCount, "streak.window_count_one", "streak.window_count_other")}
+          </span>
+        </div>
       </ha-card>
     `;
   }
@@ -138,12 +148,19 @@ export class SuuntoStreakCard extends SuuntoBaseCard {
       .week-dots {
         display: flex;
         gap: 8px;
+        flex-wrap: wrap;
       }
       .dot {
         width: 10px;
         height: 10px;
         border-radius: 50%;
         display: block;
+      }
+      .footer {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
       }
     `,
   ];

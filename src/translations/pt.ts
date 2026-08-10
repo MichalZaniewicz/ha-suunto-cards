@@ -23,7 +23,7 @@ export const pt: Record<keyof typeof en, string> = {
   "stat.resting_hr_delta": "FC repouso ({delta})",
   "stat.spo2": "SpO2",
   "stat.stress_level": "Nível de stress",
-  "stat.recovery_window": "Janela de recuperação",
+  "stat.recovery_window": "Tempo de recuperação",
   "stat.ctl": "CTL · condição",
   "stat.atl": "ATL · fadiga",
   "stat.tsb": "TSB · forma",
@@ -114,8 +114,8 @@ export const pt: Record<keyof typeof en, string> = {
   "card.elevation.title": "Altitude e Subidas",
   "stat.ascent": "Subida",
   "stat.descent": "Descida",
-  "stat.ascent_time": "Tempo de subida",
-  "stat.descent_time": "Tempo de descida",
+  "stat.ascent_time": "Tempo subida",
+  "stat.descent_time": "Tempo descida",
   "stat.min_altitude": "Altitude mín.",
   "stat.max_altitude": "Altitude máx.",
   "stat.ascent_rate": "Taxa de subida",
@@ -129,9 +129,9 @@ export const pt: Record<keyof typeof en, string> = {
 
   "card.fitness.title": "Condição Física",
   "stat.vo2max": "VO2max",
-  "stat.estimated_vo2max": "VO2max estimado",
-  "stat.fitness_age": "Idade de aptidão física",
-  "fitness.measured": "Medido há {time} · {activity}",
+  "stat.estimated_vo2max": "VO2max est.",
+  "stat.fitness_age": "Idade física",
+  "fitness.measured": "Medido {time} · {activity}",
   "empty.fitness.title": "Ainda sem dados de condição física",
   "empty.fitness.subtitle": "A Suunto calcula isto apenas a partir de treinos de corrida ou caminhada.",
 
@@ -166,6 +166,9 @@ export const pt: Record<keyof typeof en, string> = {
   "editor.goal_label": "Meta semanal (km)",
 
   "card.streak.title": "Sequência de Atividade",
+  "card.streak.subtitle": "Últimos 14 dias",
+  "streak.window_count_one": "{count} dia ativo",
+  "streak.window_count_other": "{count} dias ativos",
   "streak.days_one": "{count} dia de sequência",
   "streak.days_other": "{count} dias de sequência",
   "streak.none": "Sem sequência ativa - começa hoje",
@@ -190,7 +193,7 @@ export const pt: Record<keyof typeof en, string> = {
 
   "stat.cadence": "Cadência",
   "stat.pct_hrmax": "% da FC máx.",
-  "stat.sleep_avg_hr": "FC média no sono",
-  "stat.sleep_min_hr": "FC mín. no sono",
+  "stat.sleep_avg_hr": "FC média sono",
+  "stat.sleep_min_hr": "FC mín. sono",
   "chip.bedtime": "Deitou-se {time}",
 };

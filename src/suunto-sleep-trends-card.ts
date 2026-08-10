@@ -115,7 +115,7 @@ export class SuuntoSleepTrendsCard extends SuuntoBaseCard {
           <span class="legend-item"><i class="dot" style="background:var(--sc-amber)"></i>${t(hass, "stat.quality")}</span>
         </div>
 
-        <div class="stats two">
+        <div class="stats">
           ${this._stat(`${durationParts.value} ${durationParts.unit}`, t(hass, "stat.duration"))}
           ${quality && !UNAVAILABLE_STATES.has(quality.state)
             ? this._stat(`${Math.round(Number(quality.state))}%`, t(hass, "stat.quality"))
@@ -138,9 +138,6 @@ export class SuuntoSleepTrendsCard extends SuuntoBaseCard {
     suuntoTokens,
     suuntoSharedStyles,
     css`
-      .stats.two {
-        grid-template-columns: repeat(2, 1fr);
-      }
       .chart-legend {
         display: flex;
         gap: 14px;

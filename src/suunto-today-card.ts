@@ -62,7 +62,7 @@ export class SuuntoTodayCard extends SuuntoBaseCard {
           </div>
         </div>
 
-        <div class="stats three">
+        <div class="stats">
           ${steps && !UNAVAILABLE_STATES.has(steps.state)
             ? this._stat(Number(steps.state).toLocaleString(hass.language), "", t(hass, "stat.steps"))
             : nothing}
@@ -114,9 +114,6 @@ export class SuuntoTodayCard extends SuuntoBaseCard {
     suuntoTokens,
     suuntoSharedStyles,
     css`
-      .stats.three {
-        grid-template-columns: repeat(3, 1fr);
-      }
       .live-dot {
         width: 6px;
         height: 6px;

@@ -116,7 +116,7 @@ export class SuuntoRecoveryBalanceTrendCard extends SuuntoBaseCard {
           <span class="legend-item"><i class="dot" style="background:var(--sc-amber)"></i>${t(hass, "stat.stress_level")}</span>
         </div>
 
-        <div class="stats two">
+        <div class="stats">
           ${this._stat(`${Math.round(Number(balance.state))}%`, t(hass, "stat.recovery_balance"))}
           ${stress && !UNAVAILABLE_STATES.has(stress.state)
             ? this._stat(stress.state, t(hass, "stat.stress_level"))
@@ -139,9 +139,6 @@ export class SuuntoRecoveryBalanceTrendCard extends SuuntoBaseCard {
     suuntoTokens,
     suuntoSharedStyles,
     css`
-      .stats.two {
-        grid-template-columns: repeat(2, 1fr);
-      }
       .chart-legend {
         display: flex;
         gap: 14px;

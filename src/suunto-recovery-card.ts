@@ -96,7 +96,7 @@ export class SuuntoRecoveryCard extends SuuntoBaseCard {
 
         ${stressState || recoveryTime
           ? html`
-              <div class="stats two">
+              <div class="stats">
                 ${stressState && !UNAVAILABLE_STATES.has(stressState.state)
                   ? this._stat(stressState.state, "", t(hass, "stat.stress_level"))
                   : nothing}
@@ -154,9 +154,6 @@ export class SuuntoRecoveryCard extends SuuntoBaseCard {
       .readiness-band {
         font-size: 1.05rem;
         font-weight: 600;
-      }
-      .stats.two {
-        grid-template-columns: repeat(2, 1fr);
       }
       .footer {
         display: flex;

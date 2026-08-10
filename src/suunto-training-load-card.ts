@@ -138,7 +138,7 @@ export class SuuntoTrainingLoadCard extends SuuntoBaseCard {
 
         ${sparkline(this._history, "var(--sc-amber)")}
 
-        <div class="stats three">
+        <div class="stats">
           ${this._stat(Number(ctl.state).toFixed(0), t(hass, "stat.ctl"))}
           ${atl ? this._stat(Number(atl.state).toFixed(0), t(hass, "stat.atl")) : nothing}
           ${tsbValue !== undefined
@@ -173,9 +173,6 @@ export class SuuntoTrainingLoadCard extends SuuntoBaseCard {
     suuntoTokens,
     suuntoSharedStyles,
     css`
-      .stats.three {
-        grid-template-columns: repeat(3, 1fr);
-      }
       .footer {
         display: flex;
       }

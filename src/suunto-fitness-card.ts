@@ -67,7 +67,7 @@ export class SuuntoFitnessCard extends SuuntoBaseCard {
           </div>
         </div>
 
-        <div class="stats three">
+        <div class="stats">
           ${this._stat(Number(vo2max.state).toFixed(1), "ml/kg/min", t(hass, "stat.vo2max"))}
           ${estimatedVo2max && !UNAVAILABLE_STATES.has(estimatedVo2max.state)
             ? this._stat(Number(estimatedVo2max.state).toFixed(1), "ml/kg/min", t(hass, "stat.estimated_vo2max"))
@@ -93,9 +93,6 @@ export class SuuntoFitnessCard extends SuuntoBaseCard {
     suuntoTokens,
     suuntoSharedStyles,
     css`
-      .stats.three {
-        grid-template-columns: repeat(3, 1fr);
-      }
     `,
   ];
 }

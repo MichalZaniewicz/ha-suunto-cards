@@ -105,7 +105,7 @@ export class SuuntoReadinessTrendCard extends SuuntoBaseCard {
 
         ${sparkline(this._history, band.colorVar)}
 
-        <div class="stats one">
+        <div class="stats">
           <div class="stat">
             <div class="stat-value" style="color:${band.colorVar}">${Math.round(value)}</div>
             <div class="stat-label">${band.label}</div>
@@ -119,9 +119,6 @@ export class SuuntoReadinessTrendCard extends SuuntoBaseCard {
     suuntoTokens,
     suuntoSharedStyles,
     css`
-      .stats.one {
-        grid-template-columns: 1fr;
-      }
       .stat-value {
         font-size: 1.4rem;
       }

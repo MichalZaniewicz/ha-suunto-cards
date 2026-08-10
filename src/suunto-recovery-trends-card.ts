@@ -132,7 +132,7 @@ export class SuuntoRecoveryTrendsCard extends SuuntoBaseCard {
           <span class="legend-item"><i class="dot" style="background:var(--sc-amber)"></i>${t(hass, "stat.hrv")}</span>
         </div>
 
-        <div class="stats two">
+        <div class="stats">
           ${rhrKnown
             ? this._stat(
                 String(Math.round(Number(rhr!.state))),
@@ -171,9 +171,6 @@ export class SuuntoRecoveryTrendsCard extends SuuntoBaseCard {
     suuntoTokens,
     suuntoSharedStyles,
     css`
-      .stats.two {
-        grid-template-columns: repeat(2, 1fr);
-      }
       .chart-legend {
         display: flex;
         gap: 14px;

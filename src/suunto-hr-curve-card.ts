@@ -104,7 +104,7 @@ export class SuuntoHrCurveCard extends SuuntoBaseCard {
 
         ${sparkline(this._history, "var(--sc-pulse)")}
 
-        <div class="stats three">
+        <div class="stats">
           ${this._stat(String(Math.round(Number(current.state))), "bpm", t(hass, "stat.hr_now"))}
           ${min !== undefined ? this._stat(String(Math.round(min)), "bpm", t(hass, "stat.hr_min")) : nothing}
           ${max !== undefined ? this._stat(String(Math.round(max)), "bpm", t(hass, "stat.hr_max")) : nothing}
@@ -126,9 +126,6 @@ export class SuuntoHrCurveCard extends SuuntoBaseCard {
     suuntoTokens,
     suuntoSharedStyles,
     css`
-      .stats.three {
-        grid-template-columns: repeat(3, 1fr);
-      }
     `,
   ];
 }

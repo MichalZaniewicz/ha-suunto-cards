@@ -23,7 +23,7 @@ export const es: Record<keyof typeof en, string> = {
   "stat.resting_hr_delta": "FC reposo ({delta})",
   "stat.spo2": "SpO2",
   "stat.stress_level": "Nivel de estrés",
-  "stat.recovery_window": "Ventana de recuperación",
+  "stat.recovery_window": "Tiempo de recuperación",
   "stat.ctl": "CTL · forma",
   "stat.atl": "ATL · fatiga",
   "stat.tsb": "TSB · forma",
@@ -114,8 +114,8 @@ export const es: Record<keyof typeof en, string> = {
   "card.elevation.title": "Altitud y Ascensos",
   "stat.ascent": "Ascenso",
   "stat.descent": "Descenso",
-  "stat.ascent_time": "Tiempo de ascenso",
-  "stat.descent_time": "Tiempo de descenso",
+  "stat.ascent_time": "T. ascenso",
+  "stat.descent_time": "T. descenso",
   "stat.min_altitude": "Altitud mín.",
   "stat.max_altitude": "Altitud máx.",
   "stat.ascent_rate": "Velocidad de ascenso",
@@ -129,9 +129,9 @@ export const es: Record<keyof typeof en, string> = {
 
   "card.fitness.title": "Forma Física",
   "stat.vo2max": "VO2max",
-  "stat.estimated_vo2max": "VO2max estimado",
+  "stat.estimated_vo2max": "VO2max est.",
   "stat.fitness_age": "Edad física",
-  "fitness.measured": "Medido hace {time} · {activity}",
+  "fitness.measured": "Medido {time} · {activity}",
   "empty.fitness.title": "Aún sin datos de forma física",
   "empty.fitness.subtitle": "Suunto calcula esto solo a partir de entrenamientos de carrera o caminata.",
 
@@ -166,6 +166,9 @@ export const es: Record<keyof typeof en, string> = {
   "editor.goal_label": "Objetivo semanal (km)",
 
   "card.streak.title": "Racha de Actividad",
+  "card.streak.subtitle": "Últimos 14 días",
+  "streak.window_count_one": "{count} día activo",
+  "streak.window_count_other": "{count} días activos",
   "streak.days_one": "{count} día de racha",
   "streak.days_other": "{count} días de racha",
   "streak.none": "Sin racha activa - muévete hoy",
@@ -190,7 +193,7 @@ export const es: Record<keyof typeof en, string> = {
 
   "stat.cadence": "Cadencia",
   "stat.pct_hrmax": "% de FC máx.",
-  "stat.sleep_avg_hr": "FC media en sueño",
-  "stat.sleep_min_hr": "FC mín. en sueño",
+  "stat.sleep_avg_hr": "FC med. sueño",
+  "stat.sleep_min_hr": "FC mín. sueño",
   "chip.bedtime": "Acostado {time}",
 };
