@@ -246,4 +246,14 @@ export const de: Record<keyof typeof en, string> = {
   "pace_trend.faster": "Wird schneller",
   "pace_trend.slower": "Wird langsamer",
   "pace_trend.steady": "Konstantes Tempo",
+
+  "card.lap_splits.title": "Rundenzeiten",
+  "empty.lap_splits.title": "Keine Rundendaten",
+  "empty.lap_splits.subtitle": "Nicht jedes Training hat Runden - das nächste mit Rundendaten füllt das hier auf.",
+  "stat.laps": "Runden",
+  "stat.fastest_lap": "Schnellste Runde",
+  "label.lap": "Runde {n}",
+
+  "card.training_effect_trend.title": "Trainingseffekt-Trend",
+  "empty.training_effect_trend.title": "Noch keine Trainingseffekt-Daten",
 };

@@ -159,6 +159,8 @@
       "mdi:party-popper": '<path d="M4 20l2.6-7.8 5.2 5.2L4 20Z"/><path d="M12.5 6l1.5 1.5M16.5 4l.5 2M19.5 7.5l-2 1"/><circle cx="17.5" cy="11" r="0.9" fill="currentColor" stroke="none"/><circle cx="13.5" cy="15" r="0.9" fill="currentColor" stroke="none"/>',
       "mdi:shoe-print": '<ellipse cx="9" cy="7" rx="3.5" ry="4.2"/><path d="M6 12c-1.5 1-2.5 3-2.5 5.5C3.5 20 5.5 21 8 21h8c2 0 3-1 3-2.5 0-2-1.5-3-3.5-3.5l-6-1.5c-1.5-.4-2.5-1-3.5-1.5Z"/>',
       "mdi:gauge": '<path d="M12 4a8.5 8.5 0 0 0-7 13.3"/><path d="M20 17.3A8.5 8.5 0 0 0 12 4"/><path d="M12 12l4-3.5"/><circle cx="12" cy="12" r="1.3" fill="currentColor" stroke="none"/>',
+      "mdi:flag-checkered": '<path d="M5 3v18"/><path d="M5 4h9l-1.5 2.5L14 9H5"/><path d="M8 4v5M11 4v5"/>',
+      "mdi:lightning-bolt": '<path d="M13 3 5 14h5l-1 7 8-11h-5l1-7Z"/>',
     };
     const DEFAULT_ICON = '<circle cx="12" cy="12" r="8.5"/>';
     const WEATHER_ICON = '<path d="M7 18h10a3.5 3.5 0 0 0 0-7 5 5 0 0 0-9.6-1.5A3.8 3.8 0 0 0 7 18Z"/>';
@@ -327,6 +329,8 @@
       "suunto_app:recovery_balance": () => statisticsTrend(14 * 24, 58, 0, 12, 4, 2, 40),
       "suunto_app:stress": () => statisticsTrend(14 * 24, 2, 0, 1, 5, 2, 40),
       "suunto_app:readiness": () => statisticsTrend(30 * 24, 72, 0, 10, 6, 24),
+      "suunto_app:pte": () => statisticsTrend(30 * 24, 2.1, 0, 0.6, 7, 24),
+      "suunto_app:epoc": () => statisticsTrend(30 * 24, 35, 0, 15, 8, 24),
     };
 
     function statisticsWSImpl(msg) {
@@ -362,6 +366,18 @@
           },
           last_workout_tags: { state: "Commute" },
           last_workout_achievements: { state: 2, attributes: { achievements: ["2nd fastest"], route_ranking: 2 } },
+          last_workout_laps: {
+            state: 4,
+            attributes: {
+              laps: [
+                { lap: 1, duration_minutes: 24.8, distance_km: 10.6, pace_min_km: 2.34 },
+                { lap: 2, duration_minutes: 25.6, distance_km: 10.2, pace_min_km: 2.51 },
+                { lap: 3, duration_minutes: 24.2, distance_km: 11.0, pace_min_km: 2.2 },
+                { lap: 4, duration_minutes: 23.4, distance_km: 10.5, pace_min_km: 2.23 },
+              ],
+            },
+          },
+          last_zone0: { state: 4 },
           last_zone1: { state: 5, attributes: { upper_limit_bpm: 111 } },
           last_zone2: { state: 12, attributes: { lower_limit_bpm: 111, upper_limit_bpm: 131 } },
           last_zone3: { state: 30, attributes: { lower_limit_bpm: 131, upper_limit_bpm: 151 } },
@@ -517,6 +533,8 @@
       "suunto-milestones-card",
       "suunto-athlete-profile-card",
       "suunto-pace-trend-card",
+      "suunto-lap-splits-card",
+      "suunto-training-effect-trend-card",
     ];
 
     function setup() {

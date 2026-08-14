@@ -246,4 +246,14 @@ export const pt: Record<keyof typeof en, string> = {
   "pace_trend.faster": "A ficar mais rápido",
   "pace_trend.slower": "A ficar mais lento",
   "pace_trend.steady": "Ritmo estável",
+
+  "card.lap_splits.title": "Tempos de Volta",
+  "empty.lap_splits.title": "Sem dados de voltas",
+  "empty.lap_splits.subtitle": "Nem todos os treinos têm voltas - o próximo que tiver vai preencher isto.",
+  "stat.laps": "Voltas",
+  "stat.fastest_lap": "Volta mais rápida",
+  "label.lap": "Volta {n}",
+
+  "card.training_effect_trend.title": "Tendência do Efeito de Treino",
+  "empty.training_effect_trend.title": "Ainda sem dados de efeito de treino",
 };

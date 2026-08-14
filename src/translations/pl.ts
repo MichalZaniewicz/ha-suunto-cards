@@ -246,4 +246,14 @@ export const pl: Record<keyof typeof en, string> = {
   "pace_trend.faster": "Przyspieszasz",
   "pace_trend.slower": "Zwalniasz",
   "pace_trend.steady": "Stabilne tempo",
+
+  "card.lap_splits.title": "Czasy Okrążeń",
+  "empty.lap_splits.title": "Brak danych o okrążeniach",
+  "empty.lap_splits.subtitle": "Nie każdy trening ma okrążenia - uzupełni się przy najbliższym, który je ma.",
+  "stat.laps": "Okrążenia",
+  "stat.fastest_lap": "Najszybsze okrążenie",
+  "label.lap": "Okrążenie {n}",
+
+  "card.training_effect_trend.title": "Trend Efektu Treningowego",
+  "empty.training_effect_trend.title": "Brak jeszcze danych o efekcie treningowym",
 };

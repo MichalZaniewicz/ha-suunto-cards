@@ -23,6 +23,7 @@ export const suuntoTokens = css`
     --sc-warn-bg: #fbeed9;
     --sc-bad: #c73e3e;
     --sc-bad-bg: #fbe6e6;
+    --sc-zone-0: #cfd6db;
     --sc-zone-1: #9aa5ad;
     --sc-zone-2: #4f90c4;
     --sc-zone-3: #4c9a6a;
@@ -49,6 +50,7 @@ export const suuntoTokens = css`
     --sc-warn-bg: rgba(245, 180, 78, 0.16);
     --sc-bad: #e05a5a;
     --sc-bad-bg: rgba(224, 90, 90, 0.16);
+    --sc-zone-0: #3f454a;
     --sc-zone-1: #7c8790;
     --sc-zone-2: #6fb3ea;
     --sc-zone-3: #5db47f;

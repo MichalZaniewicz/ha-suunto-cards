@@ -246,4 +246,14 @@ export const fr: Record<keyof typeof en, string> = {
   "pace_trend.faster": "S'améliore",
   "pace_trend.slower": "Ralentit",
   "pace_trend.steady": "Stable",
+
+  "card.lap_splits.title": "Temps par Tour",
+  "empty.lap_splits.title": "Aucune donnée de tour",
+  "empty.lap_splits.subtitle": "Tous les entraînements n'ont pas de tours - le prochain qui en a remplira ceci.",
+  "stat.laps": "Tours",
+  "stat.fastest_lap": "Tour le plus rapide",
+  "label.lap": "Tour {n}",
+
+  "card.training_effect_trend.title": "Tendance de l'Effet d'Entraînement",
+  "empty.training_effect_trend.title": "Pas encore de données d'effet d'entraînement",
 };

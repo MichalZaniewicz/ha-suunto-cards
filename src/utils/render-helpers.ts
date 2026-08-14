@@ -169,6 +169,8 @@ export function multiLineChart(
 export interface Bar {
   value: number;
   label?: string;
+  /** Overrides the chart's default color for this one bar (e.g. the fastest lap). */
+  colorVar?: string;
 }
 
 /** A simple vertical bar chart (e.g. weekly volume) - bars share one linear scale. */
@@ -183,7 +185,7 @@ export function barChart(bars: Bar[], colorVar: string, width = 300, height = 70
     const x = i * (barWidth + gap);
     const y = height - h;
     return svg`
-      <rect x=${x} y=${y} width=${barWidth} height=${h} rx="2" fill=${colorVar}>
+      <rect x=${x} y=${y} width=${barWidth} height=${h} rx="2" fill=${b.colorVar ?? colorVar}>
         <title>${b.label ?? b.value}</title>
       </rect>
     `;

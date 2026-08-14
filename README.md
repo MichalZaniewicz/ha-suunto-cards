@@ -2,7 +2,7 @@
 
 Custom Lovelace cards for [`ha-suunto`](https://github.com/MichalZaniewicz/ha-suunto) (the
 `suunto_app` integration) - a purpose-built widget family instead of wiring generic entity/gauge
-cards to its 74 sensors by hand.
+cards to its 76 sensors by hand.
 
 [![Open your Home Assistant instance and open this repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=MichalZaniewicz&repository=ha-suunto-cards&category=plugin)
 
@@ -22,7 +22,7 @@ into <ha-alert> and drops every child whose textContent is empty, which silently
 | Card | `type` | What it shows |
 |---|---|---|
 | Last Workout | `custom:suunto-last-workout-card` | Activity, distance/duration, avg &amp; max HR, pace or speed, training effect, EPOC, feeling, TSS, weather, tags and route achievements |
-| Heart Rate Zones | `custom:suunto-hr-zones-card` | Time in each of the 5 HR zones from your last workout, with the bpm thresholds |
+| Heart Rate Zones | `custom:suunto-hr-zones-card` | Time in each of the 6 HR zones (0-5) from your last workout, with the bpm thresholds |
 | Sleep &amp; Readiness | `custom:suunto-sleep-readiness-card` | Sleep stages (deep/light/REM), quality, SpO2, HRV &amp; resting HR vs. your baseline, today's readiness score, naps |
 | Recovery | `custom:suunto-recovery-card` | Recovery balance ring, countdown until fully recovered, stress level |
 | Training Load | `custom:suunto-training-load-card` | Fitness/Fatigue/Form (CTL/ATL/TSB) with a 30-day trend line, plus ACWR and its safe-zone banding |
@@ -50,6 +50,8 @@ into <ha-alert> and drops every child whose textContent is empty, which silently
 | By The Numbers | `custom:suunto-milestones-card` | Your lifetime distance and energy converted into fun equivalents |
 | Training Personality | `custom:suunto-athlete-profile-card` | Your dominant sport, schedule pattern and time-of-day, computed from your history |
 | Pace Trend | `custom:suunto-pace-trend-card` | Whether your pace is improving over your recent same-activity workouts |
+| Lap Splits | `custom:suunto-lap-splits-card` | Per-lap duration, distance and pace from your last workout, with the fastest lap highlighted |
+| Training Effect Trend | `custom:suunto-training-effect-trend-card` | Peak training effect and peak EPOC over the last 30 days |
 
 Each card auto-detects your Suunto device - **zero YAML required** for the common case of one
 Suunto account. If you ever have more than one, the card's visual editor shows a device picker.

@@ -29,6 +29,8 @@ import "./suunto-workout-comparison-card";
 import "./suunto-milestones-card";
 import "./suunto-athlete-profile-card";
 import "./suunto-pace-trend-card";
+import "./suunto-lap-splits-card";
+import "./suunto-training-effect-trend-card";
 
 interface CustomCardEntry {
   type: string;
@@ -219,12 +221,24 @@ window.customCards.push(
     name: "Suunto - Pace Trend",
     description: "Whether your pace is improving over your recent same-activity workouts.",
     preview: true,
+  },
+  {
+    type: "suunto-lap-splits-card",
+    name: "Suunto - Lap Splits",
+    description: "Per-lap duration, distance and pace from your last workout, with the fastest lap highlighted.",
+    preview: true,
+  },
+  {
+    type: "suunto-training-effect-trend-card",
+    name: "Suunto - Training Effect Trend",
+    description: "Peak training effect and peak EPOC over the last 30 days.",
+    preview: true,
   }
 );
 
 // eslint-disable-next-line no-console
 console.info(
-  "%c SUUNTO-CARDS %c 29 cards loaded ",
+  "%c SUUNTO-CARDS %c 31 cards loaded ",
   "color: #fff; background: #d98a1d; font-weight: 700; border-radius: 3px 0 0 3px; padding: 2px 6px;",
   "color: #d98a1d; background: transparent; font-weight: 500;"
 );

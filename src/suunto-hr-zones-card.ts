@@ -8,7 +8,8 @@ import { segmentedBar } from "./utils/render-helpers";
 import { formatDuration, formatRelative } from "./utils/format";
 import { t } from "./utils/localize";
 
-const ZONE_COUNT = 5;
+const ZONE_MIN = 0;
+const ZONE_MAX = 5;
 const ZONE_COLOR = (n: number) => `var(--sc-zone-${n})`;
 
 interface ZoneRow {
@@ -56,7 +57,7 @@ export class SuuntoHrZonesCard extends SuuntoBaseCard {
     const hass = this.hass;
 
     const zones: ZoneRow[] = [];
-    for (let n = 1; n <= ZONE_COUNT; n++) {
+    for (let n = ZONE_MIN; n <= ZONE_MAX; n++) {
       const entityId = map[`last_zone${n}`];
       const st = entityId ? hass.states[entityId] : undefined;
       if (!st || Number.isNaN(Number(st.state))) continue;

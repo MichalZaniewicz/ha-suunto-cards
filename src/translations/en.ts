@@ -285,4 +285,16 @@ export const en = {
   "pace_trend.faster": "Getting faster",
   "pace_trend.slower": "Getting slower",
   "pace_trend.steady": "Holding steady",
+
+  // -- card 30: lap splits --
+  "card.lap_splits.title": "Lap Splits",
+  "empty.lap_splits.title": "No lap data",
+  "empty.lap_splits.subtitle": "Not every workout has laps - your next one with them will fill this in.",
+  "stat.laps": "Laps",
+  "stat.fastest_lap": "Fastest lap",
+  "label.lap": "Lap {n}",
+
+  // -- card 31: training effect trend --
+  "card.training_effect_trend.title": "Training Effect Trend",
+  "empty.training_effect_trend.title": "No training effect data yet",
 } as const;
