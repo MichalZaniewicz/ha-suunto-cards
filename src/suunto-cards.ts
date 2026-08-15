@@ -31,6 +31,9 @@ import "./suunto-athlete-profile-card";
 import "./suunto-pace-trend-card";
 import "./suunto-lap-splits-card";
 import "./suunto-training-effect-trend-card";
+import "./suunto-training-status-card";
+import "./suunto-training-profile-card";
+import "./suunto-heart-rate-card";
 
 interface CustomCardEntry {
   type: string;
@@ -233,12 +236,30 @@ window.customCards.push(
     name: "Suunto - Training Effect Trend",
     description: "Peak training effect and peak EPOC over the last 30 days.",
     preview: true,
+  },
+  {
+    type: "suunto-training-status-card",
+    name: "Suunto - Training Status",
+    description: "Today's training suggestion and readiness in one place, with an unusual-recovery warning.",
+    preview: true,
+  },
+  {
+    type: "suunto-training-profile-card",
+    name: "Suunto - Training Profile",
+    description: "A five-axis radar of volume, intensity, consistency, recovery and variety, at a glance.",
+    preview: true,
+  },
+  {
+    type: "suunto-heart-rate-card",
+    name: "Suunto - Heart Rate",
+    description: "A clinical-monitor-style ECG trace, its beat paced by your actual current heart rate.",
+    preview: true,
   }
 );
 
 // eslint-disable-next-line no-console
 console.info(
-  "%c SUUNTO-CARDS %c 31 cards loaded ",
+  "%c SUUNTO-CARDS %c 34 cards loaded ",
   "color: #fff; background: #d98a1d; font-weight: 700; border-radius: 3px 0 0 3px; padding: 2px 6px;",
   "color: #d98a1d; background: transparent; font-weight: 500;"
 );

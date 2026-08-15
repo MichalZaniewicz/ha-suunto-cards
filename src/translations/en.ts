@@ -39,6 +39,12 @@ export const en = {
   "stat.tsb": "TSB · form",
   "stat.readiness": "Readiness",
   "stat.recovery_balance": "Recovery balance",
+  "stat.training_suggestion": "Today's suggestion",
+  "stat.volume": "Volume",
+  "stat.intensity": "Intensity",
+  "stat.consistency": "Consistency",
+  "stat.recovery": "Recovery",
+  "stat.variety": "Variety",
 
   // -- card titles / subtitles --
   "card.hr_zones.title": "Heart Rate Zones",
@@ -54,6 +60,10 @@ export const en = {
   "card.week_stats.lifetime_title": "Lifetime by activity",
   "card.today.title": "Today",
   "card.today.subtitle": "Live from your watch",
+  "card.training_status.title": "Training Status",
+  "card.training_profile.title": "Training Profile",
+  "card.training_profile.subtitle": "Your training, at a glance",
+  "card.heart_rate.title": "Heart Rate",
 
   // -- empty / loading / generic-error states --
   "empty.last_workout.title": "No recent workout",
@@ -67,6 +77,11 @@ export const en = {
   "empty.training_load.subtitle": "Needs a bit of workout history to compute - check back after a few sessions.",
   "empty.week_stats.title": "No workout history yet",
   "empty.today.title": "No live data yet",
+  "empty.training_status.title": "Not enough data yet",
+  "empty.training_status.subtitle": "Needs a bit of training history to compute.",
+  "empty.training_profile.title": "Not enough data yet",
+  "empty.training_profile.subtitle": "Needs a few more sensors reporting to compute your profile.",
+  "empty.heart_rate.title": "No live heart rate yet",
   "empty.loading": "Loading...",
   "empty.generic_error": "Could not load Suunto data.",
 
@@ -94,6 +109,10 @@ export const en = {
   "band.acwr.safe": "Safe zone",
   "band.acwr.low": "Low load",
   "band.acwr.high": "High load - injury risk",
+  "band.suggestion.hard": "Go for it",
+  "band.suggestion.moderate": "Moderate effort",
+  "band.suggestion.easy": "Take it easy",
+  "band.suggestion.rest": "Rest day",
 
   // -- chips / composed strings --
   "chip.workout_logged_today": "Workout logged today",
@@ -103,8 +122,12 @@ export const en = {
   "chip.nap_earlier": "{minutes} min nap (earlier)",
   "chip.workouts_30d": "{count} workouts in the last 30 days",
   "chip.acwr": "ACWR {value} · {label}",
+  "profile.summary": "Strongest on {strong} · lightest on {light}",
   "chip.more_activity_one": "+{count} more activity type",
   "chip.more_activity_other": "+{count} more activity types",
+  "chip.unusual_recovery": "Unusual recovery",
+  "chip.days_since_one": "{count} day since last workout",
+  "chip.days_since_other": "{count} days since last workout",
   "achievement.count_one": "{count} achievement",
   "achievement.count_other": "{count} achievements",
   "achievement.rank": "Rank #{rank} on this route",

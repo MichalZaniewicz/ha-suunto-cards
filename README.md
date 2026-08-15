@@ -2,7 +2,7 @@
 
 Custom Lovelace cards for [`ha-suunto`](https://github.com/MichalZaniewicz/ha-suunto) (the
 `suunto_app` integration) - a purpose-built widget family instead of wiring generic entity/gauge
-cards to its 76 sensors by hand.
+cards to its 78 sensors by hand.
 
 [![Open your Home Assistant instance and open this repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=MichalZaniewicz&repository=ha-suunto-cards&category=plugin)
 
@@ -52,6 +52,9 @@ into <ha-alert> and drops every child whose textContent is empty, which silently
 | Pace Trend | `custom:suunto-pace-trend-card` | Whether your pace is improving over your recent same-activity workouts |
 | Lap Splits | `custom:suunto-lap-splits-card` | Per-lap duration, distance and pace from your last workout, with the fastest lap highlighted |
 | Training Effect Trend | `custom:suunto-training-effect-trend-card` | Peak training effect and peak EPOC over the last 30 days |
+| Training Status | `custom:suunto-training-status-card` | Today's training suggestion and readiness in one place, with an unusual-recovery warning |
+| Training Profile | `custom:suunto-training-profile-card` | A five-axis radar of volume, intensity, consistency, recovery and variety |
+| Heart Rate | `custom:suunto-heart-rate-card` | A clinical-monitor-style ECG trace, its beat paced by your actual current heart rate |
 
 Each card auto-detects your Suunto device - **zero YAML required** for the common case of one
 Suunto account. If you ever have more than one, the card's visual editor shows a device picker.

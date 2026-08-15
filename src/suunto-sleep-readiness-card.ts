@@ -85,6 +85,7 @@ export class SuuntoSleepReadinessCard extends SuuntoBaseCard {
     const sleepAvgHr = get("sleep_avg_hr");
     const sleepMinHr = get("sleep_min_hr");
     const sleepTime = get("sleep_time");
+    const unusualRecovery = get("unusual_recovery");
 
     const readinessValue =
       readiness && !UNAVAILABLE_STATES.has(readiness.state) ? Number(readiness.state) : undefined;
@@ -201,9 +202,13 @@ export class SuuntoSleepReadinessCard extends SuuntoBaseCard {
 
         ${(hrvStatus && !UNAVAILABLE_STATES.has(hrvStatus.state)) ||
         napMinutes ||
-        (sleepTime && !UNAVAILABLE_STATES.has(sleepTime.state))
+        (sleepTime && !UNAVAILABLE_STATES.has(sleepTime.state)) ||
+        unusualRecovery?.state === "on"
           ? html`
               <div class="footer">
+                ${unusualRecovery?.state === "on"
+                  ? html`<span class="chip bad"><ha-icon icon="mdi:shield-alert-outline"></ha-icon>${t(hass, "chip.unusual_recovery")}</span>`
+                  : nothing}
                 ${hrvStatus && !UNAVAILABLE_STATES.has(hrvStatus.state)
                   ? (() => {
                       const chip = hrvStatusChip(hass, hrvStatus.state);

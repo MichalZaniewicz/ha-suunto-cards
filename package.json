@@ -1,6 +1,6 @@
 {
   "name": "ha-suunto-cards",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "private": true,
   "type": "module",
   "description": "Custom Lovelace cards for the suunto_app Home Assistant integration",

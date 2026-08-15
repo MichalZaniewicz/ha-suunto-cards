@@ -4,9 +4,24 @@ import type { LovelaceCardEditor } from "custom-card-helpers";
 import type { SuuntoCardConfig } from "./utils/types";
 import { SuuntoBaseCard } from "./utils/base-card";
 import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
-import { t } from "./utils/localize";
+import { t, tPlural } from "./utils/localize";
+import type { SuuntoHass } from "./utils/types";
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
+
+/** Presentation-only banding for the training_suggestion ENUM - not a Suunto scale. */
+function suggestionBand(hass: SuuntoHass | undefined, value: string): { colorVar: string; label: string; icon: string } {
+  switch (value) {
+    case "hard":
+      return { colorVar: "var(--sc-good)", label: t(hass, "band.suggestion.hard"), icon: "mdi:fire" };
+    case "moderate":
+      return { colorVar: "var(--sc-pulse)", label: t(hass, "band.suggestion.moderate"), icon: "mdi:walk" };
+    case "easy":
+      return { colorVar: "var(--sc-warn)", label: t(hass, "band.suggestion.easy"), icon: "mdi:leaf" };
+    default:
+      return { colorVar: "var(--sc-bad)", label: t(hass, "band.suggestion.rest"), icon: "mdi:bed-clock" };
+  }
+}
 
 @customElement("suunto-today-card")
 export class SuuntoTodayCard extends SuuntoBaseCard {
@@ -44,6 +59,8 @@ export class SuuntoTodayCard extends SuuntoBaseCard {
     const currentHr = get("current_hr");
     const workoutToday = get("workout_today");
     const isRecovering = get("is_recovering");
+    const suggestion = get("training_suggestion");
+    const daysSince = get("days_since_last_workout");
 
     if (!steps && !energy && !currentHr) {
       return this._message("mdi:pulse", t(hass, "empty.today.title"));
@@ -51,6 +68,12 @@ export class SuuntoTodayCard extends SuuntoBaseCard {
 
     const hrValue =
       currentHr && !UNAVAILABLE_STATES.has(currentHr.state) ? Math.round(Number(currentHr.state)) : undefined;
+
+    const suggestionValue =
+      suggestion && !UNAVAILABLE_STATES.has(suggestion.state) ? suggestion.state : undefined;
+    const suggestionBandValue = suggestionValue ? suggestionBand(hass, suggestionValue) : undefined;
+    const daysSinceValue =
+      daysSince && !UNAVAILABLE_STATES.has(daysSince.state) ? Number(daysSince.state) : undefined;
 
     return html`
       <ha-card class="static">
@@ -85,7 +108,10 @@ export class SuuntoTodayCard extends SuuntoBaseCard {
             : nothing}
         </div>
 
-        ${workoutToday?.state === "on" || isRecovering?.state === "on"
+        ${workoutToday?.state === "on" ||
+        isRecovering?.state === "on" ||
+        suggestionBandValue ||
+        (daysSinceValue !== undefined && daysSinceValue > 0)
           ? html`
               <div class="footer">
                 ${workoutToday?.state === "on"
@@ -93,6 +119,21 @@ export class SuuntoTodayCard extends SuuntoBaseCard {
                   : nothing}
                 ${isRecovering?.state === "on"
                   ? html`<span class="chip"><ha-icon icon="mdi:bed-clock"></ha-icon>${t(hass, "chip.recovering")}</span>`
+                  : nothing}
+                ${suggestionBandValue
+                  ? html`<span class="chip" style="color:${suggestionBandValue.colorVar}"
+                      ><ha-icon icon="${suggestionBandValue.icon}"></ha-icon>${suggestionBandValue.label}</span
+                    >`
+                  : nothing}
+                ${daysSinceValue !== undefined && daysSinceValue > 0
+                  ? html`<span class="chip"
+                      ><ha-icon icon="mdi:calendar-clock-outline"></ha-icon>${tPlural(
+                        hass,
+                        daysSinceValue,
+                        "chip.days_since_one",
+                        "chip.days_since_other"
+                      )}</span
+                    >`
                   : nothing}
               </div>
             `

@@ -59,6 +59,7 @@ export class SuuntoRecoveryCard extends SuuntoBaseCard {
     const recoveryTime = get("recovery_time");
     const stressState = get("stress_state");
     const workoutToday = get("workout_today");
+    const unusualRecovery = get("unusual_recovery");
 
     const balanceValue = Number(balance.state);
     const band = balanceBand(hass, balanceValue);
@@ -106,8 +107,17 @@ export class SuuntoRecoveryCard extends SuuntoBaseCard {
               </div>
             `
           : nothing}
-        ${workoutToday?.state === "on"
-          ? html`<div class="footer"><span class="chip accent"><ha-icon icon="mdi:calendar-check"></ha-icon>${t(hass, "chip.workout_logged_today")}</span></div>`
+        ${workoutToday?.state === "on" || unusualRecovery?.state === "on"
+          ? html`
+              <div class="footer">
+                ${workoutToday?.state === "on"
+                  ? html`<span class="chip accent"><ha-icon icon="mdi:calendar-check"></ha-icon>${t(hass, "chip.workout_logged_today")}</span>`
+                  : nothing}
+                ${unusualRecovery?.state === "on"
+                  ? html`<span class="chip bad"><ha-icon icon="mdi:shield-alert-outline"></ha-icon>${t(hass, "chip.unusual_recovery")}</span>`
+                  : nothing}
+              </div>
+            `
           : nothing}
       </ha-card>
     `;
