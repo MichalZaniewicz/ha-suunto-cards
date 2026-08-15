@@ -326,6 +326,23 @@
       return points;
     }
 
+    // Entity-backed statistics - fitness_ctl/resting_hr/etc are regular HA
+    // entities with a state_class, not suunto_app:* external statistics, so
+    // the real recorder auto-generates these under the entity_id itself
+    // (see suunto-training-load-card.ts and friends, fixed to read this
+    // instead of history/period, which only reaches back ~10 days). Reuses
+    // the exact trend shape HISTORY_GENERATORS already has for each key,
+    // just resampled as {start,mean,min,max} statistics points at a daily
+    // step, matching these sensors' real once-a-day update cadence.
+    const ENTITY_STATS_GENERATORS = {
+      fitness_ctl: () => statisticsTrend(90 * 24, 30, 0.2, 2, 1, 24),
+      fatigue_atl: () => statisticsTrend(90 * 24, 35, 0.07, 6, 2, 24),
+      form_tsb: () => statisticsTrend(90 * 24, -5, 0.09, 5, 3, 24),
+      resting_hr: () => statisticsTrend(30 * 24, 51, -0.1, 1.5, 4, 24),
+      sleep_hrv: () => statisticsTrend(30 * 24, 50, 0.13, 3, 5, 24),
+      weekly_distance: () => statisticsTrend(84 * 24, 45, 0.2, 10, 6, 24),
+    };
+
     const STATISTICS_GENERATORS = {
       "suunto_app:hr": () => statisticsTrend(26, 68, 0.2, 14, 1, 2),
       "suunto_app:sleep_duration": () => statisticsTrend(30 * 24, 7.2, 0, 0.6, 2, 24),
@@ -342,7 +359,14 @@
     function statisticsWSImpl(msg) {
       if (msg.type !== "recorder/statistics_during_period") return Promise.resolve({});
       const id = (msg.statistic_ids || [])[0];
-      const gen = STATISTICS_GENERATORS[id];
+      let gen = STATISTICS_GENERATORS[id];
+      if (!gen) {
+        // Not a suunto_app:* external id - try it as an entity_id shaped
+        // <domain>.suunto_<deviceId>_<translationKey>, same key extraction
+        // historyApiImpl already uses.
+        const key = id.split("_").slice(2).join("_");
+        gen = ENTITY_STATS_GENERATORS[key];
+      }
       return Promise.resolve(gen ? { [id]: gen() } : {});
     }
 

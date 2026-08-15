@@ -5,19 +5,13 @@ import type { SuuntoCardConfig } from "./utils/types";
 import { SuuntoBaseCard } from "./utils/base-card";
 import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
 import { sparkline, type SparklinePoint } from "./utils/render-helpers";
-import { formatDelta } from "./utils/format";
+import { formatDelta, fetchStatisticsSeries } from "./utils/format";
 import { t } from "./utils/localize";
 import type { SuuntoHass } from "./utils/types";
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
 const HISTORY_DAYS = 30;
 const REFETCH_INTERVAL_MS = 10 * 60 * 1000;
-
-interface RawHistoryPoint {
-  state: string;
-  last_updated?: string;
-  last_changed?: string;
-}
 
 /** Presentation-only banding for Training Stress Balance (form). */
 function formBand(hass: SuuntoHass | undefined, tsb: number): { colorVar: string; label: string } {
@@ -79,21 +73,14 @@ export class SuuntoTrainingLoadCard extends SuuntoBaseCard {
     this._historyFetchedAt = now;
 
     try {
-      const start = new Date(now - HISTORY_DAYS * 86400000).toISOString();
-      const result = await this.hass.callApi<RawHistoryPoint[][]>(
-        "GET",
-        `history/period/${start}?filter_entity_id=${entityId}&no_attributes`
-      );
-      const series = (result?.[0] ?? [])
-        .map((p) => {
-          const t = new Date(p.last_updated ?? p.last_changed ?? "").getTime();
-          const v = Number(p.state);
-          return { t, v };
-        })
-        .filter((p) => Number.isFinite(p.t) && Number.isFinite(p.v));
-      this._history = series;
+      // fitness_ctl has a state_class, so the recorder auto-generates
+      // long-term statistics for it under its own entity_id - unlike a plain
+      // history/period fetch, which only reaches back ~10 days by default
+      // and left most of this "30-day" sparkline empty on a live account
+      // (confirmed live, not theoretical).
+      this._history = await fetchStatisticsSeries(this.hass as SuuntoHass, entityId, HISTORY_DAYS * 24, "mean");
     } catch {
-      // History API is best-effort - the card still works from live state alone.
+      // Best-effort - the card still works from live state alone.
       this._history = [];
     }
   }

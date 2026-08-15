@@ -1,11 +1,11 @@
 import { html, css, nothing, type PropertyValues, type TemplateResult } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import type { LovelaceCardEditor } from "custom-card-helpers";
-import type { SuuntoCardConfig } from "./utils/types";
+import type { SuuntoCardConfig, SuuntoHass } from "./utils/types";
 import { SuuntoBaseCard } from "./utils/base-card";
 import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
 import { multiLineChart, type ChartSeries, type SparklinePoint } from "./utils/render-helpers";
-import { formatDelta, parseHistorySeries, type RawHistoryPoint } from "./utils/format";
+import { formatDelta, fetchStatisticsSeries } from "./utils/format";
 import { t } from "./utils/localize";
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
@@ -69,17 +69,22 @@ export class SuuntoPmcCard extends SuuntoBaseCard {
     this._historyFetchedAt = now;
 
     try {
-      const start = new Date(now - HISTORY_DAYS * 86400000).toISOString();
-      const result = await this.hass.callApi<RawHistoryPoint[][]>(
-        "GET",
-        `history/period/${start}?filter_entity_id=${ids.join(",")}&no_attributes`
-      );
-      let i = 0;
-      this._ctlHistory = parseHistorySeries(result?.[i++]);
-      this._atlHistory = atlId ? parseHistorySeries(result?.[i++]) : [];
-      this._tsbHistory = tsbId ? parseHistorySeries(result?.[i++]) : [];
+      // fitness_ctl/fatigue_atl/form_tsb have a state_class, so the recorder
+      // auto-generates long-term statistics for them under their own
+      // entity_id - a plain history/period fetch only reaches back ~10 days
+      // by default, which left most of this "90-day" chart empty on a live
+      // account (confirmed live, not theoretical).
+      const hass = this.hass as SuuntoHass;
+      const [ctlSeries, atlSeries, tsbSeries] = await Promise.all([
+        fetchStatisticsSeries(hass, ctlId, HISTORY_DAYS * 24, "mean"),
+        atlId ? fetchStatisticsSeries(hass, atlId, HISTORY_DAYS * 24, "mean") : Promise.resolve([]),
+        tsbId ? fetchStatisticsSeries(hass, tsbId, HISTORY_DAYS * 24, "mean") : Promise.resolve([]),
+      ]);
+      this._ctlHistory = ctlSeries;
+      this._atlHistory = atlSeries;
+      this._tsbHistory = tsbSeries;
     } catch {
-      // History API is best-effort - the card still works from live state alone.
+      // Best-effort - the card still works from live state alone.
       this._ctlHistory = [];
       this._atlHistory = [];
       this._tsbHistory = [];

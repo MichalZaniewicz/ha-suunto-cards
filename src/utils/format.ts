@@ -1,22 +1,6 @@
 import type { SparklinePoint } from "./render-helpers";
 import type { SuuntoHass } from "./types";
 
-export interface RawHistoryPoint {
-  state: string;
-  last_updated?: string;
-  last_changed?: string;
-}
-
-/** Turns one entity's raw `history/period` response into chart-ready points, dropping unavailable/non-numeric samples. */
-export function parseHistorySeries(points: RawHistoryPoint[] | undefined): SparklinePoint[] {
-  return (points ?? [])
-    .map((p) => {
-      const t = new Date(p.last_updated ?? p.last_changed ?? "").getTime();
-      const v = Number(p.state);
-      return { t, v };
-    })
-    .filter((p) => Number.isFinite(p.t) && Number.isFinite(p.v));
-}
 
 /** One point of a `recorder/statistics_during_period` response - `start` is epoch ms. */
 export interface RawStatisticPoint {

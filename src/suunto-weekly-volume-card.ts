@@ -1,11 +1,11 @@
 import { html, css, nothing, type PropertyValues, type TemplateResult } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import type { LovelaceCardEditor } from "custom-card-helpers";
-import type { SuuntoCardConfig } from "./utils/types";
+import type { SuuntoCardConfig, SuuntoHass } from "./utils/types";
 import { SuuntoBaseCard } from "./utils/base-card";
 import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
 import { barChart, type Bar, type SparklinePoint } from "./utils/render-helpers";
-import { parseHistorySeries, type RawHistoryPoint } from "./utils/format";
+import { fetchStatisticsSeries } from "./utils/format";
 import { t } from "./utils/localize";
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
@@ -83,14 +83,16 @@ export class SuuntoWeeklyVolumeCard extends SuuntoBaseCard {
     this._historyFetchedAt = now;
 
     try {
-      const start = new Date(now - HISTORY_DAYS * 86400000).toISOString();
-      const result = await this.hass.callApi<RawHistoryPoint[][]>(
-        "GET",
-        `history/period/${start}?filter_entity_id=${entityId}&no_attributes`
-      );
-      this._history = parseHistorySeries(result?.[0]);
+      // `weekly_distance` has a state_class, so the recorder auto-generates
+      // long-term statistics for it under its own entity_id (same WS call
+      // fetchStatisticsSeries already uses for external suunto_app:*
+      // statistics). That matters here specifically: a plain history/period
+      // fetch only reaches back ~10 days by default, so 10-11 of these 12
+      // weekly buckets came back empty on a live account - confirmed live,
+      // not theoretical. Long-term statistics persist indefinitely.
+      this._history = await fetchStatisticsSeries(this.hass as SuuntoHass, entityId, HISTORY_DAYS * 24, "mean");
     } catch {
-      // History API is best-effort - the card still works from live state alone.
+      // Best-effort - the card still works from live state alone.
       this._history = [];
     }
   }

@@ -1,11 +1,11 @@
 import { html, css, nothing, type PropertyValues, type TemplateResult } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import type { LovelaceCardEditor } from "custom-card-helpers";
-import type { SuuntoCardConfig } from "./utils/types";
+import type { SuuntoCardConfig, SuuntoHass } from "./utils/types";
 import { SuuntoBaseCard } from "./utils/base-card";
 import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
 import { multiLineChart, type ChartSeries, type SparklinePoint } from "./utils/render-helpers";
-import { formatDelta, parseHistorySeries, type RawHistoryPoint } from "./utils/format";
+import { formatDelta, fetchStatisticsSeries } from "./utils/format";
 import { t } from "./utils/localize";
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
@@ -67,16 +67,20 @@ export class SuuntoRecoveryTrendsCard extends SuuntoBaseCard {
     this._historyFetchedAt = now;
 
     try {
-      const start = new Date(now - HISTORY_DAYS * 86400000).toISOString();
-      const result = await this.hass.callApi<RawHistoryPoint[][]>(
-        "GET",
-        `history/period/${start}?filter_entity_id=${ids.join(",")}&no_attributes`
-      );
-      let i = 0;
-      this._rhrHistory = rhrId ? parseHistorySeries(result?.[i++]) : [];
-      this._hrvHistory = hrvId ? parseHistorySeries(result?.[i++]) : [];
+      // resting_hr/sleep_hrv have a state_class, so the recorder
+      // auto-generates long-term statistics for them under their own
+      // entity_id - a plain history/period fetch only reaches back ~10 days
+      // by default and left most of this "30-day" chart empty on a live
+      // account (confirmed live, not theoretical).
+      const hass = this.hass as SuuntoHass;
+      const [rhrSeries, hrvSeries] = await Promise.all([
+        rhrId ? fetchStatisticsSeries(hass, rhrId, HISTORY_DAYS * 24, "mean") : Promise.resolve([]),
+        hrvId ? fetchStatisticsSeries(hass, hrvId, HISTORY_DAYS * 24, "mean") : Promise.resolve([]),
+      ]);
+      this._rhrHistory = rhrSeries;
+      this._hrvHistory = hrvSeries;
     } catch {
-      // History API is best-effort - the card still works from live state alone.
+      // Best-effort - the card still works from live state alone.
       this._rhrHistory = [];
       this._hrvHistory = [];
     }
