@@ -34,6 +34,10 @@ import "./suunto-training-effect-trend-card";
 import "./suunto-training-status-card";
 import "./suunto-training-profile-card";
 import "./suunto-heart-rate-card";
+import "./suunto-player-card";
+import "./suunto-achievements-card";
+import "./suunto-level-card";
+import "./suunto-class-card";
 
 interface CustomCardEntry {
   type: string;
@@ -254,12 +258,36 @@ window.customCards.push(
     name: "Suunto - Heart Rate",
     description: "A clinical-monitor-style ECG trace, its beat paced by your actual current heart rate.",
     preview: true,
+  },
+  {
+    type: "suunto-player-card",
+    name: "Suunto - Player Card",
+    description: "A FIFA-style trading card: an overall rating, tier and 6 stat bars computed from your training data.",
+    preview: true,
+  },
+  {
+    type: "suunto-achievements-card",
+    name: "Suunto - Achievements",
+    description: "19 unlockable badges plus your all-time personal records - fastest pace, biggest climb and more.",
+    preview: true,
+  },
+  {
+    type: "suunto-level-card",
+    name: "Suunto - Level & XP",
+    description: "A game-style level and XP bar powered by your lifetime training load.",
+    preview: true,
+  },
+  {
+    type: "suunto-class-card",
+    name: "Suunto - Class",
+    description: "An RPG character class derived from your training mix, with the build breakdown behind it.",
+    preview: true,
   }
 );
 
 // eslint-disable-next-line no-console
 console.info(
-  "%c SUUNTO-CARDS %c 34 cards loaded ",
+  "%c SUUNTO-CARDS %c 38 cards loaded ",
   "color: #fff; background: #d98a1d; font-weight: 700; border-radius: 3px 0 0 3px; padding: 2px 6px;",
   "color: #d98a1d; background: transparent; font-weight: 500;"
 );

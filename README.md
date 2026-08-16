@@ -55,6 +55,10 @@ into <ha-alert> and drops every child whose textContent is empty, which silently
 | Training Status | `custom:suunto-training-status-card` | Today's training suggestion and readiness in one place, with an unusual-recovery warning |
 | Training Profile | `custom:suunto-training-profile-card` | A five-axis radar of volume, intensity, consistency, recovery and variety |
 | Heart Rate | `custom:suunto-heart-rate-card` | A clinical-monitor-style ECG trace, its beat paced by your actual current heart rate |
+| Player Card | `custom:suunto-player-card` | A FIFA-style trading card: an overall rating, tier and 6 stat bars computed from your training data |
+| Achievements | `custom:suunto-achievements-card` | 19 unlockable badges (workouts, distance, time, energy, variety, fitness) plus your all-time personal records |
+| Level &amp; XP | `custom:suunto-level-card` | A game-style level and XP bar powered by your lifetime training load |
+| Class | `custom:suunto-class-card` | An RPG character class derived from your training mix, with the build breakdown behind it |
 
 Each card auto-detects your Suunto device - **zero YAML required** for the common case of one
 Suunto account. If you ever have more than one, the card's visual editor shows a device picker.
