@@ -34,6 +34,21 @@ function classSlug(activity?: string): string {
   return "other";
 }
 
+/** Each class gets its own accent from the existing token palette - no new
+ * colors invented, but distinct enough that two riders with different
+ * dominant sports get visibly different cards instead of a generic skin. */
+const CLASS_COLORS: Record<string, string> = {
+  cycling: "var(--sc-pulse)",
+  running: "var(--sc-bad)",
+  trekking: "var(--sc-good)",
+  walking: "var(--sc-zone-1)",
+  gym: "var(--sc-zone-4)",
+  swim: "var(--sc-sleep-light)",
+  ski: "var(--sc-sleep-deep)",
+  row: "var(--sc-sleep-rem)",
+  other: "var(--sc-amber)",
+};
+
 const BUILD_COLORS = [
   "var(--sc-pulse)",
   "var(--sc-amber)",
@@ -85,11 +100,12 @@ export class SuuntoClassCard extends SuuntoBaseCard {
     const sorted = [...activities].sort((a, b) => b.workouts - a.workouts).filter((a) => a.workouts > 0);
     const dominant = sorted[0];
     const slug = classSlug(dominant?.activity);
+    const accent = CLASS_COLORS[slug];
     const top = sorted.slice(0, 5);
     const rest = sorted.slice(5).reduce((sum, a) => sum + a.workouts, 0);
 
     return html`
-      <ha-card class="static">
+      <ha-card class="static" style="--class-accent:${accent}">
         <div class="class-emblem"><ha-icon .icon=${activityIcon(dominant?.activity)}></ha-icon></div>
         <div class="class-name">${t(hass, `class.name.${slug}` as TranslationKey)}</div>
         <div class="class-tag">${t(hass, "class.tag", { activity: dominant?.activity ?? "" })}</div>
@@ -100,7 +116,7 @@ export class SuuntoClassCard extends SuuntoBaseCard {
             return html`
               <div class="cb-row">
                 <span class="cn">${a.activity}</span>
-                <div class="ct"><div class="cf" style="width:${pct}%;background:${BUILD_COLORS[i % BUILD_COLORS.length]}"></div></div>
+                <div class="ct"><div class="cf" style="width:${pct}%;background:${i === 0 ? accent : BUILD_COLORS[i % BUILD_COLORS.length]}"></div></div>
                 <span class="cp">${pct}%</span>
               </div>
             `;
@@ -118,43 +134,34 @@ export class SuuntoClassCard extends SuuntoBaseCard {
     suuntoSharedStyles,
     css`
       ha-card.static {
-        padding: 18px;
-        position: relative;
-        overflow: hidden;
-      }
-      ha-card.static::after {
-        content: "";
-        position: absolute;
-        right: -40px;
-        top: -40px;
-        width: 160px;
-        height: 160px;
-        background: radial-gradient(circle, var(--sc-pulse-bg), transparent 70%);
-        pointer-events: none;
+        padding: 20px 18px 18px;
+        border-top: 3px solid var(--class-accent);
       }
       .class-emblem {
-        width: 52px;
-        height: 52px;
-        border-radius: 14px;
-        background: var(--sc-pulse-bg);
-        color: var(--sc-pulse);
+        width: 64px;
+        height: 64px;
+        clip-path: polygon(25% 3%, 75% 3%, 100% 50%, 75% 97%, 25% 97%, 0% 50%);
+        background: color-mix(in srgb, var(--class-accent) 20%, transparent);
+        color: var(--class-accent);
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-bottom: 4px;
+        margin-bottom: 6px;
       }
       .class-emblem ha-icon {
-        --mdc-icon-size: 26px;
+        --mdc-icon-size: 30px;
       }
       .class-name {
-        font-size: 1.1rem;
+        font-size: 1.35rem;
         font-weight: 800;
+        letter-spacing: -0.01em;
       }
       .class-tag {
-        font-size: 0.72rem;
-        color: var(--sc-pulse);
-        font-weight: 600;
-        text-transform: capitalize;
+        font-size: 0.74rem;
+        color: var(--class-accent);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
       }
       .class-flavor {
         font-size: 0.78rem;
