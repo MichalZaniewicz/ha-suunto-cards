@@ -56,7 +56,8 @@ into <ha-alert> and drops every child whose textContent is empty, which silently
 | Training Profile | `custom:suunto-training-profile-card` | A five-axis radar of volume, intensity, consistency, recovery and variety |
 | Heart Rate | `custom:suunto-heart-rate-card` | A clinical-monitor-style ECG trace, its beat paced by your actual current heart rate |
 | Player Card | `custom:suunto-player-card` | A FIFA-style trading card: an overall rating, tier and 6 stat bars computed from your training data |
-| Achievements | `custom:suunto-achievements-card` | 19 unlockable badges (workouts, distance, time, energy, variety, fitness) plus your all-time personal records |
+| Achievements | `custom:suunto-achievements-card` | 20 unlockable badges (workouts, distance, time, energy, variety, fitness) plus your all-time personal records |
+| Achievements (compact) | `custom:suunto-achievements-compact-card` | The same 20 badges as a dense icon grid - no progress bars or category headers, fits without scrolling |
 | Level &amp; XP | `custom:suunto-level-card` | A game-style level and XP bar powered by your lifetime training load |
 | Class | `custom:suunto-class-card` | An RPG character class derived from your training mix, with the build breakdown behind it |
 

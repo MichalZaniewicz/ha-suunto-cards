@@ -36,6 +36,7 @@ import "./suunto-training-profile-card";
 import "./suunto-heart-rate-card";
 import "./suunto-player-card";
 import "./suunto-achievements-card";
+import "./suunto-achievements-compact-card";
 import "./suunto-level-card";
 import "./suunto-class-card";
 
@@ -268,7 +269,13 @@ window.customCards.push(
   {
     type: "suunto-achievements-card",
     name: "Suunto - Achievements",
-    description: "19 unlockable badges plus your all-time personal records - fastest pace, biggest climb and more.",
+    description: "20 unlockable badges plus your all-time personal records - fastest pace, biggest climb and more.",
+    preview: true,
+  },
+  {
+    type: "suunto-achievements-compact-card",
+    name: "Suunto - Achievements (compact)",
+    description: "The same 20 badges as a dense icon grid - no progress bars or category headers, fits without scrolling.",
     preview: true,
   },
   {
@@ -287,7 +294,7 @@ window.customCards.push(
 
 // eslint-disable-next-line no-console
 console.info(
-  "%c SUUNTO-CARDS %c 38 cards loaded ",
+  "%c SUUNTO-CARDS %c 39 cards loaded ",
   "color: #fff; background: #d98a1d; font-weight: 700; border-radius: 3px 0 0 3px; padding: 2px 6px;",
   "color: #d98a1d; background: transparent; font-weight: 500;"
 );
