@@ -23,6 +23,7 @@ interface LifetimeActivity {
 interface StatBar {
   code: string;
   value: number;
+  helpKey: TranslationKey;
 }
 
 /** Same activity -> archetype-noun mapping as suunto-athlete-profile-card's
@@ -68,6 +69,7 @@ function tierFor(overall: number): { key: TranslationKey; colorVar: string } {
 @customElement("suunto-player-card")
 export class SuuntoPlayerCard extends SuuntoBaseCard {
   @state() private _config?: SuuntoCardConfig;
+  @state() private _showHelp = false;
 
   public static getConfigElement(): LovelaceCardEditor {
     return document.createElement("suunto-device-editor") as LovelaceCardEditor;
@@ -127,12 +129,12 @@ export class SuuntoPlayerCard extends SuuntoBaseCard {
     const frm = clamp99(((num(tsb) + 30) / 50) * 99);
 
     const bars: StatBar[] = [
-      { code: "STA", value: sta },
-      { code: "PWR", value: pwr },
-      { code: "REC", value: rec },
-      { code: "CON", value: con },
-      { code: "END", value: end },
-      { code: "FRM", value: frm },
+      { code: "STA", value: sta, helpKey: "player.help.sta" },
+      { code: "PWR", value: pwr, helpKey: "player.help.pwr" },
+      { code: "REC", value: rec, helpKey: "player.help.rec" },
+      { code: "CON", value: con, helpKey: "player.help.con" },
+      { code: "END", value: end, helpKey: "player.help.end" },
+      { code: "FRM", value: frm, helpKey: "player.help.frm" },
     ];
     const overall = clamp99(bars.reduce((sum, b) => sum + b.value, 0) / bars.length);
     const tier = tierFor(overall);
@@ -157,9 +159,20 @@ export class SuuntoPlayerCard extends SuuntoBaseCard {
             <div class="num">${overall}</div>
             <div class="tier">${t(hass, tier.key)}</div>
           </div>
-          <div class="pc-badge">
-            <span class="dot"><ha-icon .icon=${activityIcon(dominantActivity)}></ha-icon></span>
-            ${dominantActivity ?? ""}
+          <div class="pc-top-right">
+            <button
+              class="pc-help-btn"
+              aria-label=${t(hass, "player.help.title")}
+              @click=${() => {
+                this._showHelp = !this._showHelp;
+              }}
+            >
+              <ha-icon icon="mdi:help-circle-outline"></ha-icon>
+            </button>
+            <div class="pc-badge">
+              <span class="dot"><ha-icon .icon=${activityIcon(dominantActivity)}></ha-icon></span>
+              ${dominantActivity ?? ""}
+            </div>
           </div>
         </div>
 
@@ -180,6 +193,24 @@ export class SuuntoPlayerCard extends SuuntoBaseCard {
             `
           )}
         </div>
+
+        ${this._showHelp
+          ? html`
+              <div
+                class="pc-help-overlay"
+                @click=${() => {
+                  this._showHelp = false;
+                }}
+              >
+                <div class="pc-help-title">${t(hass, "player.help.title")}</div>
+                ${bars.map((b) => {
+                  const [code, rest] = t(hass, b.helpKey).split(" · ");
+                  return html`<div class="pc-help-row"><b>${code}</b> · ${rest}</div>`;
+                })}
+                <div class="pc-help-disclaimer">${t(hass, "player.help.disclaimer")}</div>
+              </div>
+            `
+          : nothing}
       </ha-card>
     `;
   }
@@ -238,6 +269,63 @@ export class SuuntoPlayerCard extends SuuntoBaseCard {
         text-transform: uppercase;
         color: var(--tier-color);
         margin-top: 2px;
+      }
+      .pc-top-right {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .pc-help-btn {
+        background: none;
+        border: none;
+        padding: 2px;
+        margin: 0;
+        cursor: pointer;
+        color: var(--secondary-text-color);
+        display: flex;
+        align-items: center;
+        opacity: 0.75;
+      }
+      .pc-help-btn:hover {
+        opacity: 1;
+        color: var(--tier-color);
+      }
+      .pc-help-btn ha-icon {
+        --mdc-icon-size: 18px;
+      }
+      .pc-help-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(10, 8, 5, 0.96);
+        border-radius: 16px;
+        padding: 18px 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+        cursor: pointer;
+        overflow-y: auto;
+      }
+      .pc-help-title {
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: var(--tier-color);
+        margin-bottom: 2px;
+      }
+      .pc-help-row {
+        font-size: 0.74rem;
+        color: #d8d4cc;
+        line-height: 1.4;
+      }
+      .pc-help-row b {
+        color: var(--tier-color);
+        margin-right: 2px;
+      }
+      .pc-help-disclaimer {
+        font-size: 0.64rem;
+        color: #8a8478;
+        margin-top: 6px;
+        font-style: italic;
+        line-height: 1.4;
       }
       .pc-badge {
         display: flex;
