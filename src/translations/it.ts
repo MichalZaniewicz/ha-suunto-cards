@@ -370,4 +370,37 @@ export const it: Record<keyof typeof en, string> = {
   "class.flavor.row": "Forza ritmica, colpo dopo colpo.",
   "class.flavor.other": "Nessuno sport domina - un mix davvero equilibrato.",
 
+  "card.next_milestone.title": "Prossimo Traguardo",
+  "card.next_milestone.subtitle": "Distanza totale",
+  "empty.next_milestone.title": "Ancora nessuna distanza totale",
+  "next_milestone.remaining_label": "mancanti",
+  "next_milestone.target": "a {target} km totali - {pct}% del percorso",
+  "next_milestone.workouts_one": "{count} allenamento a {target} totali",
+  "next_milestone.workouts_other": "{count} allenamenti a {target} totali",
+  "next_milestone.eta_one": "a {pace} km/settimana - circa {weeks} settimana",
+  "next_milestone.eta_other": "a {pace} km/settimana - circa {weeks} settimane",
+
+  "card.story.title": "La Tua Storia Suunto",
+  "card.story.subtitle": "Dal tuo primo allenamento",
+  "empty.story.title": "Ancora nessun dato totale",
+  "story.top_activity": "{activity} - la tua attività principale",
+  "story.top_activity_share": "{count} allenamenti - {pct}% della tua storia",
+  "story.record_subtitle": "Il tuo record personale assoluto",
+
+  "card.sleep_clock.title": "Orologio del Sonno",
+  "card.sleep_clock.subtitle": "Stanotte",
+  "empty.sleep_clock.title": "Ancora nessun dato sul sonno",
+  "empty.sleep_clock.subtitle": "Indossa l'orologio di notte per vederlo qui.",
+  "sleep_clock.quality": "{pct}% di qualità del sonno",
+
+  "card.sleep_rhythm.title": "Ritmo del Sonno",
+  "card.sleep_rhythm.subtitle": "Ultime 7 notti",
+  "empty.sleep_rhythm.title": "Ancora poca cronologia del sonno",
+  "empty.sleep_rhythm.subtitle": "Servono alcune notti di dati per mostrare uno schema.",
+  "sleep_rhythm.avg_bedtime": "Media addormentamento {time}",
+  "sleep_rhythm.avg_wake": "Media risveglio {time}",
+  "sleep_rhythm.spread": "Variazione di {minutes} min",
+  "sleep_rhythm.legend_normal": "Notte tipica",
+  "sleep_rhythm.legend_outlier": "{minutes}+ min di scostamento dalla media",
+
 };

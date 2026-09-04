@@ -370,4 +370,37 @@ export const es: Record<keyof typeof en, string> = {
   "class.flavor.row": "Fuerza rítmica, remada a remada.",
   "class.flavor.other": "Ningún deporte domina - una mezcla verdaderamente equilibrada.",
 
+  "card.next_milestone.title": "Próxima Meta",
+  "card.next_milestone.subtitle": "Distancia acumulada",
+  "empty.next_milestone.title": "Aún sin distancia acumulada",
+  "next_milestone.remaining_label": "restantes",
+  "next_milestone.target": "hasta {target} km acumulados - {pct}% del camino",
+  "next_milestone.workouts_one": "{count} entrenamiento hasta {target} en total",
+  "next_milestone.workouts_other": "{count} entrenamientos hasta {target} en total",
+  "next_milestone.eta_one": "a {pace} km/semana - unas {weeks} semana",
+  "next_milestone.eta_other": "a {pace} km/semana - unas {weeks} semanas",
+
+  "card.story.title": "Tu Historia con Suunto",
+  "card.story.subtitle": "Desde tu primer entrenamiento",
+  "empty.story.title": "Aún sin datos acumulados",
+  "story.top_activity": "{activity} - tu actividad principal",
+  "story.top_activity_share": "{count} entrenamientos - {pct}% de tu historial",
+  "story.record_subtitle": "Tu récord personal de siempre",
+
+  "card.sleep_clock.title": "Reloj de Sueño",
+  "card.sleep_clock.subtitle": "Anoche",
+  "empty.sleep_clock.title": "Aún sin datos de sueño",
+  "empty.sleep_clock.subtitle": "Usa tu reloj por la noche para verlo aquí.",
+  "sleep_clock.quality": "{pct}% de calidad de sueño",
+
+  "card.sleep_rhythm.title": "Ritmo de Sueño",
+  "card.sleep_rhythm.subtitle": "Últimas 7 noches",
+  "empty.sleep_rhythm.title": "Aún no hay suficiente historial de sueño",
+  "empty.sleep_rhythm.subtitle": "Necesita algunas noches de datos para mostrar un patrón.",
+  "sleep_rhythm.avg_bedtime": "Hora media de acostarse {time}",
+  "sleep_rhythm.avg_wake": "Hora media de despertar {time}",
+  "sleep_rhythm.spread": "Variación de {minutes} min",
+  "sleep_rhythm.legend_normal": "Noche típica",
+  "sleep_rhythm.legend_outlier": "{minutes}+ min fuera del promedio",
+
 };

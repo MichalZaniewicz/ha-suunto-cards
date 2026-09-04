@@ -370,4 +370,37 @@ export const nl: Record<keyof typeof en, string> = {
   "class.flavor.row": "Ritmische kracht, haal voor haal.",
   "class.flavor.other": "Geen enkele sport domineert - een echt evenwichtige mix.",
 
+  "card.next_milestone.title": "Volgende Mijlpaal",
+  "card.next_milestone.subtitle": "Totale afstand",
+  "empty.next_milestone.title": "Nog geen totale afstand",
+  "next_milestone.remaining_label": "te gaan",
+  "next_milestone.target": "naar {target} km totaal - {pct}% onderweg",
+  "next_milestone.workouts_one": "{count} training naar {target} totaal",
+  "next_milestone.workouts_other": "{count} trainingen naar {target} totaal",
+  "next_milestone.eta_one": "bij {pace} km/week - nog ongeveer {weeks} week",
+  "next_milestone.eta_other": "bij {pace} km/week - nog ongeveer {weeks} weken",
+
+  "card.story.title": "Jouw Suunto Verhaal",
+  "card.story.subtitle": "Sinds je eerste training",
+  "empty.story.title": "Nog geen totale gegevens",
+  "story.top_activity": "{activity} - jouw belangrijkste activiteit",
+  "story.top_activity_share": "{count} trainingen - {pct}% van je geschiedenis",
+  "story.record_subtitle": "Jouw record aller tijden",
+
+  "card.sleep_clock.title": "Slaapklok",
+  "card.sleep_clock.subtitle": "Afgelopen nacht",
+  "empty.sleep_clock.title": "Nog geen slaapgegevens",
+  "empty.sleep_clock.subtitle": "Draag je horloge 's nachts om dit hier te zien.",
+  "sleep_clock.quality": "{pct}% slaapkwaliteit",
+
+  "card.sleep_rhythm.title": "Slaapritme",
+  "card.sleep_rhythm.subtitle": "Laatste 7 nachten",
+  "empty.sleep_rhythm.title": "Nog niet genoeg slaapgeschiedenis",
+  "empty.sleep_rhythm.subtitle": "Heeft een paar nachten aan gegevens nodig om een patroon te tonen.",
+  "sleep_rhythm.avg_bedtime": "Gem. bedtijd {time}",
+  "sleep_rhythm.avg_wake": "Gem. wektijd {time}",
+  "sleep_rhythm.spread": "{minutes} min spreiding",
+  "sleep_rhythm.legend_normal": "Typische nacht",
+  "sleep_rhythm.legend_outlier": "{minutes}+ min afwijkend van gemiddelde",
+
 };

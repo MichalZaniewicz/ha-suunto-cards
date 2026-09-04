@@ -370,4 +370,37 @@ export const pl: Record<keyof typeof en, string> = {
   "class.flavor.row": "Rytmiczna siła, pociągnięcie po pociągnięciu.",
   "class.flavor.other": "Żaden sport nie dominuje - naprawdę zrównoważona mieszanka.",
 
+  "card.next_milestone.title": "Do następnego celu",
+  "card.next_milestone.subtitle": "Dystans życiowy",
+  "empty.next_milestone.title": "Brak jeszcze dystansu życiowego",
+  "next_milestone.remaining_label": "zostało",
+  "next_milestone.target": "do {target} km życiowych - {pct}% drogi",
+  "next_milestone.workouts_one": "{count} trening do {target} w karierze",
+  "next_milestone.workouts_other": "{count} treningów do {target} w karierze",
+  "next_milestone.eta_one": "przy {pace} km/tydz. - około {weeks} tydzień zostało",
+  "next_milestone.eta_other": "przy {pace} km/tydz. - około {weeks} tygodni zostało",
+
+  "card.story.title": "Twoja historia z Suunto",
+  "card.story.subtitle": "Od pierwszego treningu",
+  "empty.story.title": "Brak jeszcze danych życiowych",
+  "story.top_activity": "{activity} - Twoja główna aktywność",
+  "story.top_activity_share": "{count} treningów - {pct}% Twojej historii",
+  "story.record_subtitle": "Twój rekord życiowy",
+
+  "card.sleep_clock.title": "Zegar snu",
+  "card.sleep_clock.subtitle": "Ostatnia noc",
+  "empty.sleep_clock.title": "Brak jeszcze danych o śnie",
+  "empty.sleep_clock.subtitle": "Załóż zegarek na noc, żeby to zobaczyć.",
+  "sleep_clock.quality": "{pct}% jakości snu",
+
+  "card.sleep_rhythm.title": "Rytm snu",
+  "card.sleep_rhythm.subtitle": "Ostatnie 7 nocy",
+  "empty.sleep_rhythm.title": "Za mało jeszcze historii snu",
+  "empty.sleep_rhythm.subtitle": "Potrzeba kilku nocy danych, żeby pokazać wzorzec.",
+  "sleep_rhythm.avg_bedtime": "Śr. początek snu {time}",
+  "sleep_rhythm.avg_wake": "Śr. pobudka {time}",
+  "sleep_rhythm.spread": "Rozrzut {minutes} min",
+  "sleep_rhythm.legend_normal": "Zwykła noc",
+  "sleep_rhythm.legend_outlier": "Odstaje {minutes}+ min od średniej",
+
 };

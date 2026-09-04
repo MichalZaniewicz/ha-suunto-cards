@@ -411,4 +411,41 @@ export const en = {
   "class.flavor.row": "Rhythmic power, pulled one stroke at a time.",
   "class.flavor.other": "No single sport dominates - a genuinely balanced mix.",
 
+  // -- card 40: next milestone --
+  "card.next_milestone.title": "Next Milestone",
+  "card.next_milestone.subtitle": "Lifetime distance",
+  "empty.next_milestone.title": "No lifetime distance yet",
+  "next_milestone.remaining_label": "to go",
+  "next_milestone.target": "to {target} km lifetime - {pct}% there",
+  "next_milestone.workouts_one": "{count} workout to {target} lifetime",
+  "next_milestone.workouts_other": "{count} workouts to {target} lifetime",
+  "next_milestone.eta_one": "at {pace} km/week - about {weeks} week to go",
+  "next_milestone.eta_other": "at {pace} km/week - about {weeks} weeks to go",
+
+  // -- card 41: your suunto story --
+  "card.story.title": "Your Suunto Story",
+  "card.story.subtitle": "Since your first workout",
+  "empty.story.title": "No lifetime data yet",
+  "story.top_activity": "{activity} - your main activity",
+  "story.top_activity_share": "{count} workouts - {pct}% of your history",
+  "story.record_subtitle": "Your all-time personal record",
+
+  // -- card 42: sleep clock --
+  "card.sleep_clock.title": "Sleep Clock",
+  "card.sleep_clock.subtitle": "Last night",
+  "empty.sleep_clock.title": "No sleep data yet",
+  "empty.sleep_clock.subtitle": "Wear your watch to bed to see it here.",
+  "sleep_clock.quality": "{pct}% sleep quality",
+
+  // -- card 43: sleep rhythm --
+  "card.sleep_rhythm.title": "Sleep Rhythm",
+  "card.sleep_rhythm.subtitle": "Last 7 nights",
+  "empty.sleep_rhythm.title": "Not enough sleep history yet",
+  "empty.sleep_rhythm.subtitle": "Needs a few nights of data to show a pattern.",
+  "sleep_rhythm.avg_bedtime": "Avg bedtime {time}",
+  "sleep_rhythm.avg_wake": "Avg wake {time}",
+  "sleep_rhythm.spread": "{minutes} min spread",
+  "sleep_rhythm.legend_normal": "Typical night",
+  "sleep_rhythm.legend_outlier": "{minutes}+ min off average",
+
 } as const;

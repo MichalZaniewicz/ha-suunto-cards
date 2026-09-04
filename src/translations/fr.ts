@@ -370,4 +370,37 @@ export const fr: Record<keyof typeof en, string> = {
   "class.flavor.row": "Une force rythmée, coup après coup.",
   "class.flavor.other": "Aucun sport ne domine - un mélange vraiment équilibré.",
 
+  "card.next_milestone.title": "Prochain Objectif",
+  "card.next_milestone.subtitle": "Distance cumulée",
+  "empty.next_milestone.title": "Pas encore de distance cumulée",
+  "next_milestone.remaining_label": "restants",
+  "next_milestone.target": "jusqu'à {target} km cumulés - {pct}% du chemin",
+  "next_milestone.workouts_one": "{count} séance jusqu'à {target} au total",
+  "next_milestone.workouts_other": "{count} séances jusqu'à {target} au total",
+  "next_milestone.eta_one": "à {pace} km/semaine - encore environ {weeks} semaine",
+  "next_milestone.eta_other": "à {pace} km/semaine - encore environ {weeks} semaines",
+
+  "card.story.title": "Ton Histoire Suunto",
+  "card.story.subtitle": "Depuis ta première séance",
+  "empty.story.title": "Pas encore de données cumulées",
+  "story.top_activity": "{activity} - ton activité principale",
+  "story.top_activity_share": "{count} séances - {pct}% de ton historique",
+  "story.record_subtitle": "Ton record personnel absolu",
+
+  "card.sleep_clock.title": "Horloge du Sommeil",
+  "card.sleep_clock.subtitle": "Cette nuit",
+  "empty.sleep_clock.title": "Pas encore de données de sommeil",
+  "empty.sleep_clock.subtitle": "Porte ta montre la nuit pour le voir ici.",
+  "sleep_clock.quality": "{pct}% de qualité de sommeil",
+
+  "card.sleep_rhythm.title": "Rythme de Sommeil",
+  "card.sleep_rhythm.subtitle": "7 dernières nuits",
+  "empty.sleep_rhythm.title": "Pas encore assez d'historique de sommeil",
+  "empty.sleep_rhythm.subtitle": "Il faut quelques nuits de données pour montrer une tendance.",
+  "sleep_rhythm.avg_bedtime": "Coucher moyen {time}",
+  "sleep_rhythm.avg_wake": "Réveil moyen {time}",
+  "sleep_rhythm.spread": "Écart de {minutes} min",
+  "sleep_rhythm.legend_normal": "Nuit typique",
+  "sleep_rhythm.legend_outlier": "{minutes}+ min d'écart par rapport à la moyenne",
+
 };

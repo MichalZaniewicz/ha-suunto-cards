@@ -370,4 +370,37 @@ export const de: Record<keyof typeof en, string> = {
   "class.flavor.row": "Rhythmische Kraft, Schlag für Schlag.",
   "class.flavor.other": "Keine Sportart dominiert - eine wirklich ausgewogene Mischung.",
 
+  "card.next_milestone.title": "Nächstes Ziel",
+  "card.next_milestone.subtitle": "Lebenszeit-Distanz",
+  "empty.next_milestone.title": "Noch keine Lebenszeit-Distanz",
+  "next_milestone.remaining_label": "verbleibend",
+  "next_milestone.target": "bis {target} km Lebenszeit - {pct}% geschafft",
+  "next_milestone.workouts_one": "{count} Training bis {target} insgesamt",
+  "next_milestone.workouts_other": "{count} Trainings bis {target} insgesamt",
+  "next_milestone.eta_one": "bei {pace} km/Woche - noch etwa {weeks} Woche",
+  "next_milestone.eta_other": "bei {pace} km/Woche - noch etwa {weeks} Wochen",
+
+  "card.story.title": "Deine Suunto-Geschichte",
+  "card.story.subtitle": "Seit deinem ersten Training",
+  "empty.story.title": "Noch keine Lebenszeitdaten",
+  "story.top_activity": "{activity} - deine Hauptaktivität",
+  "story.top_activity_share": "{count} Trainings - {pct}% deiner Geschichte",
+  "story.record_subtitle": "Dein Allzeitrekord",
+
+  "card.sleep_clock.title": "Schlafuhr",
+  "card.sleep_clock.subtitle": "Letzte Nacht",
+  "empty.sleep_clock.title": "Noch keine Schlafdaten",
+  "empty.sleep_clock.subtitle": "Trage deine Uhr nachts, um es hier zu sehen.",
+  "sleep_clock.quality": "{pct}% Schlafqualität",
+
+  "card.sleep_rhythm.title": "Schlafrhythmus",
+  "card.sleep_rhythm.subtitle": "Letzte 7 Nächte",
+  "empty.sleep_rhythm.title": "Noch nicht genug Schlafhistorie",
+  "empty.sleep_rhythm.subtitle": "Braucht ein paar Nächte an Daten, um ein Muster zu zeigen.",
+  "sleep_rhythm.avg_bedtime": "Ø-Schlafenszeit {time}",
+  "sleep_rhythm.avg_wake": "Ø-Aufwachzeit {time}",
+  "sleep_rhythm.spread": "{minutes} Min. Streuung",
+  "sleep_rhythm.legend_normal": "Typische Nacht",
+  "sleep_rhythm.legend_outlier": "{minutes}+ Min. vom Durchschnitt abweichend",
+
 };

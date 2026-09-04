@@ -274,6 +274,28 @@
       resting_hr: () => trendHistory(30, 51, -0.1, 1.5, 4),
       sleep_hrv: () => trendHistory(30, 50, 0.13, 3, 5),
       weekly_distance: () => trendHistory(84, 45, 0.2, 10, 6),
+      // Last 9 wake times (minutes after midnight) - one intentionally late
+      // outlier (day -2, ~08:20) for suunto-sleep-rhythm-card's amber tone.
+      wake_time: () => {
+        const wakeMin = [410, 390, 375, 400, 430, 500, 420, 405, 395];
+        const now = Date.now();
+        return wakeMin.map((min, i) => {
+          const d = new Date(now - (wakeMin.length - 1 - i) * 86400000);
+          d.setHours(Math.floor(min / 60), min % 60, 0, 0);
+          return { state: d.toISOString(), last_updated: d.toISOString() };
+        });
+      },
+      // Paired 1:1 with wake_time above (same day offsets) so
+      // suunto-sleep-rhythm-card can join bedtime = wake - duration per night.
+      sleep_duration: () => {
+        const hours = [7.75, 6.83, 7.42, 6.33, 7.92, 8.25, 7.5, 7.6, 7.1];
+        const now = Date.now();
+        return hours.map((h, i) => {
+          const d = new Date(now - (hours.length - 1 - i) * 86400000);
+          d.setHours(7, 0, 0, 0);
+          return { state: h.toFixed(2), last_updated: d.toISOString() };
+        });
+      },
     };
 
     // Mock `history/period` - real HA returns one array per requested entity,
@@ -591,6 +613,10 @@
       "suunto-achievements-compact-card",
       "suunto-level-card",
       "suunto-class-card",
+      "suunto-next-milestone-card",
+      "suunto-story-card",
+      "suunto-sleep-clock-card",
+      "suunto-sleep-rhythm-card",
     ];
 
     function setup() {

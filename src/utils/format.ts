@@ -75,6 +75,44 @@ export function dailyMeanFromHourly(points: SparklinePoint[]): SparklinePoint[] 
     .sort((a, b) => a.t - b.t);
 }
 
+export interface HistoryPoint {
+  state: string;
+  lastChanged: number;
+}
+
+/**
+ * Fetches raw entity STATE history (not long-term statistics) for the given
+ * entity ids over the last `days` days, via the REST `history/period`
+ * endpoint. Only appropriate for a SHORT window - the recorder purges this
+ * after ~10 days by default, which is exactly why every longer trend card in
+ * this repo (recovery/training-load/weekly-volume) reads long-term
+ * statistics instead (see fetchStatisticsSeries above). This is the only
+ * option for a timestamp-valued sensor like `wake_time`: HA only generates
+ * long-term statistics for entities with a numeric state_class, so a
+ * timestamp sensor has none at all, at any window length.
+ */
+export async function fetchEntityHistory(
+  hass: SuuntoHass,
+  entityIds: string[],
+  days: number
+): Promise<Record<string, HistoryPoint[]>> {
+  if (entityIds.length === 0) return {};
+  const end = new Date();
+  const start = new Date(end.getTime() - days * 86400000);
+  const raw = await hass.callApi<Array<Array<{ state: string; last_changed: string; last_updated: string }>>>(
+    "GET",
+    `history/period/${start.toISOString()}?filter_entity_id=${entityIds.join(",")}&end_time=${end.toISOString()}`
+  );
+  const out: Record<string, HistoryPoint[]> = {};
+  entityIds.forEach((id, i) => {
+    out[id] = (raw[i] ?? []).map((p) => ({
+      state: p.state,
+      lastChanged: new Date(p.last_updated ?? p.last_changed).getTime(),
+    }));
+  });
+  return out;
+}
+
 /** 98.4 -> "1:38 h"; 42 -> "42 min". Mirrors how the sketch reads at a glance. */
 export function formatDuration(minutes: number): { value: string; unit: string } {
   if (minutes >= 60) {

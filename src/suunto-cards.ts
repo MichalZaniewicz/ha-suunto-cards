@@ -39,6 +39,10 @@ import "./suunto-achievements-card";
 import "./suunto-achievements-compact-card";
 import "./suunto-level-card";
 import "./suunto-class-card";
+import "./suunto-next-milestone-card";
+import "./suunto-story-card";
+import "./suunto-sleep-clock-card";
+import "./suunto-sleep-rhythm-card";
 
 interface CustomCardEntry {
   type: string;
@@ -289,12 +293,36 @@ window.customCards.push(
     name: "Suunto - Class",
     description: "An RPG character class derived from your training mix, with the build breakdown behind it.",
     preview: true,
+  },
+  {
+    type: "suunto-next-milestone-card",
+    name: "Suunto - Next Milestone",
+    description: "A countdown to your next round-number lifetime distance, plus a workout-count milestone and pace-based ETA.",
+    preview: true,
+  },
+  {
+    type: "suunto-story-card",
+    name: "Suunto - Your Suunto Story",
+    description: "A lifetime retrospective: totals, your main activity, and your longest streak in one narrative card.",
+    preview: true,
+  },
+  {
+    type: "suunto-sleep-clock-card",
+    name: "Suunto - Sleep Clock",
+    description: "Last night's sleep as a 24h clock dial, from bedtime to wake, split into deep/light/REM.",
+    preview: true,
+  },
+  {
+    type: "suunto-sleep-rhythm-card",
+    name: "Suunto - Sleep Rhythm",
+    description: "Your last 7 nights' bedtime and wake time on a shared axis - how regular your sleep schedule really is.",
+    preview: true,
   }
 );
 
 // eslint-disable-next-line no-console
 console.info(
-  "%c SUUNTO-CARDS %c 39 cards loaded ",
+  "%c SUUNTO-CARDS %c 43 cards loaded ",
   "color: #fff; background: #d98a1d; font-weight: 700; border-radius: 3px 0 0 3px; padding: 2px 6px;",
   "color: #d98a1d; background: transparent; font-weight: 500;"
 );

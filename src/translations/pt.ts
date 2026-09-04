@@ -370,4 +370,37 @@ export const pt: Record<keyof typeof en, string> = {
   "class.flavor.row": "Força rítmica, remada a remada.",
   "class.flavor.other": "Nenhum desporto domina - uma mistura verdadeiramente equilibrada.",
 
+  "card.next_milestone.title": "Próxima Meta",
+  "card.next_milestone.subtitle": "Distância acumulada",
+  "empty.next_milestone.title": "Ainda sem distância acumulada",
+  "next_milestone.remaining_label": "restantes",
+  "next_milestone.target": "até {target} km acumulados - {pct}% do caminho",
+  "next_milestone.workouts_one": "{count} treino até {target} no total",
+  "next_milestone.workouts_other": "{count} treinos até {target} no total",
+  "next_milestone.eta_one": "a {pace} km/semana - cerca de {weeks} semana",
+  "next_milestone.eta_other": "a {pace} km/semana - cerca de {weeks} semanas",
+
+  "card.story.title": "A Tua História Suunto",
+  "card.story.subtitle": "Desde o teu primeiro treino",
+  "empty.story.title": "Ainda sem dados acumulados",
+  "story.top_activity": "{activity} - a tua atividade principal",
+  "story.top_activity_share": "{count} treinos - {pct}% da tua história",
+  "story.record_subtitle": "O teu recorde pessoal de sempre",
+
+  "card.sleep_clock.title": "Relógio do Sono",
+  "card.sleep_clock.subtitle": "Noite passada",
+  "empty.sleep_clock.title": "Ainda sem dados de sono",
+  "empty.sleep_clock.subtitle": "Usa o teu relógio à noite para ver isto aqui.",
+  "sleep_clock.quality": "{pct}% de qualidade do sono",
+
+  "card.sleep_rhythm.title": "Ritmo do Sono",
+  "card.sleep_rhythm.subtitle": "Últimas 7 noites",
+  "empty.sleep_rhythm.title": "Ainda sem histórico de sono suficiente",
+  "empty.sleep_rhythm.subtitle": "Precisa de algumas noites de dados para mostrar um padrão.",
+  "sleep_rhythm.avg_bedtime": "Hora média de deitar {time}",
+  "sleep_rhythm.avg_wake": "Hora média de acordar {time}",
+  "sleep_rhythm.spread": "Variação de {minutes} min",
+  "sleep_rhythm.legend_normal": "Noite típica",
+  "sleep_rhythm.legend_outlier": "{minutes}+ min fora da média",
+
 };

@@ -2,7 +2,7 @@
 
 Custom Lovelace cards for [`ha-suunto`](https://github.com/MichalZaniewicz/ha-suunto) (the
 `suunto_app` integration) - a purpose-built widget family instead of wiring generic entity/gauge
-cards to its 78 sensors by hand.
+cards to its 80 sensors by hand.
 
 [![Open your Home Assistant instance and open this repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=MichalZaniewicz&repository=ha-suunto-cards&category=plugin)
 
@@ -60,6 +60,10 @@ into <ha-alert> and drops every child whose textContent is empty, which silently
 | Achievements (compact) | `custom:suunto-achievements-compact-card` | The same 20 badges as a dense icon grid - no progress bars or category headers, fits without scrolling |
 | Level &amp; XP | `custom:suunto-level-card` | A game-style level and XP bar powered by your lifetime training load |
 | Class | `custom:suunto-class-card` | An RPG character class derived from your training mix, with the build breakdown behind it |
+| Next Milestone | `custom:suunto-next-milestone-card` | A countdown to your next round-number lifetime distance, plus a workout-count milestone and pace-based ETA |
+| Your Suunto Story | `custom:suunto-story-card` | A lifetime retrospective: totals, your main activity, and your longest streak in one narrative card |
+| Sleep Clock | `custom:suunto-sleep-clock-card` | Last night's sleep as a 24h clock dial, from bedtime to wake, split into deep/light/REM |
+| Sleep Rhythm | `custom:suunto-sleep-rhythm-card` | Your last 7 nights' bedtime and wake time on a shared axis - how regular your sleep schedule really is |
 
 Each card auto-detects your Suunto device - **zero YAML required** for the common case of one
 Suunto account. If you ever have more than one, the card's visual editor shows a device picker.
