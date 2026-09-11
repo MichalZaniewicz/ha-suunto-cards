@@ -403,4 +403,13 @@ export const it: Record<keyof typeof en, string> = {
   "sleep_rhythm.legend_normal": "Notte tipica",
   "sleep_rhythm.legend_outlier": "{minutes}+ min di scostamento dalla media",
 
+  // -- card 44: route --
+  "card.route.title": "Percorso",
+  "empty.route.title": "Nessun dato sul percorso",
+  "empty.route.subtitle": "Gli allenamenti indoor non hanno una traccia GPS.",
+  "route.tap_hint": "Mappa",
+  "route.pace_slower": "Più lento",
+  "route.pace_faster": "Più veloce",
+  "route.close": "Chiudi",
+
 };

@@ -2,7 +2,7 @@
 
 Custom Lovelace cards for [`ha-suunto`](https://github.com/MichalZaniewicz/ha-suunto) (the
 `suunto_app` integration) - a purpose-built widget family instead of wiring generic entity/gauge
-cards to its 80 sensors by hand.
+cards to its 81 sensors by hand.
 
 [![Open your Home Assistant instance and open this repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=MichalZaniewicz&repository=ha-suunto-cards&category=plugin)
 
@@ -64,6 +64,7 @@ into <ha-alert> and drops every child whose textContent is empty, which silently
 | Your Suunto Story | `custom:suunto-story-card` | A lifetime retrospective: totals, your main activity, and your longest streak in one narrative card |
 | Sleep Clock | `custom:suunto-sleep-clock-card` | Last night's sleep as a 24h clock dial, from bedtime to wake, split into deep/light/REM |
 | Sleep Rhythm | `custom:suunto-sleep-rhythm-card` | Your last 7 nights' bedtime and wake time on a shared axis - how regular your sleep schedule really is |
+| Route | `custom:suunto-route-card` | Your last workout's route, colored by pace - tap to open it on a real map |
 
 Each card auto-detects your Suunto device - **zero YAML required** for the common case of one
 Suunto account. If you ever have more than one, the card's visual editor shows a device picker.
@@ -90,6 +91,12 @@ goal_km: 50
 (`suunto_app:hr`, `suunto_app:sleep_duration`, `suunto_app:sleep_quality`) rather than live sensor
 state, so they need a little history to accumulate after you first install the integration before
 they show anything.
+
+**Route**'s collapsed view is a self-contained SVG - no network requests, nothing loaded. Tapping
+it to open the full map is the one exception in this whole card family: it loads
+[Leaflet](https://leafletjs.com/) from a CDN and fetches map tiles from OpenStreetMap on demand,
+which sends that workout's approximate location to those third-party servers. Nothing loads until
+you actually tap the card.
 
 ## Languages
 

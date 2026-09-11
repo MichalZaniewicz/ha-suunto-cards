@@ -448,4 +448,13 @@ export const en = {
   "sleep_rhythm.legend_normal": "Typical night",
   "sleep_rhythm.legend_outlier": "{minutes}+ min off average",
 
+  // -- card 44: route --
+  "card.route.title": "Route",
+  "empty.route.title": "No route data",
+  "empty.route.subtitle": "Indoor workouts have no GPS track.",
+  "route.tap_hint": "Map",
+  "route.pace_slower": "Slower",
+  "route.pace_faster": "Faster",
+  "route.close": "Close",
+
 } as const;

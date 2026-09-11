@@ -538,7 +538,27 @@
           last_ascent_rate: { state: 680 },
           last_workout_location: {
             state: "52.40632, 16.92592",
-            attributes: { latitude: 52.40632, longitude: 16.92592 },
+            attributes: {
+              latitude: 52.40632,
+              longitude: 16.92592,
+              // A loop ride: easy warm-up, a fast push through the middle,
+              // easing off toward the finish - exercises every pace-color band.
+              route: [
+                [52.4063, 16.9259, 14],
+                [52.408, 16.9268, 18],
+                [52.4095, 16.929, 24],
+                [52.41, 16.932, 30],
+                [52.409, 16.935, 34],
+                [52.407, 16.9365, 36],
+                [52.4045, 16.936, 32],
+                [52.4025, 16.934, 28],
+                [52.4015, 16.931, 24],
+                [52.402, 16.928, 20],
+                [52.4035, 16.926, 18],
+                [52.405, 16.9255, 16],
+                [52.4058, 16.9256, 15],
+              ],
+            },
           },
           vo2max: { state: 49, attributes: { measured_at: nowIso(-20 * 86400000), measured_from: "Walking" } },
           estimated_vo2max: { state: 49.4, attributes: { measured_at: nowIso(-20 * 86400000), measured_from: "Walking" } },
@@ -617,6 +637,7 @@
       "suunto-story-card",
       "suunto-sleep-clock-card",
       "suunto-sleep-rhythm-card",
+      "suunto-route-card",
     ];
 
     function setup() {

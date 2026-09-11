@@ -166,6 +166,89 @@ export function multiLineChart(
   `;
 }
 
+export interface RoutePoint {
+  lat: number;
+  lon: number;
+  speedKmh: number;
+}
+
+/**
+ * Colors a point by its speed relative to THIS route's own min/max (a 5-step
+ * cool-to-hot scale using the same `--sc-sev-*` tokens the rest of the card
+ * family already uses for "how hard"), not a fixed km/h threshold - a
+ * runner's "fast" is a cyclist's crawl, so relative-to-this-workout coloring
+ * is what actually reads as meaningful regardless of activity. A route with
+ * almost no speed variation (e.g. a steady-state ride) falls back to the
+ * plain accent color rather than a meaningless near-random bucket split.
+ */
+export function paceColorVar(speedKmh: number, minKmh: number, maxKmh: number): string {
+  const span = maxKmh - minKmh;
+  if (span < 0.5) return "var(--sc-amber)";
+  const ratio = (speedKmh - minKmh) / span;
+  const step = Math.min(5, Math.max(1, Math.ceil(ratio * 5) || 1));
+  return `var(--sc-sev-${step})`;
+}
+
+/**
+ * A GPS track drawn as a pace-colored line with start (green) / finish (red)
+ * markers - self-contained SVG root, safe to splice into any `html`
+ * template. Projects lon/lat to the viewBox with a uniform scale (not a
+ * separate scale per axis) so the drawn shape isn't stretched, and corrects
+ * longitude by cos(latitude) first - at higher latitudes a degree of
+ * longitude covers less real ground distance than a degree of latitude, so
+ * skipping this would visibly widen a route's east-west extent the further
+ * from the equator it is.
+ */
+export function paceRoute(points: RoutePoint[], width = 300, height = 160): TemplateResult | typeof nothing {
+  if (points.length < 2) return nothing;
+
+  const midLatRad = (points.reduce((sum, p) => sum + p.lat, 0) / points.length) * (Math.PI / 180);
+  const lonScale = Math.cos(midLatRad) || 1;
+
+  const xs = points.map((p) => p.lon * lonScale);
+  const ys = points.map((p) => -p.lat); // north (larger lat) should draw UP, i.e. smaller svg y
+  const minX = Math.min(...xs);
+  const minY = Math.min(...ys);
+  const spanX = Math.max(...xs) - minX || 1e-6;
+  const spanY = Math.max(...ys) - minY || 1e-6;
+
+  const pad = 14;
+  const availW = width - pad * 2;
+  const availH = height - pad * 2;
+  const scale = Math.min(availW / spanX, availH / spanY);
+  const offsetX = pad + (availW - spanX * scale) / 2;
+  const offsetY = pad + (availH - spanY * scale) / 2;
+
+  const project = (p: RoutePoint): [number, number] => [
+    offsetX + (p.lon * lonScale - minX) * scale,
+    offsetY + (-p.lat - minY) * scale,
+  ];
+
+  const speeds = points.map((p) => p.speedKmh);
+  const minSpeed = Math.min(...speeds);
+  const maxSpeed = Math.max(...speeds);
+
+  // Sub-fragments containing <line>/<circle> must use Lit's `svg` tag, not
+  // `html` - see multiLineChart's comment above for why.
+  const segments = points.slice(1).map((p, i) => {
+    const [x1, y1] = project(points[i]);
+    const [x2, y2] = project(p);
+    const color = paceColorVar(p.speedKmh, minSpeed, maxSpeed);
+    return svg`<line x1=${x1.toFixed(1)} y1=${y1.toFixed(1)} x2=${x2.toFixed(1)} y2=${y2.toFixed(1)} stroke=${color} stroke-width="4" stroke-linecap="round"></line>`;
+  });
+
+  const [startX, startY] = project(points[0]);
+  const [endX, endY] = project(points[points.length - 1]);
+
+  return html`
+    <svg viewBox="0 0 ${width} ${height}" preserveAspectRatio="xMidYMid meet" class="route-schematic">
+      ${segments}
+      <circle cx=${startX} cy=${startY} r="5.5" fill="var(--sc-good)" stroke="var(--card-background-color)" stroke-width="1.5"></circle>
+      <circle cx=${endX} cy=${endY} r="5.5" fill="var(--sc-bad)" stroke="var(--card-background-color)" stroke-width="1.5"></circle>
+    </svg>
+  `;
+}
+
 export interface Bar {
   value: number;
   label?: string;

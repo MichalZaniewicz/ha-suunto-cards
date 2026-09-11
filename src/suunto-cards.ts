@@ -43,6 +43,7 @@ import "./suunto-next-milestone-card";
 import "./suunto-story-card";
 import "./suunto-sleep-clock-card";
 import "./suunto-sleep-rhythm-card";
+import "./suunto-route-card";
 
 interface CustomCardEntry {
   type: string;
@@ -317,12 +318,18 @@ window.customCards.push(
     name: "Suunto - Sleep Rhythm",
     description: "Your last 7 nights' bedtime and wake time on a shared axis - how regular your sleep schedule really is.",
     preview: true,
+  },
+  {
+    type: "suunto-route-card",
+    name: "Suunto - Route",
+    description: "Your last workout's route, colored by pace - tap to open it on a real map.",
+    preview: true,
   }
 );
 
 // eslint-disable-next-line no-console
 console.info(
-  "%c SUUNTO-CARDS %c 43 cards loaded ",
+  "%c SUUNTO-CARDS %c 44 cards loaded ",
   "color: #fff; background: #d98a1d; font-weight: 700; border-radius: 3px 0 0 3px; padding: 2px 6px;",
   "color: #d98a1d; background: transparent; font-weight: 500;"
 );
