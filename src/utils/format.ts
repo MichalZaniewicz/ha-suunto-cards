@@ -131,6 +131,20 @@ export function formatPace(minutesPerKm: number): string {
   return `${m}:${String(s).padStart(2, "0")}`;
 }
 
+/** A race/effort duration in raw seconds (as best_efforts sends it) -> "24:13"
+ * under an hour, "1:32:07" at or past it - unlike formatPace, this is a whole
+ * elapsed time, not a per-km rate. */
+export function formatRaceTime(totalSeconds: number): string {
+  const s = Math.round(totalSeconds);
+  const h = Math.floor(s / 3600);
+  const m = Math.floor((s % 3600) / 60);
+  const sec = s % 60;
+  if (h > 0) {
+    return `${h}:${String(m).padStart(2, "0")}:${String(sec).padStart(2, "0")}`;
+  }
+  return `${m}:${String(sec).padStart(2, "0")}`;
+}
+
 /** Date -> "6:42 AM" in the user's locale. */
 export function formatTime(date: Date, locale?: string): string {
   return new Intl.DateTimeFormat(locale, { hour: "numeric", minute: "2-digit" }).format(date);

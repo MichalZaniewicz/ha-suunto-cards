@@ -410,4 +410,25 @@ export const pt: Record<keyof typeof en, string> = {
   "route.pace_slower": "Mais lento",
   "route.pace_faster": "Mais rápido",
 
+  // -- card 45: month story --
+  "card.month_story.title": "Este Mês",
+  "empty.month_story.title": "Ainda sem treinos este mês",
+  "story.share_month": "{count} treinos - {pct}% deste mês",
+  "story.record_subtitle_month": "O seu recorde este mês",
+
+  // -- card 46: year story --
+  "card.year_story.title": "Este Ano",
+  "empty.year_story.title": "Ainda sem treinos este ano",
+  "story.share_year": "{count} treinos - {pct}% deste ano",
+  "story.record_subtitle_year": "O seu recorde este ano",
+
+  // -- card 47: best efforts --
+  "card.best_efforts.title": "Melhores Marcas",
+  "card.best_efforts.subtitle": "{count} de {total} conseguidas",
+  "empty.best_efforts.title": "Ainda sem melhores marcas",
+  "empty.best_efforts.subtitle": "Registadas a partir de treinos de corrida a partir de agora, não retroativamente.",
+  "best_efforts.not_yet": "Ainda não conseguido",
+  "distance.half_marathon": "Meia Maratona",
+  "distance.marathon": "Maratona",
+
 };

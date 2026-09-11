@@ -44,6 +44,9 @@ import "./suunto-story-card";
 import "./suunto-sleep-clock-card";
 import "./suunto-sleep-rhythm-card";
 import "./suunto-route-card";
+import "./suunto-month-story-card";
+import "./suunto-year-story-card";
+import "./suunto-best-efforts-card";
 
 interface CustomCardEntry {
   type: string;
@@ -324,12 +327,30 @@ window.customCards.push(
     name: "Suunto - Route",
     description: "Your last workout's route as a line colored by pace, from a warm fast segment to a cool slow one.",
     preview: true,
+  },
+  {
+    type: "suunto-month-story-card",
+    name: "Suunto - This Month",
+    description: "Distance, time, workouts and active days for the current calendar month, plus your main activity and streak.",
+    preview: true,
+  },
+  {
+    type: "suunto-year-story-card",
+    name: "Suunto - This Year",
+    description: "The same totals as This Month, scoped to the current calendar year - a running year in review.",
+    preview: true,
+  },
+  {
+    type: "suunto-best-efforts-card",
+    name: "Suunto - Best Efforts",
+    description: "Your fastest 1K, 5K, 10K, half marathon and marathon efforts, tracked from running workouts.",
+    preview: true,
   }
 );
 
 // eslint-disable-next-line no-console
 console.info(
-  "%c SUUNTO-CARDS %c 44 cards loaded ",
+  "%c SUUNTO-CARDS %c 47 cards loaded ",
   "color: #fff; background: #d98a1d; font-weight: 700; border-radius: 3px 0 0 3px; padding: 2px 6px;",
   "color: #d98a1d; background: transparent; font-weight: 500;"
 );

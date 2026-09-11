@@ -480,6 +480,50 @@
               hardest_workout_tss: { value: 186, activity: "Cycling", start_time: nowIso(-15 * 86400000) },
             },
           },
+          training_records_month: {
+            state: 5,
+            attributes: {
+              fastest_pace_min_km: { value: 5.1, activity: "Running", start_time: nowIso(-3 * 86400000) },
+              biggest_climb_m: { value: 420, activity: "Cycling", start_time: nowIso(-9 * 86400000) },
+              longest_workout_min: { value: 138, activity: "Cycling", start_time: nowIso(-9 * 86400000) },
+              farthest_workout_km: { value: 42.3, activity: "Cycling", start_time: nowIso(-2 * 3600 * 1000) },
+              hardest_workout_tss: { value: 132, activity: "Cycling", start_time: nowIso(-2 * 3600 * 1000) },
+            },
+          },
+          training_records_year: {
+            state: 9,
+            attributes: {
+              fastest_pace_min_km: { value: 4.35, activity: "Running", start_time: nowIso(-40 * 86400000) },
+              biggest_climb_m: { value: 1120, activity: "Trekking", start_time: nowIso(-70 * 86400000) },
+              longest_workout_min: { value: 245, activity: "Trekking", start_time: nowIso(-70 * 86400000) },
+              farthest_workout_km: { value: 68.2, activity: "Cycling", start_time: nowIso(-15 * 86400000) },
+              hardest_workout_tss: { value: 186, activity: "Cycling", start_time: nowIso(-15 * 86400000) },
+            },
+          },
+          month_distance: { state: 184.3 },
+          month_time: { state: 14.2 },
+          month_energy: { state: 9800 },
+          month_workouts: {
+            state: 9,
+            attributes: { main_activity: "Cycling", main_activity_workouts: 6, main_activity_pct: 66.7 },
+          },
+          month_active_days: { state: 8 },
+          year_distance: { state: 2140.5 },
+          year_time: { state: 162.4 },
+          year_energy: { state: 118000 },
+          year_workouts: {
+            state: 94,
+            attributes: { main_activity: "Cycling", main_activity_workouts: 61, main_activity_pct: 64.9 },
+          },
+          year_active_days: { state: 78 },
+          best_efforts: {
+            state: 3,
+            attributes: {
+              "1k_seconds": { value: 238, activity: "Running", start_time: nowIso(-12 * 86400000) },
+              "5k_seconds": { value: 1300, activity: "Running", start_time: nowIso(-3 * 86400000) },
+              "10k_seconds": { value: 2772, activity: "Running", start_time: nowIso(-21 * 86400000) },
+            },
+          },
           weekly_distance: { state: 62.4 },
           weekly_time: { state: 5.2 },
           workouts_7d: { state: 4 },
@@ -638,6 +682,9 @@
       "suunto-sleep-clock-card",
       "suunto-sleep-rhythm-card",
       "suunto-route-card",
+      "suunto-month-story-card",
+      "suunto-year-story-card",
+      "suunto-best-efforts-card",
     ];
 
     function setup() {

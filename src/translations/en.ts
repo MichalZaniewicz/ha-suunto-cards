@@ -455,4 +455,25 @@ export const en = {
   "route.pace_slower": "Slower",
   "route.pace_faster": "Faster",
 
+  // -- card 45: month story --
+  "card.month_story.title": "This Month",
+  "empty.month_story.title": "No workouts yet this month",
+  "story.share_month": "{count} workouts - {pct}% of this month",
+  "story.record_subtitle_month": "Your record this month",
+
+  // -- card 46: year story --
+  "card.year_story.title": "This Year",
+  "empty.year_story.title": "No workouts yet this year",
+  "story.share_year": "{count} workouts - {pct}% of this year",
+  "story.record_subtitle_year": "Your record this year",
+
+  // -- card 47: best efforts --
+  "card.best_efforts.title": "Best Efforts",
+  "card.best_efforts.subtitle": "{count} of {total} recorded",
+  "empty.best_efforts.title": "No best efforts yet",
+  "empty.best_efforts.subtitle": "Recorded from running workouts going forward, not retroactively.",
+  "best_efforts.not_yet": "Not yet recorded",
+  "distance.half_marathon": "Half Marathon",
+  "distance.marathon": "Marathon",
+
 } as const;

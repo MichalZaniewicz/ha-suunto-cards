@@ -410,4 +410,25 @@ export const nl: Record<keyof typeof en, string> = {
   "route.pace_slower": "Langzamer",
   "route.pace_faster": "Sneller",
 
+  // -- card 45: month story --
+  "card.month_story.title": "Deze Maand",
+  "empty.month_story.title": "Nog geen trainingen deze maand",
+  "story.share_month": "{count} trainingen - {pct}% van deze maand",
+  "story.record_subtitle_month": "Jouw record deze maand",
+
+  // -- card 46: year story --
+  "card.year_story.title": "Dit Jaar",
+  "empty.year_story.title": "Nog geen trainingen dit jaar",
+  "story.share_year": "{count} trainingen - {pct}% van dit jaar",
+  "story.record_subtitle_year": "Jouw record dit jaar",
+
+  // -- card 47: best efforts --
+  "card.best_efforts.title": "Beste Prestaties",
+  "card.best_efforts.subtitle": "{count} van {total} behaald",
+  "empty.best_efforts.title": "Nog geen beste prestaties",
+  "empty.best_efforts.subtitle": "Vanaf nu bijgehouden bij hardlooptrainingen, niet met terugwerkende kracht.",
+  "best_efforts.not_yet": "Nog niet behaald",
+  "distance.half_marathon": "Halve Marathon",
+  "distance.marathon": "Marathon",
+
 };

@@ -2,7 +2,7 @@
 
 Custom Lovelace cards for [`ha-suunto`](https://github.com/MichalZaniewicz/ha-suunto) (the
 `suunto_app` integration) - a purpose-built widget family instead of wiring generic entity/gauge
-cards to its 81 sensors by hand.
+cards to its 92 sensors by hand.
 
 [![Open your Home Assistant instance and open this repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=MichalZaniewicz&repository=ha-suunto-cards&category=plugin)
 
@@ -65,6 +65,9 @@ into <ha-alert> and drops every child whose textContent is empty, which silently
 | Sleep Clock | `custom:suunto-sleep-clock-card` | Last night's sleep as a 24h clock dial, from bedtime to wake, split into deep/light/REM |
 | Sleep Rhythm | `custom:suunto-sleep-rhythm-card` | Your last 7 nights' bedtime and wake time on a shared axis - how regular your sleep schedule really is |
 | Route | `custom:suunto-route-card` | Your last workout's route as a line colored by pace, from a warm fast segment to a cool slow one |
+| This Month | `custom:suunto-month-story-card` | Distance, time, workouts and active days for the current calendar month, plus your main activity and streak |
+| This Year | `custom:suunto-year-story-card` | The same totals as This Month, scoped to the current calendar year - a running year in review |
+| Best Efforts | `custom:suunto-best-efforts-card` | Your fastest 1K, 5K, 10K, half marathon and marathon efforts, tracked from running workouts |
 
 Each card auto-detects your Suunto device - **zero YAML required** for the common case of one
 Suunto account. If you ever have more than one, the card's visual editor shows a device picker.
@@ -94,6 +97,12 @@ they show anything.
 
 **Route** draws the shape itself as a self-contained, pace-colored SVG - no map tiles, no
 third-party requests, purely informational (nothing to tap).
+
+**This Month**, **This Year** and **Best Efforts** require `ha-suunto` **1.0.25 or newer**
+(currently a beta pre-release) - the `month_*`/`year_*`/`best_efforts` sensors they read don't
+exist on older versions. **Best Efforts** is also tracked going forward only, from whenever you
+update - it can't find a genuine best from before that, since it needs detailed per-workout data
+this card family doesn't otherwise fetch in bulk.
 
 ## Languages
 
