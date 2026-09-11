@@ -58,7 +58,6 @@ export class SuuntoRouteCard extends SuuntoBaseCard {
     const distance = get("last_distance");
     const duration = get("last_duration");
     const pace = get("last_avg_pace");
-    const mapsUrl = `https://www.google.com/maps?q=${points[0].lat},${points[0].lon}`;
 
     return html`
       <ha-card class="static">
@@ -82,34 +81,28 @@ export class SuuntoRouteCard extends SuuntoBaseCard {
           <span class="end-label">${t(hass, "route.pace_faster")}</span>
         </div>
 
-        <div class="footer-row">
-          <div class="stats">
-            ${distance
-              ? html`<div class="stat">
-                  <div class="stat-label">${t(hass, "stat.distance")}</div>
-                  <div class="stat-value">${(Number(distance.state) / 1000).toFixed(1)}<span class="unit">km</span></div>
-                </div>`
-              : nothing}
-            ${duration
-              ? (() => {
-                  const d = formatDuration(Number(duration.state));
-                  return html`<div class="stat">
-                    <div class="stat-label">${t(hass, "stat.duration")}</div>
-                    <div class="stat-value">${d.value}<span class="unit">${d.unit}</span></div>
-                  </div>`;
-                })()
-              : nothing}
-            ${pace
-              ? html`<div class="stat">
-                  <div class="stat-label">${t(hass, "stat.avg_pace")}</div>
-                  <div class="stat-value">${formatPace(Number(pace.state))}<span class="unit">/km</span></div>
-                </div>`
-              : nothing}
-          </div>
-          <a class="chip accent link" href=${mapsUrl} target="_blank" rel="noopener noreferrer">
-            <ha-icon icon="mdi:open-in-new"></ha-icon>
-            ${t(hass, "location.open_in_maps")}
-          </a>
+        <div class="stats">
+          ${distance
+            ? html`<div class="stat">
+                <div class="stat-label">${t(hass, "stat.distance")}</div>
+                <div class="stat-value">${(Number(distance.state) / 1000).toFixed(1)}<span class="unit">km</span></div>
+              </div>`
+            : nothing}
+          ${duration
+            ? (() => {
+                const d = formatDuration(Number(duration.state));
+                return html`<div class="stat">
+                  <div class="stat-label">${t(hass, "stat.duration")}</div>
+                  <div class="stat-value">${d.value}<span class="unit">${d.unit}</span></div>
+                </div>`;
+              })()
+            : nothing}
+          ${pace
+            ? html`<div class="stat">
+                <div class="stat-label">${t(hass, "stat.avg_pace")}</div>
+                <div class="stat-value">${formatPace(Number(pace.state))}<span class="unit">/km</span></div>
+              </div>`
+            : nothing}
         </div>
       </ha-card>
     `;
@@ -165,18 +158,6 @@ export class SuuntoRouteCard extends SuuntoBaseCard {
         text-transform: uppercase;
         letter-spacing: 0.04em;
         flex: none;
-      }
-
-      .footer-row {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 10px;
-        flex-wrap: wrap;
-      }
-      .chip.link {
-        text-decoration: none;
-        cursor: pointer;
       }
     `,
   ];

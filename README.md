@@ -64,7 +64,7 @@ into <ha-alert> and drops every child whose textContent is empty, which silently
 | Your Suunto Story | `custom:suunto-story-card` | A lifetime retrospective: totals, your main activity, and your longest streak in one narrative card |
 | Sleep Clock | `custom:suunto-sleep-clock-card` | Last night's sleep as a 24h clock dial, from bedtime to wake, split into deep/light/REM |
 | Sleep Rhythm | `custom:suunto-sleep-rhythm-card` | Your last 7 nights' bedtime and wake time on a shared axis - how regular your sleep schedule really is |
-| Route | `custom:suunto-route-card` | Your last workout's route as a line colored by pace, with a one-tap link to open it in Maps |
+| Route | `custom:suunto-route-card` | Your last workout's route as a line colored by pace, from a warm fast segment to a cool slow one |
 
 Each card auto-detects your Suunto device - **zero YAML required** for the common case of one
 Suunto account. If you ever have more than one, the card's visual editor shows a device picker.
@@ -93,8 +93,7 @@ state, so they need a little history to accumulate after you first install the i
 they show anything.
 
 **Route** draws the shape itself as a self-contained, pace-colored SVG - no map tiles, no
-third-party requests. Its "Open in Maps" link works the same way **Start Location**'s does:
-a normal link your own browser opens, not something this card loads or embeds.
+third-party requests, purely informational (nothing to tap).
 
 ## Languages
 
