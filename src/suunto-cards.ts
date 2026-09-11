@@ -322,7 +322,7 @@ window.customCards.push(
   {
     type: "suunto-route-card",
     name: "Suunto - Route",
-    description: "Your last workout's route, colored by pace - tap to open it on a real map.",
+    description: "Your last workout's route as a line colored by pace, with a one-tap link to open it in Maps.",
     preview: true,
   }
 );

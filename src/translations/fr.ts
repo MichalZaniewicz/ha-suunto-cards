@@ -407,9 +407,7 @@ export const fr: Record<keyof typeof en, string> = {
   "card.route.title": "Itinéraire",
   "empty.route.title": "Aucune donnée d'itinéraire",
   "empty.route.subtitle": "Les séances en intérieur n'ont pas de trace GPS.",
-  "route.tap_hint": "Carte",
   "route.pace_slower": "Plus lent",
   "route.pace_faster": "Plus rapide",
-  "route.close": "Fermer",
 
 };

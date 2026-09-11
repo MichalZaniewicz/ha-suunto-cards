@@ -407,9 +407,7 @@ export const pl: Record<keyof typeof en, string> = {
   "card.route.title": "Trasa",
   "empty.route.title": "Brak danych o trasie",
   "empty.route.subtitle": "Treningi w pomieszczeniu nie mają zapisu GPS.",
-  "route.tap_hint": "Mapa",
   "route.pace_slower": "Wolniej",
   "route.pace_faster": "Szybciej",
-  "route.close": "Zamknij",
 
 };

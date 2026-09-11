@@ -407,9 +407,7 @@ export const de: Record<keyof typeof en, string> = {
   "card.route.title": "Route",
   "empty.route.title": "Keine Streckendaten",
   "empty.route.subtitle": "Indoor-Trainings haben keine GPS-Aufzeichnung.",
-  "route.tap_hint": "Karte",
   "route.pace_slower": "Langsamer",
   "route.pace_faster": "Schneller",
-  "route.close": "Schließen",
 
 };

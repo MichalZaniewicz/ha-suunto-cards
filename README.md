@@ -64,7 +64,7 @@ into <ha-alert> and drops every child whose textContent is empty, which silently
 | Your Suunto Story | `custom:suunto-story-card` | A lifetime retrospective: totals, your main activity, and your longest streak in one narrative card |
 | Sleep Clock | `custom:suunto-sleep-clock-card` | Last night's sleep as a 24h clock dial, from bedtime to wake, split into deep/light/REM |
 | Sleep Rhythm | `custom:suunto-sleep-rhythm-card` | Your last 7 nights' bedtime and wake time on a shared axis - how regular your sleep schedule really is |
-| Route | `custom:suunto-route-card` | Your last workout's route, colored by pace - tap to open it on a real map |
+| Route | `custom:suunto-route-card` | Your last workout's route as a line colored by pace, with a one-tap link to open it in Maps |
 
 Each card auto-detects your Suunto device - **zero YAML required** for the common case of one
 Suunto account. If you ever have more than one, the card's visual editor shows a device picker.
@@ -92,11 +92,9 @@ goal_km: 50
 state, so they need a little history to accumulate after you first install the integration before
 they show anything.
 
-**Route**'s collapsed view is a self-contained SVG - no network requests, nothing loaded. Tapping
-it to open the full map is the one exception in this whole card family: it loads
-[Leaflet](https://leafletjs.com/) from a CDN and fetches map tiles from OpenStreetMap on demand,
-which sends that workout's approximate location to those third-party servers. Nothing loads until
-you actually tap the card.
+**Route** draws the shape itself as a self-contained, pace-colored SVG - no map tiles, no
+third-party requests. Its "Open in Maps" link works the same way **Start Location**'s does:
+a normal link your own browser opens, not something this card loads or embeds.
 
 ## Languages
 

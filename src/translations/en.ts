@@ -452,9 +452,7 @@ export const en = {
   "card.route.title": "Route",
   "empty.route.title": "No route data",
   "empty.route.subtitle": "Indoor workouts have no GPS track.",
-  "route.tap_hint": "Map",
   "route.pace_slower": "Slower",
   "route.pace_faster": "Faster",
-  "route.close": "Close",
 
 } as const;
