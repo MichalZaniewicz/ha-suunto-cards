@@ -11,32 +11,20 @@ interface RecentWorkout {
   start: string | null;
 }
 
+const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
 const DOTS = 14;
 
-/**
- * Consecutive-days-active streak, computed client-side from
- * `workouts_recent` (up to the last 15 workouts - there's no full-history
- * feed available). A gap in that list undercounts a genuinely longer streak
- * rather than over-counting, so this stays honest even though it's capped.
- */
-function computeStreak(workouts: RecentWorkout[]): { streak: number; activeDates: Set<string> } {
-  const activeDates = new Set(
+/** Active-day set from `workouts_recent`, for the day-dots strip below - the
+ * streak NUMBER itself now comes straight from the `current_streak` sensor
+ * (ha-suunto 1.0.27+), which scans the full 90-day fetch window server-side
+ * rather than being capped to the last ~60 recent-workout entries. */
+function activeDatesFrom(workouts: RecentWorkout[]): Set<string> {
+  return new Set(
     workouts
       .map((w) => w.start)
       .filter((s): s is string => Boolean(s))
       .map((s) => new Date(s).toDateString())
   );
-
-  const cursor = new Date();
-  if (!activeDates.has(cursor.toDateString())) {
-    cursor.setDate(cursor.getDate() - 1);
-  }
-  let streak = 0;
-  while (activeDates.has(cursor.toDateString())) {
-    streak++;
-    cursor.setDate(cursor.getDate() - 1);
-  }
-  return { streak, activeDates };
 }
 
 @customElement("suunto-streak-card")
@@ -68,15 +56,16 @@ export class SuuntoStreakCard extends SuuntoBaseCard {
     if ("error" in resolved) return resolved.error;
     const { map } = resolved;
     const hass = this.hass;
-    const entityId = map["workouts_recent"];
-    const entity = entityId ? hass.states[entityId] : undefined;
-    const workouts: RecentWorkout[] = entity?.attributes.workouts ?? [];
+    const streakEntity = map["current_streak"] ? hass.states[map["current_streak"]] : undefined;
+    const recentEntity = map["workouts_recent"] ? hass.states[map["workouts_recent"]] : undefined;
+    const workouts: RecentWorkout[] = recentEntity?.attributes.workouts ?? [];
 
-    if (!entity || workouts.length === 0) {
+    if (!streakEntity || UNAVAILABLE_STATES.has(streakEntity.state) || !recentEntity || workouts.length === 0) {
       return this._message("mdi:fire", t(hass, "empty.streak.title"));
     }
 
-    const { streak, activeDates } = computeStreak(workouts);
+    const streak = Number(streakEntity.state);
+    const activeDates = activeDatesFrom(workouts);
 
     const dots: TemplateResult[] = [];
     let windowCount = 0;

@@ -19,6 +19,7 @@ export const en = {
   "stat.max_hr": "Max HR",
   "stat.training_effect": "Training effect",
   "stat.tss": "TSS",
+  "stat.tss_met": "TSS (MET)",
   "stat.epoc": "EPOC",
   "stat.feeling": "Feeling",
   "stat.energy": "Energy",
@@ -128,6 +129,7 @@ export const en = {
   "chip.unusual_recovery": "Unusual recovery",
   "chip.days_since_one": "{count} day since last workout",
   "chip.days_since_other": "{count} days since last workout",
+  "chip.manually_added": "Manually added",
   "achievement.count_one": "{count} achievement",
   "achievement.count_other": "{count} achievements",
   "achievement.rank": "Rank #{rank} on this route",
@@ -184,6 +186,8 @@ export const en = {
   "fitness.measured": "Measured {time} · {activity}",
   "empty.fitness.title": "No fitness data yet",
   "empty.fitness.subtitle": "Suunto computes this from running or walking workouts only.",
+  "empty.fitness_trend.title": "No fitness data yet",
+  "empty.fitness_trend.subtitle": "Suunto computes this from running or walking workouts only.",
 
   // -- card 14: performance management chart --
   "card.pmc.title": "Performance Management",
@@ -325,6 +329,7 @@ export const en = {
 
   // -- card 31: training effect trend --
   "card.training_effect_trend.title": "Training Effect Trend",
+  "card.fitness_trend.title": "Fitness Trend",
   "empty.training_effect_trend.title": "No training effect data yet",
   // -- cards 32-35: player card, achievements, level & xp, class/build --
   "achievements.badge.around_globe": "Around the Globe",

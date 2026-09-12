@@ -9,6 +9,7 @@ export const nl: Record<keyof typeof en, string> = {
   "stat.max_hr": "Max. hartslag",
   "stat.training_effect": "Trainingseffect",
   "stat.tss": "TSS",
+  "stat.tss_met": "TSS (MET)",
   "stat.epoc": "EPOC",
   "stat.feeling": "Gevoel",
   "stat.energy": "Energie",
@@ -113,6 +114,7 @@ export const nl: Record<keyof typeof en, string> = {
   "chip.unusual_recovery": "Afwijkend herstel",
   "chip.days_since_one": "{count} dag sinds laatste training",
   "chip.days_since_other": "{count} dagen sinds laatste training",
+  "chip.manually_added": "Handmatig toegevoegd",
   "achievement.count_one": "{count} prestatie",
   "achievement.count_other": "{count} prestaties",
   "achievement.rank": "Positie #{rank} op deze route",
@@ -162,6 +164,8 @@ export const nl: Record<keyof typeof en, string> = {
   "fitness.measured": "Gemeten {time} · {activity}",
   "empty.fitness.title": "Nog geen fitheidsgegevens",
   "empty.fitness.subtitle": "Suunto berekent dit alleen op basis van hardloop- of wandeltrainingen.",
+  "empty.fitness_trend.title": "Nog geen fitheidsgegevens",
+  "empty.fitness_trend.subtitle": "Suunto berekent dit alleen op basis van hardloop- of wandeltrainingen.",
 
   "card.pmc.title": "Prestatiebeheer",
   "card.pmc.subtitle": "90-dagen trend",
@@ -284,6 +288,7 @@ export const nl: Record<keyof typeof en, string> = {
   "label.lap": "Ronde {n}",
 
   "card.training_effect_trend.title": "Trainingseffecttrend",
+  "card.fitness_trend.title": "Fitheidstrend",
   "empty.training_effect_trend.title": "Nog geen trainingseffectgegevens",
   // -- cards 32-35: player card, achievements, level & xp, class/build --
   "achievements.badge.around_globe": "Rond de wereld",

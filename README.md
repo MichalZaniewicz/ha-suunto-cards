@@ -2,7 +2,7 @@
 
 Custom Lovelace cards for [`ha-suunto`](https://github.com/MichalZaniewicz/ha-suunto) (the
 `suunto_app` integration) - a purpose-built widget family instead of wiring generic entity/gauge
-cards to its 92 sensors by hand.
+cards to its 94 sensors by hand.
 
 [![Open your Home Assistant instance and open this repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=MichalZaniewicz&repository=ha-suunto-cards&category=plugin)
 
@@ -76,6 +76,7 @@ into <ha-alert> and drops every child whose textContent is empty, which silently
 | Weekly Steps Goal | `custom:suunto-weekly-steps-goal-card` | Your rolling 7-day step total against a weekly target you set |
 | Goals Overview | `custom:suunto-goals-overview-card` | Your weekly distance and step goals as two rings in one card |
 | Week Compare | `custom:suunto-week-compare-card` | This week's distance, time and workouts against last week's, with the delta |
+| Fitness Trend | `custom:suunto-fitness-trend-card` | VO2max and estimated VO2max over a 90-day trend, plus fitness age |
 
 Each card auto-detects your Suunto device - **zero YAML required** for the common case of one
 Suunto account. If you ever have more than one, the card's visual editor shows a device picker.
@@ -173,6 +174,19 @@ fetch in bulk.
 sensor doesn't carry the per-workout cadence/stride data it reads. It only shows data for
 foot-based activities (running, walking, trekking); a cycling-only account will see its empty
 state.
+
+**Activity Streak**, **Weekly Steps Goal** and **Goals Overview** read the `current_streak` /
+`weekly_steps` sensors and require `ha-suunto` **1.0.27 or newer** - on an older version they show
+their empty state instead. The Last Workout card's TSS stat and workout-type chip also show two
+small extras from 1.0.27+ when your account has the data: an alternative MET-based TSS figure next
+to the HR-based one, and a "Manually added" chip for workouts you typed in rather than synced from
+the watch.
+
+**Fitness Trend** reads the `suunto_app:vo2max` / `suunto_app:estimated_vo2max` long-term
+statistics, also new in `ha-suunto` **1.0.27**. Suunto only computes VO2max from running/walking
+workouts, so on a cycling-heavy account this trend can be sparse - a handful of points over the
+90-day window rather than a dense daily line, and a fresh install may show a flat or short line
+until a few readings accumulate.
 
 ## Languages
 

@@ -75,21 +75,6 @@ export function dailyMeanFromHourly(points: SparklinePoint[]): SparklinePoint[] 
     .sort((a, b) => a.t - b.t);
 }
 
-/**
- * Sums the last 6 FULL prior days from `suunto_app:steps` (today excluded) -
- * the "rest of the week" half of a rolling 7-day steps total. There is no
- * `weekly_steps` sensor in ha-suunto, so every card that needs one pairs
- * this with its caller's own live `daily_steps` state for today - shared
- * here since suunto-weekly-steps-goal-card and suunto-goals-overview-card
- * both need exactly this sum.
- */
-export async function fetchPriorWeekStepsTotal(hass: SuuntoHass): Promise<number> {
-  const points = dailyTotalsFromCumulative(await fetchStatisticsSeries(hass, "suunto_app:steps", 8 * 24, "sum"));
-  const todayKey = new Date().toDateString();
-  const priorDays = points.filter((p) => new Date(p.t).toDateString() !== todayKey).slice(-6);
-  return priorDays.reduce((sum, p) => sum + p.v, 0);
-}
-
 export interface HistoryPoint {
   state: string;
   lastChanged: number;

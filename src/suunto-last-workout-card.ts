@@ -103,6 +103,11 @@ export class SuuntoLastWorkoutCard extends SuuntoBaseCard {
     const strideValue =
       stride && !UNAVAILABLE_STATES.has(stride.state) ? Number(stride.state) : undefined;
     const tssValue = tss && !UNAVAILABLE_STATES.has(tss.state) ? Number(tss.state) : undefined;
+    const tssMetValue =
+      tss && !UNAVAILABLE_STATES.has(tss.state) && typeof tss.attributes.tss_met === "number"
+        ? tss.attributes.tss_met
+        : undefined;
+    const manuallyAdded = tags?.attributes.is_manually_added === true;
     const epocValue = epoc && !UNAVAILABLE_STATES.has(epoc.state) ? Number(epoc.state) : undefined;
     const calPerKmValue =
       calPerKm && !UNAVAILABLE_STATES.has(calPerKm.state) ? Number(calPerKm.state) : undefined;
@@ -171,6 +176,7 @@ export class SuuntoLastWorkoutCard extends SuuntoBaseCard {
 
         ${!compact &&
         (tssValue !== undefined ||
+          tssMetValue !== undefined ||
           epocValue !== undefined ||
           feelingValue !== undefined ||
           calPerKmValue !== undefined ||
@@ -182,6 +188,9 @@ export class SuuntoLastWorkoutCard extends SuuntoBaseCard {
               <div class="secondary">
                 ${tssValue !== undefined
                   ? this._secondary(String(Math.round(tssValue)), t(hass, "stat.tss"))
+                  : nothing}
+                ${tssMetValue !== undefined
+                  ? this._secondary(String(Math.round(tssMetValue)), t(hass, "stat.tss_met"))
                   : nothing}
                 ${epocValue !== undefined
                   ? this._secondary(epocValue.toFixed(1), t(hass, "stat.epoc"))
@@ -229,11 +238,15 @@ export class SuuntoLastWorkoutCard extends SuuntoBaseCard {
               </div>
             `
           : nothing}
-        ${!compact && ((tags && !UNAVAILABLE_STATES.has(tags.state)) || achievementCount > 0)
+        ${!compact &&
+        ((tags && !UNAVAILABLE_STATES.has(tags.state)) || achievementCount > 0 || manuallyAdded)
           ? html`
               <div class="footer">
                 ${tags && !UNAVAILABLE_STATES.has(tags.state)
                   ? html`<span class="chip"><ha-icon icon="mdi:tag-outline"></ha-icon>${tags.state}</span>`
+                  : nothing}
+                ${manuallyAdded
+                  ? html`<span class="chip"><ha-icon icon="mdi:pencil-outline"></ha-icon>${t(hass, "chip.manually_added")}</span>`
                   : nothing}
                 ${achievementCount > 0
                   ? html`

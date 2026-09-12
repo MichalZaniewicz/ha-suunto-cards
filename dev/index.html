@@ -410,7 +410,17 @@
       "suunto_app:readiness": () => statisticsTrend(30 * 24, 72, 0, 10, 6, 24),
       "suunto_app:pte": () => statisticsTrend(30 * 24, 2.1, 0, 0.6, 7, 24),
       "suunto_app:epoc": () => statisticsTrend(30 * 24, 35, 0, 15, 8, 24),
+      // Sparse, real-shaped: Suunto only computes VO2max from runs/walks, so
+      // a 90-day window realistically holds a handful of points, not a dense
+      // daily series - unlike the other statistics above.
+      "suunto_app:vo2max": () => sparsePoints([[85, 47.5], [55, 48.0], [20, 48.6], [2, 49.0]]),
+      "suunto_app:estimated_vo2max": () => sparsePoints([[85, 47.0], [55, 47.6], [20, 48.3], [2, 49.4]]),
     };
+
+    function sparsePoints(pairs) {
+      const now = Date.now();
+      return pairs.map(([daysAgo, v]) => ({ start: now - daysAgo * 86400000, mean: v, min: v, max: v }));
+    }
 
     function statisticsWSImpl(msg) {
       if (msg.type !== "recorder/statistics_during_period") return Promise.resolve({});
@@ -442,7 +452,7 @@
           last_pte: { state: 1.6 },
           last_epoc: { state: 11.6 },
           last_feeling: { state: 4 },
-          last_tss: { state: 132 },
+          last_tss: { state: 132, attributes: { tss_met: 168.4 } },
           last_cal_per_km: { state: 32 },
           last_cadence: { state: 83 },
           last_pct_hrmax: { state: 78 },
@@ -451,7 +461,7 @@
             state: 27.2,
             attributes: { humidity_pct: 58, wind_speed_kmh: 12, wind_direction_deg: 210, condition: "Scattered clouds", icon_code: "03d" },
           },
-          last_workout_tags: { state: "Commute" },
+          last_workout_tags: { state: "Commute", attributes: { is_manually_added: true } },
           last_workout_achievements: { state: 2, attributes: { achievements: ["2nd fastest"], route_ranking: 2 } },
           last_workout_laps: {
             state: 4,
@@ -556,6 +566,8 @@
           },
           weekly_distance: { state: 62.4 },
           weekly_time: { state: 5.2 },
+          weekly_steps: { state: 54200 },
+          current_streak: { state: 1 },
           workouts_7d: { state: 4 },
           workouts_30d: { state: 14 },
           lifetime_by_activity: {
@@ -723,6 +735,7 @@
       "suunto-weekly-steps-goal-card",
       "suunto-goals-overview-card",
       "suunto-week-compare-card",
+      "suunto-fitness-trend-card",
     ];
 
     function setup() {

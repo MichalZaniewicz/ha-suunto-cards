@@ -9,6 +9,7 @@ export const de: Record<keyof typeof en, string> = {
   "stat.max_hr": "Max. Puls",
   "stat.training_effect": "Trainingseffekt",
   "stat.tss": "TSS",
+  "stat.tss_met": "TSS (MET)",
   "stat.epoc": "EPOC",
   "stat.feeling": "Gefühl",
   "stat.energy": "Energie",
@@ -113,6 +114,7 @@ export const de: Record<keyof typeof en, string> = {
   "chip.unusual_recovery": "Ungewöhnliche Erholung",
   "chip.days_since_one": "{count} Tag seit dem letzten Training",
   "chip.days_since_other": "{count} Tage seit dem letzten Training",
+  "chip.manually_added": "Manuell hinzugefügt",
   "achievement.count_one": "{count} Erfolg",
   "achievement.count_other": "{count} Erfolge",
   "achievement.rank": "Platz #{rank} auf dieser Strecke",
@@ -162,6 +164,8 @@ export const de: Record<keyof typeof en, string> = {
   "fitness.measured": "Gemessen {time} · {activity}",
   "empty.fitness.title": "Noch keine Fitnessdaten",
   "empty.fitness.subtitle": "Suunto berechnet dies nur aus Lauf- oder Gehtrainings.",
+  "empty.fitness_trend.title": "Noch keine Fitnessdaten",
+  "empty.fitness_trend.subtitle": "Suunto berechnet dies nur aus Lauf- oder Gehtrainings.",
 
   "card.pmc.title": "Leistungsmanagement",
   "card.pmc.subtitle": "90-Tage-Trend",
@@ -284,6 +288,7 @@ export const de: Record<keyof typeof en, string> = {
   "label.lap": "Runde {n}",
 
   "card.training_effect_trend.title": "Trainingseffekt-Trend",
+  "card.fitness_trend.title": "Fitness-Trend",
   "empty.training_effect_trend.title": "Noch keine Trainingseffekt-Daten",
   // -- cards 32-35: player card, achievements, level & xp, class/build --
   "achievements.badge.around_globe": "Einmal um die Welt",

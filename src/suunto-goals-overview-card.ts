@@ -1,17 +1,16 @@
-import { html, css, nothing, type PropertyValues, type TemplateResult } from "lit";
+import { html, css, nothing, type TemplateResult } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import type { LovelaceCardEditor } from "custom-card-helpers";
-import type { SuuntoGoalsOverviewCardConfig, SuuntoHass } from "./utils/types";
+import type { SuuntoGoalsOverviewCardConfig } from "./utils/types";
 import { SuuntoBaseCard } from "./utils/base-card";
 import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
 import { progressRing } from "./utils/render-helpers";
-import { fetchPriorWeekStepsTotal, formatDistance } from "./utils/format";
+import { formatDistance } from "./utils/format";
 import { t } from "./utils/localize";
 import { DEFAULT_WEEKLY_GOAL_KM } from "./suunto-weekly-goal-card";
 import { DEFAULT_WEEKLY_STEPS_GOAL } from "./suunto-weekly-steps-goal-card";
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
-const REFETCH_INTERVAL_MS = 10 * 60 * 1000;
 
 interface Ring {
   key: string;
@@ -25,19 +24,13 @@ interface Ring {
 /**
  * Both weekly goal rings (distance + steps) in one card, instead of two
  * separate suunto-weekly-goal-card / suunto-weekly-steps-goal-card
- * instances - reuses the exact same sensors and client-side weekly-steps
- * sum (fetchPriorWeekStepsTotal, shared with suunto-weekly-steps-goal-card)
- * rather than inventing a new computation. Shows whichever goal(s) have
- * live data - one ring full width if only one does, both side by side
- * otherwise.
+ * instances - reads the same `weekly_distance` / `weekly_steps` sensors
+ * those cards use directly. Shows whichever goal(s) have live data - one
+ * ring full width if only one does, both side by side otherwise.
  */
 @customElement("suunto-goals-overview-card")
 export class SuuntoGoalsOverviewCard extends SuuntoBaseCard {
   @state() private _config?: SuuntoGoalsOverviewCardConfig;
-  @state() private _priorDaysSteps?: number;
-
-  private _historyKey?: string;
-  private _historyFetchedAt = 0;
 
   public static getConfigElement(): LovelaceCardEditor {
     return document.createElement("suunto-goals-overview-editor") as LovelaceCardEditor;
@@ -60,30 +53,6 @@ export class SuuntoGoalsOverviewCard extends SuuntoBaseCard {
     return 2;
   }
 
-  protected willUpdate(changed: PropertyValues): void {
-    if (changed.has("hass") && this.hass && this._config) {
-      void this._maybeFetchHistory();
-    }
-  }
-
-  private async _maybeFetchHistory(): Promise<void> {
-    if (!this.hass) return;
-    const key = this._configuredDeviceId ?? "auto";
-    const now = Date.now();
-    if (key === this._historyKey && now - this._historyFetchedAt < REFETCH_INTERVAL_MS) {
-      return;
-    }
-    this._historyKey = key;
-    this._historyFetchedAt = now;
-
-    try {
-      this._priorDaysSteps = await fetchPriorWeekStepsTotal(this.hass as SuuntoHass);
-    } catch {
-      // Statistics are best-effort - the steps ring still works from today's live state alone.
-      this._priorDaysSteps = undefined;
-    }
-  }
-
   protected render(): TemplateResult | typeof nothing {
     if (!this._config || !this.hass) return nothing;
     this._syncTheme();
@@ -95,7 +64,7 @@ export class SuuntoGoalsOverviewCard extends SuuntoBaseCard {
     const get = (key: string) => (map[key] ? hass.states[map[key]] : undefined);
 
     const weeklyDistance = get("weekly_distance");
-    const dailySteps = get("daily_steps");
+    const weeklySteps = get("weekly_steps");
     const units = this._config.units ?? "metric";
 
     const rings: Ring[] = [];
@@ -113,9 +82,9 @@ export class SuuntoGoalsOverviewCard extends SuuntoBaseCard {
         valueLabel: `${valueFmt.value} / ${goalFmt.value} ${goalFmt.unit}`,
       });
     }
-    if (dailySteps && !UNAVAILABLE_STATES.has(dailySteps.state)) {
+    if (weeklySteps && !UNAVAILABLE_STATES.has(weeklySteps.state)) {
       const goal = this._config.goal_steps ?? DEFAULT_WEEKLY_STEPS_GOAL;
-      const value = (this._priorDaysSteps ?? 0) + Number(dailySteps.state);
+      const value = Number(weeklySteps.state);
       rings.push({
         key: "steps",
         icon: "mdi:shoe-print",

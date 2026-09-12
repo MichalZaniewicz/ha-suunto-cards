@@ -58,6 +58,7 @@ import "./suunto-running-dynamics-card";
 import "./suunto-weekly-steps-goal-card";
 import "./suunto-goals-overview-card";
 import "./suunto-week-compare-card";
+import "./suunto-fitness-trend-card";
 
 interface CustomCardEntry {
   type: string;
@@ -404,12 +405,18 @@ window.customCards.push(
     name: "Suunto - Week Compare",
     description: "This week's distance, time and workouts against last week's.",
     preview: true,
+  },
+  {
+    type: "suunto-fitness-trend-card",
+    name: "Suunto - Fitness Trend",
+    description: "VO2max and estimated VO2max over the last 90 days.",
+    preview: true,
   }
 );
 
 // eslint-disable-next-line no-console
 console.info(
-  "%c SUUNTO-CARDS %c 55 cards loaded ",
+  "%c SUUNTO-CARDS %c 56 cards loaded ",
   "color: #fff; background: #d98a1d; font-weight: 700; border-radius: 3px 0 0 3px; padding: 2px 6px;",
   "color: #d98a1d; background: transparent; font-weight: 500;"
 );

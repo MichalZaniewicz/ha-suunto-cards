@@ -1,33 +1,25 @@
-import { html, css, nothing, type PropertyValues, type TemplateResult } from "lit";
+import { html, css, nothing, type TemplateResult } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import type { LovelaceCardEditor } from "custom-card-helpers";
-import type { SuuntoStepsGoalCardConfig, SuuntoHass } from "./utils/types";
+import type { SuuntoStepsGoalCardConfig } from "./utils/types";
 import { SuuntoBaseCard } from "./utils/base-card";
 import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
 import { progressRing } from "./utils/render-helpers";
-import { fetchPriorWeekStepsTotal } from "./utils/format";
 import { t } from "./utils/localize";
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
 export const DEFAULT_WEEKLY_STEPS_GOAL = 70000;
-const REFETCH_INTERVAL_MS = 10 * 60 * 1000;
 
 /**
  * A rolling 7-day step total against a user-set weekly target - the steps
- * equivalent of suunto-weekly-goal-card (which reads the `weekly_distance`
- * sensor), but ha-suunto has no `weekly_steps` sensor, so this sums it
- * client-side: the last 6 FULL days from the `suunto_app:steps` statistic
- * (already fetched the same way suunto-steps-today-card computes its 7-day
- * average) plus today's own live `daily_steps` state, matching how
- * `weekly_distance` itself is a rolling window that includes today so far.
+ * equivalent of suunto-weekly-goal-card (which reads `weekly_distance`).
+ * Reads the `weekly_steps` sensor directly (ha-suunto 1.0.27+); older
+ * installs without it show the empty state, same as any other
+ * required-sensor card in this family.
  */
 @customElement("suunto-weekly-steps-goal-card")
 export class SuuntoWeeklyStepsGoalCard extends SuuntoBaseCard {
   @state() private _config?: SuuntoStepsGoalCardConfig;
-  @state() private _priorDaysTotal?: number;
-
-  private _historyKey?: string;
-  private _historyFetchedAt = 0;
 
   public static getConfigElement(): LovelaceCardEditor {
     return document.createElement("suunto-weekly-steps-goal-editor") as LovelaceCardEditor;
@@ -46,30 +38,6 @@ export class SuuntoWeeklyStepsGoalCard extends SuuntoBaseCard {
     return 2;
   }
 
-  protected willUpdate(changed: PropertyValues): void {
-    if (changed.has("hass") && this.hass && this._config) {
-      void this._maybeFetchHistory();
-    }
-  }
-
-  private async _maybeFetchHistory(): Promise<void> {
-    if (!this.hass) return;
-    const key = this._configuredDeviceId ?? "auto";
-    const now = Date.now();
-    if (key === this._historyKey && now - this._historyFetchedAt < REFETCH_INTERVAL_MS) {
-      return;
-    }
-    this._historyKey = key;
-    this._historyFetchedAt = now;
-
-    try {
-      this._priorDaysTotal = await fetchPriorWeekStepsTotal(this.hass as SuuntoHass);
-    } catch {
-      // Statistics are best-effort - the ring still works from today's live state alone.
-      this._priorDaysTotal = undefined;
-    }
-  }
-
   protected render(): TemplateResult | typeof nothing {
     if (!this._config || !this.hass) return nothing;
     this._syncTheme();
@@ -80,13 +48,13 @@ export class SuuntoWeeklyStepsGoalCard extends SuuntoBaseCard {
     const hass = this.hass;
     const get = (key: string) => (map[key] ? hass.states[map[key]] : undefined);
 
-    const stepsEntity = get("daily_steps");
+    const stepsEntity = get("weekly_steps");
     if (!stepsEntity || UNAVAILABLE_STATES.has(stepsEntity.state)) {
       return this._message("mdi:target", t(hass, "empty.weekly_steps_goal.title"));
     }
 
     const goal = this._config.goal_steps ?? DEFAULT_WEEKLY_STEPS_GOAL;
-    const value = (this._priorDaysTotal ?? 0) + Number(stepsEntity.state);
+    const value = Number(stepsEntity.state);
     const pct = goal > 0 ? (value / goal) * 100 : 0;
     const colorVar = pct >= 100 ? "var(--sc-good)" : "var(--sc-amber)";
 
