@@ -18,6 +18,11 @@ export interface SuuntoGoalCardConfig extends SuuntoCardConfig {
   goal_km?: number;
 }
 
+/** suunto-steps-today-card / suunto-steps-trend-card's config: a daily step target. */
+export interface SuuntoStepsGoalCardConfig extends SuuntoCardConfig {
+  goal_steps?: number;
+}
+
 /** Entity registry entry shape available on `hass.entities` (HA 2024.8+). */
 export interface EntityRegistryEntry {
   entity_id: string;

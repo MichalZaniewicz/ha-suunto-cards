@@ -431,4 +431,21 @@ export const nl: Record<keyof typeof en, string> = {
   "distance.half_marathon": "Halve Marathon",
   "distance.marathon": "Marathon",
 
+  // -- card 48: steps today --
+  "card.steps_today.title": "Stappen Vandaag",
+  "card.steps_today.subtitle": "Doel: {goal} stappen",
+  "empty.steps_today.title": "Nog geen stappengegevens",
+  "editor.steps_goal_label": "Dagelijks doel (stappen)",
+  "steps_today.goal_pct": "{pct}% van dagelijks doel",
+  "steps_today.vs_avg_up": "+{pct}% t.o.v. je 7-daags gemiddelde ({avg})",
+  "steps_today.vs_avg_down": "-{pct}% t.o.v. je 7-daags gemiddelde ({avg})",
+
+  // -- card 49: steps trend --
+  "card.steps_trend.title": "Stappentrend",
+  "card.steps_trend.subtitle": "Laatste 14 dagen",
+  "empty.steps_trend.title": "Nog geen stappengeschiedenis",
+  "steps_trend.legend_met": "Doel behaald",
+  "steps_trend.legend_below": "Onder doel",
+  "steps_trend.days_at_goal": "Dagen met doel",
+
 };

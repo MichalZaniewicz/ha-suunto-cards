@@ -68,6 +68,8 @@ into <ha-alert> and drops every child whose textContent is empty, which silently
 | This Month | `custom:suunto-month-story-card` | Distance, time, workouts and active days for the current calendar month, plus your main activity and streak |
 | This Year | `custom:suunto-year-story-card` | The same totals as This Month, scoped to the current calendar year - a running year in review |
 | Best Efforts | `custom:suunto-best-efforts-card` | Your fastest 1K, 5K, 10K, half marathon and marathon efforts, tracked from running workouts |
+| Steps Today | `custom:suunto-steps-today-card` | Today's steps against a daily goal you set, with a ring and a comparison to your own 7-day average |
+| Steps Trend | `custom:suunto-steps-trend-card` | Daily steps over the last 14 days as a bar chart, colored by whether each day hit your goal |
 
 Each card auto-detects your Suunto device - **zero YAML required** for the common case of one
 Suunto account. If you ever have more than one, the card's visual editor shows a device picker.
@@ -88,6 +90,13 @@ device_id: abcdef0123456789
 ```yaml
 type: custom:suunto-weekly-goal-card
 goal_km: 50
+```
+
+**Steps Today** and **Steps Trend** take a `goal_steps` field the same way (default 10,000):
+
+```yaml
+type: custom:suunto-steps-today-card
+goal_steps: 8000
 ```
 
 **Heart Rate Curve** and **Sleep Trends** read from `ha-suunto`'s long-term statistics

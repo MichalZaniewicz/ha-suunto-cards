@@ -1,5 +1,6 @@
 import "./suunto-device-editor";
 import "./suunto-goal-editor";
+import "./suunto-steps-goal-editor";
 import "./suunto-last-workout-card";
 import "./suunto-hr-zones-card";
 import "./suunto-sleep-readiness-card";
@@ -47,6 +48,8 @@ import "./suunto-route-card";
 import "./suunto-month-story-card";
 import "./suunto-year-story-card";
 import "./suunto-best-efforts-card";
+import "./suunto-steps-today-card";
+import "./suunto-steps-trend-card";
 
 interface CustomCardEntry {
   type: string;
@@ -345,12 +348,24 @@ window.customCards.push(
     name: "Suunto - Best Efforts",
     description: "Your fastest 1K, 5K, 10K, half marathon and marathon efforts, tracked from running workouts.",
     preview: true,
+  },
+  {
+    type: "suunto-steps-today-card",
+    name: "Suunto - Steps Today",
+    description: "Today's steps against a daily goal you set, with a ring and a comparison to your own 7-day average.",
+    preview: true,
+  },
+  {
+    type: "suunto-steps-trend-card",
+    name: "Suunto - Steps Trend",
+    description: "Daily steps over the last 14 days as a bar chart, colored by whether each day hit your goal.",
+    preview: true,
   }
 );
 
 // eslint-disable-next-line no-console
 console.info(
-  "%c SUUNTO-CARDS %c 47 cards loaded ",
+  "%c SUUNTO-CARDS %c 49 cards loaded ",
   "color: #fff; background: #d98a1d; font-weight: 700; border-radius: 3px 0 0 3px; padding: 2px 6px;",
   "color: #d98a1d; background: transparent; font-weight: 500;"
 );

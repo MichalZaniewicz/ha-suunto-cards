@@ -476,4 +476,21 @@ export const en = {
   "distance.half_marathon": "Half Marathon",
   "distance.marathon": "Marathon",
 
+  // -- card 48: steps today --
+  "card.steps_today.title": "Steps Today",
+  "card.steps_today.subtitle": "Goal: {goal} steps",
+  "empty.steps_today.title": "No step data yet",
+  "editor.steps_goal_label": "Daily goal (steps)",
+  "steps_today.goal_pct": "{pct}% of daily goal",
+  "steps_today.vs_avg_up": "+{pct}% vs your 7-day average ({avg})",
+  "steps_today.vs_avg_down": "-{pct}% vs your 7-day average ({avg})",
+
+  // -- card 49: steps trend --
+  "card.steps_trend.title": "Steps Trend",
+  "card.steps_trend.subtitle": "Last 14 days",
+  "empty.steps_trend.title": "No step history yet",
+  "steps_trend.legend_met": "Goal met",
+  "steps_trend.legend_below": "Below goal",
+  "steps_trend.days_at_goal": "Days at goal",
+
 } as const;

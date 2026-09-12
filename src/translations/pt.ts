@@ -431,4 +431,21 @@ export const pt: Record<keyof typeof en, string> = {
   "distance.half_marathon": "Meia Maratona",
   "distance.marathon": "Maratona",
 
+  // -- card 48: steps today --
+  "card.steps_today.title": "Passos Hoje",
+  "card.steps_today.subtitle": "Meta: {goal} passos",
+  "empty.steps_today.title": "Ainda sem dados de passos",
+  "editor.steps_goal_label": "Meta diária (passos)",
+  "steps_today.goal_pct": "{pct}% da meta diária",
+  "steps_today.vs_avg_up": "+{pct}% em relação à sua média de 7 dias ({avg})",
+  "steps_today.vs_avg_down": "-{pct}% em relação à sua média de 7 dias ({avg})",
+
+  // -- card 49: steps trend --
+  "card.steps_trend.title": "Tendência de Passos",
+  "card.steps_trend.subtitle": "Últimos 14 dias",
+  "empty.steps_trend.title": "Ainda sem histórico de passos",
+  "steps_trend.legend_met": "Meta atingida",
+  "steps_trend.legend_below": "Abaixo da meta",
+  "steps_trend.days_at_goal": "Dias com meta",
+
 };
