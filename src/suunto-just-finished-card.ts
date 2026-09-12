@@ -72,6 +72,13 @@ export class SuuntoJustFinishedCard extends SuuntoBaseCard {
     const avgHr = get("last_avg_hr");
     const tss = get("last_tss");
 
+    const distanceValue =
+      distance && !UNAVAILABLE_STATES.has(distance.state) ? Number(distance.state) : undefined;
+    const durationParts =
+      duration && !UNAVAILABLE_STATES.has(duration.state) ? formatDuration(Number(duration.state)) : undefined;
+    const avgHrValue = avgHr && !UNAVAILABLE_STATES.has(avgHr.state) ? Number(avgHr.state) : undefined;
+    const tssValue = tss && !UNAVAILABLE_STATES.has(tss.state) ? Number(tss.state) : undefined;
+
     return html`
       <ha-card class="static celebrate">
         <div class="header">
@@ -85,17 +92,16 @@ export class SuuntoJustFinishedCard extends SuuntoBaseCard {
         </div>
 
         <div class="stats">
-          ${distance
-            ? this._stat((Number(distance.state) / 1000).toFixed(1), "km", t(hass, "stat.distance"))
+          ${distanceValue !== undefined
+            ? this._stat((distanceValue / 1000).toFixed(1), "km", t(hass, "stat.distance"))
             : nothing}
-          ${duration
-            ? (() => {
-                const d = formatDuration(Number(duration.state));
-                return this._stat(d.value, d.unit, t(hass, "stat.duration"));
-              })()
+          ${durationParts
+            ? this._stat(durationParts.value, durationParts.unit, t(hass, "stat.duration"))
             : nothing}
-          ${avgHr ? this._stat(String(Math.round(Number(avgHr.state))), "bpm", t(hass, "stat.avg_hr")) : nothing}
-          ${tss ? this._stat(Number(tss.state).toFixed(0), "", t(hass, "stat.tss")) : nothing}
+          ${avgHrValue !== undefined
+            ? this._stat(String(Math.round(avgHrValue)), "bpm", t(hass, "stat.avg_hr"))
+            : nothing}
+          ${tssValue !== undefined ? this._stat(tssValue.toFixed(0), "", t(hass, "stat.tss")) : nothing}
         </div>
       </ha-card>
     `;

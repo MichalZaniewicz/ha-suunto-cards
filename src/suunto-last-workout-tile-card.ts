@@ -55,14 +55,21 @@ export class SuuntoLastWorkoutTileCard extends SuuntoBaseCard {
     const speed = get("last_avg_speed");
 
     const parts: TemplateResult[] = [];
-    if (distance) parts.push(html`${(Number(distance.state) / 1000).toFixed(1)} km`);
-    if (duration) {
+    if (distance && !UNAVAILABLE_STATES.has(distance.state)) {
+      parts.push(html`${(Number(distance.state) / 1000).toFixed(1)} km`);
+    }
+    if (duration && !UNAVAILABLE_STATES.has(duration.state)) {
       const d = formatDuration(Number(duration.state));
       parts.push(html`${d.value} ${d.unit}`);
     }
-    if (pace) parts.push(html`${formatPace(Number(pace.state))}/km`);
-    else if (speed) parts.push(html`${Number(speed.state).toFixed(1)} km/h`);
-    if (avgHr) parts.push(html`${Math.round(Number(avgHr.state))} bpm`);
+    if (pace && !UNAVAILABLE_STATES.has(pace.state)) {
+      parts.push(html`${formatPace(Number(pace.state))}/km`);
+    } else if (speed && !UNAVAILABLE_STATES.has(speed.state)) {
+      parts.push(html`${Number(speed.state).toFixed(1)} km/h`);
+    }
+    if (avgHr && !UNAVAILABLE_STATES.has(avgHr.state)) {
+      parts.push(html`${Math.round(Number(avgHr.state))} bpm`);
+    }
 
     return html`
       <ha-card @click=${() => this._openMoreInfo(map["last_activity"])}>

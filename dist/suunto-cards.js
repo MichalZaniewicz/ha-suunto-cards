@@ -717,7 +717,7 @@ const ue=e=>(t,a)=>{void 0!==a?a.addInitializer(()=>{customElements.define(e,t)}
       color: inherit;
       font: inherit;
     }
-  `,e([he({attribute:!1})],st.prototype,"hass",void 0),e([ge()],st.prototype,"_config",void 0),st=e([ue("suunto-weekly-steps-goal-editor")],st);const rt=[[/cycl|bik/i,"mdi:bike"],[/run/i,"mdi:run"],[/trek|hik/i,"mdi:hiking"],[/walk/i,"mdi:walk"],[/gym|strength|weight/i,"mdi:dumbbell"],[/swim/i,"mdi:swim"],[/ski/i,"mdi:ski"],[/row/i,"mdi:rowing"]];function nt(e){if(e)for(const[t,a]of rt)if(t.test(e))return a;return"mdi:run-fast"}const ot={"01":"mdi:weather-sunny","02":"mdi:weather-partly-cloudy","03":"mdi:weather-cloudy","04":"mdi:weather-cloudy","09":"mdi:weather-pouring",10:"mdi:weather-rainy",11:"mdi:weather-lightning",13:"mdi:weather-snowy",50:"mdi:weather-fog"};const lt=new Set(["unknown","unavailable",""]);let ct=class extends Ce{static getConfigElement(){return document.createElement("suunto-device-editor")}static getStubConfig(){return{type:"custom:suunto-last-workout-card"}}setConfig(e){this._config=e,this._configuredDeviceId=e.device_id}getCardSize(){return 4}render(){if(!this._config||!this.hass)return G;this._syncTheme();const e=this._resolveEntities();if("error"in e)return e.error;const{map:t}=e,a=this.hass,i=e=>t[e]?a.states[t[e]]:void 0,s=i("last_activity");if(!s||lt.has(s.state))return this._message("mdi:calendar-blank-outline",Se(a,"empty.last_workout.title"),Se(a,"empty.last_workout.subtitle"));const r=i("last_workout_start"),n=i("last_distance"),o=i("last_duration"),l=i("last_avg_hr"),c=i("last_max_hr"),d=i("last_avg_pace"),u=i("last_avg_speed"),p=i("last_pte"),m=i("last_epoc"),h=i("last_feeling"),g=i("last_tss"),v=i("last_cal_per_km"),y=i("last_cadence"),_=i("last_pct_hrmax"),b=i("last_stride"),f=i("last_workout_weather"),w=i("last_workout_tags"),k=i("last_workout_achievements"),x=o?Ke(Number(o.state)):void 0,$=void 0===d&&void 0!==u,z=h&&!lt.has(h.state)?Number(h.state):void 0,S=p&&!lt.has(p.state)?Number(p.state):void 0,A=k?Number(k.state):0;return I`
+  `,e([he({attribute:!1})],st.prototype,"hass",void 0),e([ge()],st.prototype,"_config",void 0),st=e([ue("suunto-weekly-steps-goal-editor")],st);const rt=[[/cycl|bik/i,"mdi:bike"],[/run/i,"mdi:run"],[/trek|hik/i,"mdi:hiking"],[/walk/i,"mdi:walk"],[/gym|strength|weight/i,"mdi:dumbbell"],[/swim/i,"mdi:swim"],[/ski/i,"mdi:ski"],[/row/i,"mdi:rowing"]];function nt(e){if(e)for(const[t,a]of rt)if(t.test(e))return a;return"mdi:run-fast"}const ot={"01":"mdi:weather-sunny","02":"mdi:weather-partly-cloudy","03":"mdi:weather-cloudy","04":"mdi:weather-cloudy","09":"mdi:weather-pouring",10:"mdi:weather-rainy",11:"mdi:weather-lightning",13:"mdi:weather-snowy",50:"mdi:weather-fog"};const lt=new Set(["unknown","unavailable",""]);let ct=class extends Ce{static getConfigElement(){return document.createElement("suunto-device-editor")}static getStubConfig(){return{type:"custom:suunto-last-workout-card"}}setConfig(e){this._config=e,this._configuredDeviceId=e.device_id}getCardSize(){return 4}render(){if(!this._config||!this.hass)return G;this._syncTheme();const e=this._resolveEntities();if("error"in e)return e.error;const{map:t}=e,a=this.hass,i=e=>t[e]?a.states[t[e]]:void 0,s=i("last_activity");if(!s||lt.has(s.state))return this._message("mdi:calendar-blank-outline",Se(a,"empty.last_workout.title"),Se(a,"empty.last_workout.subtitle"));const r=i("last_workout_start"),n=i("last_distance"),o=i("last_duration"),l=i("last_avg_hr"),c=i("last_max_hr"),d=i("last_avg_pace"),u=i("last_avg_speed"),p=i("last_pte"),m=i("last_epoc"),h=i("last_feeling"),g=i("last_tss"),v=i("last_cal_per_km"),y=i("last_cadence"),_=i("last_pct_hrmax"),b=i("last_stride"),f=i("last_workout_weather"),w=i("last_workout_tags"),k=i("last_workout_achievements"),x=n&&!lt.has(n.state)?Number(n.state):void 0,$=o&&!lt.has(o.state)?Ke(Number(o.state)):void 0,z=d&&!lt.has(d.state)?Number(d.state):void 0,S=u&&!lt.has(u.state)?Number(u.state):void 0,A=void 0===z&&void 0!==S,T=l&&!lt.has(l.state)?Number(l.state):void 0,C=c&&!lt.has(c.state)?Number(c.state):void 0,E=h&&!lt.has(h.state)?Number(h.state):void 0,N=p&&!lt.has(p.state)?Number(p.state):void 0,j=k&&!lt.has(k.state)?Number(k.state):0,M=b&&!lt.has(b.state)?Number(b.state):void 0,R=g&&!lt.has(g.state)?Number(g.state):void 0,D=m&&!lt.has(m.state)?Number(m.state):void 0,P=v&&!lt.has(v.state)?Number(v.state):void 0,F=y&&!lt.has(y.state)?Number(y.state):void 0,V=_&&!lt.has(_.state)?Number(_.state):void 0;return I`
       <ha-card @click=${()=>this._openMoreInfo(t.last_activity)}>
         <div class="header">
           <div class="icon-badge"><ha-icon .icon=${nt(s.state)}></ha-icon></div>
@@ -732,39 +732,39 @@ const ue=e=>(t,a)=>{void 0!==a?a.addInitializer(()=>{customElements.define(e,t)}
         </div>
 
         <div class="stats">
-          ${n?this._stat((Number(n.state)/1e3).toFixed(1),"km",Se(a,"stat.distance")):G}
-          ${x?this._stat(x.value,x.unit,Se(a,"stat.duration")):G}
-          ${d?this._stat(We(Number(d.state)),"/km",Se(a,"stat.avg_pace")):$?this._stat(Number(u.state).toFixed(1),"km/h",Se(a,"stat.avg_speed")):G}
-          ${l?this._stat(String(Math.round(Number(l.state))),"bpm",Se(a,"stat.avg_hr"),!0):G}
-          ${c?this._stat(String(Math.round(Number(c.state))),"bpm",Se(a,"stat.max_hr"),!0):G}
-          ${void 0!==S?I`
+          ${void 0!==x?this._stat((x/1e3).toFixed(1),"km",Se(a,"stat.distance")):G}
+          ${$?this._stat($.value,$.unit,Se(a,"stat.duration")):G}
+          ${void 0!==z?this._stat(We(z),"/km",Se(a,"stat.avg_pace")):A?this._stat(S.toFixed(1),"km/h",Se(a,"stat.avg_speed")):G}
+          ${void 0!==T?this._stat(String(Math.round(T)),"bpm",Se(a,"stat.avg_hr"),!0):G}
+          ${void 0!==C?this._stat(String(Math.round(C)),"bpm",Se(a,"stat.max_hr"),!0):G}
+          ${void 0!==N?I`
                 <div class="stat">
-                  <div class="stat-value">${S.toFixed(1)}</div>
+                  <div class="stat-value">${N.toFixed(1)}</div>
                   <div class="stat-label">${Se(a,"stat.training_effect")}</div>
                   <div class="severity">
-                    ${[1,2,3,4,5].map(e=>I`<i class=${e<=Math.round(S)?`on s${e}`:""}></i>`)}
+                    ${[1,2,3,4,5].map(e=>I`<i class=${e<=Math.round(N)?`on s${e}`:""}></i>`)}
                   </div>
                 </div>
               `:G}
         </div>
 
-        ${g||m||void 0!==z||v||y||_||b?I`
+        ${void 0!==R||void 0!==D||void 0!==E||void 0!==P||void 0!==F||void 0!==V||void 0!==M?I`
               <hr />
               <div class="secondary">
-                ${g?this._secondary(String(Math.round(Number(g.state))),Se(a,"stat.tss")):G}
-                ${m?this._secondary(Number(m.state).toFixed(1),Se(a,"stat.epoc")):G}
-                ${void 0!==z?I`
+                ${void 0!==R?this._secondary(String(Math.round(R)),Se(a,"stat.tss")):G}
+                ${void 0!==D?this._secondary(D.toFixed(1),Se(a,"stat.epoc")):G}
+                ${void 0!==E?I`
                       <div class="sec-item">
                         <div class="feeling">
-                          ${[1,2,3,4,5].map(e=>I`<i class=${e<=z?"on":""}></i>`)}
+                          ${[1,2,3,4,5].map(e=>I`<i class=${e<=E?"on":""}></i>`)}
                         </div>
                         <div class="sec-label">${Se(a,"stat.feeling")}</div>
                       </div>
                     `:G}
-                ${v?this._secondary(`${Math.round(Number(v.state))}`,Se(a,"stat.energy"),"kcal/km"):G}
-                ${y?this._secondary(String(Math.round(Number(y.state))),Se(a,"stat.cadence"),"rpm"):G}
-                ${_?this._secondary(String(Math.round(Number(_.state))),Se(a,"stat.pct_hrmax"),"%"):G}
-                ${b?this._secondary(Number(b.state).toFixed(2),Se(a,"stat.stride_length"),"m"):G}
+                ${void 0!==P?this._secondary(`${Math.round(P)}`,Se(a,"stat.energy"),"kcal/km"):G}
+                ${void 0!==F?this._secondary(String(Math.round(F)),Se(a,"stat.cadence"),"rpm"):G}
+                ${void 0!==V?this._secondary(String(Math.round(V)),Se(a,"stat.pct_hrmax"),"%"):G}
+                ${void 0!==M?this._secondary(M.toFixed(2),Se(a,"stat.stride_length"),"m"):G}
               </div>
             `:G}
         ${f&&!lt.has(f.state)?I`
@@ -779,16 +779,16 @@ const ue=e=>(t,a)=>{void 0!==a?a.addInitializer(()=>{customElements.define(e,t)}
                     `:G}
               </div>
             `:G}
-        ${w&&!lt.has(w.state)||A>0?I`
+        ${w&&!lt.has(w.state)||j>0?I`
               <div class="footer">
                 ${w&&!lt.has(w.state)?I`<span class="chip"><ha-icon icon="mdi:tag-outline"></ha-icon>${w.state}</span>`:G}
-                ${A>0?I`
+                ${j>0?I`
                       <span
                         class="chip accent"
                         title=${k?.attributes.route_ranking?Se(a,"achievement.rank",{rank:k.attributes.route_ranking}):""}
                       >
                         <ha-icon icon="mdi:trophy"></ha-icon>
-                        ${function(e,t,a){if(Array.isArray(t)&&t.length){const e=t[0];if("string"==typeof e)return e;if(e&&"object"==typeof e){const t=e,a=t.name??t.title??t.type;if("string"==typeof a)return a}}return Ae(e,a,"achievement.count_one","achievement.count_other")}(a,k?.attributes.achievements,A)}
+                        ${function(e,t,a){if(Array.isArray(t)&&t.length){const e=t[0];if("string"==typeof e)return e;if(e&&"object"==typeof e){const t=e,a=t.name??t.title??t.type;if("string"==typeof a)return a}}return Ae(e,a,"achievement.count_one","achievement.count_other")}(a,k?.attributes.achievements,j)}
                       </span>
                     `:G}
               </div>
@@ -1539,7 +1539,7 @@ const ue=e=>(t,a)=>{void 0!==a?a.addInitializer(()=>{customElements.define(e,t)}
         <div class="stat-label">${a}</div>
       </div>
     `}};Nt.styles=[Ee,Ne,n`
-    `],e([ge()],Nt.prototype,"_config",void 0),Nt=e([ue("suunto-fitness-card")],Nt);const jt=new Set(["unknown","unavailable",""]);let Mt=class extends Ce{static getConfigElement(){return document.createElement("suunto-device-editor")}static getStubConfig(){return{type:"custom:suunto-last-workout-tile-card"}}setConfig(e){this._config=e,this._configuredDeviceId=e.device_id}getCardSize(){return 1}render(){if(!this._config||!this.hass)return G;this._syncTheme();const e=this._resolveEntities();if("error"in e)return e.error;const{map:t}=e,a=this.hass,i=e=>t[e]?a.states[t[e]]:void 0,s=i("last_activity");if(!s||jt.has(s.state))return this._message("mdi:calendar-blank-outline",Se(a,"empty.last_workout.title"));const r=i("last_workout_start"),n=i("last_distance"),o=i("last_duration"),l=i("last_avg_hr"),c=i("last_avg_pace"),d=i("last_avg_speed"),u=[];if(n&&u.push(I`${(Number(n.state)/1e3).toFixed(1)} km`),o){const e=Ke(Number(o.state));u.push(I`${e.value} ${e.unit}`)}return c?u.push(I`${We(Number(c.state))}/km`):d&&u.push(I`${Number(d.state).toFixed(1)} km/h`),l&&u.push(I`${Math.round(Number(l.state))} bpm`),I`
+    `],e([ge()],Nt.prototype,"_config",void 0),Nt=e([ue("suunto-fitness-card")],Nt);const jt=new Set(["unknown","unavailable",""]);let Mt=class extends Ce{static getConfigElement(){return document.createElement("suunto-device-editor")}static getStubConfig(){return{type:"custom:suunto-last-workout-tile-card"}}setConfig(e){this._config=e,this._configuredDeviceId=e.device_id}getCardSize(){return 1}render(){if(!this._config||!this.hass)return G;this._syncTheme();const e=this._resolveEntities();if("error"in e)return e.error;const{map:t}=e,a=this.hass,i=e=>t[e]?a.states[t[e]]:void 0,s=i("last_activity");if(!s||jt.has(s.state))return this._message("mdi:calendar-blank-outline",Se(a,"empty.last_workout.title"));const r=i("last_workout_start"),n=i("last_distance"),o=i("last_duration"),l=i("last_avg_hr"),c=i("last_avg_pace"),d=i("last_avg_speed"),u=[];if(n&&!jt.has(n.state)&&u.push(I`${(Number(n.state)/1e3).toFixed(1)} km`),o&&!jt.has(o.state)){const e=Ke(Number(o.state));u.push(I`${e.value} ${e.unit}`)}return c&&!jt.has(c.state)?u.push(I`${We(Number(c.state))}/km`):d&&!jt.has(d.state)&&u.push(I`${Number(d.state).toFixed(1)} km/h`),l&&!jt.has(l.state)&&u.push(I`${Math.round(Number(l.state))} bpm`),I`
       <ha-card @click=${()=>this._openMoreInfo(t.last_activity)}>
         <div class="header">
           <div class="icon-badge"><ha-icon .icon=${nt(s.state)}></ha-icon></div>
@@ -1805,7 +1805,7 @@ const ue=e=>(t,a)=>{void 0!==a?a.addInitializer(()=>{customElements.define(e,t)}
         gap: 8px;
         flex-wrap: wrap;
       }
-    `],e([ge()],It.prototype,"_config",void 0),It=e([ue("suunto-streak-card")],It);const Kt=new Set(["unknown","unavailable",""]);let Wt=class extends Ce{static getConfigElement(){return document.createElement("suunto-device-editor")}static getStubConfig(){return{type:"custom:suunto-just-finished-card"}}setConfig(e){this._config=e,this._configuredDeviceId=e.device_id}getCardSize(){return 3}render(){if(!this._config||!this.hass)return G;this._syncTheme();const e=this._resolveEntities();if("error"in e)return e.error;const{map:t}=e,a=this.hass,i=e=>t[e]?a.states[t[e]]:void 0,s=i("last_activity"),r=i("last_workout_start");if(!s||Kt.has(s.state)||!r)return this._message("mdi:party-popper",Se(a,"empty.just_finished.title"));const n=new Date(r.last_changed),o=Date.now()-n.getTime();if(!(Number.isFinite(o)&&o>=0&&o<216e5))return this._message("mdi:party-popper",Se(a,"just_finished.idle.title"),Se(a,"just_finished.idle.subtitle"));const l=i("last_distance"),c=i("last_duration"),d=i("last_avg_hr"),u=i("last_tss");return I`
+    `],e([ge()],It.prototype,"_config",void 0),It=e([ue("suunto-streak-card")],It);const Kt=new Set(["unknown","unavailable",""]);let Wt=class extends Ce{static getConfigElement(){return document.createElement("suunto-device-editor")}static getStubConfig(){return{type:"custom:suunto-just-finished-card"}}setConfig(e){this._config=e,this._configuredDeviceId=e.device_id}getCardSize(){return 3}render(){if(!this._config||!this.hass)return G;this._syncTheme();const e=this._resolveEntities();if("error"in e)return e.error;const{map:t}=e,a=this.hass,i=e=>t[e]?a.states[t[e]]:void 0,s=i("last_activity"),r=i("last_workout_start");if(!s||Kt.has(s.state)||!r)return this._message("mdi:party-popper",Se(a,"empty.just_finished.title"));const n=new Date(r.last_changed),o=Date.now()-n.getTime();if(!(Number.isFinite(o)&&o>=0&&o<216e5))return this._message("mdi:party-popper",Se(a,"just_finished.idle.title"),Se(a,"just_finished.idle.subtitle"));const l=i("last_distance"),c=i("last_duration"),d=i("last_avg_hr"),u=i("last_tss"),p=l&&!Kt.has(l.state)?Number(l.state):void 0,m=c&&!Kt.has(c.state)?Ke(Number(c.state)):void 0,h=d&&!Kt.has(d.state)?Number(d.state):void 0,g=u&&!Kt.has(u.state)?Number(u.state):void 0;return I`
       <ha-card class="static celebrate">
         <div class="header">
           <div class="icon-badge accent"><ha-icon icon="mdi:party-popper"></ha-icon></div>
@@ -1818,10 +1818,10 @@ const ue=e=>(t,a)=>{void 0!==a?a.addInitializer(()=>{customElements.define(e,t)}
         </div>
 
         <div class="stats">
-          ${l?this._stat((Number(l.state)/1e3).toFixed(1),"km",Se(a,"stat.distance")):G}
-          ${c?(()=>{const e=Ke(Number(c.state));return this._stat(e.value,e.unit,Se(a,"stat.duration"))})():G}
-          ${d?this._stat(String(Math.round(Number(d.state))),"bpm",Se(a,"stat.avg_hr")):G}
-          ${u?this._stat(Number(u.state).toFixed(0),"",Se(a,"stat.tss")):G}
+          ${void 0!==p?this._stat((p/1e3).toFixed(1),"km",Se(a,"stat.distance")):G}
+          ${m?this._stat(m.value,m.unit,Se(a,"stat.duration")):G}
+          ${void 0!==h?this._stat(String(Math.round(h)),"bpm",Se(a,"stat.avg_hr")):G}
+          ${void 0!==g?this._stat(g.toFixed(0),"",Se(a,"stat.tss")):G}
         </div>
       </ha-card>
     `}_stat(e,t,a){return I`
@@ -3660,7 +3660,7 @@ const ue=e=>(t,a)=>{void 0!==a?a.addInitializer(()=>{customElements.define(e,t)}
         font-size: 0.74rem;
         color: var(--secondary-text-color);
       }
-    `],e([ge()],ti.prototype,"_config",void 0),e([ge()],ti.prototype,"_nights",void 0),ti=e([ue("suunto-sleep-rhythm-card")],ti);const ai=new Set(["unknown","unavailable",""]);let ii=class extends Ce{static getConfigElement(){return document.createElement("suunto-device-editor")}static getStubConfig(){return{type:"custom:suunto-route-card"}}setConfig(e){this._config=e,this._configuredDeviceId=e.device_id}getCardSize(){return 4}render(){if(!this._config||!this.hass)return G;this._syncTheme();const e=this._resolveEntities();if("error"in e)return e.error;const{map:t}=e,a=this.hass,i=e=>t[e]?a.states[t[e]]:void 0,s=i("last_workout_location"),r=s?.attributes.route,n=(r??[]).map(([e,t,a])=>({lat:e,lon:t,speedKmh:a}));if(!s||ai.has(s.state)||n.length<2)return this._message("mdi:map-marker-path",Se(a,"empty.route.title"),Se(a,"empty.route.subtitle"));const o=i("last_activity"),l=i("last_workout_start"),c=i("last_distance"),d=i("last_duration"),u=i("last_avg_pace");return I`
+    `],e([ge()],ti.prototype,"_config",void 0),e([ge()],ti.prototype,"_nights",void 0),ti=e([ue("suunto-sleep-rhythm-card")],ti);const ai=new Set(["unknown","unavailable",""]);let ii=class extends Ce{static getConfigElement(){return document.createElement("suunto-device-editor")}static getStubConfig(){return{type:"custom:suunto-route-card"}}setConfig(e){this._config=e,this._configuredDeviceId=e.device_id}getCardSize(){return 4}render(){if(!this._config||!this.hass)return G;this._syncTheme();const e=this._resolveEntities();if("error"in e)return e.error;const{map:t}=e,a=this.hass,i=e=>t[e]?a.states[t[e]]:void 0,s=i("last_workout_location"),r=s?.attributes.route,n=(r??[]).map(([e,t,a])=>({lat:e,lon:t,speedKmh:a}));if(!s||ai.has(s.state)||n.length<2)return this._message("mdi:map-marker-path",Se(a,"empty.route.title"),Se(a,"empty.route.subtitle"));const o=i("last_activity"),l=i("last_workout_start"),c=i("last_distance"),d=i("last_duration"),u=i("last_avg_pace"),p=c&&!ai.has(c.state)?c:void 0,m=d&&!ai.has(d.state)?d:void 0,h=u&&!ai.has(u.state)?u:void 0;return I`
       <ha-card class="static">
         <div class="header">
           <div class="icon-badge"><ha-icon icon="mdi:map-marker-path"></ha-icon></div>
@@ -3683,17 +3683,17 @@ const ue=e=>(t,a)=>{void 0!==a?a.addInitializer(()=>{customElements.define(e,t)}
         </div>
 
         <div class="stats">
-          ${c?I`<div class="stat">
+          ${p?I`<div class="stat">
                 <div class="stat-label">${Se(a,"stat.distance")}</div>
-                <div class="stat-value">${(Number(c.state)/1e3).toFixed(1)}<span class="unit">km</span></div>
+                <div class="stat-value">${(Number(p.state)/1e3).toFixed(1)}<span class="unit">km</span></div>
               </div>`:G}
-          ${d?(()=>{const e=Ke(Number(d.state));return I`<div class="stat">
+          ${m?(()=>{const e=Ke(Number(m.state));return I`<div class="stat">
                   <div class="stat-label">${Se(a,"stat.duration")}</div>
                   <div class="stat-value">${e.value}<span class="unit">${e.unit}</span></div>
                 </div>`})():G}
-          ${u?I`<div class="stat">
+          ${h?I`<div class="stat">
                 <div class="stat-label">${Se(a,"stat.avg_pace")}</div>
-                <div class="stat-value">${We(Number(u.state))}<span class="unit">/km</span></div>
+                <div class="stat-value">${We(Number(h.state))}<span class="unit">/km</span></div>
               </div>`:G}
         </div>
       </ha-card>

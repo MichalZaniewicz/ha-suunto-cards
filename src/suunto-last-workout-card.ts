@@ -84,12 +84,30 @@ export class SuuntoLastWorkoutCard extends SuuntoBaseCard {
     const tags = get("last_workout_tags");
     const achievements = get("last_workout_achievements");
 
-    const durationParts = duration ? formatDuration(Number(duration.state)) : undefined;
-    const hasSpeed = pace === undefined && speed !== undefined;
+    const distanceValue =
+      distance && !UNAVAILABLE_STATES.has(distance.state) ? Number(distance.state) : undefined;
+    const durationParts =
+      duration && !UNAVAILABLE_STATES.has(duration.state) ? formatDuration(Number(duration.state)) : undefined;
+    const paceValue = pace && !UNAVAILABLE_STATES.has(pace.state) ? Number(pace.state) : undefined;
+    const speedValue = speed && !UNAVAILABLE_STATES.has(speed.state) ? Number(speed.state) : undefined;
+    const hasSpeed = paceValue === undefined && speedValue !== undefined;
+    const avgHrValue = avgHr && !UNAVAILABLE_STATES.has(avgHr.state) ? Number(avgHr.state) : undefined;
+    const maxHrValue = maxHr && !UNAVAILABLE_STATES.has(maxHr.state) ? Number(maxHr.state) : undefined;
     const feelingValue =
       feeling && !UNAVAILABLE_STATES.has(feeling.state) ? Number(feeling.state) : undefined;
     const pteValue = pte && !UNAVAILABLE_STATES.has(pte.state) ? Number(pte.state) : undefined;
-    const achievementCount = achievements ? Number(achievements.state) : 0;
+    const achievementCount =
+      achievements && !UNAVAILABLE_STATES.has(achievements.state) ? Number(achievements.state) : 0;
+    const strideValue =
+      stride && !UNAVAILABLE_STATES.has(stride.state) ? Number(stride.state) : undefined;
+    const tssValue = tss && !UNAVAILABLE_STATES.has(tss.state) ? Number(tss.state) : undefined;
+    const epocValue = epoc && !UNAVAILABLE_STATES.has(epoc.state) ? Number(epoc.state) : undefined;
+    const calPerKmValue =
+      calPerKm && !UNAVAILABLE_STATES.has(calPerKm.state) ? Number(calPerKm.state) : undefined;
+    const cadenceValue =
+      cadence && !UNAVAILABLE_STATES.has(cadence.state) ? Number(cadence.state) : undefined;
+    const pctHrmaxValue =
+      pctHrmax && !UNAVAILABLE_STATES.has(pctHrmax.state) ? Number(pctHrmax.state) : undefined;
 
     return html`
       <ha-card @click=${() => this._openMoreInfo(map["last_activity"])}>
@@ -108,22 +126,22 @@ export class SuuntoLastWorkoutCard extends SuuntoBaseCard {
         </div>
 
         <div class="stats">
-          ${distance
-            ? this._stat((Number(distance.state) / 1000).toFixed(1), "km", t(hass, "stat.distance"))
+          ${distanceValue !== undefined
+            ? this._stat((distanceValue / 1000).toFixed(1), "km", t(hass, "stat.distance"))
             : nothing}
           ${durationParts
             ? this._stat(durationParts.value, durationParts.unit, t(hass, "stat.duration"))
             : nothing}
-          ${pace
-            ? this._stat(formatPace(Number(pace.state)), "/km", t(hass, "stat.avg_pace"))
+          ${paceValue !== undefined
+            ? this._stat(formatPace(paceValue), "/km", t(hass, "stat.avg_pace"))
             : hasSpeed
-              ? this._stat(Number(speed!.state).toFixed(1), "km/h", t(hass, "stat.avg_speed"))
+              ? this._stat(speedValue!.toFixed(1), "km/h", t(hass, "stat.avg_speed"))
               : nothing}
-          ${avgHr
-            ? this._stat(String(Math.round(Number(avgHr.state))), "bpm", t(hass, "stat.avg_hr"), true)
+          ${avgHrValue !== undefined
+            ? this._stat(String(Math.round(avgHrValue)), "bpm", t(hass, "stat.avg_hr"), true)
             : nothing}
-          ${maxHr
-            ? this._stat(String(Math.round(Number(maxHr.state))), "bpm", t(hass, "stat.max_hr"), true)
+          ${maxHrValue !== undefined
+            ? this._stat(String(Math.round(maxHrValue)), "bpm", t(hass, "stat.max_hr"), true)
             : nothing}
           ${pteValue !== undefined
             ? html`
@@ -140,12 +158,22 @@ export class SuuntoLastWorkoutCard extends SuuntoBaseCard {
             : nothing}
         </div>
 
-        ${tss || epoc || feelingValue !== undefined || calPerKm || cadence || pctHrmax || stride
+        ${tssValue !== undefined ||
+        epocValue !== undefined ||
+        feelingValue !== undefined ||
+        calPerKmValue !== undefined ||
+        cadenceValue !== undefined ||
+        pctHrmaxValue !== undefined ||
+        strideValue !== undefined
           ? html`
               <hr />
               <div class="secondary">
-                ${tss ? this._secondary(String(Math.round(Number(tss.state))), t(hass, "stat.tss")) : nothing}
-                ${epoc ? this._secondary(Number(epoc.state).toFixed(1), t(hass, "stat.epoc")) : nothing}
+                ${tssValue !== undefined
+                  ? this._secondary(String(Math.round(tssValue)), t(hass, "stat.tss"))
+                  : nothing}
+                ${epocValue !== undefined
+                  ? this._secondary(epocValue.toFixed(1), t(hass, "stat.epoc"))
+                  : nothing}
                 ${feelingValue !== undefined
                   ? html`
                       <div class="sec-item">
@@ -156,17 +184,17 @@ export class SuuntoLastWorkoutCard extends SuuntoBaseCard {
                       </div>
                     `
                   : nothing}
-                ${calPerKm
-                  ? this._secondary(`${Math.round(Number(calPerKm.state))}`, t(hass, "stat.energy"), "kcal/km")
+                ${calPerKmValue !== undefined
+                  ? this._secondary(`${Math.round(calPerKmValue)}`, t(hass, "stat.energy"), "kcal/km")
                   : nothing}
-                ${cadence
-                  ? this._secondary(String(Math.round(Number(cadence.state))), t(hass, "stat.cadence"), "rpm")
+                ${cadenceValue !== undefined
+                  ? this._secondary(String(Math.round(cadenceValue)), t(hass, "stat.cadence"), "rpm")
                   : nothing}
-                ${pctHrmax
-                  ? this._secondary(String(Math.round(Number(pctHrmax.state))), t(hass, "stat.pct_hrmax"), "%")
+                ${pctHrmaxValue !== undefined
+                  ? this._secondary(String(Math.round(pctHrmaxValue)), t(hass, "stat.pct_hrmax"), "%")
                   : nothing}
-                ${stride
-                  ? this._secondary(Number(stride.state).toFixed(2), t(hass, "stat.stride_length"), "m")
+                ${strideValue !== undefined
+                  ? this._secondary(strideValue.toFixed(2), t(hass, "stat.stride_length"), "m")
                   : nothing}
               </div>
             `

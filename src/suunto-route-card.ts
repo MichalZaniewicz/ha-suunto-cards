@@ -55,9 +55,14 @@ export class SuuntoRouteCard extends SuuntoBaseCard {
 
     const activity = get("last_activity");
     const start = get("last_workout_start");
-    const distance = get("last_distance");
-    const duration = get("last_duration");
-    const pace = get("last_avg_pace");
+    const distanceEntity = get("last_distance");
+    const durationEntity = get("last_duration");
+    const paceEntity = get("last_avg_pace");
+    const distance =
+      distanceEntity && !UNAVAILABLE_STATES.has(distanceEntity.state) ? distanceEntity : undefined;
+    const duration =
+      durationEntity && !UNAVAILABLE_STATES.has(durationEntity.state) ? durationEntity : undefined;
+    const pace = paceEntity && !UNAVAILABLE_STATES.has(paceEntity.state) ? paceEntity : undefined;
 
     return html`
       <ha-card class="static">
