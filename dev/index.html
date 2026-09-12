@@ -59,6 +59,23 @@
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 16px;
   }
+  /* README hero screenshot (docs/screenshots/cards-overview-*.png) must NOT
+     be captured against this default CSS Grid: row height = tallest card in
+     that row, so any shorter neighbor leaves dead space below it (the bug
+     reported live more than once). Before take_screenshot, switch #full via
+     evaluate_script to a real masonry pack instead:
+       full.style.display = 'block';
+       full.style.columnCount = '4';
+       full.style.columnGap = '16px';
+       for (const c of full.children) {
+         c.style.breakInside = 'avoid';
+         c.style.marginBottom = '16px';
+         c.style.display = 'inline-block';
+         c.style.width = '100%';
+       }
+     Also hide #empty via style.setProperty('display','none','important') -
+     a plain .hidden/[hidden] loses the specificity fight against .grid's
+     own display:grid rule and silently stays visible. */
   /* ha-card / ha-icon are styled from inside their own shadow DOM (see the
      stubs below) - these custom properties are what they read. */
 </style>
