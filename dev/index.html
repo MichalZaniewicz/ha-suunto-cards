@@ -291,6 +291,18 @@
       resting_hr: () => trendHistory(30, 51, -0.1, 1.5, 4),
       sleep_hrv: () => trendHistory(30, 50, 0.13, 3, 5),
       weekly_distance: () => trendHistory(84, 45, 0.2, 10, 6),
+      weekly_time: () => trendHistory(20, 4.5, 0.02, 0.4, 8),
+      // Integer step function for suunto-week-compare-card: 3 workouts/week
+      // until exactly 7 days ago, 4/week since - a clean "+1" delta demo.
+      workouts_7d: () => {
+        const now = Date.now();
+        const points = [];
+        for (let i = 20; i >= 0; i -= 1) {
+          const v = i >= 7 ? 3 : 4;
+          points.push({ state: String(v), last_updated: new Date(now - i * 86400000).toISOString() });
+        }
+        return points;
+      },
       // Last 9 wake times (minutes after midnight) - one intentionally late
       // outlier (day -2, ~08:20) for suunto-sleep-rhythm-card's amber tone.
       wake_time: () => {
@@ -709,6 +721,8 @@
       "suunto-year-records-card",
       "suunto-running-dynamics-card",
       "suunto-weekly-steps-goal-card",
+      "suunto-goals-overview-card",
+      "suunto-week-compare-card",
     ];
 
     function setup() {

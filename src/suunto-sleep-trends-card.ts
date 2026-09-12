@@ -9,7 +9,7 @@ import { fetchStatisticsSeries, formatDuration } from "./utils/format";
 import { t } from "./utils/localize";
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
-const HISTORY_DAYS = 30;
+const DEFAULT_HISTORY_DAYS = 30;
 const REFETCH_INTERVAL_MS = 10 * 60 * 1000;
 
 /**
@@ -53,7 +53,8 @@ export class SuuntoSleepTrendsCard extends SuuntoBaseCard {
 
   private async _maybeFetchHistory(): Promise<void> {
     if (!this.hass) return;
-    const key = this._configuredDeviceId ?? "auto";
+    const days = this._config?.days ?? DEFAULT_HISTORY_DAYS;
+    const key = `${this._configuredDeviceId ?? "auto"}:${days}`;
     const now = Date.now();
     if (key === this._historyKey && now - this._historyFetchedAt < REFETCH_INTERVAL_MS) {
       return;
@@ -61,7 +62,7 @@ export class SuuntoSleepTrendsCard extends SuuntoBaseCard {
     this._historyKey = key;
     this._historyFetchedAt = now;
 
-    const hours = HISTORY_DAYS * 24;
+    const hours = days * 24;
     try {
       const [duration, quality] = await Promise.all([
         fetchStatisticsSeries(this.hass, "suunto_app:sleep_duration", hours, "mean"),
@@ -104,7 +105,7 @@ export class SuuntoSleepTrendsCard extends SuuntoBaseCard {
           <div class="icon-badge pulse"><ha-icon icon="mdi:power-sleep"></ha-icon></div>
           <div class="title-block">
             <div class="title">${t(hass, "card.sleep_trends.title")}</div>
-            <div class="subtitle">${t(hass, "card.sleep_trends.subtitle")}</div>
+            <div class="subtitle">${t(hass, "card.sleep_trends.subtitle", { days: this._config?.days ?? DEFAULT_HISTORY_DAYS })}</div>
           </div>
         </div>
 

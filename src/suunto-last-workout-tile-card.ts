@@ -5,7 +5,7 @@ import type { SuuntoCardConfig } from "./utils/types";
 import { SuuntoBaseCard } from "./utils/base-card";
 import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
 import { activityIcon } from "./utils/icons";
-import { formatDuration, formatPace, formatRelative } from "./utils/format";
+import { formatDuration, formatDistance, formatPaceUnits, formatSpeed, formatRelative } from "./utils/format";
 import { t } from "./utils/localize";
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
@@ -54,18 +54,22 @@ export class SuuntoLastWorkoutTileCard extends SuuntoBaseCard {
     const pace = get("last_avg_pace");
     const speed = get("last_avg_speed");
 
+    const units = this._config.units ?? "metric";
     const parts: TemplateResult[] = [];
     if (distance && !UNAVAILABLE_STATES.has(distance.state)) {
-      parts.push(html`${(Number(distance.state) / 1000).toFixed(1)} km`);
+      const d = formatDistance(Number(distance.state) / 1000, units);
+      parts.push(html`${d.value} ${d.unit}`);
     }
     if (duration && !UNAVAILABLE_STATES.has(duration.state)) {
       const d = formatDuration(Number(duration.state));
       parts.push(html`${d.value} ${d.unit}`);
     }
     if (pace && !UNAVAILABLE_STATES.has(pace.state)) {
-      parts.push(html`${formatPace(Number(pace.state))}/km`);
+      const p = formatPaceUnits(Number(pace.state), units);
+      parts.push(html`${p.value}${p.unit}`);
     } else if (speed && !UNAVAILABLE_STATES.has(speed.state)) {
-      parts.push(html`${Number(speed.state).toFixed(1)} km/h`);
+      const s = formatSpeed(Number(speed.state), units);
+      parts.push(html`${s.value} ${s.unit}`);
     }
     if (avgHr && !UNAVAILABLE_STATES.has(avgHr.state)) {
       parts.push(html`${Math.round(Number(avgHr.state))} bpm`);

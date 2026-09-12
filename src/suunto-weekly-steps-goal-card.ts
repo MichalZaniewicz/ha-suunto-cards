@@ -5,7 +5,7 @@ import type { SuuntoStepsGoalCardConfig, SuuntoHass } from "./utils/types";
 import { SuuntoBaseCard } from "./utils/base-card";
 import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
 import { progressRing } from "./utils/render-helpers";
-import { fetchStatisticsSeries, dailyTotalsFromCumulative } from "./utils/format";
+import { fetchPriorWeekStepsTotal } from "./utils/format";
 import { t } from "./utils/localize";
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
@@ -63,12 +63,7 @@ export class SuuntoWeeklyStepsGoalCard extends SuuntoBaseCard {
     this._historyFetchedAt = now;
 
     try {
-      const points = dailyTotalsFromCumulative(
-        await fetchStatisticsSeries(this.hass as SuuntoHass, "suunto_app:steps", 8 * 24, "sum")
-      );
-      const todayKey = new Date().toDateString();
-      const priorDays = points.filter((p) => new Date(p.t).toDateString() !== todayKey).slice(-6);
-      this._priorDaysTotal = priorDays.reduce((sum, p) => sum + p.v, 0);
+      this._priorDaysTotal = await fetchPriorWeekStepsTotal(this.hass as SuuntoHass);
     } catch {
       // Statistics are best-effort - the ring still works from today's live state alone.
       this._priorDaysTotal = undefined;

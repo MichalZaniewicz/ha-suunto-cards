@@ -4,6 +4,7 @@ import type { LovelaceCardEditor } from "custom-card-helpers";
 import type { SuuntoCardConfig } from "./utils/types";
 import { SuuntoBaseCard } from "./utils/base-card";
 import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
+import { formatDistance } from "./utils/format";
 import { t } from "./utils/localize";
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
@@ -60,7 +61,10 @@ export class SuuntoLifetimeCard extends SuuntoBaseCard {
         </div>
 
         <div class="stats">
-          ${this._stat(Number(distance.state).toFixed(0), "km", t(hass, "stat.distance"))}
+          ${(() => {
+            const d = formatDistance(Number(distance.state), this._config!.units ?? "metric", 0);
+            return this._stat(d.value, d.unit, t(hass, "stat.distance"));
+          })()}
           ${time ? this._stat(Number(time.state).toFixed(0), "h", t(hass, "stat.time")) : nothing}
           ${energy
             ? this._stat(Math.round(Number(energy.state)).toLocaleString(hass.language), "kcal", t(hass, "stat.energy"))

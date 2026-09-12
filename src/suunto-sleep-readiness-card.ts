@@ -59,6 +59,7 @@ export class SuuntoSleepReadinessCard extends SuuntoBaseCard {
     const { map } = resolved;
     const hass = this.hass;
     const get = (key: string) => (map[key] ? hass.states[map[key]] : undefined);
+    const compact = this._config.compact ?? false;
 
     const duration = get("sleep_duration");
     if (!duration || UNAVAILABLE_STATES.has(duration.state)) {
@@ -173,16 +174,18 @@ export class SuuntoSleepReadinessCard extends SuuntoBaseCard {
                 rhrDelta !== undefined ? (rhrDelta <= 0 ? "good" : "bad") : undefined
               )
             : nothing}
-          ${spo2 ? this._stat(String(Math.round(Number(spo2.state))), "%", t(hass, "stat.spo2")) : nothing}
-          ${sleepAvgHr
+          ${!compact && spo2
+            ? this._stat(String(Math.round(Number(spo2.state))), "%", t(hass, "stat.spo2"))
+            : nothing}
+          ${!compact && sleepAvgHr
             ? this._stat(String(Math.round(Number(sleepAvgHr.state))), "bpm", t(hass, "stat.sleep_avg_hr"))
             : nothing}
-          ${sleepMinHr
+          ${!compact && sleepMinHr
             ? this._stat(String(Math.round(Number(sleepMinHr.state))), "bpm", t(hass, "stat.sleep_min_hr"))
             : nothing}
         </div>
 
-        ${stageSegments.length
+        ${!compact && stageSegments.length
           ? html`
               <div class="stages">
                 ${segmentedBar(stageSegments)}
@@ -200,10 +203,11 @@ export class SuuntoSleepReadinessCard extends SuuntoBaseCard {
             `
           : nothing}
 
-        ${(hrvStatus && !UNAVAILABLE_STATES.has(hrvStatus.state)) ||
-        napMinutes ||
-        (sleepTime && !UNAVAILABLE_STATES.has(sleepTime.state)) ||
-        unusualRecovery?.state === "on"
+        ${!compact &&
+        ((hrvStatus && !UNAVAILABLE_STATES.has(hrvStatus.state)) ||
+          napMinutes ||
+          (sleepTime && !UNAVAILABLE_STATES.has(sleepTime.state)) ||
+          unusualRecovery?.state === "on")
           ? html`
               <div class="footer">
                 ${unusualRecovery?.state === "on"

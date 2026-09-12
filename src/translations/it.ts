@@ -125,6 +125,11 @@ export const it: Record<keyof typeof en, string> = {
   "editor.auto_detect": "Questa scheda rileva automaticamente il tuo dispositivo Suunto - nessuna configurazione necessaria.",
   "editor.pick_device": "Trovati più dispositivi Suunto - scegli quale deve usare questa scheda.",
   "editor.device_label": "Dispositivo Suunto",
+  "editor.units_label": "Unità",
+  "editor.units_metric": "Metrico (km)",
+  "editor.units_imperial": "Imperiale (mi)",
+  "editor.compact_label": "Modalità compatta",
+  "editor.days_label": "Finestra tendenza (giorni)",
 
   "card.lifetime.title": "Totali di Sempre",
   "card.lifetime.subtitle": "Dall'inizio",
@@ -162,7 +167,7 @@ export const it: Record<keyof typeof en, string> = {
   "card.pmc.subtitle": "Andamento di 90 giorni",
 
   "card.recovery_trends.title": "Tendenze di Recupero",
-  "card.recovery_trends.subtitle": "Riferimento di 30 giorni",
+  "card.recovery_trends.subtitle": "Riferimento di {days} giorni",
   "empty.recovery_trends.title": "Ancora nessun dato sulle tendenze di recupero",
 
   "card.weekly_volume.title": "Volume Settimanale",
@@ -180,7 +185,7 @@ export const it: Record<keyof typeof en, string> = {
   "empty.hr_curve.subtitle": "Indossa e sincronizza l'orologio per vedere qui la curva di oggi.",
 
   "card.sleep_trends.title": "Andamento del Sonno",
-  "card.sleep_trends.subtitle": "Ultime 30 notti",
+  "card.sleep_trends.subtitle": "Ultime {days} notti",
   "empty.sleep_trends.title": "Ancora nessun dato sull'andamento del sonno",
 
   "card.weekly_goal.title": "Obiettivo Settimanale",
@@ -472,5 +477,16 @@ export const it: Record<keyof typeof en, string> = {
   "card.weekly_steps_goal.subtitle": "{value} di {goal} passi",
   "empty.weekly_steps_goal.title": "Ancora nessun dato sui passi",
   "editor.weekly_steps_goal_label": "Obiettivo settimanale (passi)",
+
+  "card.goals_overview.title": "Panoramica Obiettivi",
+  "card.goals_overview.subtitle": "Questa settimana",
+  "empty.goals_overview.title": "Ancora nessun dato sugli obiettivi",
+
+  "card.week_compare.title": "Questa Settimana vs Settimana Scorsa",
+  "card.week_compare.subtitle": "Totali mobili su 7 giorni",
+  "empty.week_compare.title": "Ancora non abbastanza storico",
+  "empty.week_compare.subtitle": "Torna tra circa una settimana per un confronto.",
+  "week_compare.legend_now": "Questa settimana",
+  "week_compare.legend_prev": "Settimana scorsa",
 
 };

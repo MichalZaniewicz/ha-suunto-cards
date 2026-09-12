@@ -125,6 +125,11 @@ export const nl: Record<keyof typeof en, string> = {
   "editor.auto_detect": "Deze kaart detecteert automatisch je Suunto-apparaat - geen configuratie nodig.",
   "editor.pick_device": "Meerdere Suunto-apparaten gevonden - kies welke deze kaart moet gebruiken.",
   "editor.device_label": "Suunto-apparaat",
+  "editor.units_label": "Eenheden",
+  "editor.units_metric": "Metrisch (km)",
+  "editor.units_imperial": "Imperiaal (mi)",
+  "editor.compact_label": "Compacte modus",
+  "editor.days_label": "Trendvenster (dagen)",
 
   "card.lifetime.title": "Totalen Aller Tijden",
   "card.lifetime.subtitle": "Sinds het begin",
@@ -162,7 +167,7 @@ export const nl: Record<keyof typeof en, string> = {
   "card.pmc.subtitle": "90-dagen trend",
 
   "card.recovery_trends.title": "Hersteltrends",
-  "card.recovery_trends.subtitle": "30-dagen basiswaarde",
+  "card.recovery_trends.subtitle": "{days}-dagen basiswaarde",
   "empty.recovery_trends.title": "Nog geen hersteltrendgegevens",
 
   "card.weekly_volume.title": "Wekelijks Volume",
@@ -180,7 +185,7 @@ export const nl: Record<keyof typeof en, string> = {
   "empty.hr_curve.subtitle": "Draag en synchroniseer je horloge om de curve van vandaag hier te zien.",
 
   "card.sleep_trends.title": "Slaaptrends",
-  "card.sleep_trends.subtitle": "Laatste 30 nachten",
+  "card.sleep_trends.subtitle": "Laatste {days} nachten",
   "empty.sleep_trends.title": "Nog geen slaaptrendgegevens",
 
   "card.weekly_goal.title": "Weekdoel",
@@ -472,5 +477,16 @@ export const nl: Record<keyof typeof en, string> = {
   "card.weekly_steps_goal.subtitle": "{value} van {goal} stappen",
   "empty.weekly_steps_goal.title": "Nog geen stapgegevens",
   "editor.weekly_steps_goal_label": "Weekdoel (stappen)",
+
+  "card.goals_overview.title": "Doelenoverzicht",
+  "card.goals_overview.subtitle": "Deze week",
+  "empty.goals_overview.title": "Nog geen doelgegevens",
+
+  "card.week_compare.title": "Deze Week vs Vorige Week",
+  "card.week_compare.subtitle": "Voortschrijdende 7-daagse totalen",
+  "empty.week_compare.title": "Nog niet genoeg geschiedenis",
+  "empty.week_compare.subtitle": "Kom over ongeveer een week terug voor een vergelijking.",
+  "week_compare.legend_now": "Deze week",
+  "week_compare.legend_prev": "Vorige week",
 
 };

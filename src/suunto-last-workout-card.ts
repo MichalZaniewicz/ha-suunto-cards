@@ -5,7 +5,7 @@ import type { SuuntoCardConfig } from "./utils/types";
 import { SuuntoBaseCard } from "./utils/base-card";
 import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
 import { activityIcon, weatherIcon } from "./utils/icons";
-import { formatDuration, formatPace, formatRelative, formatTime } from "./utils/format";
+import { formatDuration, formatDistance, formatPaceUnits, formatSpeed, formatRelative, formatTime } from "./utils/format";
 import { t, tPlural } from "./utils/localize";
 import type { SuuntoHass } from "./utils/types";
 
@@ -55,6 +55,8 @@ export class SuuntoLastWorkoutCard extends SuuntoBaseCard {
 
     const hass = this.hass;
     const get = (key: string) => (map[key] ? hass.states[map[key]] : undefined);
+    const units = this._config.units ?? "metric";
+    const compact = this._config.compact ?? false;
 
     const activity = get("last_activity");
     if (!activity || UNAVAILABLE_STATES.has(activity.state)) {
@@ -127,15 +129,24 @@ export class SuuntoLastWorkoutCard extends SuuntoBaseCard {
 
         <div class="stats">
           ${distanceValue !== undefined
-            ? this._stat((distanceValue / 1000).toFixed(1), "km", t(hass, "stat.distance"))
+            ? (() => {
+                const d = formatDistance(distanceValue / 1000, units);
+                return this._stat(d.value, d.unit, t(hass, "stat.distance"));
+              })()
             : nothing}
           ${durationParts
             ? this._stat(durationParts.value, durationParts.unit, t(hass, "stat.duration"))
             : nothing}
           ${paceValue !== undefined
-            ? this._stat(formatPace(paceValue), "/km", t(hass, "stat.avg_pace"))
+            ? (() => {
+                const p = formatPaceUnits(paceValue, units);
+                return this._stat(p.value, p.unit, t(hass, "stat.avg_pace"));
+              })()
             : hasSpeed
-              ? this._stat(speedValue!.toFixed(1), "km/h", t(hass, "stat.avg_speed"))
+              ? (() => {
+                  const s = formatSpeed(speedValue!, units);
+                  return this._stat(s.value, s.unit, t(hass, "stat.avg_speed"));
+                })()
               : nothing}
           ${avgHrValue !== undefined
             ? this._stat(String(Math.round(avgHrValue)), "bpm", t(hass, "stat.avg_hr"), true)
@@ -158,13 +169,14 @@ export class SuuntoLastWorkoutCard extends SuuntoBaseCard {
             : nothing}
         </div>
 
-        ${tssValue !== undefined ||
-        epocValue !== undefined ||
-        feelingValue !== undefined ||
-        calPerKmValue !== undefined ||
-        cadenceValue !== undefined ||
-        pctHrmaxValue !== undefined ||
-        strideValue !== undefined
+        ${!compact &&
+        (tssValue !== undefined ||
+          epocValue !== undefined ||
+          feelingValue !== undefined ||
+          calPerKmValue !== undefined ||
+          cadenceValue !== undefined ||
+          pctHrmaxValue !== undefined ||
+          strideValue !== undefined)
           ? html`
               <hr />
               <div class="secondary">
@@ -199,7 +211,7 @@ export class SuuntoLastWorkoutCard extends SuuntoBaseCard {
               </div>
             `
           : nothing}
-        ${weather && !UNAVAILABLE_STATES.has(weather.state)
+        ${!compact && weather && !UNAVAILABLE_STATES.has(weather.state)
           ? html`
               <div class="weather">
                 <ha-icon .icon=${weatherIcon(weather.attributes.icon_code)}></ha-icon>
@@ -217,7 +229,7 @@ export class SuuntoLastWorkoutCard extends SuuntoBaseCard {
               </div>
             `
           : nothing}
-        ${(tags && !UNAVAILABLE_STATES.has(tags.state)) || achievementCount > 0
+        ${!compact && ((tags && !UNAVAILABLE_STATES.has(tags.state)) || achievementCount > 0)
           ? html`
               <div class="footer">
                 ${tags && !UNAVAILABLE_STATES.has(tags.state)

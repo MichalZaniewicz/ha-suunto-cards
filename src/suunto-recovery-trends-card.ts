@@ -9,7 +9,7 @@ import { formatDelta, fetchStatisticsSeries } from "./utils/format";
 import { t } from "./utils/localize";
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
-const HISTORY_DAYS = 30;
+const DEFAULT_HISTORY_DAYS = 30;
 const REFETCH_INTERVAL_MS = 10 * 60 * 1000;
 
 /**
@@ -57,8 +57,9 @@ export class SuuntoRecoveryTrendsCard extends SuuntoBaseCard {
     const hrvId = map["sleep_hrv"];
     if (!rhrId && !hrvId) return;
 
+    const days = this._config?.days ?? DEFAULT_HISTORY_DAYS;
     const ids = [rhrId, hrvId].filter((id): id is string => Boolean(id));
-    const key = ids.join(",");
+    const key = `${ids.join(",")}:${days}`;
     const now = Date.now();
     if (key === this._historyKey && now - this._historyFetchedAt < REFETCH_INTERVAL_MS) {
       return;
@@ -70,12 +71,12 @@ export class SuuntoRecoveryTrendsCard extends SuuntoBaseCard {
       // resting_hr/sleep_hrv have a state_class, so the recorder
       // auto-generates long-term statistics for them under their own
       // entity_id - a plain history/period fetch only reaches back ~10 days
-      // by default and left most of this "30-day" chart empty on a live
+      // by default and left most of this multi-week chart empty on a live
       // account (confirmed live, not theoretical).
       const hass = this.hass as SuuntoHass;
       const [rhrSeries, hrvSeries] = await Promise.all([
-        rhrId ? fetchStatisticsSeries(hass, rhrId, HISTORY_DAYS * 24, "mean") : Promise.resolve([]),
-        hrvId ? fetchStatisticsSeries(hass, hrvId, HISTORY_DAYS * 24, "mean") : Promise.resolve([]),
+        rhrId ? fetchStatisticsSeries(hass, rhrId, days * 24, "mean") : Promise.resolve([]),
+        hrvId ? fetchStatisticsSeries(hass, hrvId, days * 24, "mean") : Promise.resolve([]),
       ]);
       this._rhrHistory = rhrSeries;
       this._hrvHistory = hrvSeries;
@@ -125,7 +126,7 @@ export class SuuntoRecoveryTrendsCard extends SuuntoBaseCard {
           <div class="icon-badge pulse"><ha-icon icon="mdi:heart-pulse"></ha-icon></div>
           <div class="title-block">
             <div class="title">${t(hass, "card.recovery_trends.title")}</div>
-            <div class="subtitle">${t(hass, "card.recovery_trends.subtitle")}</div>
+            <div class="subtitle">${t(hass, "card.recovery_trends.subtitle", { days: this._config?.days ?? DEFAULT_HISTORY_DAYS })}</div>
           </div>
         </div>
 

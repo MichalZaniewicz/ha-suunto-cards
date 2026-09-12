@@ -125,6 +125,11 @@ export const fr: Record<keyof typeof en, string> = {
   "editor.auto_detect": "Cette carte détecte automatiquement ton appareil Suunto - aucune configuration nécessaire.",
   "editor.pick_device": "Plusieurs appareils Suunto trouvés - choisis celui que cette carte doit utiliser.",
   "editor.device_label": "Appareil Suunto",
+  "editor.units_label": "Unités",
+  "editor.units_metric": "Métrique (km)",
+  "editor.units_imperial": "Impérial (mi)",
+  "editor.compact_label": "Mode compact",
+  "editor.days_label": "Fenêtre de tendance (jours)",
 
   "card.lifetime.title": "Cumul Total",
   "card.lifetime.subtitle": "Depuis le début",
@@ -162,7 +167,7 @@ export const fr: Record<keyof typeof en, string> = {
   "card.pmc.subtitle": "Tendance sur 90 jours",
 
   "card.recovery_trends.title": "Tendances de Récupération",
-  "card.recovery_trends.subtitle": "Référence sur 30 jours",
+  "card.recovery_trends.subtitle": "Référence sur {days} jours",
   "empty.recovery_trends.title": "Pas encore de données de tendances de récupération",
 
   "card.weekly_volume.title": "Volume Hebdomadaire",
@@ -180,7 +185,7 @@ export const fr: Record<keyof typeof en, string> = {
   "empty.hr_curve.subtitle": "Porte et synchronise ta montre pour voir la courbe du jour ici.",
 
   "card.sleep_trends.title": "Tendances de Sommeil",
-  "card.sleep_trends.subtitle": "30 dernières nuits",
+  "card.sleep_trends.subtitle": "{days} dernières nuits",
   "empty.sleep_trends.title": "Pas encore de données de tendances de sommeil",
 
   "card.weekly_goal.title": "Objectif Hebdomadaire",
@@ -472,5 +477,16 @@ export const fr: Record<keyof typeof en, string> = {
   "card.weekly_steps_goal.subtitle": "{value} sur {goal} pas",
   "empty.weekly_steps_goal.title": "Pas encore de données de pas",
   "editor.weekly_steps_goal_label": "Objectif hebdomadaire (pas)",
+
+  "card.goals_overview.title": "Aperçu des objectifs",
+  "card.goals_overview.subtitle": "Cette semaine",
+  "empty.goals_overview.title": "Pas encore de données d'objectif",
+
+  "card.week_compare.title": "Cette semaine vs la semaine dernière",
+  "card.week_compare.subtitle": "Totaux glissants sur 7 jours",
+  "empty.week_compare.title": "Pas encore assez d'historique",
+  "empty.week_compare.subtitle": "Revenez dans environ une semaine pour voir une comparaison.",
+  "week_compare.legend_now": "Cette semaine",
+  "week_compare.legend_prev": "Semaine dernière",
 
 };

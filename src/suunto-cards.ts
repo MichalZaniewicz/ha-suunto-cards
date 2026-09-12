@@ -2,6 +2,7 @@ import "./suunto-device-editor";
 import "./suunto-goal-editor";
 import "./suunto-steps-goal-editor";
 import "./suunto-weekly-steps-goal-editor";
+import "./suunto-goals-overview-editor";
 import "./suunto-last-workout-card";
 import "./suunto-hr-zones-card";
 import "./suunto-sleep-readiness-card";
@@ -55,6 +56,8 @@ import "./suunto-month-records-card";
 import "./suunto-year-records-card";
 import "./suunto-running-dynamics-card";
 import "./suunto-weekly-steps-goal-card";
+import "./suunto-goals-overview-card";
+import "./suunto-week-compare-card";
 
 interface CustomCardEntry {
   type: string;
@@ -389,12 +392,24 @@ window.customCards.push(
     name: "Suunto - Weekly Steps Goal",
     description: "Your rolling 7-day step total against a weekly target you set.",
     preview: true,
+  },
+  {
+    type: "suunto-goals-overview-card",
+    name: "Suunto - Goals Overview",
+    description: "Your weekly distance and step goals as two rings in one card.",
+    preview: true,
+  },
+  {
+    type: "suunto-week-compare-card",
+    name: "Suunto - Week Compare",
+    description: "This week's distance, time and workouts against last week's.",
+    preview: true,
   }
 );
 
 // eslint-disable-next-line no-console
 console.info(
-  "%c SUUNTO-CARDS %c 53 cards loaded ",
+  "%c SUUNTO-CARDS %c 55 cards loaded ",
   "color: #fff; background: #d98a1d; font-weight: 700; border-radius: 3px 0 0 3px; padding: 2px 6px;",
   "color: #d98a1d; background: transparent; font-weight: 500;"
 );

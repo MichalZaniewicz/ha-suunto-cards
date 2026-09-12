@@ -6,6 +6,7 @@ import { SuuntoBaseCard } from "./utils/base-card";
 import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
 import { segmentedBar } from "./utils/render-helpers";
 import { activityIcon } from "./utils/icons";
+import { formatDistance } from "./utils/format";
 import { t, tPlural } from "./utils/localize";
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
@@ -73,6 +74,7 @@ export class SuuntoWeekStatsCard extends SuuntoBaseCard {
       .sort((a: LifetimeActivity, b: LifetimeActivity) => b.distance_km - a.distance_km);
     const top = activities.slice(0, TOP_N);
     const rest = activities.length - top.length;
+    const units = this._config.units ?? "metric";
 
     return html`
       <ha-card class="static">
@@ -88,7 +90,10 @@ export class SuuntoWeekStatsCard extends SuuntoBaseCard {
           ? html`
               <div class="stats">
                 ${weeklyDistance && !UNAVAILABLE_STATES.has(weeklyDistance.state)
-                  ? this._stat(Number(weeklyDistance.state).toFixed(1), "km", t(hass, "stat.distance"))
+                  ? (() => {
+                      const d = formatDistance(Number(weeklyDistance.state), units);
+                      return this._stat(d.value, d.unit, t(hass, "stat.distance"));
+                    })()
                   : nothing}
                 ${weeklyTime && !UNAVAILABLE_STATES.has(weeklyTime.state)
                   ? this._stat(Number(weeklyTime.state).toFixed(1), "h", t(hass, "stat.time"))
@@ -125,7 +130,10 @@ export class SuuntoWeekStatsCard extends SuuntoBaseCard {
                         </div>
                         <span class="name">${a.activity}</span>
                         <span class="count">${a.workouts}×</span>
-                        <span class="dist">${a.distance_km.toFixed(0)} km</span>
+                        <span class="dist">${(() => {
+                          const d = formatDistance(a.distance_km, units, 0);
+                          return `${d.value} ${d.unit}`;
+                        })()}</span>
                       </div>
                     `;
                   })}

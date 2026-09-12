@@ -75,6 +75,21 @@ export function dailyMeanFromHourly(points: SparklinePoint[]): SparklinePoint[] 
     .sort((a, b) => a.t - b.t);
 }
 
+/**
+ * Sums the last 6 FULL prior days from `suunto_app:steps` (today excluded) -
+ * the "rest of the week" half of a rolling 7-day steps total. There is no
+ * `weekly_steps` sensor in ha-suunto, so every card that needs one pairs
+ * this with its caller's own live `daily_steps` state for today - shared
+ * here since suunto-weekly-steps-goal-card and suunto-goals-overview-card
+ * both need exactly this sum.
+ */
+export async function fetchPriorWeekStepsTotal(hass: SuuntoHass): Promise<number> {
+  const points = dailyTotalsFromCumulative(await fetchStatisticsSeries(hass, "suunto_app:steps", 8 * 24, "sum"));
+  const todayKey = new Date().toDateString();
+  const priorDays = points.filter((p) => new Date(p.t).toDateString() !== todayKey).slice(-6);
+  return priorDays.reduce((sum, p) => sum + p.v, 0);
+}
+
 export interface HistoryPoint {
   state: string;
   lastChanged: number;
@@ -129,6 +144,55 @@ export function formatPace(minutesPerKm: number): string {
   const m = Math.floor(totalSeconds / 60);
   const s = totalSeconds % 60;
   return `${m}:${String(s).padStart(2, "0")}`;
+}
+
+/**
+ * The user-facing unit system, configurable per card via `config.units`
+ * (defaults to "metric" everywhere - the backend itself always sends
+ * metric values, this only controls DISPLAY conversion).
+ */
+export type UnitSystem = "metric" | "imperial";
+
+const KM_PER_MI = 1.609344;
+const M_PER_FT = 0.3048;
+
+/** km -> a value/unit pair in the requested system, e.g. 42.3 -> {"26.3", "mi"}. */
+export function formatDistance(
+  km: number,
+  units: UnitSystem = "metric",
+  decimals = 1
+): { value: string; unit: string } {
+  if (units === "imperial") return { value: (km / KM_PER_MI).toFixed(decimals), unit: "mi" };
+  return { value: km.toFixed(decimals), unit: "km" };
+}
+
+/** km/h -> a value/unit pair in the requested system, e.g. 25.9 -> {"16.1", "mph"}. */
+export function formatSpeed(
+  kmh: number,
+  units: UnitSystem = "metric",
+  decimals = 1
+): { value: string; unit: string } {
+  if (units === "imperial") return { value: (kmh / KM_PER_MI).toFixed(decimals), unit: "mph" };
+  return { value: kmh.toFixed(decimals), unit: "km/h" };
+}
+
+/** Decimal min/km -> a pace STRING/unit pair in the requested system - converts the rate before formatting, unlike formatDistance/formatSpeed which convert the raw number. */
+export function formatPaceUnits(
+  minutesPerKm: number,
+  units: UnitSystem = "metric"
+): { value: string; unit: string } {
+  if (units === "imperial") return { value: formatPace(minutesPerKm * KM_PER_MI), unit: "/mi" };
+  return { value: formatPace(minutesPerKm), unit: "/km" };
+}
+
+/** Metres -> a value/unit pair in the requested system, e.g. 842 -> {"2762", "ft"}. */
+export function formatAltitude(
+  m: number,
+  units: UnitSystem = "metric",
+  decimals = 0
+): { value: string; unit: string } {
+  if (units === "imperial") return { value: (m / M_PER_FT).toFixed(decimals), unit: "ft" };
+  return { value: m.toFixed(decimals), unit: "m" };
 }
 
 /** A race/effort duration in raw seconds (as best_efforts sends it) -> "24:13"

@@ -74,6 +74,8 @@ into <ha-alert> and drops every child whose textContent is empty, which silently
 | Year Records | `custom:suunto-year-records-card` | This year's personal bests - the same records as Month Records, scoped to the calendar year |
 | Running Dynamics | `custom:suunto-running-dynamics-card` | Cadence and stride length across your recent same-activity workouts |
 | Weekly Steps Goal | `custom:suunto-weekly-steps-goal-card` | Your rolling 7-day step total against a weekly target you set |
+| Goals Overview | `custom:suunto-goals-overview-card` | Your weekly distance and step goals as two rings in one card |
+| Week Compare | `custom:suunto-week-compare-card` | This week's distance, time and workouts against last week's, with the delta |
 
 Each card auto-detects your Suunto device - **zero YAML required** for the common case of one
 Suunto account. If you ever have more than one, the card's visual editor shows a device picker.
@@ -110,6 +112,47 @@ goal_steps: 8000
 type: custom:suunto-weekly-steps-goal-card
 goal_steps: 60000
 ```
+
+**Units.** Last Workout, Last Workout (compact), Lifetime Totals and This Week & Lifetime take a
+`units` field (`metric`, the default, or `imperial`) for their distance/pace/speed stats -
+editable from the visual editor, no YAML required:
+
+```yaml
+type: custom:suunto-last-workout-card
+units: imperial
+```
+
+**Compact mode.** Last Workout and Sleep & Readiness take a `compact: true` field that collapses
+secondary stats (training load details, weather, tags for Last Workout; SpO2/sleep HR, sleep
+stages, footer chips for Sleep & Readiness) down to the essentials - useful on a denser dashboard
+section:
+
+```yaml
+type: custom:suunto-last-workout-card
+compact: true
+```
+
+**Trend window.** Recovery Trends and Sleep Trends take a `days` field (14/30/60/90, default 30)
+controlling how far back their chart and baseline reach:
+
+```yaml
+type: custom:suunto-recovery-trends-card
+days: 60
+```
+
+**Goals Overview** takes the same `goal_km`/`goal_steps` fields as Weekly Goal / Weekly Steps
+Goal (defaults 50 km / 70,000 steps), plus `units`, all editable from its visual editor:
+
+```yaml
+type: custom:suunto-goals-overview-card
+goal_km: 60
+goal_steps: 80000
+```
+
+**Week Compare** needs no configuration beyond `device_id`/`units` - it reads last week's totals
+from `weekly_distance`/`weekly_time`/`workouts_7d`'s own short-term recorder history (the same
+entities, ~7 days back), so no new `ha-suunto` sensor was needed. On a fresh install it shows
+"not enough history yet" until a week of data has accumulated.
 
 **Heart Rate Curve** and **Sleep Trends** read from `ha-suunto`'s long-term statistics
 (`suunto_app:hr`, `suunto_app:sleep_duration`, `suunto_app:sleep_quality`) rather than live sensor
@@ -187,8 +230,11 @@ real shadow-DOM custom elements reading the same theme variables Home Assistant 
    render invisibly even though their attributes look correct in the DOM.
 3. Register it in [`src/suunto-cards.ts`](src/suunto-cards.ts) (one `import` + one
    `window.customCards.push(...)` entry). `getConfigElement()` can almost always just return
-   `document.createElement("suunto-device-editor")` - every card's config is currently just an
-   optional `device_id`.
+   `document.createElement("suunto-device-editor")`. If the new card should support `units`,
+   `compact`, or a configurable `days` trend window, add its type string to the matching capability
+   set (`UNITS_CARDS`/`COMPACT_CARDS`/`DAYS_CARDS`) at the top of
+   [`src/suunto-device-editor.ts`](src/suunto-device-editor.ts) - the editor's fields adapt by card
+   type, so this is a one-line addition, not a new editor class.
 4. Every user-facing string goes through `t(hass, key)` from
    [`src/utils/localize.ts`](src/utils/localize.ts) - add the key to
    [`src/translations/en.ts`](src/translations/en.ts) first (the canonical key list) and

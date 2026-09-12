@@ -142,6 +142,11 @@ export const en = {
   "editor.auto_detect": "This card auto-detects your Suunto device - no configuration needed.",
   "editor.pick_device": "Multiple Suunto devices were found - pick which one this card should read.",
   "editor.device_label": "Suunto device",
+  "editor.units_label": "Units",
+  "editor.units_metric": "Metric (km)",
+  "editor.units_imperial": "Imperial (mi)",
+  "editor.compact_label": "Compact mode",
+  "editor.days_label": "Trend window (days)",
 
   // -- card 8: lifetime totals --
   "card.lifetime.title": "Lifetime Totals",
@@ -186,7 +191,7 @@ export const en = {
 
   // -- card 15: recovery trends --
   "card.recovery_trends.title": "Recovery Trends",
-  "card.recovery_trends.subtitle": "30-day baseline",
+  "card.recovery_trends.subtitle": "{days}-day baseline",
   "empty.recovery_trends.title": "No recovery trend data yet",
 
   // -- card 16: weekly volume --
@@ -207,7 +212,7 @@ export const en = {
 
   // -- card 18: sleep trends --
   "card.sleep_trends.title": "Sleep Trends",
-  "card.sleep_trends.subtitle": "Last 30 nights",
+  "card.sleep_trends.subtitle": "Last {days} nights",
   "empty.sleep_trends.title": "No sleep trend data yet",
 
   // -- card 19: weekly goal --
@@ -517,5 +522,18 @@ export const en = {
   "card.weekly_steps_goal.subtitle": "{value} of {goal} steps",
   "empty.weekly_steps_goal.title": "No step data yet",
   "editor.weekly_steps_goal_label": "Weekly goal (steps)",
+
+  // -- card 54: goals overview --
+  "card.goals_overview.title": "Goals Overview",
+  "card.goals_overview.subtitle": "This week",
+  "empty.goals_overview.title": "No goal data yet",
+
+  // -- card 55: week compare --
+  "card.week_compare.title": "This Week vs Last Week",
+  "card.week_compare.subtitle": "Rolling 7-day totals",
+  "empty.week_compare.title": "Not enough history yet",
+  "empty.week_compare.subtitle": "Check back in about a week for a comparison.",
+  "week_compare.legend_now": "This week",
+  "week_compare.legend_prev": "Last week",
 
 } as const;

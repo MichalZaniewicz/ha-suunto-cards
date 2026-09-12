@@ -1,4 +1,5 @@
 import type { HomeAssistant, LovelaceCardConfig } from "custom-card-helpers";
+import type { UnitSystem } from "./format";
 
 // custom-card-helpers' Themes type predates `darkMode`, which the real
 // frontend has sent for years - augment rather than casting at every call site.
@@ -8,9 +9,22 @@ declare module "custom-card-helpers" {
   }
 }
 
-/** Every widget in this repo currently takes the same, minimal config. */
+/**
+ * Every widget in this repo takes at least this. `units`/`compact`/`days`
+ * are cross-cutting opt-in fields a card can ignore entirely if it has no
+ * distance/pace/altitude content, no dense secondary stats to collapse, or
+ * no trend window to resize - each card that DOES support one reads it
+ * with its own sensible default, so an old saved config without the field
+ * behaves exactly as before.
+ */
 export interface SuuntoCardConfig extends LovelaceCardConfig {
   device_id?: string;
+  /** Display unit system for distance/pace/speed/altitude stats. Default: "metric". */
+  units?: UnitSystem;
+  /** Collapses secondary/detail stats to keep the card short. Default: false. */
+  compact?: boolean;
+  /** Trend window length in days, for cards with a rolling chart. Each such card defines its own default and offered choices. */
+  days?: number;
 }
 
 /** suunto-weekly-goal-card's config: same device selection, plus a user-set target. */
@@ -20,6 +34,12 @@ export interface SuuntoGoalCardConfig extends SuuntoCardConfig {
 
 /** suunto-steps-today-card / suunto-steps-trend-card's config: a daily step target. */
 export interface SuuntoStepsGoalCardConfig extends SuuntoCardConfig {
+  goal_steps?: number;
+}
+
+/** suunto-goals-overview-card's config: both goal targets it can show a ring for. */
+export interface SuuntoGoalsOverviewCardConfig extends SuuntoCardConfig {
+  goal_km?: number;
   goal_steps?: number;
 }
 

@@ -125,6 +125,11 @@ export const pl: Record<keyof typeof en, string> = {
   "editor.auto_detect": "Ta karta automatycznie wykrywa Twoje urządzenie Suunto - konfiguracja nie jest potrzebna.",
   "editor.pick_device": "Znaleziono wiele urządzeń Suunto - wybierz, z którego ta karta ma korzystać.",
   "editor.device_label": "Urządzenie Suunto",
+  "editor.units_label": "Jednostki",
+  "editor.units_metric": "Metryczne (km)",
+  "editor.units_imperial": "Imperialne (mi)",
+  "editor.compact_label": "Tryb kompaktowy",
+  "editor.days_label": "Okno trendu (dni)",
 
   "card.lifetime.title": "Statystyki życiowe",
   "card.lifetime.subtitle": "Od początku",
@@ -162,7 +167,7 @@ export const pl: Record<keyof typeof en, string> = {
   "card.pmc.subtitle": "Trend 90-dniowy",
 
   "card.recovery_trends.title": "Trendy regeneracji",
-  "card.recovery_trends.subtitle": "Poziom bazowy 30 dni",
+  "card.recovery_trends.subtitle": "Poziom bazowy {days} dni",
   "empty.recovery_trends.title": "Brak jeszcze danych o trendach regeneracji",
 
   "card.weekly_volume.title": "Wolumen tygodniowy",
@@ -180,7 +185,7 @@ export const pl: Record<keyof typeof en, string> = {
   "empty.hr_curve.subtitle": "Noś zegarek i zsynchronizuj go, aby zobaczyć tu dzisiejszą krzywą.",
 
   "card.sleep_trends.title": "Trendy snu",
-  "card.sleep_trends.subtitle": "Ostatnie 30 nocy",
+  "card.sleep_trends.subtitle": "Ostatnie {days} nocy",
   "empty.sleep_trends.title": "Brak jeszcze danych o trendach snu",
 
   "card.weekly_goal.title": "Cel tygodniowy",
@@ -472,5 +477,16 @@ export const pl: Record<keyof typeof en, string> = {
   "card.weekly_steps_goal.subtitle": "{value} z {goal} kroków",
   "empty.weekly_steps_goal.title": "Brak jeszcze danych o krokach",
   "editor.weekly_steps_goal_label": "Cel tygodniowy (kroki)",
+
+  "card.goals_overview.title": "Podsumowanie celów",
+  "card.goals_overview.subtitle": "Ten tydzień",
+  "empty.goals_overview.title": "Brak jeszcze danych o celach",
+
+  "card.week_compare.title": "Ten tydzień vs poprzedni",
+  "card.week_compare.subtitle": "Sumy z ostatnich 7 dni",
+  "empty.week_compare.title": "Za mało historii",
+  "empty.week_compare.subtitle": "Wróć za około tydzień, żeby zobaczyć porównanie.",
+  "week_compare.legend_now": "Ten tydzień",
+  "week_compare.legend_prev": "Poprzedni tydzień",
 
 };
