@@ -417,6 +417,7 @@
           last_cal_per_km: { state: 32 },
           last_cadence: { state: 83 },
           last_pct_hrmax: { state: 78 },
+          last_stride: { state: 1.32 },
           last_workout_weather: {
             state: 27.2,
             attributes: { humidity_pct: 58, wind_speed_kmh: 12, wind_direction_deg: 210, condition: "Scattered clouds", icon_code: "03d" },
@@ -563,13 +564,13 @@
                 { start: nowIso(-(9 * 24 + 4) * 3600 * 1000), activity: "Cycling", distance_km: 40.1, duration_min: 104, avg_hr: 138, max_hr: 165, tss: 121 },
                 { start: nowIso(-(9 * 24 + 8) * 3600 * 1000), activity: "Gym", distance_km: null, duration_min: 45, avg_hr: 115, max_hr: 140, tss: 55 },
                 { start: nowIso(-(15 * 24 + 5) * 3600 * 1000), activity: "Trekking", distance_km: 15.2, duration_min: 190, avg_hr: 128, max_hr: 160, tss: 128 },
-                { start: nowIso(-(17 * 24 + 3) * 3600 * 1000), activity: "Running", distance_km: 8.2, duration_min: 42, avg_hr: 152, max_hr: 172, tss: 88 },
+                { start: nowIso(-(17 * 24 + 3) * 3600 * 1000), activity: "Running", distance_km: 8.2, duration_min: 42, avg_hr: 152, max_hr: 172, tss: 88, cadence_spm: 172, stride_length_m: 1.18 },
                 { start: nowIso(-(18 * 24 + 6) * 3600 * 1000), activity: "Cycling", distance_km: 38.5, duration_min: 108, avg_hr: 135, max_hr: 162, tss: 118 },
                 { start: nowIso(-(22 * 24 + 4) * 3600 * 1000), activity: "Gym", distance_km: null, duration_min: 50, avg_hr: 120, max_hr: 148, tss: 58 },
                 { start: nowIso(-(25 * 24 + 7) * 3600 * 1000), activity: "Walking", distance_km: 5.4, duration_min: 68, avg_hr: 102, max_hr: 118, tss: 22 },
                 { start: nowIso(-(30 * 24 + 5) * 3600 * 1000), activity: "Cycling", distance_km: 36.9, duration_min: 112, avg_hr: 133, max_hr: 160, tss: 115 },
                 { start: nowIso(-(33 * 24 + 6) * 3600 * 1000), activity: "Trekking", distance_km: 18.0, duration_min: 210, avg_hr: 130, max_hr: 165, tss: 140 },
-                { start: nowIso(-(38 * 24 + 4) * 3600 * 1000), activity: "Running", distance_km: 7.5, duration_min: 40, avg_hr: 148, max_hr: 168, tss: 82 },
+                { start: nowIso(-(38 * 24 + 4) * 3600 * 1000), activity: "Running", distance_km: 7.5, duration_min: 40, avg_hr: 148, max_hr: 168, tss: 82, cadence_spm: 168, stride_length_m: 1.10 },
               ],
             },
           },
@@ -687,6 +688,10 @@
       "suunto-best-efforts-card",
       "suunto-steps-today-card",
       "suunto-steps-trend-card",
+      "suunto-month-records-card",
+      "suunto-year-records-card",
+      "suunto-running-dynamics-card",
+      "suunto-weekly-steps-goal-card",
     ];
 
     function setup() {

@@ -167,10 +167,17 @@ export interface PrRow {
   render: (e: PrEntry) => string;
 }
 
-/** All-time personal records from training_records, reshaped for display -
- * only used by the full achievements card (the compact grid has no room). */
-export function computePrRows(hass: SuuntoHass, map: Record<string, string>): PrRow[] {
-  const recordsEntity = map["training_records"] ? hass.states[map["training_records"]] : undefined;
+/** Personal records reshaped for display - defaults to the all-time
+ * `training_records` sensor (used by the full achievements card, the compact
+ * grid has no room), or pass `training_records_month`/`training_records_year`
+ * for a period-scoped records card. All three sensors share this exact
+ * attribute shape. */
+export function computePrRows(
+  hass: SuuntoHass,
+  map: Record<string, string>,
+  sensorKey: string = "training_records"
+): PrRow[] {
+  const recordsEntity = map[sensorKey] ? hass.states[map[sensorKey]] : undefined;
   const streak = recordsEntity && !UNAVAILABLE_STATES.has(recordsEntity.state) ? Number(recordsEntity.state) : 0;
   const prAttrs = recordsEntity?.attributes ?? {};
 

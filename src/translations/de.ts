@@ -215,6 +215,7 @@ export const de: Record<keyof typeof en, string> = {
   "empty.readiness_trend.title": "Noch keine Bereitschaftstrend-Daten",
 
   "stat.cadence": "Trittfrequenz",
+  "stat.stride_length": "Schrittlänge",
   "stat.pct_hrmax": "% der max. Herzfrequenz",
   "stat.sleep_avg_hr": "Ø-Puls",
   "stat.sleep_min_hr": "Min-Puls",
@@ -447,5 +448,29 @@ export const de: Record<keyof typeof en, string> = {
   "steps_trend.legend_met": "Ziel erreicht",
   "steps_trend.legend_below": "Unter Ziel",
   "steps_trend.days_at_goal": "Tage mit Ziel",
+
+  // -- card 50: month records --
+  "card.month_records.title": "Rekorde des Monats",
+  "card.month_records.subtitle": "{count} von {total} in diesem Monat aufgestellt",
+  "empty.month_records.title": "Noch keine Rekorde diesen Monat",
+  "empty.month_records.subtitle": "Deine persönlichen Bestleistungen dieses Monats erscheinen hier.",
+
+  // -- card 51: year records --
+  "card.year_records.title": "Rekorde des Jahres",
+  "card.year_records.subtitle": "{count} von {total} in diesem Jahr aufgestellt",
+  "empty.year_records.title": "Noch keine Rekorde dieses Jahr",
+  "empty.year_records.subtitle": "Deine persönlichen Bestleistungen dieses Jahres erscheinen hier.",
+
+  // -- card 52: running dynamics --
+  "card.running_dynamics.title": "Lauf-Dynamik",
+  "card.running_dynamics.subtitle": "{activity} - letzte {count} Einheiten",
+  "empty.running_dynamics.title": "Noch nicht genug Daten",
+  "empty.running_dynamics.subtitle": "Benötigt ein paar aktuelle Lauf-Einheiten mit Kadenzdaten.",
+
+  // -- card 53: weekly steps goal --
+  "card.weekly_steps_goal.title": "Wochenziel: Schritte",
+  "card.weekly_steps_goal.subtitle": "{value} von {goal} Schritten",
+  "empty.weekly_steps_goal.title": "Noch keine Schrittdaten",
+  "editor.weekly_steps_goal_label": "Wochenziel (Schritte)",
 
 };

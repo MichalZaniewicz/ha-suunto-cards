@@ -215,6 +215,7 @@ export const nl: Record<keyof typeof en, string> = {
   "empty.readiness_trend.title": "Nog geen gereedheidstrendgegevens",
 
   "stat.cadence": "Cadans",
+  "stat.stride_length": "Paslengte",
   "stat.pct_hrmax": "% van max. hartslag",
   "stat.sleep_avg_hr": "Gem. slaappols",
   "stat.sleep_min_hr": "Min. slaappols",
@@ -447,5 +448,29 @@ export const nl: Record<keyof typeof en, string> = {
   "steps_trend.legend_met": "Doel behaald",
   "steps_trend.legend_below": "Onder doel",
   "steps_trend.days_at_goal": "Dagen met doel",
+
+  // -- card 50: month records --
+  "card.month_records.title": "Records van de Maand",
+  "card.month_records.subtitle": "{count} van {total} behaald deze maand",
+  "empty.month_records.title": "Nog geen records deze maand",
+  "empty.month_records.subtitle": "Je persoonlijke records van deze maand verschijnen hier.",
+
+  // -- card 51: year records --
+  "card.year_records.title": "Records van het Jaar",
+  "card.year_records.subtitle": "{count} van {total} behaald dit jaar",
+  "empty.year_records.title": "Nog geen records dit jaar",
+  "empty.year_records.subtitle": "Je persoonlijke records van dit jaar verschijnen hier.",
+
+  // -- card 52: running dynamics --
+  "card.running_dynamics.title": "Loopdynamiek",
+  "card.running_dynamics.subtitle": "{activity} - laatste {count} trainingen",
+  "empty.running_dynamics.title": "Nog niet genoeg gegevens",
+  "empty.running_dynamics.subtitle": "Vereist een paar recente hardlooptrainingen met cadansgegevens.",
+
+  // -- card 53: weekly steps goal --
+  "card.weekly_steps_goal.title": "Weekdoel: Stappen",
+  "card.weekly_steps_goal.subtitle": "{value} van {goal} stappen",
+  "empty.weekly_steps_goal.title": "Nog geen stapgegevens",
+  "editor.weekly_steps_goal_label": "Weekdoel (stappen)",
 
 };

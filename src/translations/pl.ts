@@ -215,6 +215,7 @@ export const pl: Record<keyof typeof en, string> = {
   "empty.readiness_trend.title": "Brak jeszcze danych o trendzie gotowości",
 
   "stat.cadence": "Kadencja",
+  "stat.stride_length": "Długość kroku",
   "stat.pct_hrmax": "% tętna maks.",
   "stat.sleep_avg_hr": "Śr. tętno snu",
   "stat.sleep_min_hr": "Min. tętno snu",
@@ -447,5 +448,29 @@ export const pl: Record<keyof typeof en, string> = {
   "steps_trend.legend_met": "Cel osiągnięty",
   "steps_trend.legend_below": "Poniżej celu",
   "steps_trend.days_at_goal": "Dni z celem",
+
+  // -- card 50: month records --
+  "card.month_records.title": "Rekordy miesiąca",
+  "card.month_records.subtitle": "{count} z {total} pobitych w tym miesiącu",
+  "empty.month_records.title": "Brak jeszcze rekordów w tym miesiącu",
+  "empty.month_records.subtitle": "Tutaj pojawią się Twoje rekordy z tego miesiąca.",
+
+  // -- card 51: year records --
+  "card.year_records.title": "Rekordy roku",
+  "card.year_records.subtitle": "{count} z {total} pobitych w tym roku",
+  "empty.year_records.title": "Brak jeszcze rekordów w tym roku",
+  "empty.year_records.subtitle": "Tutaj pojawią się Twoje rekordy z tego roku.",
+
+  // -- card 52: running dynamics --
+  "card.running_dynamics.title": "Dynamika biegu",
+  "card.running_dynamics.subtitle": "{activity} - ostatnie {count} treningów",
+  "empty.running_dynamics.title": "Za mało danych",
+  "empty.running_dynamics.subtitle": "Potrzeba kilku ostatnich treningów biegowych z danymi kadencji.",
+
+  // -- card 53: weekly steps goal --
+  "card.weekly_steps_goal.title": "Cel tygodniowy: kroki",
+  "card.weekly_steps_goal.subtitle": "{value} z {goal} kroków",
+  "empty.weekly_steps_goal.title": "Brak jeszcze danych o krokach",
+  "editor.weekly_steps_goal_label": "Cel tygodniowy (kroki)",
 
 };

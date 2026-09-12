@@ -1,6 +1,7 @@
 import "./suunto-device-editor";
 import "./suunto-goal-editor";
 import "./suunto-steps-goal-editor";
+import "./suunto-weekly-steps-goal-editor";
 import "./suunto-last-workout-card";
 import "./suunto-hr-zones-card";
 import "./suunto-sleep-readiness-card";
@@ -50,6 +51,10 @@ import "./suunto-year-story-card";
 import "./suunto-best-efforts-card";
 import "./suunto-steps-today-card";
 import "./suunto-steps-trend-card";
+import "./suunto-month-records-card";
+import "./suunto-year-records-card";
+import "./suunto-running-dynamics-card";
+import "./suunto-weekly-steps-goal-card";
 
 interface CustomCardEntry {
   type: string;
@@ -360,12 +365,36 @@ window.customCards.push(
     name: "Suunto - Steps Trend",
     description: "Daily steps over the last 14 days as a bar chart, colored by whether each day hit your goal.",
     preview: true,
+  },
+  {
+    type: "suunto-month-records-card",
+    name: "Suunto - Month Records",
+    description: "This month's personal bests - fastest pace, biggest climb, longest workout and more.",
+    preview: true,
+  },
+  {
+    type: "suunto-year-records-card",
+    name: "Suunto - Year Records",
+    description: "This year's personal bests - the same records as Month Records, scoped to the calendar year.",
+    preview: true,
+  },
+  {
+    type: "suunto-running-dynamics-card",
+    name: "Suunto - Running Dynamics",
+    description: "Cadence and stride length across your recent same-activity workouts.",
+    preview: true,
+  },
+  {
+    type: "suunto-weekly-steps-goal-card",
+    name: "Suunto - Weekly Steps Goal",
+    description: "Your rolling 7-day step total against a weekly target you set.",
+    preview: true,
   }
 );
 
 // eslint-disable-next-line no-console
 console.info(
-  "%c SUUNTO-CARDS %c 49 cards loaded ",
+  "%c SUUNTO-CARDS %c 53 cards loaded ",
   "color: #fff; background: #d98a1d; font-weight: 700; border-radius: 3px 0 0 3px; padding: 2px 6px;",
   "color: #d98a1d; background: transparent; font-weight: 500;"
 );

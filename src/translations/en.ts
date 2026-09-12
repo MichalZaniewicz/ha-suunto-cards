@@ -249,6 +249,7 @@ export const en = {
 
   // -- last-workout / sleep-readiness enrichments --
   "stat.cadence": "Cadence",
+  "stat.stride_length": "Stride",
   "stat.pct_hrmax": "% of max HR",
   "stat.sleep_avg_hr": "Sleep avg HR",
   "stat.sleep_min_hr": "Sleep min HR",
@@ -492,5 +493,29 @@ export const en = {
   "steps_trend.legend_met": "Goal met",
   "steps_trend.legend_below": "Below goal",
   "steps_trend.days_at_goal": "Days at goal",
+
+  // -- card 50: month records --
+  "card.month_records.title": "This Month's Records",
+  "card.month_records.subtitle": "{count} of {total} set this month",
+  "empty.month_records.title": "No records yet this month",
+  "empty.month_records.subtitle": "Personal bests for this month will appear here.",
+
+  // -- card 51: year records --
+  "card.year_records.title": "This Year's Records",
+  "card.year_records.subtitle": "{count} of {total} set this year",
+  "empty.year_records.title": "No records yet this year",
+  "empty.year_records.subtitle": "Personal bests for this year will appear here.",
+
+  // -- card 52: running dynamics --
+  "card.running_dynamics.title": "Running Dynamics",
+  "card.running_dynamics.subtitle": "{activity} - last {count} workouts",
+  "empty.running_dynamics.title": "Not enough data yet",
+  "empty.running_dynamics.subtitle": "Needs a few recent foot-based workouts with cadence data.",
+
+  // -- card 53: weekly steps goal --
+  "card.weekly_steps_goal.title": "Weekly Steps Goal",
+  "card.weekly_steps_goal.subtitle": "{value} of {goal} steps",
+  "empty.weekly_steps_goal.title": "No step data yet",
+  "editor.weekly_steps_goal_label": "Weekly goal (steps)",
 
 } as const;

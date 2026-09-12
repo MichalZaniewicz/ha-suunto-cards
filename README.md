@@ -70,6 +70,10 @@ into <ha-alert> and drops every child whose textContent is empty, which silently
 | Best Efforts | `custom:suunto-best-efforts-card` | Your fastest 1K, 5K, 10K, half marathon and marathon efforts, tracked from running workouts |
 | Steps Today | `custom:suunto-steps-today-card` | Today's steps against a daily goal you set, with a ring and a comparison to your own 7-day average |
 | Steps Trend | `custom:suunto-steps-trend-card` | Daily steps over the last 14 days as a bar chart, colored by whether each day hit your goal |
+| Month Records | `custom:suunto-month-records-card` | This month's personal bests - fastest pace, biggest climb, longest workout and more |
+| Year Records | `custom:suunto-year-records-card` | This year's personal bests - the same records as Month Records, scoped to the calendar year |
+| Running Dynamics | `custom:suunto-running-dynamics-card` | Cadence and stride length across your recent same-activity workouts |
+| Weekly Steps Goal | `custom:suunto-weekly-steps-goal-card` | Your rolling 7-day step total against a weekly target you set |
 
 Each card auto-detects your Suunto device - **zero YAML required** for the common case of one
 Suunto account. If you ever have more than one, the card's visual editor shows a device picker.
@@ -99,6 +103,14 @@ type: custom:suunto-steps-today-card
 goal_steps: 8000
 ```
 
+**Weekly Steps Goal** also takes a `goal_steps` field, just a weekly rather than daily target
+(default 70,000):
+
+```yaml
+type: custom:suunto-weekly-steps-goal-card
+goal_steps: 60000
+```
+
 **Heart Rate Curve** and **Sleep Trends** read from `ha-suunto`'s long-term statistics
 (`suunto_app:hr`, `suunto_app:sleep_duration`, `suunto_app:sleep_quality`) rather than live sensor
 state, so they need a little history to accumulate after you first install the integration before
@@ -107,11 +119,17 @@ they show anything.
 **Route** draws the shape itself as a self-contained, pace-colored SVG - no map tiles, no
 third-party requests, purely informational (nothing to tap).
 
-**This Month**, **This Year** and **Best Efforts** require `ha-suunto` **1.0.25 or newer**
-(currently a beta pre-release) - the `month_*`/`year_*`/`best_efforts` sensors they read don't
-exist on older versions. **Best Efforts** is also tracked going forward only, from whenever you
-update - it can't find a genuine best from before that, since it needs detailed per-workout data
-this card family doesn't otherwise fetch in bulk.
+**This Month**, **This Year**, **Month Records**, **Year Records** and **Best Efforts** require
+`ha-suunto` **1.0.25 or newer** - the `month_*`/`year_*`/`training_records_month`/
+`training_records_year`/`best_efforts` sensors they read don't exist on older versions. **Best
+Efforts** is also tracked going forward only, from whenever you update - it can't find a genuine
+best from before that, since it needs detailed per-workout data this card family doesn't otherwise
+fetch in bulk.
+
+**Running Dynamics** requires `ha-suunto` **1.0.26 or newer** - older versions' `workouts_recent`
+sensor doesn't carry the per-workout cadence/stride data it reads. It only shows data for
+foot-based activities (running, walking, trekking); a cycling-only account will see its empty
+state.
 
 ## Languages
 

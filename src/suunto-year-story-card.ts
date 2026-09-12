@@ -51,6 +51,7 @@ export class SuuntoYearStoryCard extends SuuntoBaseCard {
     }
 
     const time = get("year_time");
+    const energy = get("year_energy");
     const workouts = get("year_workouts");
     const days = get("year_active_days");
 
@@ -84,6 +85,14 @@ export class SuuntoYearStoryCard extends SuuntoBaseCard {
                 <div class="story-tile">
                   <div class="num">${Math.round(Number(time.state)).toLocaleString(hass.language)}<span class="unit">h</span></div>
                   <div class="lab">${t(hass, "stat.time")}</div>
+                </div>
+              `
+            : nothing}
+          ${energy && !UNAVAILABLE_STATES.has(energy.state)
+            ? html`
+                <div class="story-tile">
+                  <div class="num">${Math.round(Number(energy.state)).toLocaleString(hass.language)}<span class="unit">kcal</span></div>
+                  <div class="lab">${t(hass, "stat.energy")}</div>
                 </div>
               `
             : nothing}
@@ -148,6 +157,12 @@ export class SuuntoYearStoryCard extends SuuntoBaseCard {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 10px;
+      }
+      /* A tile count that renders odd (some tiles hide when a sensor is
+         unavailable) would otherwise leave a lone tile in its own half-empty
+         row - span it full-width instead, whichever tile ends up last. */
+      .story-tile:nth-last-child(1):nth-child(odd) {
+        grid-column: 1 / -1;
       }
       .story-tile {
         background: var(--divider-color);

@@ -215,6 +215,7 @@ export const pt: Record<keyof typeof en, string> = {
   "empty.readiness_trend.title": "Ainda sem dados de tendências de prontidão",
 
   "stat.cadence": "Cadência",
+  "stat.stride_length": "Comprimento da passada",
   "stat.pct_hrmax": "% da FC máx.",
   "stat.sleep_avg_hr": "FC média sono",
   "stat.sleep_min_hr": "FC mín. sono",
@@ -447,5 +448,29 @@ export const pt: Record<keyof typeof en, string> = {
   "steps_trend.legend_met": "Meta atingida",
   "steps_trend.legend_below": "Abaixo da meta",
   "steps_trend.days_at_goal": "Dias com meta",
+
+  // -- card 50: month records --
+  "card.month_records.title": "Recordes do Mês",
+  "card.month_records.subtitle": "{count} de {total} alcançados este mês",
+  "empty.month_records.title": "Ainda sem recordes este mês",
+  "empty.month_records.subtitle": "Seus melhores resultados deste mês aparecerão aqui.",
+
+  // -- card 51: year records --
+  "card.year_records.title": "Recordes do Ano",
+  "card.year_records.subtitle": "{count} de {total} alcançados este ano",
+  "empty.year_records.title": "Ainda sem recordes este ano",
+  "empty.year_records.subtitle": "Seus melhores resultados deste ano aparecerão aqui.",
+
+  // -- card 52: running dynamics --
+  "card.running_dynamics.title": "Dinâmica de Corrida",
+  "card.running_dynamics.subtitle": "{activity} - últimos {count} treinos",
+  "empty.running_dynamics.title": "Ainda sem dados suficientes",
+  "empty.running_dynamics.subtitle": "Requer alguns treinos de corrida recentes com dados de cadência.",
+
+  // -- card 53: weekly steps goal --
+  "card.weekly_steps_goal.title": "Meta Semanal de Passos",
+  "card.weekly_steps_goal.subtitle": "{value} de {goal} passos",
+  "empty.weekly_steps_goal.title": "Ainda sem dados de passos",
+  "editor.weekly_steps_goal_label": "Meta semanal (passos)",
 
 };
