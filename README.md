@@ -77,6 +77,7 @@ into <ha-alert> and drops every child whose textContent is empty, which silently
 | Goals Overview | `custom:suunto-goals-overview-card` | Your weekly distance and step goals as two rings in one card |
 | Week Compare | `custom:suunto-week-compare-card` | This week's distance, time and workouts against last week's, with the delta |
 | Fitness Trend | `custom:suunto-fitness-trend-card` | VO2max and estimated VO2max over a 90-day trend, plus fitness age |
+| Sleep Detail | `custom:suunto-sleep-detail-card` | A single-night deep-dive: time awake in bed, sleep efficiency, and every sleep vital in one card |
 
 Each card auto-detects your Suunto device - **zero YAML required** for the common case of one
 Suunto account. If you ever have more than one, the card's visual editor shows a device picker.
@@ -187,6 +188,11 @@ statistics, also new in `ha-suunto` **1.0.27**. Suunto only computes VO2max from
 workouts, so on a cycling-heavy account this trend can be sparse - a handful of points over the
 90-day window rather than a dense daily line, and a fresh install may show a flat or short line
 until a few readings accumulate.
+
+**Sleep Detail**'s "time awake in bed" and "sleep efficiency" aren't sensors `ha-suunto` sends
+directly - they're computed here from `wake_time` minus `sleep_time` against `sleep_duration`. If
+your watch model doesn't report `sleep_time`/`wake_time` for a given night, the card just omits the
+bedtime/wake row and the efficiency ring rather than guessing.
 
 ## Languages
 

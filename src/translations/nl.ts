@@ -494,4 +494,20 @@ export const nl: Record<keyof typeof en, string> = {
   "week_compare.legend_now": "Deze week",
   "week_compare.legend_prev": "Vorige week",
 
+  // -- card 57: sleep detail --
+  "card.sleep_detail.title": "Slaapdetail",
+  "card.sleep_detail.subtitle": "Afgelopen nacht",
+  "label.awake": "Wakker",
+  "sleep_detail.total_sleep": "totale slaap",
+  "sleep_detail.in_bed": "{duration} in bed",
+  "sleep_detail.bedtime": "Naar bed",
+  "sleep_detail.wake": "Wakker worden",
+  "sleep_detail.stages": "Slaapfasen",
+  "sleep_detail.efficiency": "Slaapefficiëntie",
+  "sleep_detail.efficiency_sub": "Slaaptijd ÷ tijd in bed",
+  "sleep_detail.vitals": "Waarden",
+  "sleep_detail.insight_excellent": "{pct}% diepe slaap · een uitstekend hersteltraject.",
+  "sleep_detail.insight_solid": "{pct}% diepe slaap · een solide herstel.",
+  "sleep_detail.insight_light": "{pct}% diepe slaap · lichter dan gebruikelijk.",
+
 };

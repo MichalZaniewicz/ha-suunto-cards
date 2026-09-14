@@ -59,6 +59,7 @@ import "./suunto-weekly-steps-goal-card";
 import "./suunto-goals-overview-card";
 import "./suunto-week-compare-card";
 import "./suunto-fitness-trend-card";
+import "./suunto-sleep-detail-card";
 
 interface CustomCardEntry {
   type: string;
@@ -411,12 +412,19 @@ window.customCards.push(
     name: "Suunto - Fitness Trend",
     description: "VO2max and estimated VO2max over the last 90 days.",
     preview: true,
+  },
+  {
+    type: "suunto-sleep-detail-card",
+    name: "Suunto - Sleep Detail",
+    description:
+      "A single-night deep-dive: time awake in bed, sleep efficiency, and every sleep vital in one glanceable card.",
+    preview: true,
   }
 );
 
 // eslint-disable-next-line no-console
 console.info(
-  "%c SUUNTO-CARDS %c 56 cards loaded ",
+  "%c SUUNTO-CARDS %c 57 cards loaded ",
   "color: #fff; background: #d98a1d; font-weight: 700; border-radius: 3px 0 0 3px; padding: 2px 6px;",
   "color: #d98a1d; background: transparent; font-weight: 500;"
 );

@@ -32,6 +32,7 @@ export const suuntoTokens = css`
     --sc-sleep-deep: #3d5a80;
     --sc-sleep-light: #6f9bd1;
     --sc-sleep-rem: #a682c9;
+    --sc-sleep-awake: #c9a35a;
   }
   :host(.dark) {
     --sc-amber: #f5b44e;
@@ -59,6 +60,7 @@ export const suuntoTokens = css`
     --sc-sleep-deep: #5b82ab;
     --sc-sleep-light: #7fb4e0;
     --sc-sleep-rem: #b89ce0;
+    --sc-sleep-awake: #d9b876;
   }
 `;
 

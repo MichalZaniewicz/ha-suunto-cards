@@ -494,4 +494,20 @@ export const es: Record<keyof typeof en, string> = {
   "week_compare.legend_now": "Esta semana",
   "week_compare.legend_prev": "Semana pasada",
 
+  // -- card 57: sleep detail --
+  "card.sleep_detail.title": "Detalle del Sueño",
+  "card.sleep_detail.subtitle": "Anoche",
+  "label.awake": "Despierto",
+  "sleep_detail.total_sleep": "sueño total",
+  "sleep_detail.in_bed": "{duration} en cama",
+  "sleep_detail.bedtime": "Acostarse",
+  "sleep_detail.wake": "Despertar",
+  "sleep_detail.stages": "Fases del sueño",
+  "sleep_detail.efficiency": "Eficiencia del sueño",
+  "sleep_detail.efficiency_sub": "Tiempo dormido ÷ tiempo en cama",
+  "sleep_detail.vitals": "Constantes",
+  "sleep_detail.insight_excellent": "{pct}% de sueño profundo · una ventana de recuperación excelente.",
+  "sleep_detail.insight_solid": "{pct}% de sueño profundo · una recuperación sólida.",
+  "sleep_detail.insight_light": "{pct}% de sueño profundo · más ligero de lo habitual.",
+
 };

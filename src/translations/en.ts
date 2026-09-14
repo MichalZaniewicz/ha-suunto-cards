@@ -541,4 +541,20 @@ export const en = {
   "week_compare.legend_now": "This week",
   "week_compare.legend_prev": "Last week",
 
+  // -- card 57: sleep detail --
+  "card.sleep_detail.title": "Sleep Detail",
+  "card.sleep_detail.subtitle": "Last night",
+  "label.awake": "Awake",
+  "sleep_detail.total_sleep": "total sleep",
+  "sleep_detail.in_bed": "{duration} in bed",
+  "sleep_detail.bedtime": "Bedtime",
+  "sleep_detail.wake": "Wake",
+  "sleep_detail.stages": "Sleep stages",
+  "sleep_detail.efficiency": "Sleep efficiency",
+  "sleep_detail.efficiency_sub": "Time asleep ÷ time in bed",
+  "sleep_detail.vitals": "Vitals",
+  "sleep_detail.insight_excellent": "{pct}% deep sleep · an excellent recovery window.",
+  "sleep_detail.insight_solid": "{pct}% deep sleep · a solid night's recovery.",
+  "sleep_detail.insight_light": "{pct}% deep sleep · lighter than usual.",
+
 } as const;
