@@ -4,10 +4,6 @@ Custom Lovelace cards for [`ha-suunto`](https://github.com/MichalZaniewicz/ha-su
 `suunto_app` integration) - a purpose-built widget family instead of wiring generic entity/gauge
 cards to its 94 sensors by hand.
 
-[![Open your Home Assistant instance and open this repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=MichalZaniewicz&repository=ha-suunto-cards&category=plugin)
-
-![Preview of the Suunto cards](docs/screenshots/cards-overview-dark.png)
-
 > [!TIP]
 > ⭐ **Enjoying these cards?** Every star is real motivation to keep building new features :)
 >
@@ -18,6 +14,10 @@ into <ha-alert> and drops every child whose textContent is empty, which silently
 <img> placed inside it. -->
 
 [![Star this repo](https://img.shields.io/github/stars/MichalZaniewicz/ha-suunto-cards?style=for-the-badge&logo=github&label=STAR%20THIS%20REPO&labelColor=555555&color=ffc107)](https://github.com/MichalZaniewicz/ha-suunto-cards) [![Buy me a coffee](https://img.shields.io/badge/BUY%20ME%20A%20COFFEE-FFDD00?style=for-the-badge&logo=buymeacoffee&logoColor=black)](https://buymeacoffee.com/zanula)
+
+[![Open your Home Assistant instance and open this repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=MichalZaniewicz&repository=ha-suunto-cards&category=plugin)
+
+![Preview of the Suunto cards](docs/screenshots/cards-overview-dark.png)
 
 ## Cards
 
