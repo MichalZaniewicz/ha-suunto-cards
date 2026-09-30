@@ -56,6 +56,10 @@ export class SuuntoTodayCard extends SuuntoBaseCard {
 
     const steps = get("daily_steps");
     const energy = get("daily_energy");
+    // ha-suunto 1.0.28+: active + BMR accrued today, the app's "calories".
+    const totalEnergy = get("daily_total_energy");
+    const totalEnergyValue =
+      totalEnergy && !UNAVAILABLE_STATES.has(totalEnergy.state) ? Number(totalEnergy.state) : undefined;
     const currentHr = get("current_hr");
     const workoutToday = get("workout_today");
     const isRecovering = get("is_recovering");
@@ -89,7 +93,23 @@ export class SuuntoTodayCard extends SuuntoBaseCard {
           ${steps && !UNAVAILABLE_STATES.has(steps.state)
             ? this._stat(Number(steps.state).toLocaleString(hass.language), "", t(hass, "stat.steps"))
             : nothing}
-          ${energy && !UNAVAILABLE_STATES.has(energy.state)
+          ${totalEnergyValue !== undefined
+            ? html`
+                <div class="stat">
+                  <div class="stat-value">
+                    ${Math.round(totalEnergyValue).toLocaleString(hass.language)}<span class="unit">kcal</span>
+                  </div>
+                  <div class="stat-label">${t(hass, "stat.energy")}</div>
+                  ${energy && !UNAVAILABLE_STATES.has(energy.state)
+                    ? html`<div class="stat-sub">
+                        ${t(hass, "stat.energy_active_sub", {
+                          kcal: Math.round(Number(energy.state)).toLocaleString(hass.language),
+                        })}
+                      </div>`
+                    : nothing}
+                </div>
+              `
+            : energy && !UNAVAILABLE_STATES.has(energy.state)
             ? this._stat(
                 Math.round(Number(energy.state)).toLocaleString(hass.language),
                 "kcal",
@@ -177,6 +197,10 @@ export class SuuntoTodayCard extends SuuntoBaseCard {
         display: flex;
         gap: 8px;
         flex-wrap: wrap;
+      }
+      .stat-sub {
+        font-size: 0.68rem;
+        color: var(--secondary-text-color);
       }
     `,
   ];

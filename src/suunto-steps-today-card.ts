@@ -93,6 +93,17 @@ export class SuuntoStepsTodayCard extends SuuntoBaseCard {
     const pct = goal > 0 ? (value / goal) * 100 : 0;
     const colorVar = pct >= 100 ? "var(--sc-good)" : "var(--sc-amber)";
 
+    // ha-suunto 1.0.28+: today's total energy split into active and the BMR
+    // accrued so far (total - active), the app's own "calories" breakdown.
+    const totalEnergy = get("daily_total_energy");
+    const activeEnergy = get("daily_energy");
+    const totalKcal =
+      totalEnergy && !UNAVAILABLE_STATES.has(totalEnergy.state) ? Number(totalEnergy.state) : undefined;
+    const activeKcal =
+      activeEnergy && !UNAVAILABLE_STATES.has(activeEnergy.state) ? Number(activeEnergy.state) : undefined;
+    const bmrKcal =
+      totalKcal !== undefined && activeKcal !== undefined ? Math.max(totalKcal - activeKcal, 0) : undefined;
+
     const delta =
       this._weekAverage && this._weekAverage > 0 ? ((value - this._weekAverage) / this._weekAverage) * 100 : undefined;
 
@@ -118,6 +129,32 @@ export class SuuntoStepsTodayCard extends SuuntoBaseCard {
             <div class="ring-value" style="color:${colorVar}">${Math.round(pct)}%</div>
           </div>
         </div>
+
+        ${totalKcal !== undefined && activeKcal !== undefined && bmrKcal !== undefined
+          ? html`
+              <div class="energy-row">
+                <div class="icon-badge tiny"><ha-icon icon="mdi:fire"></ha-icon></div>
+                <div class="split">
+                  <div class="split-top">
+                    <span
+                      ><strong>${Math.round(totalKcal).toLocaleString(hass.language)}</strong>
+                      ${t(hass, "energy.total_unit")}</span
+                    >
+                    <span
+                      >${t(hass, "energy.split", {
+                        active: Math.round(activeKcal).toLocaleString(hass.language),
+                        bmr: Math.round(bmrKcal).toLocaleString(hass.language),
+                      })}</span
+                    >
+                  </div>
+                  <div class="split-bar">
+                    <span style="flex:${activeKcal};background:var(--sc-amber)"></span>
+                    <span class="bmr" style="flex:${bmrKcal}"></span>
+                  </div>
+                </div>
+              </div>
+            `
+          : nothing}
 
         ${delta !== undefined
           ? html`
@@ -180,6 +217,43 @@ export class SuuntoStepsTodayCard extends SuuntoBaseCard {
         font-size: 0.95rem;
         font-weight: 700;
         font-variant-numeric: tabular-nums;
+      }
+      .energy-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .split {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+      .split-top {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 2px 8px;
+        font-size: 0.78rem;
+        color: var(--secondary-text-color);
+      }
+      .split-top strong {
+        font-size: 1rem;
+        color: var(--primary-text-color);
+        font-variant-numeric: tabular-nums;
+      }
+      .split-bar {
+        display: flex;
+        height: 6px;
+        border-radius: 3px;
+        overflow: hidden;
+        background: var(--divider-color);
+      }
+      .split-bar .bmr {
+        background: var(--secondary-text-color);
+        opacity: 0.35;
       }
       .avg-chip {
         display: flex;
