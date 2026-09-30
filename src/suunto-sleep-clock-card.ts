@@ -4,7 +4,7 @@ import type { LovelaceCardEditor } from "custom-card-helpers";
 import type { SuuntoCardConfig } from "./utils/types";
 import { SuuntoBaseCard } from "./utils/base-card";
 import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
-import { formatDuration, formatTime } from "./utils/format";
+import { formatDuration, formatShortDate, formatTime } from "./utils/format";
 import { t } from "./utils/localize";
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
@@ -131,6 +131,16 @@ export class SuuntoSleepClockCard extends SuuntoBaseCard {
             <div class="subtitle">${t(hass, "card.sleep_clock.subtitle")}</div>
           </div>
         </div>
+
+        ${duration.attributes.stale === true && typeof duration.attributes.night === "string"
+          ? html`<div style="display:flex;flex-wrap:wrap">
+              <span class="chip warn"
+                ><ha-icon icon="mdi:alert-outline"></ha-icon>${t(hass, "chip.sleep_stale", {
+                  date: formatShortDate(duration.attributes.night as string, hass.language),
+                })}</span
+              >
+            </div>`
+          : nothing}
 
         <div class="clock-wrap">
           <svg viewBox="0 0 ${SIZE} ${SIZE}">

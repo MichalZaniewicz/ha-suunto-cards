@@ -93,8 +93,14 @@ export class SuuntoLastWorkoutCard extends SuuntoBaseCard {
     const paceValue = pace && !UNAVAILABLE_STATES.has(pace.state) ? Number(pace.state) : undefined;
     const speedValue = speed && !UNAVAILABLE_STATES.has(speed.state) ? Number(speed.state) : undefined;
     const hasSpeed = paceValue === undefined && speedValue !== undefined;
-    const avgHrValue = avgHr && !UNAVAILABLE_STATES.has(avgHr.state) ? Number(avgHr.state) : undefined;
-    const maxHrValue = maxHr && !UNAVAILABLE_STATES.has(maxHr.state) ? Number(maxHr.state) : undefined;
+    // ha-suunto 1.0.28+ flags a workout recorded without heart rate. Suunto
+    // then sends 0 bpm and a MET-based TSS, so the HR tiles would read "0 bpm"
+    // and the TSS state already IS the MET figure.
+    const noHr = tss?.attributes.has_hr === false;
+    const avgHrValue =
+      !noHr && avgHr && !UNAVAILABLE_STATES.has(avgHr.state) ? Number(avgHr.state) : undefined;
+    const maxHrValue =
+      !noHr && maxHr && !UNAVAILABLE_STATES.has(maxHr.state) ? Number(maxHr.state) : undefined;
     const feelingValue =
       feeling && !UNAVAILABLE_STATES.has(feeling.state) ? Number(feeling.state) : undefined;
     const pteValue = pte && !UNAVAILABLE_STATES.has(pte.state) ? Number(pte.state) : undefined;
@@ -104,7 +110,7 @@ export class SuuntoLastWorkoutCard extends SuuntoBaseCard {
       stride && !UNAVAILABLE_STATES.has(stride.state) ? Number(stride.state) : undefined;
     const tssValue = tss && !UNAVAILABLE_STATES.has(tss.state) ? Number(tss.state) : undefined;
     const tssMetValue =
-      tss && !UNAVAILABLE_STATES.has(tss.state) && typeof tss.attributes.tss_met === "number"
+      !noHr && tss && !UNAVAILABLE_STATES.has(tss.state) && typeof tss.attributes.tss_met === "number"
         ? tss.attributes.tss_met
         : undefined;
     const manuallyAdded = tags?.attributes.is_manually_added === true;
@@ -114,7 +120,7 @@ export class SuuntoLastWorkoutCard extends SuuntoBaseCard {
     const cadenceValue =
       cadence && !UNAVAILABLE_STATES.has(cadence.state) ? Number(cadence.state) : undefined;
     const pctHrmaxValue =
-      pctHrmax && !UNAVAILABLE_STATES.has(pctHrmax.state) ? Number(pctHrmax.state) : undefined;
+      !noHr && pctHrmax && !UNAVAILABLE_STATES.has(pctHrmax.state) ? Number(pctHrmax.state) : undefined;
 
     return html`
       <ha-card @click=${() => this._openMoreInfo(map["last_activity"])}>
@@ -187,7 +193,7 @@ export class SuuntoLastWorkoutCard extends SuuntoBaseCard {
               <hr />
               <div class="secondary">
                 ${tssValue !== undefined
-                  ? this._secondary(String(Math.round(tssValue)), t(hass, "stat.tss"))
+                  ? this._secondary(String(Math.round(tssValue)), t(hass, noHr ? "stat.tss_met" : "stat.tss"))
                   : nothing}
                 ${tssMetValue !== undefined
                   ? this._secondary(String(Math.round(tssMetValue)), t(hass, "stat.tss_met"))
@@ -239,11 +245,14 @@ export class SuuntoLastWorkoutCard extends SuuntoBaseCard {
             `
           : nothing}
         ${!compact &&
-        ((tags && !UNAVAILABLE_STATES.has(tags.state)) || achievementCount > 0 || manuallyAdded)
+        ((tags && !UNAVAILABLE_STATES.has(tags.state)) || achievementCount > 0 || manuallyAdded || noHr)
           ? html`
               <div class="footer">
                 ${tags && !UNAVAILABLE_STATES.has(tags.state)
                   ? html`<span class="chip"><ha-icon icon="mdi:tag-outline"></ha-icon>${tags.state}</span>`
+                  : nothing}
+                ${noHr
+                  ? html`<span class="chip"><ha-icon icon="mdi:heart-off-outline"></ha-icon>${t(hass, "chip.no_hr")}</span>`
                   : nothing}
                 ${manuallyAdded
                   ? html`<span class="chip"><ha-icon icon="mdi:pencil-outline"></ha-icon>${t(hass, "chip.manually_added")}</span>`

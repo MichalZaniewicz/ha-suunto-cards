@@ -5,7 +5,7 @@ import type { SuuntoCardConfig } from "./utils/types";
 import { SuuntoBaseCard } from "./utils/base-card";
 import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
 import { segmentedBar, progressRing } from "./utils/render-helpers";
-import { formatDuration, formatTime, formatDelta, isToday } from "./utils/format";
+import { formatDuration, formatTime, formatDelta, formatShortDate, isToday } from "./utils/format";
 import { t } from "./utils/localize";
 import type { SuuntoHass } from "./utils/types";
 
@@ -163,6 +163,16 @@ export class SuuntoSleepDetailCard extends SuuntoBaseCard {
               `
             : nothing}
         </div>
+
+        ${duration.attributes.stale === true && typeof duration.attributes.night === "string"
+          ? html`<div style="display:flex;flex-wrap:wrap">
+              <span class="chip warn"
+                ><ha-icon icon="mdi:alert-outline"></ha-icon>${t(hass, "chip.sleep_stale", {
+                  date: formatShortDate(duration.attributes.night as string, hass.language),
+                })}</span
+              >
+            </div>`
+          : nothing}
 
         <div class="hero">
           <div class="hero-value">${durationParts.value}<span class="unit">${durationParts.unit}</span></div>

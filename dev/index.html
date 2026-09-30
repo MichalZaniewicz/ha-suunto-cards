@@ -452,7 +452,7 @@
           last_pte: { state: 1.6 },
           last_epoc: { state: 11.6 },
           last_feeling: { state: 4 },
-          last_tss: { state: 132, attributes: { tss_met: 168.4 } },
+          last_tss: { state: 132, attributes: { tss_met: 168.4, has_hr: true } },
           last_cal_per_km: { state: 32 },
           last_cadence: { state: 83 },
           last_pct_hrmax: { state: 78 },
@@ -480,7 +480,7 @@
           last_zone3: { state: 30, attributes: { lower_limit_bpm: 131, upper_limit_bpm: 151 } },
           last_zone4: { state: 15, attributes: { lower_limit_bpm: 151, upper_limit_bpm: 168 } },
           last_zone5: { state: 3, attributes: { lower_limit_bpm: 168 } },
-          sleep_duration: { state: 7.53 },
+          sleep_duration: { state: 7.53, attributes: { night: new Date(Date.now() - 36 * 3600 * 1000).toISOString().slice(0, 10), stale: false } },
           sleep_deep: { state: 92 },
           sleep_light: { state: 210 },
           sleep_rem: { state: 68 },
@@ -496,7 +496,7 @@
           resting_hr_baseline: { state: 51 },
           wake_time: { state: nowIso(-9 * 3600 * 1000) },
           nap_duration: { state: 32, attributes: { nap_count: 1, date: new Date().toISOString().slice(0, 10) } },
-          readiness: { state: 78 },
+          readiness: { state: 78, attributes: { sleep_night: new Date(Date.now() - 36 * 3600 * 1000).toISOString().slice(0, 10), sleep_stale: false } },
           recovery_balance: { state: 54 },
           is_recovering: { domain: "binary_sensor", state: "on" },
           recovery_until: { state: nowIso(3 * 3600 * 1000 + 20 * 60 * 1000) },
@@ -584,7 +584,7 @@
           },
           daily_steps: { state: 8412 },
           daily_energy: { state: 612 },
-          current_hr: { state: 78 },
+          current_hr: { state: 78, attributes: { measured_at: nowIso(-6 * 60 * 1000) } },
           lifetime_distance: { state: 6801 },
           lifetime_time: { state: 623 },
           lifetime_energy: { state: 185000 },
@@ -651,6 +651,29 @@
           fitness_age: { state: 20, attributes: { measured_at: nowIso(-20 * 86400000), measured_from: "Walking" } },
         },
       });
+    }
+
+    // ?scenario=degraded - what ha-suunto 1.0.28+ reports when data quality
+    // drops: last night's sleep missing (stale night 3 days back, readiness on
+    // recovery balance alone), a workout recorded without heart rate (0 bpm,
+    // MET-based TSS), and a current HR measured 40 min before the newest record.
+    function degradedHass() {
+      const hass = fullHass();
+      const patch = (key, state, attributes, domain = "sensor") => {
+        const s = hass.states[`${domain}.suunto_full_${key}`];
+        if (state !== undefined) s.state = String(state);
+        if (attributes) s.attributes = { ...s.attributes, ...attributes };
+      };
+      const oldNight = new Date(Date.now() - 3 * 86400000).toISOString().slice(0, 10);
+      patch("sleep_duration", 7.3, { night: oldNight, stale: true });
+      patch("readiness", 52, { sleep_night: oldNight, sleep_stale: true });
+      patch("last_activity", "Trekking");
+      patch("last_avg_hr", 0);
+      patch("last_max_hr", 0);
+      patch("last_pct_hrmax", 0);
+      patch("last_tss", 364.5, { tss_met: 364.5, has_hr: false });
+      patch("current_hr", 62, { measured_at: nowIso(-40 * 60 * 1000) });
+      return hass;
     }
 
     function emptyHass() {
@@ -740,7 +763,8 @@
     ];
 
     function setup() {
-      const full = fullHass();
+      const scenario = new URLSearchParams(location.search).get("scenario");
+      const full = scenario === "degraded" ? degradedHass() : fullHass();
       const empty = emptyHass();
       const fullEl = document.getElementById("full");
       const emptyEl = document.getElementById("empty");

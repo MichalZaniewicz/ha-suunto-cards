@@ -5,7 +5,7 @@ import type { SuuntoCardConfig } from "./utils/types";
 import { SuuntoBaseCard } from "./utils/base-card";
 import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
 import { segmentedBar, progressRing } from "./utils/render-helpers";
-import { formatDuration, formatTime, formatDelta, isToday } from "./utils/format";
+import { formatDuration, formatTime, formatDelta, formatShortDate, isToday } from "./utils/format";
 import { t } from "./utils/localize";
 import type { SuuntoHass } from "./utils/types";
 
@@ -117,6 +117,13 @@ export class SuuntoSleepReadinessCard extends SuuntoBaseCard {
     const napMinutes = nap && !UNAVAILABLE_STATES.has(nap.state) ? Number(nap.state) : undefined;
     const napToday = nap?.attributes.date ? isToday(new Date(nap.attributes.date)) : false;
     const durationLabel = { duration: `${durationParts.value} ${durationParts.unit}` };
+    // ha-suunto 1.0.28+: the newest night it has is no longer last night (not
+    // worn, wrong watch clock, not synced). Older installs never set `stale`.
+    const staleNight =
+      duration.attributes.stale === true && typeof duration.attributes.night === "string"
+        ? (duration.attributes.night as string)
+        : undefined;
+    const readinessBalanceOnly = readiness?.attributes.sleep_stale === true;
 
     return html`
       <ha-card class="static">
@@ -135,6 +142,16 @@ export class SuuntoSleepReadinessCard extends SuuntoBaseCard {
           </div>
         </div>
 
+        ${staleNight
+          ? html`<div class="footer">
+              <span class="chip warn"
+                ><ha-icon icon="mdi:alert-outline"></ha-icon>${t(hass, "chip.sleep_stale", {
+                  date: formatShortDate(staleNight, hass.language),
+                })}</span
+              >
+            </div>`
+          : nothing}
+
         ${readinessValue !== undefined && band
           ? html`
               <div class="readiness-row">
@@ -145,12 +162,15 @@ export class SuuntoSleepReadinessCard extends SuuntoBaseCard {
                 <div class="readiness-text">
                   <div class="readiness-label">${t(hass, "stat.readiness")}</div>
                   <div class="readiness-band" style="color:${band.colorVar}">${band.label}</div>
+                  ${readinessBalanceOnly
+                    ? html`<div class="readiness-note">${t(hass, "readiness.balance_only")}</div>`
+                    : nothing}
                 </div>
               </div>
             `
           : nothing}
 
-        <div class="stats">
+        <div class="stats ${staleNight ? "stale" : ""}">
           ${quality
             ? this._stat(String(Math.round(Number(quality.state))), "%", t(hass, "stat.quality"))
             : nothing}
@@ -187,7 +207,7 @@ export class SuuntoSleepReadinessCard extends SuuntoBaseCard {
 
         ${!compact && stageSegments.length
           ? html`
-              <div class="stages">
+              <div class="stages ${staleNight ? "stale" : ""}">
                 ${segmentedBar(stageSegments)}
                 <div class="stage-legend">
                   ${stageSegments.map((s) => {
@@ -283,6 +303,16 @@ export class SuuntoSleepReadinessCard extends SuuntoBaseCard {
       .readiness-band {
         font-size: 1.05rem;
         font-weight: 600;
+      }
+      .readiness-note {
+        font-size: 0.72rem;
+        color: var(--secondary-text-color);
+        margin-top: 2px;
+      }
+      /* Numbers from an out-of-date night: still shown, but not passed off as today's. */
+      .stats.stale,
+      .stages.stale {
+        opacity: 0.5;
       }
 
       .stages {

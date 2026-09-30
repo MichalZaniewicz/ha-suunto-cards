@@ -5,6 +5,7 @@ import type { SuuntoCardConfig } from "./utils/types";
 import { SuuntoBaseCard } from "./utils/base-card";
 import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
 import { t } from "./utils/localize";
+import { formatRelative, formatTime } from "./utils/format";
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
 
@@ -81,6 +82,23 @@ export class SuuntoHeartRateCard extends SuuntoBaseCard {
     // rate is, not decoration laid over a static number.
     const beatSeconds = 60 / bpm;
 
+    // ha-suunto 1.0.28+: the value can be the last reading before a workout
+    // rather than the newest 10-min record, so say when it was taken. Past
+    // 15 min, lead with the age - it no longer reads as "right now".
+    const measuredAt =
+      typeof currentHr.attributes.measured_at === "string"
+        ? new Date(currentHr.attributes.measured_at as string)
+        : undefined;
+    const measuredLabel =
+      measuredAt && !Number.isNaN(measuredAt.getTime())
+        ? Date.now() - measuredAt.getTime() > 15 * 60 * 1000
+          ? t(hass, "card.heart_rate.measured_ago", {
+              ago: formatRelative(measuredAt, hass.language),
+              time: formatTime(measuredAt, hass.language),
+            })
+          : t(hass, "card.heart_rate.measured", { time: formatTime(measuredAt, hass.language) })
+        : undefined;
+
     const gridLines = [];
     for (let gx = 0; gx <= STRIP_WIDTH; gx += GRID_STEP) {
       gridLines.push(
@@ -101,6 +119,7 @@ export class SuuntoHeartRateCard extends SuuntoBaseCard {
           </div>
           <div class="title-block">
             <div class="title">${t(hass, "card.heart_rate.title")}</div>
+            ${measuredLabel ? html`<div class="subtitle">${measuredLabel}</div>` : nothing}
           </div>
         </div>
 

@@ -199,6 +199,20 @@ export function formatTime(date: Date, locale?: string): string {
   return new Intl.DateTimeFormat(locale, { hour: "numeric", minute: "2-digit" }).format(date);
 }
 
+/**
+ * "2026-09-19" (a plain calendar date, e.g. ha-suunto's sleep `night`
+ * attribute) -> "19.09" / "9/19" in the user's locale. Parsed as a LOCAL
+ * date: `new Date("2026-09-19")` would be UTC midnight and can show the
+ * previous day west of Greenwich.
+ */
+export function formatShortDate(isoDate: string, locale?: string): string {
+  const [y, m, d] = isoDate.split("-").map(Number);
+  if (!y || !m || !d) return isoDate;
+  return new Intl.DateTimeFormat(locale, { day: "numeric", month: "numeric" }).format(
+    new Date(y, m - 1, d)
+  );
+}
+
 export function isToday(date: Date): boolean {
   const now = new Date();
   return (
