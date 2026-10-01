@@ -185,6 +185,9 @@ export const en = {
   "editor.units_imperial": "Imperial (mi)",
   "editor.compact_label": "Compact mode",
   "editor.days_label": "Trend window (days)",
+  "editor.period_label": "Headline period",
+  "editor.period_year": "This year",
+  "editor.period_month": "This month",
 
   // -- card 8: lifetime totals --
   "card.lifetime.title": "Lifetime Totals",

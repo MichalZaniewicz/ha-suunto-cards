@@ -168,6 +168,9 @@ export const fr: Record<keyof typeof en, string> = {
   "editor.units_imperial": "Impérial (mi)",
   "editor.compact_label": "Mode compact",
   "editor.days_label": "Fenêtre de tendance (jours)",
+  "editor.period_label": "Période principale",
+  "editor.period_year": "Cette année",
+  "editor.period_month": "Ce mois",
 
   "card.lifetime.title": "Cumul Total",
   "card.lifetime.subtitle": "Depuis le début",

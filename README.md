@@ -203,8 +203,8 @@ BMR, the Suunto app's "calories"). On older versions these cards simply look as 
 
 **Commutes**, **Gear**, **Form Forecast** and **Daily Brief** read sensors new in `ha-suunto`
 **1.0.29** (`commute_year` / `commute_month`, the per-gear distance sensors, `form_forecast`,
-`daily_brief`) and show their empty state on older versions. Commutes takes `period: month` to
-lead with this month instead of this year; its money figure uses the currency set in Home
+`daily_brief`) and show their empty state on older versions. Commutes can lead with this month instead of this year (the
+"Headline period" choice in the card editor, or `period: month` in YAML); its money figure uses the currency set in Home
 Assistant and the fuel consumption and price set in the integration's Configure menu. Gear lists
 whatever you add under Configure -> Add gear to track, with no card configuration.
 

@@ -168,6 +168,9 @@ export const nl: Record<keyof typeof en, string> = {
   "editor.units_imperial": "Imperiaal (mi)",
   "editor.compact_label": "Compacte modus",
   "editor.days_label": "Trendvenster (dagen)",
+  "editor.period_label": "Hoofdperiode",
+  "editor.period_year": "Dit jaar",
+  "editor.period_month": "Deze maand",
 
   "card.lifetime.title": "Totalen Aller Tijden",
   "card.lifetime.subtitle": "Sinds het begin",

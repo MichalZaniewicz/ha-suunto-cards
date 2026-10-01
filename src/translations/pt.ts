@@ -168,6 +168,9 @@ export const pt: Record<keyof typeof en, string> = {
   "editor.units_imperial": "Imperial (mi)",
   "editor.compact_label": "Modo compacto",
   "editor.days_label": "Janela de tendência (dias)",
+  "editor.period_label": "Período principal",
+  "editor.period_year": "Este ano",
+  "editor.period_month": "Este mês",
 
   "card.lifetime.title": "Totais Vitalícios",
   "card.lifetime.subtitle": "Desde o início",

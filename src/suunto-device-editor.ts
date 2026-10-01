@@ -17,7 +17,12 @@ const UNITS_CARDS = new Set<string>([
   "custom:suunto-lifetime-card",
   "custom:suunto-week-stats-card",
   "custom:suunto-week-compare-card",
+  "custom:suunto-commute-card",
+  "custom:suunto-gear-card",
 ]);
+
+/** Cards with a `period: "year" | "month"` option picking which window is the headline. */
+const PERIOD_CARDS = new Set<string>(["custom:suunto-commute-card"]);
 
 /** Cards with a `compact: boolean` option that collapses secondary stats. */
 const COMPACT_CARDS = new Set<string>(["custom:suunto-last-workout-card", "custom:suunto-sleep-readiness-card"]);
@@ -54,6 +59,7 @@ export class SuuntoDeviceEditor extends LitElement {
     const type = this._config.type;
     const showUnits = UNITS_CARDS.has(type);
     const showCompact = COMPACT_CARDS.has(type);
+    const showPeriod = PERIOD_CARDS.has(type);
     const daysDefault = DAYS_CARDS[type];
 
     return html`
@@ -69,6 +75,17 @@ export class SuuntoDeviceEditor extends LitElement {
             <div class="hint">${t(this.hass, "editor.pick_device")}</div>
           `
         : html`<div class="hint">${t(this.hass, "editor.auto_detect")}</div>`}
+      ${showPeriod
+        ? html`
+            <label class="field">
+              <span>${t(this.hass, "editor.period_label")}</span>
+              <select .value=${this._config.period === "month" ? "month" : "year"} @change=${this._periodChanged}>
+                <option value="year">${t(this.hass, "editor.period_year")}</option>
+                <option value="month">${t(this.hass, "editor.period_month")}</option>
+              </select>
+            </label>
+          `
+        : nothing}
       ${showUnits
         ? html`
             <label class="field">
@@ -109,6 +126,13 @@ export class SuuntoDeviceEditor extends LitElement {
     if (!this._config) return;
     const value = ev.detail.value;
     this._emit({ ...this._config, device_id: value || undefined });
+  }
+
+  private _periodChanged(ev: Event): void {
+    if (!this._config) return;
+    const value = (ev.target as HTMLSelectElement).value;
+    // "year" is the default, so it is stored as an absent key.
+    this._emit({ ...this._config, period: value === "month" ? "month" : undefined });
   }
 
   private _unitsChanged(ev: Event): void {

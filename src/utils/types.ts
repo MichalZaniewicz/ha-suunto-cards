@@ -25,6 +25,8 @@ export interface SuuntoCardConfig extends LovelaceCardConfig {
   compact?: boolean;
   /** Trend window length in days, for cards with a rolling chart. Each such card defines its own default and offered choices. */
   days?: number;
+  /** Which window a period-aware card (Commutes) leads with. Default: "year". */
+  period?: "year" | "month";
 }
 
 /** suunto-weekly-goal-card's config: same device selection, plus a user-set target. */

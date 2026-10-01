@@ -168,6 +168,9 @@ export const de: Record<keyof typeof en, string> = {
   "editor.units_imperial": "Imperial (mi)",
   "editor.compact_label": "Kompaktmodus",
   "editor.days_label": "Trendfenster (Tage)",
+  "editor.period_label": "Hauptzeitraum",
+  "editor.period_year": "Dieses Jahr",
+  "editor.period_month": "Dieser Monat",
 
   "card.lifetime.title": "Gesamtstatistik",
   "card.lifetime.subtitle": "Seit Beginn",
