@@ -259,12 +259,36 @@
           translation_key: translationKey,
         };
       }
+      if (deviceId === "full") {
+        const gear = [
+          ["chain", "Chain", "Cycling", 3120, 3000],
+          ["tyres", "Tyres", "Cycling", 4100, 5000],
+          ["running_shoes", "Running shoes", "Running", 212, 800],
+        ];
+        for (const [slug, name, activity, km, interval] of gear) {
+          const entityId = `sensor.suunto_${deviceId}_${slug}`;
+          states[entityId] = {
+            entity_id: entityId,
+            state: String(km),
+            attributes: {
+              friendly_name: `Suunto (${deviceId}) ${name}`,
+              activity,
+              interval_km: interval,
+              remaining_km: interval - km,
+              service_due: km >= interval,
+            },
+            last_changed: nowIso(),
+          };
+          registry[entityId] = { entity_id: entityId, device_id: deviceId, platform: "suunto_app" };
+        }
+      }
       return {
         states,
         entities: registry,
         devices: { [deviceId]: { id: deviceId, name: `Suunto (${deviceId})` } },
         themes: { darkMode: document.body.classList.contains("dark") },
         language: "en",
+        config: { currency: "PLN" },
         callApi: callApiImpl || (async () => [[]]),
         callWS: callWSImpl || (async () => ({})),
       };
@@ -585,6 +609,19 @@
           daily_steps: { state: 8412 },
           daily_energy: { state: 612 },
           daily_total_energy: { state: 2228 },
+          commute_year: {
+            state: 1094.2,
+            attributes: { rides: 258, days: 131, avg_duration_min: 12.4, fuel_saved_l: 76.6, money_saved: 497.9, co2_saved_kg: 176.9 },
+          },
+          commute_month: {
+            state: 86.4,
+            attributes: { rides: 21, days: 11, avg_duration_min: 12.1, fuel_saved_l: 6.0, money_saved: 39.3, co2_saved_kg: 14.0 },
+          },
+          form_forecast: {
+            state: 3.2,
+            attributes: { peak_tsb: 33.2, peak_date: nowIso(15 * 86400000).slice(0, 10), days_to_peak: 15, maintenance_tss_week: 336, series: Array.from({ length: 28 }, (_, i) => { const d = i + 1; const tsb = d <= 15 ? 3.2 + 30 * (1 - ((d - 15) / 14) ** 2) : 33.2 - 6 * ((d - 15) / 13) ** 1.4; return { date: new Date(Date.now() + d * 86400000).toISOString().slice(0, 10), ctl: 48 - d, atl: 41 - d, tsb: Math.round(tsb * 10) / 10 }; }) },
+          },
+          daily_brief: { state: "Slept 7.5 h, HRV above your norm, readiness 78, form +3: a good day for a hard session." },
           bmr: { state: 1732 },
           current_hr: { state: 78, attributes: { measured_at: nowIso(-6 * 60 * 1000) } },
           lifetime_distance: { state: 6801 },
@@ -762,6 +799,10 @@
       "suunto-week-compare-card",
       "suunto-fitness-trend-card",
       "suunto-sleep-detail-card",
+      "suunto-commute-card",
+      "suunto-gear-card",
+      "suunto-form-forecast-card",
+      "suunto-daily-brief-card",
     ];
 
     function setup() {

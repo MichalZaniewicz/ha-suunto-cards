@@ -60,6 +60,10 @@ import "./suunto-goals-overview-card";
 import "./suunto-week-compare-card";
 import "./suunto-fitness-trend-card";
 import "./suunto-sleep-detail-card";
+import "./suunto-commute-card";
+import "./suunto-gear-card";
+import "./suunto-form-forecast-card";
+import "./suunto-daily-brief-card";
 
 interface CustomCardEntry {
   type: string;
@@ -419,12 +423,36 @@ window.customCards.push(
     description:
       "A single-night deep-dive: time awake in bed, sleep efficiency, and every sleep vital in one glanceable card.",
     preview: true,
+  },
+  {
+    type: "suunto-commute-card",
+    name: "Suunto - Commutes",
+    description: "Money, fuel and CO2 saved by commuting under your own power, this year and this month.",
+    preview: true,
+  },
+  {
+    type: "suunto-gear-card",
+    name: "Suunto - Gear",
+    description: "Distance on your chain, tyres or shoes against each one's service interval.",
+    preview: true,
+  },
+  {
+    type: "suunto-form-forecast-card",
+    name: "Suunto - Form Forecast",
+    description: "Your form over the next four weeks if you rest from today, with the day it would peak.",
+    preview: true,
+  },
+  {
+    type: "suunto-daily-brief-card",
+    name: "Suunto - Daily Brief",
+    description: "One sentence for today: sleep, HRV, readiness, form and what kind of session fits.",
+    preview: true,
   }
 );
 
 // eslint-disable-next-line no-console
 console.info(
-  "%c SUUNTO-CARDS %c 57 cards loaded ",
+  "%c SUUNTO-CARDS %c 61 cards loaded ",
   "color: #fff; background: #d98a1d; font-weight: 700; border-radius: 3px 0 0 3px; padding: 2px 6px;",
   "color: #d98a1d; background: transparent; font-weight: 500;"
 );
