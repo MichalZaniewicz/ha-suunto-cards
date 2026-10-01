@@ -2,7 +2,7 @@
 
 Custom Lovelace cards for [`ha-suunto`](https://github.com/MichalZaniewicz/ha-suunto) (the
 `suunto_app` integration) - a purpose-built widget family instead of wiring generic entity/gauge
-cards to its 94 sensors by hand.
+cards to its 96 sensors by hand.
 
 > [!TIP]
 > ⭐ **Enjoying these cards?** Every star is real motivation to keep building new features :)
@@ -190,6 +190,12 @@ statistics, also new in `ha-suunto` **1.0.27**. Suunto only computes VO2max from
 workouts, so on a cycling-heavy account this trend can be sparse - a handful of points over the
 90-day window rather than a dense daily line, and a fresh install may show a flat or short line
 until a few readings accumulate.
+
+**Data-quality hints and total energy** use attributes and sensors new in `ha-suunto`
+**1.0.28**: Sleep & Readiness, Sleep Detail and Sleep Clock flag a sleep night that is out of date
+(last night never arrived), the Last Workout card marks a workout recorded without heart rate,
+Heart Rate shows when the reading was taken, and Today / Steps Today show total energy (active +
+BMR, the Suunto app's "calories"). On older versions these cards simply look as before.
 
 **Sleep Detail**'s "time awake in bed" and "sleep efficiency" aren't sensors `ha-suunto` sends
 directly - they're computed here from `wake_time` minus `sleep_time` against `sleep_duration`. If
