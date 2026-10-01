@@ -4,6 +4,8 @@ import { fireEvent } from "custom-card-helpers";
 import type { SuuntoHass, SuuntoCardConfig } from "./utils/types";
 import { findSuuntoDeviceIds } from "./utils/entities";
 import { t } from "./utils/localize";
+import { suuntoFuelFigures } from "./utils/suunto-goals";
+import { DEFAULT_FUEL_L_PER_100KM, DEFAULT_FUEL_PRICE } from "./suunto-commute-card";
 
 /**
  * Cards whose stats include distance/pace/speed and so support `units:
@@ -60,6 +62,10 @@ export class SuuntoDeviceEditor extends LitElement {
     const showUnits = UNITS_CARDS.has(type);
     const showCompact = COMPACT_CARDS.has(type);
     const showPeriod = PERIOD_CARDS.has(type);
+    // Commutes: fuel figures come from the integration unless typed in here.
+    const showFuel = PERIOD_CARDS.has(type);
+    const fuelBase = showFuel ? suuntoFuelFigures(this.hass, this._config.device_id) : undefined;
+    const ownFuel = this._config.fuel_l_per_100km !== undefined || this._config.fuel_price !== undefined;
     const daysDefault = DAYS_CARDS[type];
 
     return html`
@@ -84,6 +90,48 @@ export class SuuntoDeviceEditor extends LitElement {
                 <option value="month">${t(this.hass, "editor.period_month")}</option>
               </select>
             </label>
+          `
+        : nothing}
+      ${showFuel
+        ? html`
+            <label class="field">
+              <span>${t(this.hass, "editor.fuel_source_label")}</span>
+              <select .value=${ownFuel ? "custom" : "suunto"} @change=${this._fuelSourceChanged}>
+                <option value="suunto" ?selected=${!ownFuel}>
+                  ${fuelBase
+                    ? t(this.hass, "editor.source_integration", {
+                        litres: fuelBase.litres.toLocaleString(this.hass.language),
+                        price: fuelBase.price.toLocaleString(this.hass.language),
+                      })
+                    : t(this.hass, "editor.source_integration_unknown")}
+                </option>
+                <option value="custom" ?selected=${ownFuel}>${t(this.hass, "editor.source_custom")}</option>
+              </select>
+            </label>
+            ${ownFuel
+              ? html`
+                  <label class="field">
+                    <span>${t(this.hass, "editor.fuel_consumption_label")}</span>
+                    <input
+                      type="number"
+                      min="0.1"
+                      step="0.1"
+                      .value=${String(this._config.fuel_l_per_100km ?? fuelBase?.litres ?? DEFAULT_FUEL_L_PER_100KM)}
+                      @change=${this._fuelLitresChanged}
+                    />
+                  </label>
+                  <label class="field">
+                    <span>${t(this.hass, "editor.fuel_price_label")}</span>
+                    <input
+                      type="number"
+                      min="0"
+                      step="0.01"
+                      .value=${String(this._config.fuel_price ?? fuelBase?.price ?? DEFAULT_FUEL_PRICE)}
+                      @change=${this._fuelPriceChanged}
+                    />
+                  </label>
+                `
+              : html`<div class="hint">${t(this.hass, "editor.fuel_hint")}</div>`}
           `
         : nothing}
       ${showUnits
@@ -133,6 +181,34 @@ export class SuuntoDeviceEditor extends LitElement {
     const value = (ev.target as HTMLSelectElement).value;
     // "year" is the default, so it is stored as an absent key.
     this._emit({ ...this._config, period: value === "month" ? "month" : undefined });
+  }
+
+  private _fuelSourceChanged(ev: Event): void {
+    if (!this._config) return;
+    const value = (ev.target as HTMLSelectElement).value;
+    if (value !== "custom") {
+      this._emit({ ...this._config, fuel_l_per_100km: undefined, fuel_price: undefined });
+      return;
+    }
+    // Start the override from whatever the integration is using right now.
+    const base = suuntoFuelFigures(this.hass, this._config.device_id);
+    this._emit({
+      ...this._config,
+      fuel_l_per_100km: base?.litres ?? DEFAULT_FUEL_L_PER_100KM,
+      fuel_price: base?.price ?? DEFAULT_FUEL_PRICE,
+    });
+  }
+
+  private _fuelLitresChanged(ev: Event): void {
+    if (!this._config) return;
+    const raw = Number((ev.target as HTMLInputElement).value);
+    if (Number.isFinite(raw) && raw > 0) this._emit({ ...this._config, fuel_l_per_100km: raw });
+  }
+
+  private _fuelPriceChanged(ev: Event): void {
+    if (!this._config) return;
+    const raw = Number((ev.target as HTMLInputElement).value);
+    if (Number.isFinite(raw) && raw >= 0) this._emit({ ...this._config, fuel_price: raw });
   }
 
   private _unitsChanged(ev: Event): void {

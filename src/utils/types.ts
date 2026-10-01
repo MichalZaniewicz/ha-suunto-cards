@@ -27,6 +27,10 @@ export interface SuuntoCardConfig extends LovelaceCardConfig {
   days?: number;
   /** Which window a period-aware card (Commutes) leads with. Default: "year". */
   period?: "year" | "month";
+  /** Commutes: car fuel consumption (l/100 km) overriding the integration's. */
+  fuel_l_per_100km?: number;
+  /** Commutes: fuel price per litre overriding the integration's. */
+  fuel_price?: number;
 }
 
 /** suunto-weekly-goal-card's config: same device selection, plus a user-set target. */

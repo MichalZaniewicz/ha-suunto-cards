@@ -188,6 +188,16 @@ export const en = {
   "editor.period_label": "Headline period",
   "editor.period_year": "This year",
   "editor.period_month": "This month",
+  "editor.goal_source_label": "Step goal from",
+  "editor.source_suunto": "Suunto app ({value})",
+  "editor.source_suunto_default": "Suunto app (no goal set, using {value})",
+  "editor.source_custom": "Custom",
+  "editor.fuel_source_label": "Fuel figures from",
+  "editor.source_integration": "Suunto integration ({litres} l/100 km, {price} per l)",
+  "editor.source_integration_unknown": "Suunto integration",
+  "editor.fuel_consumption_label": "Fuel consumption (l/100 km)",
+  "editor.fuel_price_label": "Fuel price per litre",
+  "editor.fuel_hint": "Change the integration's values under Settings > Devices & services > Suunto > Configure.",
 
   // -- card 8: lifetime totals --
   "card.lifetime.title": "Lifetime Totals",

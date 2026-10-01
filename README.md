@@ -208,6 +208,12 @@ BMR, the Suunto app's "calories"). On older versions these cards simply look as 
 Assistant and the fuel consumption and price set in the integration's Configure menu. Gear lists
 whatever you add under Configure -> Add gear to track, with no card configuration.
 
+**Suunto or your own value.** Step-goal cards (Steps Today, Steps Trend, Weekly Steps Goal, Goals
+Overview) follow the daily step goal set in the Suunto app unless you pick "Custom" in the card
+editor (`goal_steps` in YAML); weekly cards use 7x the daily goal. Commutes uses the integration's
+fuel consumption and price unless you set `fuel_l_per_100km` / `fuel_price` on the card. The Suunto
+goal needs `ha-suunto` **1.0.29b2+**; older versions keep the fixed defaults.
+
 **Sleep Detail**'s "time awake in bed" and "sleep efficiency" aren't sensors `ha-suunto` sends
 directly - they're computed here from `wake_time` minus `sleep_time` against `sleep_duration`. If
 your watch model doesn't report `sleep_time`/`wake_time` for a given night, the card just omits the

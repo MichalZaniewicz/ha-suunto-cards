@@ -6,6 +6,7 @@ import { SuuntoBaseCard } from "./utils/base-card";
 import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
 import { progressRing } from "./utils/render-helpers";
 import { t } from "./utils/localize";
+import { suuntoDailyStepsGoal } from "./utils/suunto-goals";
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
 export const DEFAULT_WEEKLY_STEPS_GOAL = 70000;
@@ -26,7 +27,7 @@ export class SuuntoWeeklyStepsGoalCard extends SuuntoBaseCard {
   }
 
   public static getStubConfig(): SuuntoStepsGoalCardConfig {
-    return { type: "custom:suunto-weekly-steps-goal-card", goal_steps: DEFAULT_WEEKLY_STEPS_GOAL };
+    return { type: "custom:suunto-weekly-steps-goal-card" };
   }
 
   public setConfig(config: SuuntoStepsGoalCardConfig): void {
@@ -53,7 +54,10 @@ export class SuuntoWeeklyStepsGoalCard extends SuuntoBaseCard {
       return this._message("mdi:target", t(hass, "empty.weekly_steps_goal.title"));
     }
 
-    const goal = this._config.goal_steps ?? DEFAULT_WEEKLY_STEPS_GOAL;
+    // Weekly target = the card's own number, else 7x the Suunto app's daily
+    // step goal (ha-suunto 1.0.29+), else the built-in default.
+    const suuntoDaily = suuntoDailyStepsGoal(hass, this._configuredDeviceId);
+    const goal = this._config.goal_steps ?? (suuntoDaily ? suuntoDaily * 7 : undefined) ?? DEFAULT_WEEKLY_STEPS_GOAL;
     const value = Number(stepsEntity.state);
     const pct = goal > 0 ? (value / goal) * 100 : 0;
     const colorVar = pct >= 100 ? "var(--sc-good)" : "var(--sc-amber)";

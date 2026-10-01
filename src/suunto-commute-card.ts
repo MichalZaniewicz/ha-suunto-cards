@@ -6,10 +6,16 @@ import { SuuntoBaseCard } from "./utils/base-card";
 import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
 import { formatDistance } from "./utils/format";
 import { t } from "./utils/localize";
+import { suuntoFuelFigures } from "./utils/suunto-goals";
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
 
 type Period = "year" | "month";
+
+/** Same defaults and CO2 factor as the integration (const.py), for a card-side recompute. */
+export const DEFAULT_FUEL_L_PER_100KM = 7;
+export const DEFAULT_FUEL_PRICE = 6.5;
+const CO2_KG_PER_LITRE = 2.31;
 
 /** Whole-number amount in the currency Home Assistant is set to (falls back to a plain number). */
 function formatMoney(value: number, locale: string | undefined, currency: string | undefined): string {
@@ -77,11 +83,25 @@ export class SuuntoCommuteCard extends SuuntoBaseCard {
       };
     };
 
-    const head = read(main);
+    // Fuel figures typed into the card override the integration's: the
+    // savings are then recomputed here from the commuted distance. With none
+    // set, the sensor's own numbers are shown untouched.
+    const ownLitres = typeof this._config.fuel_l_per_100km === "number" ? this._config.fuel_l_per_100km : undefined;
+    const ownPrice = typeof this._config.fuel_price === "number" ? this._config.fuel_price : undefined;
+    const recompute = <T extends { km: number; fuel: number; money: number; co2: number }>(p: T | undefined) => {
+      if (!p || (ownLitres === undefined && ownPrice === undefined)) return p;
+      const base = suuntoFuelFigures(hass, this._configuredDeviceId);
+      const litres = ownLitres ?? base?.litres ?? DEFAULT_FUEL_L_PER_100KM;
+      const price = ownPrice ?? base?.price ?? DEFAULT_FUEL_PRICE;
+      const fuel = (p.km * litres) / 100;
+      return { ...p, fuel, money: fuel * price, co2: fuel * CO2_KG_PER_LITRE };
+    };
+
+    const head = recompute(read(main));
     if (!head || head.rides === 0) {
       return this._message("mdi:bike-fast", t(hass, "empty.commute.title"), t(hass, "empty.commute.subtitle"));
     }
-    const foot = read(other);
+    const foot = recompute(read(other));
     const currency = (hass.config as { currency?: string } | undefined)?.currency;
     const whole = (km: number) => {
       const d = formatDistance(km, units, 0);

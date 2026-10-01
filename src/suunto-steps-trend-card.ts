@@ -7,6 +7,7 @@ import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
 import { barChart, type Bar, type SparklinePoint } from "./utils/render-helpers";
 import { fetchStatisticsSeries, dailyTotalsFromCumulative } from "./utils/format";
 import { t } from "./utils/localize";
+import { suuntoDailyStepsGoal } from "./utils/suunto-goals";
 import { DEFAULT_STEPS_GOAL } from "./suunto-steps-today-card";
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
@@ -32,7 +33,7 @@ export class SuuntoStepsTrendCard extends SuuntoBaseCard {
   }
 
   public static getStubConfig(): SuuntoStepsGoalCardConfig {
-    return { type: "custom:suunto-steps-trend-card", goal_steps: DEFAULT_STEPS_GOAL };
+    return { type: "custom:suunto-steps-trend-card" };
   }
 
   public setConfig(config: SuuntoStepsGoalCardConfig): void {
@@ -85,7 +86,8 @@ export class SuuntoStepsTrendCard extends SuuntoBaseCard {
       return this._message("mdi:chart-bar", t(hass, "empty.steps_trend.title"));
     }
 
-    const goal = this._config.goal_steps ?? DEFAULT_STEPS_GOAL;
+    const goal =
+      this._config.goal_steps ?? suuntoDailyStepsGoal(hass, this._configuredDeviceId) ?? DEFAULT_STEPS_GOAL;
     const bars: Bar[] = this._history.map((p) => ({
       value: p.v,
       colorVar: p.v >= goal ? "var(--sc-good)" : "var(--sc-amber)",

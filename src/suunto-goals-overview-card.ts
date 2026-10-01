@@ -7,6 +7,7 @@ import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
 import { progressRing } from "./utils/render-helpers";
 import { formatDistance } from "./utils/format";
 import { t } from "./utils/localize";
+import { suuntoDailyStepsGoal } from "./utils/suunto-goals";
 import { DEFAULT_WEEKLY_GOAL_KM } from "./suunto-weekly-goal-card";
 import { DEFAULT_WEEKLY_STEPS_GOAL } from "./suunto-weekly-steps-goal-card";
 
@@ -40,7 +41,6 @@ export class SuuntoGoalsOverviewCard extends SuuntoBaseCard {
     return {
       type: "custom:suunto-goals-overview-card",
       goal_km: DEFAULT_WEEKLY_GOAL_KM,
-      goal_steps: DEFAULT_WEEKLY_STEPS_GOAL,
     };
   }
 
@@ -83,7 +83,9 @@ export class SuuntoGoalsOverviewCard extends SuuntoBaseCard {
       });
     }
     if (weeklySteps && !UNAVAILABLE_STATES.has(weeklySteps.state)) {
-      const goal = this._config.goal_steps ?? DEFAULT_WEEKLY_STEPS_GOAL;
+      const suuntoDaily = suuntoDailyStepsGoal(hass, this._configuredDeviceId);
+      const goal =
+        this._config.goal_steps ?? (suuntoDaily ? suuntoDaily * 7 : undefined) ?? DEFAULT_WEEKLY_STEPS_GOAL;
       const value = Number(weeklySteps.state);
       rings.push({
         key: "steps",

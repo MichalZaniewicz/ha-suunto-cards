@@ -7,6 +7,7 @@ import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
 import { progressRing } from "./utils/render-helpers";
 import { fetchStatisticsSeries, dailyTotalsFromCumulative } from "./utils/format";
 import { t } from "./utils/localize";
+import { suuntoDailyStepsGoal } from "./utils/suunto-goals";
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
 export const DEFAULT_STEPS_GOAL = 10000;
@@ -31,7 +32,7 @@ export class SuuntoStepsTodayCard extends SuuntoBaseCard {
   }
 
   public static getStubConfig(): SuuntoStepsGoalCardConfig {
-    return { type: "custom:suunto-steps-today-card", goal_steps: DEFAULT_STEPS_GOAL };
+    return { type: "custom:suunto-steps-today-card" };
   }
 
   public setConfig(config: SuuntoStepsGoalCardConfig): void {
@@ -88,7 +89,10 @@ export class SuuntoStepsTodayCard extends SuuntoBaseCard {
       return this._message("mdi:shoe-print", t(hass, "empty.steps_today.title"));
     }
 
-    const goal = this._config.goal_steps ?? DEFAULT_STEPS_GOAL;
+    // A goal typed into the card wins; otherwise follow the Suunto app's own
+    // daily step goal (ha-suunto 1.0.29+), then the built-in default.
+    const goal =
+      this._config.goal_steps ?? suuntoDailyStepsGoal(hass, this._configuredDeviceId) ?? DEFAULT_STEPS_GOAL;
     const value = Number(stepsEntity.state);
     const pct = goal > 0 ? (value / goal) * 100 : 0;
     const colorVar = pct >= 100 ? "var(--sc-good)" : "var(--sc-amber)";
