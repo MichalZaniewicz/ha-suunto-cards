@@ -2,7 +2,7 @@
 
 Custom Lovelace cards for [`ha-suunto`](https://github.com/MichalZaniewicz/ha-suunto) (the
 `suunto_app` integration) - a purpose-built widget family instead of wiring generic entity/gauge
-cards to its 96 sensors by hand.
+cards to its 100 sensors by hand.
 
 > [!TIP]
 > ⭐ **Enjoying these cards?** Every star is real motivation to keep building new features :)
@@ -80,6 +80,10 @@ into <ha-alert> and drops every child whose textContent is empty, which silently
 | Week Compare | `custom:suunto-week-compare-card` | This week's distance, time and workouts against last week's, with the delta |
 | Fitness Trend | `custom:suunto-fitness-trend-card` | VO2max and estimated VO2max over a 90-day trend, plus fitness age |
 | Sleep Detail | `custom:suunto-sleep-detail-card` | A single-night deep-dive: time awake in bed, sleep efficiency, and every sleep vital in one card |
+| Commutes | `custom:suunto-commute-card` | Money, fuel and CO2 saved by commuting under your own power, this year and this month |
+| Gear | `custom:suunto-gear-card` | Distance on your chain, tyres or shoes against each one's service interval |
+| Form Forecast | `custom:suunto-form-forecast-card` | Your form over the next four weeks if you rest from today, with the day it would peak |
+| Daily Brief | `custom:suunto-daily-brief-card` | One sentence for today: sleep, HRV, readiness, form and what kind of session fits |
 
 Each card auto-detects your Suunto device - **zero YAML required** for the common case of one
 Suunto account. If you ever have more than one, the card's visual editor shows a device picker.
@@ -196,6 +200,13 @@ until a few readings accumulate.
 (last night never arrived), the Last Workout card marks a workout recorded without heart rate,
 Heart Rate shows when the reading was taken, and Today / Steps Today show total energy (active +
 BMR, the Suunto app's "calories"). On older versions these cards simply look as before.
+
+**Commutes**, **Gear**, **Form Forecast** and **Daily Brief** read sensors new in `ha-suunto`
+**1.0.29** (`commute_year` / `commute_month`, the per-gear distance sensors, `form_forecast`,
+`daily_brief`) and show their empty state on older versions. Commutes takes `period: month` to
+lead with this month instead of this year; its money figure uses the currency set in Home
+Assistant and the fuel consumption and price set in the integration's Configure menu. Gear lists
+whatever you add under Configure -> Add gear to track, with no card configuration.
 
 **Sleep Detail**'s "time awake in bed" and "sleep efficiency" aren't sensors `ha-suunto` sends
 directly - they're computed here from `wake_time` minus `sleep_time` against `sleep_duration`. If
