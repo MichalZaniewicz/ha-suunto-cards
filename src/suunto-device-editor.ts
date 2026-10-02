@@ -4,7 +4,8 @@ import { fireEvent } from "custom-card-helpers";
 import type { SuuntoHass, SuuntoCardConfig } from "./utils/types";
 import { findSuuntoDeviceIds } from "./utils/entities";
 import { t } from "./utils/localize";
-import { suuntoFuelFigures } from "./utils/suunto-goals";
+import { suuntoFuelFigures, type GoalKind } from "./utils/suunto-goals";
+import { goalSourceField } from "./utils/goal-field";
 import { DEFAULT_FUEL_L_PER_100KM, DEFAULT_FUEL_PRICE } from "./suunto-commute-card";
 
 /**
@@ -37,6 +38,20 @@ const DAYS_CARDS: Record<string, number> = {
 const DAYS_OPTIONS = [14, 30, 60, 90];
 
 /**
+ * Cards that show progress toward a goal, and which goals. `fallback`: the
+ * card draws a goal even when the Suunto app has none (so the editor names
+ * the built-in default); `toggle`: the goal is an add-on to a card that
+ * existed without it, so it can be switched off (`show_goals: false`).
+ */
+const GOAL_CARDS: Record<string, { kinds: GoalKind[]; fallback?: boolean; toggle?: boolean }> = {
+  "custom:suunto-daily-goals-card": { kinds: ["steps", "energy", "sleep"], fallback: true },
+  "custom:suunto-today-card": { kinds: ["steps", "energy"], toggle: true },
+  "custom:suunto-sleep-readiness-card": { kinds: ["sleep"], toggle: true },
+  "custom:suunto-sleep-trends-card": { kinds: ["sleep"] },
+  "custom:suunto-week-stats-card": { kinds: ["training"], toggle: true },
+};
+
+/**
  * One generic visual editor shared by every Suunto card. Most cards' config
  * is just an optional `device_id`; a growing minority also opt into
  * `units`/`compact`/`days` (see the capability sets above) - rather than
@@ -67,6 +82,8 @@ export class SuuntoDeviceEditor extends LitElement {
     const fuelBase = showFuel ? suuntoFuelFigures(this.hass, this._config.device_id) : undefined;
     const ownFuel = this._config.fuel_l_per_100km !== undefined || this._config.fuel_price !== undefined;
     const daysDefault = DAYS_CARDS[type];
+    const goals = GOAL_CARDS[type];
+    const config = this._config;
 
     return html`
       ${devices.length > 1
@@ -132,6 +149,23 @@ export class SuuntoDeviceEditor extends LitElement {
                   </label>
                 `
               : html`<div class="hint">${t(this.hass, "editor.fuel_hint")}</div>`}
+          `
+        : nothing}
+      ${goals
+        ? html`
+            ${goals.toggle
+              ? html`
+                  <label class="field checkbox">
+                    <span>${t(this.hass, "editor.show_goals_label")}</span>
+                    <input type="checkbox" .checked=${config.show_goals !== false} @change=${this._showGoalsChanged} />
+                  </label>
+                `
+              : nothing}
+            ${config.show_goals !== false || !goals.toggle
+              ? goals.kinds.map((kind) =>
+                  goalSourceField(this.hass!, config, kind, goals.fallback ?? false, (c) => this._emit(c))
+                )
+              : nothing}
           `
         : nothing}
       ${showUnits
@@ -229,6 +263,13 @@ export class SuuntoDeviceEditor extends LitElement {
     this._emit({ ...this._config, compact: checked || undefined });
   }
 
+  private _showGoalsChanged(ev: Event): void {
+    if (!this._config) return;
+    const checked = (ev.target as HTMLInputElement).checked;
+    // Shown is the default, so it is stored as an absent key.
+    this._emit({ ...this._config, show_goals: checked ? undefined : false });
+  }
+
   private _emit(config: SuuntoCardConfig): void {
     this._config = config;
     fireEvent(this, "config-changed", { config });
@@ -251,13 +292,20 @@ export class SuuntoDeviceEditor extends LitElement {
     .field.checkbox {
       justify-content: flex-start;
     }
-    .field select {
+    .field select,
+    .field input[type="number"] {
       padding: 6px 8px;
       border-radius: 6px;
       border: 1px solid var(--divider-color, #ccc);
       background: var(--card-background-color, #fff);
       color: inherit;
       font: inherit;
+    }
+    .field select {
+      max-width: 60%;
+    }
+    .field input[type="number"] {
+      width: 90px;
     }
     .field.checkbox input {
       order: -1;

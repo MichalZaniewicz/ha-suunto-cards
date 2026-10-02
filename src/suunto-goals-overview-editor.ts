@@ -5,6 +5,7 @@ import type { SuuntoHass, SuuntoGoalsOverviewCardConfig } from "./utils/types";
 import { findSuuntoDeviceIds } from "./utils/entities";
 import { t } from "./utils/localize";
 import { suuntoDailyStepsGoal } from "./utils/suunto-goals";
+import { goalSourceField } from "./utils/goal-field";
 import { DEFAULT_WEEKLY_GOAL_KM } from "./suunto-weekly-goal-card";
 import { DEFAULT_WEEKLY_STEPS_GOAL } from "./suunto-weekly-steps-goal-card";
 
@@ -54,6 +55,7 @@ export class SuuntoGoalsOverviewEditor extends LitElement {
           @change=${this._distanceGoalChanged}
         />
       </label>
+      <div class="hint">${t(this.hass, "editor.distance_goal_hint")}</div>
       <label class="goal-field">
         <span>${t(this.hass, "editor.goal_source_label")}</span>
         <select .value=${custom ? "custom" : "suunto"} @change=${this._sourceChanged}>
@@ -81,6 +83,7 @@ export class SuuntoGoalsOverviewEditor extends LitElement {
             </label>
           `
         : nothing}
+      ${goalSourceField(this.hass, this._config, "training", false, (c) => this._emit(c), "goal-field")}
       <label class="goal-field">
         <span>${t(this.hass, "editor.units_label")}</span>
         <select .value=${this._config.units ?? "metric"} @change=${this._unitsChanged}>

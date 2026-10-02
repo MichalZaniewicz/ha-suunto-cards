@@ -223,6 +223,34 @@ export const suuntoSharedStyles = css`
     color: var(--sc-bad);
   }
 
+  /* Progress toward a goal: a "of 8,000" line and a thin bar under a stat. */
+  .goal-sub {
+    font-size: 0.68rem;
+    color: var(--secondary-text-color);
+    font-variant-numeric: tabular-nums;
+  }
+  .goal-bar {
+    height: 4px;
+    border-radius: 2px;
+    background: var(--divider-color);
+    overflow: hidden;
+    margin-top: 3px;
+  }
+  .goal-bar.thick {
+    height: 8px;
+    border-radius: 4px;
+    margin-top: 0;
+  }
+  .goal-bar span {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--sc-amber);
+  }
+  .goal-bar.done span {
+    background: var(--sc-good);
+  }
+
   .secondary {
     display: flex;
     gap: 18px;

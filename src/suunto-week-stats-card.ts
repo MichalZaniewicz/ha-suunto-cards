@@ -4,7 +4,8 @@ import type { LovelaceCardEditor } from "custom-card-helpers";
 import type { SuuntoCardConfig } from "./utils/types";
 import { SuuntoBaseCard } from "./utils/base-card";
 import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
-import { segmentedBar } from "./utils/render-helpers";
+import { segmentedBar, goalBar } from "./utils/render-helpers";
+import { knownGoal, formatGoal } from "./utils/suunto-goals";
 import { activityIcon } from "./utils/icons";
 import { formatDistance } from "./utils/format";
 import { t, tPlural } from "./utils/localize";
@@ -75,6 +76,12 @@ export class SuuntoWeekStatsCard extends SuuntoBaseCard {
     const top = activities.slice(0, TOP_N);
     const rest = activities.length - top.length;
     const units = this._config.units ?? "metric";
+    // Weekly training-time goal: the card's own value or the Suunto app's
+    // (ha-suunto 1.0.29+); nothing is shown when neither exists.
+    const trainingGoal =
+      this._config.show_goals !== false
+        ? knownGoal(hass, this._config, this._configuredDeviceId, "training")
+        : undefined;
 
     return html`
       <ha-card class="static">
@@ -96,7 +103,20 @@ export class SuuntoWeekStatsCard extends SuuntoBaseCard {
                     })()
                   : nothing}
                 ${weeklyTime && !UNAVAILABLE_STATES.has(weeklyTime.state)
-                  ? this._stat(Number(weeklyTime.state).toFixed(1), "h", t(hass, "stat.time"))
+                  ? html`
+                      <div class="stat">
+                        <div class="stat-value">${Number(weeklyTime.state).toFixed(1)}<span class="unit">h</span></div>
+                        <div class="stat-label">${t(hass, "stat.time")}</div>
+                        ${trainingGoal !== undefined
+                          ? html`
+                              <div class="goal-sub">
+                                ${t(hass, "goal.of", { goal: formatGoal(hass, "training", trainingGoal) })}
+                              </div>
+                              ${goalBar(Number(weeklyTime.state), trainingGoal)}
+                            `
+                          : nothing}
+                      </div>
+                    `
                   : nothing}
                 ${workouts7d && !UNAVAILABLE_STATES.has(workouts7d.state)
                   ? this._stat(workouts7d.state, "", t(hass, "stat.workouts"))

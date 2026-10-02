@@ -4,7 +4,8 @@ import type { LovelaceCardEditor } from "custom-card-helpers";
 import type { SuuntoCardConfig } from "./utils/types";
 import { SuuntoBaseCard } from "./utils/base-card";
 import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
-import { segmentedBar, progressRing } from "./utils/render-helpers";
+import { segmentedBar, progressRing, goalBar } from "./utils/render-helpers";
+import { knownGoal, formatHours } from "./utils/suunto-goals";
 import { formatDuration, formatTime, formatDelta, formatShortDate, isToday } from "./utils/format";
 import { t } from "./utils/localize";
 import type { SuuntoHass } from "./utils/types";
@@ -124,6 +125,13 @@ export class SuuntoSleepReadinessCard extends SuuntoBaseCard {
         ? (duration.attributes.night as string)
         : undefined;
     const readinessBalanceOnly = readiness?.attributes.sleep_stale === true;
+    // Last night against the sleep goal: the card's own value or the Suunto
+    // app's (ha-suunto 1.0.29+). Hidden in compact mode and when no goal exists.
+    const sleepHours = Number(duration.state);
+    const sleepGoal =
+      !compact && this._config.show_goals !== false
+        ? knownGoal(hass, this._config, this._configuredDeviceId, "sleep")
+        : undefined;
 
     return html`
       <ha-card class="static">
@@ -150,6 +158,26 @@ export class SuuntoSleepReadinessCard extends SuuntoBaseCard {
                 })}</span
               >
             </div>`
+          : nothing}
+
+        ${sleepGoal !== undefined
+          ? html`
+              <div class="goal-row ${staleNight ? "stale" : ""}">
+                <div class="goal-top">
+                  <span>${t(hass, "sleep_goal.label")}</span>
+                  <span>
+                    ${sleepHours >= sleepGoal
+                      ? t(hass, "sleep_goal.met", { value: formatHours(sleepHours), goal: formatHours(sleepGoal) })
+                      : t(hass, "sleep_goal.short", {
+                          value: formatHours(sleepHours),
+                          goal: formatHours(sleepGoal),
+                          missing: formatHours(sleepGoal - sleepHours),
+                        })}
+                  </span>
+                </div>
+                ${goalBar(sleepHours, sleepGoal, true)}
+              </div>
+            `
           : nothing}
 
         ${readinessValue !== undefined && band
@@ -311,8 +339,23 @@ export class SuuntoSleepReadinessCard extends SuuntoBaseCard {
       }
       /* Numbers from an out-of-date night: still shown, but not passed off as today's. */
       .stats.stale,
-      .stages.stale {
+      .stages.stale,
+      .goal-row.stale {
         opacity: 0.5;
+      }
+      .goal-row {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .goal-top {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 2px 8px;
+        font-size: 0.78rem;
+        color: var(--secondary-text-color);
+        font-variant-numeric: tabular-nums;
       }
 
       .stages {

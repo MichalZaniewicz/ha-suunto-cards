@@ -31,6 +31,20 @@ export interface SuuntoCardConfig extends LovelaceCardConfig {
   fuel_l_per_100km?: number;
   /** Commutes: fuel price per litre overriding the integration's. */
   fuel_price?: number;
+  /**
+   * The user's own targets. Each one absent = follow the goal set in the
+   * Suunto app (see utils/suunto-goals.ts). `goal_steps` is daily on every
+   * card except the weekly ones, which document their own meaning.
+   */
+  goal_steps?: number;
+  /** Daily ACTIVE calories target (kcal). */
+  goal_energy_kcal?: number;
+  /** Nightly sleep target (hours). */
+  goal_sleep_hours?: number;
+  /** Weekly training time target (hours). */
+  goal_training_hours?: number;
+  /** Cards that gained goal progress later (Today, Sleep & Readiness, Week & Lifetime): false hides it. Default: true. */
+  show_goals?: boolean;
 }
 
 /** suunto-weekly-goal-card's config: same device selection, plus a user-set target. */

@@ -7,10 +7,11 @@ import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
 import { progressRing } from "./utils/render-helpers";
 import { fetchStatisticsSeries, dailyTotalsFromCumulative } from "./utils/format";
 import { t } from "./utils/localize";
-import { suuntoDailyStepsGoal } from "./utils/suunto-goals";
+import { suuntoDailyStepsGoal, DEFAULT_STEPS_GOAL } from "./utils/suunto-goals";
+
+export { DEFAULT_STEPS_GOAL };
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
-export const DEFAULT_STEPS_GOAL = 10000;
 const REFETCH_INTERVAL_MS = 10 * 60 * 1000;
 
 /**

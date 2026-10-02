@@ -4,7 +4,8 @@ import type { LovelaceCardEditor } from "custom-card-helpers";
 import type { SuuntoCardConfig } from "./utils/types";
 import { SuuntoBaseCard } from "./utils/base-card";
 import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
-import { multiLineChart, type ChartSeries, type SparklinePoint } from "./utils/render-helpers";
+import { multiLineChart, barChart, type ChartSeries, type SparklinePoint } from "./utils/render-helpers";
+import { knownGoal, formatHours } from "./utils/suunto-goals";
 import { fetchStatisticsSeries, formatDuration } from "./utils/format";
 import { t } from "./utils/localize";
 
@@ -99,6 +100,17 @@ export class SuuntoSleepTrendsCard extends SuuntoBaseCard {
 
     const durationParts = formatDuration(Number(duration.state) * 60);
 
+    // With a sleep goal (the card's own or the Suunto app's, ha-suunto 1.0.29+)
+    // the chart becomes one bar per night against that goal; without one it
+    // stays the plain duration/quality trend.
+    const goal = knownGoal(hass, this._config, this._configuredDeviceId, "sleep");
+    const nights = this._durationHistory;
+    const nightsAtGoal = goal !== undefined ? nights.filter((p) => p.v >= goal).length : 0;
+    const avgDeltaMin =
+      goal !== undefined && nights.length
+        ? Math.round((nights.reduce((sum, p) => sum + p.v, 0) / nights.length - goal) * 60)
+        : 0;
+
     return html`
       <ha-card class="static">
         <div class="header">
@@ -109,17 +121,43 @@ export class SuuntoSleepTrendsCard extends SuuntoBaseCard {
           </div>
         </div>
 
-        ${multiLineChart(series, 300, 80, false)}
-
-        <div class="chart-legend">
-          <span class="legend-item"><i class="dot" style="background:var(--sc-pulse)"></i>${t(hass, "stat.duration")}</span>
-          <span class="legend-item"><i class="dot" style="background:var(--sc-amber)"></i>${t(hass, "stat.quality")}</span>
-        </div>
+        ${goal !== undefined && nights.length
+          ? html`
+              ${barChart(
+                nights.map((p) => ({
+                  value: p.v,
+                  colorVar: p.v >= goal ? "var(--sc-good)" : "var(--sc-amber)",
+                  label: `${new Date(p.t).toLocaleDateString(hass.language, { month: "short", day: "numeric" })} · ${formatHours(p.v)}`,
+                })),
+                "var(--sc-amber)",
+                300,
+                80,
+                goal
+              )}
+              <div class="chart-legend">
+                <span class="legend-item"><i class="dot" style="background:var(--sc-good)"></i>${t(hass, "steps_trend.legend_met")}</span>
+                <span class="legend-item"><i class="dot" style="background:var(--sc-amber)"></i>${t(hass, "steps_trend.legend_below")}</span>
+                <span class="legend-item"><i class="dash"></i>${t(hass, "sleep_trends.legend_goal", { goal: formatHours(goal) })}</span>
+              </div>
+            `
+          : html`
+              ${multiLineChart(series, 300, 80, false)}
+              <div class="chart-legend">
+                <span class="legend-item"><i class="dot" style="background:var(--sc-pulse)"></i>${t(hass, "stat.duration")}</span>
+                <span class="legend-item"><i class="dot" style="background:var(--sc-amber)"></i>${t(hass, "stat.quality")}</span>
+              </div>
+            `}
 
         <div class="stats">
           ${this._stat(`${durationParts.value} ${durationParts.unit}`, t(hass, "stat.duration"))}
           ${quality && !UNAVAILABLE_STATES.has(quality.state)
             ? this._stat(`${Math.round(Number(quality.state))}%`, t(hass, "stat.quality"))
+            : nothing}
+          ${goal !== undefined && nights.length
+            ? html`
+                ${this._stat(`${nightsAtGoal} / ${nights.length}`, t(hass, "sleep_trends.nights_at_goal"))}
+                ${this._stat(`${avgDeltaMin > 0 ? "+" : ""}${avgDeltaMin} min`, t(hass, "sleep_trends.avg_vs_goal"))}
+              `
             : nothing}
         </div>
       </ha-card>
@@ -150,6 +188,12 @@ export class SuuntoSleepTrendsCard extends SuuntoBaseCard {
         gap: 6px;
         font-size: 0.76rem;
         color: var(--secondary-text-color);
+      }
+      .dash {
+        width: 12px;
+        border-top: 1px dashed var(--secondary-text-color);
+        display: block;
+        flex: none;
       }
     `,
   ];

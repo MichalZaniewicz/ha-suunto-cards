@@ -6,6 +6,8 @@ import { SuuntoBaseCard } from "./utils/base-card";
 import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
 import { t, tPlural } from "./utils/localize";
 import type { SuuntoHass } from "./utils/types";
+import { goalBar } from "./utils/render-helpers";
+import { knownGoal, formatGoal } from "./utils/suunto-goals";
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
 
@@ -70,6 +72,14 @@ export class SuuntoTodayCard extends SuuntoBaseCard {
       return this._message("mdi:pulse", t(hass, "empty.today.title"));
     }
 
+    const stepsValue = steps && !UNAVAILABLE_STATES.has(steps.state) ? Number(steps.state) : undefined;
+    const activeValue = energy && !UNAVAILABLE_STATES.has(energy.state) ? Number(energy.state) : undefined;
+    // Goals appear only when one is actually known (typed into the card or set
+    // in the Suunto app, ha-suunto 1.0.29+) - no invented default on this card.
+    const showGoals = this._config.show_goals !== false;
+    const stepsGoal = showGoals ? knownGoal(hass, this._config, this._configuredDeviceId, "steps") : undefined;
+    const energyGoal = showGoals ? knownGoal(hass, this._config, this._configuredDeviceId, "energy") : undefined;
+
     const hrValue =
       currentHr && !UNAVAILABLE_STATES.has(currentHr.state) ? Math.round(Number(currentHr.state)) : undefined;
 
@@ -90,8 +100,19 @@ export class SuuntoTodayCard extends SuuntoBaseCard {
         </div>
 
         <div class="stats">
-          ${steps && !UNAVAILABLE_STATES.has(steps.state)
-            ? this._stat(Number(steps.state).toLocaleString(hass.language), "", t(hass, "stat.steps"))
+          ${stepsValue !== undefined
+            ? html`
+                <div class="stat">
+                  <div class="stat-value">${stepsValue.toLocaleString(hass.language)}</div>
+                  <div class="stat-label">${t(hass, "stat.steps")}</div>
+                  ${stepsGoal !== undefined
+                    ? html`
+                        <div class="goal-sub">${t(hass, "goal.of", { goal: formatGoal(hass, "steps", stepsGoal) })}</div>
+                        ${goalBar(stepsValue, stepsGoal)}
+                      `
+                    : nothing}
+                </div>
+              `
             : nothing}
           ${totalEnergyValue !== undefined
             ? html`
@@ -100,21 +121,36 @@ export class SuuntoTodayCard extends SuuntoBaseCard {
                     ${Math.round(totalEnergyValue).toLocaleString(hass.language)}<span class="unit">kcal</span>
                   </div>
                   <div class="stat-label">${t(hass, "stat.energy")}</div>
-                  ${energy && !UNAVAILABLE_STATES.has(energy.state)
+                  ${activeValue !== undefined
                     ? html`<div class="stat-sub">
-                        ${t(hass, "stat.energy_active_sub", {
-                          kcal: Math.round(Number(energy.state)).toLocaleString(hass.language),
-                        })}
+                        ${energyGoal !== undefined
+                          ? t(hass, "goal.energy_active_of", {
+                              kcal: Math.round(activeValue).toLocaleString(hass.language),
+                              goal: energyGoal.toLocaleString(hass.language),
+                            })
+                          : t(hass, "stat.energy_active_sub", {
+                              kcal: Math.round(activeValue).toLocaleString(hass.language),
+                            })}
                       </div>`
+                    : nothing}
+                  ${activeValue !== undefined && energyGoal !== undefined ? goalBar(activeValue, energyGoal) : nothing}
+                </div>
+              `
+            : activeValue !== undefined
+            ? html`
+                <div class="stat">
+                  <div class="stat-value">
+                    ${Math.round(activeValue).toLocaleString(hass.language)}<span class="unit">kcal</span>
+                  </div>
+                  <div class="stat-label">${t(hass, "stat.energy")}</div>
+                  ${energyGoal !== undefined
+                    ? html`
+                        <div class="goal-sub">${t(hass, "goal.of", { goal: formatGoal(hass, "energy", energyGoal) })}</div>
+                        ${goalBar(activeValue, energyGoal)}
+                      `
                     : nothing}
                 </div>
               `
-            : energy && !UNAVAILABLE_STATES.has(energy.state)
-            ? this._stat(
-                Math.round(Number(energy.state)).toLocaleString(hass.language),
-                "kcal",
-                t(hass, "stat.energy")
-              )
             : nothing}
           ${hrValue !== undefined
             ? html`
@@ -159,15 +195,6 @@ export class SuuntoTodayCard extends SuuntoBaseCard {
             `
           : nothing}
       </ha-card>
-    `;
-  }
-
-  private _stat(value: string, unit: string, label: string) {
-    return html`
-      <div class="stat">
-        <div class="stat-value">${value}${unit ? html`<span class="unit">${unit}</span>` : nothing}</div>
-        <div class="stat-label">${label}</div>
-      </div>
     `;
   }
 

@@ -59,6 +59,16 @@ export function progressRing(pct: number, colorVar: string, size = 64, stroke = 
   `;
 }
 
+/** A thin value-vs-goal bar (styles in suuntoSharedStyles): amber below the goal, green once met. */
+export function goalBar(value: number, goal: number, thick = false): TemplateResult {
+  const pct = goal > 0 ? Math.max(0, Math.min(100, (value / goal) * 100)) : 0;
+  return html`
+    <div class="goal-bar ${thick ? "thick" : ""} ${value >= goal ? "done" : ""}">
+      <span style="width:${pct}%"></span>
+    </div>
+  `;
+}
+
 export interface SparklinePoint {
   t: number;
   v: number;
@@ -256,10 +266,21 @@ export interface Bar {
   colorVar?: string;
 }
 
-/** A simple vertical bar chart (e.g. weekly volume) - bars share one linear scale. */
-export function barChart(bars: Bar[], colorVar: string, width = 300, height = 70): TemplateResult | typeof nothing {
+/**
+ * A simple vertical bar chart (e.g. weekly volume) - bars share one linear
+ * scale. `goal` draws a dashed reference line at that value and keeps it
+ * inside the scale even when every bar is below it.
+ */
+export function barChart(
+  bars: Bar[],
+  colorVar: string,
+  width = 300,
+  height = 70,
+  goal?: number
+): TemplateResult | typeof nothing {
   if (bars.length === 0) return nothing;
-  const max = Math.max(...bars.map((b) => b.value), 0.0001);
+  const max = Math.max(...bars.map((b) => b.value), goal ?? 0, 0.0001);
+  const goalY = goal !== undefined ? height - (goal / max) * height + 0.5 : undefined;
   const gap = 4;
   const barWidth = (width - gap * (bars.length - 1)) / bars.length;
 
@@ -277,6 +298,9 @@ export function barChart(bars: Bar[], colorVar: string, width = 300, height = 70
   return html`
     <svg viewBox="0 0 ${width} ${height}" preserveAspectRatio="none" class="sparkline">
       ${rects}
+      ${goalY !== undefined
+        ? svg`<line x1="0" x2=${width} y1=${goalY} y2=${goalY} stroke="var(--secondary-text-color)" stroke-width="1" stroke-dasharray="4 3" vector-effect="non-scaling-stroke"></line>`
+        : nothing}
     </svg>
   `;
 }

@@ -7,7 +7,7 @@ import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
 import { progressRing } from "./utils/render-helpers";
 import { formatDistance } from "./utils/format";
 import { t } from "./utils/localize";
-import { suuntoDailyStepsGoal } from "./utils/suunto-goals";
+import { suuntoDailyStepsGoal, knownGoal, formatGoal } from "./utils/suunto-goals";
 import { DEFAULT_WEEKLY_GOAL_KM } from "./suunto-weekly-goal-card";
 import { DEFAULT_WEEKLY_STEPS_GOAL } from "./suunto-weekly-steps-goal-card";
 
@@ -23,11 +23,11 @@ interface Ring {
 }
 
 /**
- * Both weekly goal rings (distance + steps) in one card, instead of two
- * separate suunto-weekly-goal-card / suunto-weekly-steps-goal-card
+ * The weekly goal rings (distance, steps, training time) in one card, instead
+ * of separate suunto-weekly-goal-card / suunto-weekly-steps-goal-card
  * instances - reads the same `weekly_distance` / `weekly_steps` sensors
- * those cards use directly. Shows whichever goal(s) have live data - one
- * ring full width if only one does, both side by side otherwise.
+ * those cards use directly, plus `weekly_time`. Shows whichever goal(s) have
+ * live data, sharing the card's width between them.
  */
 @customElement("suunto-goals-overview-card")
 export class SuuntoGoalsOverviewCard extends SuuntoBaseCard {
@@ -97,6 +97,22 @@ export class SuuntoGoalsOverviewCard extends SuuntoBaseCard {
       });
     }
 
+    // Weekly training time: only when a goal is actually known (typed into the
+    // card or set in the Suunto app, ha-suunto 1.0.29+) - a ring needs a target.
+    const weeklyTime = get("weekly_time");
+    const trainingGoal = knownGoal(hass, this._config, this._configuredDeviceId, "training");
+    if (trainingGoal !== undefined && weeklyTime && !UNAVAILABLE_STATES.has(weeklyTime.state)) {
+      const value = Number(weeklyTime.state);
+      rings.push({
+        key: "training",
+        icon: "mdi:timer-outline",
+        label: t(hass, "stat.training_time"),
+        value,
+        goal: trainingGoal,
+        valueLabel: `${value.toLocaleString(hass.language, { maximumFractionDigits: 1 })} / ${formatGoal(hass, "training", trainingGoal)}`,
+      });
+    }
+
     if (!rings.length) {
       return this._message("mdi:target", t(hass, "empty.goals_overview.title"));
     }
@@ -137,10 +153,12 @@ export class SuuntoGoalsOverviewCard extends SuuntoBaseCard {
     css`
       .goals-row {
         display: flex;
-        gap: 20px;
+        gap: 12px;
       }
       .goal {
         flex: 1;
+        min-width: 0;
+        text-align: center;
         display: flex;
         flex-direction: column;
         align-items: center;

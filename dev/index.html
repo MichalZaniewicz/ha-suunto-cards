@@ -628,7 +628,7 @@
             attributes: { peak_tsb: 33.2, peak_date: nowIso(15 * 86400000).slice(0, 10), days_to_peak: 15, maintenance_tss_week: 336, series: Array.from({ length: 28 }, (_, i) => { const d = i + 1; const tsb = d <= 15 ? 3.2 + 30 * (1 - ((d - 15) / 14) ** 2) : 33.2 - 6 * ((d - 15) / 13) ** 1.4; return { date: new Date(Date.now() + d * 86400000).toISOString().slice(0, 10), ctl: 48 - d, atl: 41 - d, tsb: Math.round(tsb * 10) / 10 }; }) },
           },
           daily_brief: { state: "Slept 7.5 h, HRV above your norm, readiness 78, form +3: a good day for a hard session." },
-          bmr: { state: 1732 },
+          bmr: { state: 1732, attributes: { goal_weekly_training_hours: 5, goal_sleep_hours: 8 } },
           current_hr: { state: 78, attributes: { measured_at: nowIso(-6 * 60 * 1000) } },
           lifetime_distance: { state: 6801 },
           lifetime_time: { state: 623 },
@@ -809,6 +809,7 @@
       "suunto-gear-card",
       "suunto-form-forecast-card",
       "suunto-daily-brief-card",
+      "suunto-daily-goals-card",
     ];
 
     function setup() {

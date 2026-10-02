@@ -76,7 +76,7 @@ into <ha-alert> and drops every child whose textContent is empty, which silently
 | Year Records | `custom:suunto-year-records-card` | This year's personal bests - the same records as Month Records, scoped to the calendar year |
 | Running Dynamics | `custom:suunto-running-dynamics-card` | Cadence and stride length across your recent same-activity workouts |
 | Weekly Steps Goal | `custom:suunto-weekly-steps-goal-card` | Your rolling 7-day step total against a weekly target you set |
-| Goals Overview | `custom:suunto-goals-overview-card` | Your weekly distance and step goals as two rings in one card |
+| Goals Overview | `custom:suunto-goals-overview-card` | Your weekly distance, step and training-time goals as rings in one card |
 | Week Compare | `custom:suunto-week-compare-card` | This week's distance, time and workouts against last week's, with the delta |
 | Fitness Trend | `custom:suunto-fitness-trend-card` | VO2max and estimated VO2max over a 90-day trend, plus fitness age |
 | Sleep Detail | `custom:suunto-sleep-detail-card` | A single-night deep-dive: time awake in bed, sleep efficiency, and every sleep vital in one card |
@@ -84,6 +84,7 @@ into <ha-alert> and drops every child whose textContent is empty, which silently
 | Gear | `custom:suunto-gear-card` | Distance on your chain, tyres or shoes against each one's service interval |
 | Form Forecast | `custom:suunto-form-forecast-card` | Your form over the next four weeks if you rest from today, with the day it would peak |
 | Daily Brief | `custom:suunto-daily-brief-card` | One sentence for today: sleep, HRV, readiness, form and what kind of session fits |
+| Daily Goals | `custom:suunto-daily-goals-card` | Today's steps, active calories and last night's sleep as three rings against your goals |
 
 Each card auto-detects your Suunto device - **zero YAML required** for the common case of one
 Suunto account. If you ever have more than one, the card's visual editor shows a device picker.
@@ -213,6 +214,17 @@ Overview) follow the daily step goal set in the Suunto app unless you pick "Cust
 editor (`goal_steps` in YAML); weekly cards use 7x the daily goal. Commutes uses the integration's
 fuel consumption and price unless you set `fuel_l_per_100km` / `fuel_price` on the card. The Suunto
 goal needs `ha-suunto` **1.0.29b2+**; older versions keep the fixed defaults.
+
+**Goals from the Suunto app.** The app's four goals (daily steps, daily active calories, sleep,
+weekly training time) show up as progress wherever they fit: Daily Goals (three rings), Today (a
+thin bar under steps and energy), Sleep & Readiness (last night against the sleep goal), Sleep
+Trends (one bar per night with a goal line), Goals Overview (a third ring for training time) and
+Week & Lifetime (the time stat). Every one of them has the same editor choice: follow the Suunto
+app, or "Custom" with your own number (`goal_steps`, `goal_energy_kcal`, `goal_sleep_hours`,
+`goal_training_hours` in YAML). The calorie goal is active calories, so it is compared with
+`daily_energy`, not the day's total. Today, Sleep & Readiness and Week & Lifetime can hide their
+goal line with `show_goals: false`, and show none when there is neither a Suunto goal nor a custom
+one. Weekly distance has no Suunto goal, so `goal_km` is always your own.
 
 **Sleep Detail**'s "time awake in bed" and "sleep efficiency" aren't sensors `ha-suunto` sends
 directly - they're computed here from `wake_time` minus `sleep_time` against `sleep_duration`. If

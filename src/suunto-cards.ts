@@ -64,6 +64,7 @@ import "./suunto-commute-card";
 import "./suunto-gear-card";
 import "./suunto-form-forecast-card";
 import "./suunto-daily-brief-card";
+import "./suunto-daily-goals-card";
 
 interface CustomCardEntry {
   type: string;
@@ -402,7 +403,7 @@ window.customCards.push(
   {
     type: "suunto-goals-overview-card",
     name: "Suunto - Goals Overview",
-    description: "Your weekly distance and step goals as two rings in one card.",
+    description: "Your weekly distance, step and training-time goals as rings in one card.",
     preview: true,
   },
   {
@@ -447,12 +448,18 @@ window.customCards.push(
     name: "Suunto - Daily Brief",
     description: "One sentence for today: sleep, HRV, readiness, form and what kind of session fits.",
     preview: true,
+  },
+  {
+    type: "suunto-daily-goals-card",
+    name: "Suunto - Daily Goals",
+    description: "Today's steps, active calories and last night's sleep as three rings against your goals.",
+    preview: true,
   }
 );
 
 // eslint-disable-next-line no-console
 console.info(
-  "%c SUUNTO-CARDS %c 61 cards loaded ",
+  "%c SUUNTO-CARDS %c 62 cards loaded",
   "color: #fff; background: #d98a1d; font-weight: 700; border-radius: 3px 0 0 3px; padding: 2px 6px;",
   "color: #d98a1d; background: transparent; font-weight: 500;"
 );
