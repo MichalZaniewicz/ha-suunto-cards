@@ -632,27 +632,40 @@
           },
           daily_brief: { state: "Slept 7.5 h, HRV above your norm, readiness 78, form +3: a good day for a hard session." },
           ai_insight: {
-            state: "Last night brought recovery, but the accumulated training load needs attention right away.",
+            state: "Your recent hard training now calls for putting recovery and rest first.",
             attributes: {
-              status: "caution",
-              warning: "ACWR at 1.58 signals a risky rate of load increase; rest is recommended.",
-              advice: [
-                "Take a full rest day or very light movement tomorrow to bring ACWR down.",
-                "Aim for at least 8 hours of sleep for the next three nights.",
-                "Keep the next two sessions easy so fatigue (ATL) can drop.",
+              "status": "caution",
+              "warning": "ACWR at 1.58 shows training volume rising too fast, which puts you at risk of injury.",
+              "advice": [
+                "As the system suggests, keep today's and tomorrow's training very easy, or rest completely.",
+                "Aim for a full 8 hours of sleep over the next nights to keep HRV stable.",
+                "Bring ACWR down by cutting the number of sessions over the next 7 days.",
+                "Check your resting heart rate every morning; a rise above 50 bpm means you need an extra day off."
               ],
-              sections: {
-                sleep: { status: "good", text: "Last night, 3 October, you slept 8.3 hours at a high 89.1% quality, with 97 minutes of deep sleep. Together with HRV at 58.8 ms and a resting heart rate of 45 bpm this points to good overnight recovery. The history is uneven, with very short nights at the end of September such as 3.4 hours on 28 September, well below your 8-hour goal.\n\nThe return to more than 8 hours over the last few nights matters for a body that has just come through a recovery deficit. Sleep quality feeds straight into how well you absorb the high training load you are carrying. Keeping this rhythm is what stops the fatigue that showed up as the sharp HRV drop in late September from coming back." },
-                recovery: { status: "good", text: "Recovery is balanced right now. HRV is 58.8 ms, above your 53.7 ms baseline, and a resting heart rate of 45 bpm beats your 47.6 bpm baseline. Readiness is 69, recovery balance 59% and the stress level 3.\n\nThe numbers look steady, but they move quickly: resting HR and HRV wobble as soon as sleep drops under 6 hours. Watch them after very long sessions like yesterday's ride to make sure you are not sliding into chronic overload." },
-                training: { status: "caution", text: "Training load is very high. CTL is 75.8 and ATL 93.4, and with ACWR at 1.58 the volume is rising at a risky rate. TSB of -3.5 means only mild fatigue, but the load ratio calls for restraint. You did 13 sessions in the last 14 days, 16.3 hours in total.\n\nRamping up this fast can backfire: an ACWR above 1.5 means the work is growing faster than your body adapts. Full rest would lift your form to 43.6, while the current plan risks overtraining unless intensity comes down over the next days." },
-                activity: { status: "ok", text: "Yesterday you logged 6,150 steps and 2,140 active calories, most of them from the long ride, well past your 1,000 kcal goal. Today, by 18:34, you are at 3,274 steps and 1,337 active calories. You have not had a day without a workout since the long trek on 20 September.\n\nOn top of the training itself, every day has been an active one, so the body never gets a truly quiet day. A deliberately low-key day would give muscles and the nervous system a full break and help bring ACWR back into the safe zone." },
+              "sections": {
+                "sleep": {
+                  "status": "good",
+                  "text": "Last night you slept 8.3 hours, in line with your 8-hour goal. Sleep quality was 89.1 percent, with 97 minutes of deep sleep. Compared with recent nights, after the big swings between 24 and 28 September, when sleep dropped to as little as 3.4 hours, the last few nights show a clear improvement in stability and a return to regular, longer rest.\n\nThis stability matters, because after the sleep-deficit stretch in which HRV fell sharply to 22.5 ms, your body needs exactly this kind of repetition to rebuild fully. Sleep quality close to 90 percent points to comfortable nights, which directly supports your recovery after demanding sessions. Keeping this consistency is now the single most important factor for your condition."
+                },
+                "recovery": {
+                  "status": "good",
+                  "text": "Your HRV is currently 58.8 ms, staying above your 53.7 ms baseline, with a resting heart rate of 45 bpm, also better than your 47.6 bpm baseline. Recovery balance is 54 percent and the stress level is 3. After the critical period at the end of September, when your resting heart rate reached 67 bpm, these values have clearly settled.\n\nThese results show that despite the high training volume, your autonomic nervous system is coping well with the current load. The absence of unusual recovery swings suggests the current training pace is not yet causing chronic overtraining, but keep a close eye on your resting heart rate; if it starts rising again while the load stays high, that is a clear signal to add an extra full rest day."
+                },
+                "training": {
+                  "status": "caution",
+                  "text": "Over the last 14 days you put in a very high training volume, 259.7 km in 16.3 hours of activity, including 13 sessions in the last week. Your CTL is 75.8, with ATL at 93.4 and TSB at -3.5, which points to mild fatigue. ACWR has reached 1.58, above the safe zone, which suggests cutting back the intensity soon.\n\nAn ACWR above 1.5 is a warning sign that the load is growing faster than your ability to adapt. Your form may head toward a peak over time, but the current negative TSB combined with such a high load ratio means you risk injury unless you follow the suggestion to rest. The coming days should focus on recovery, not on building more volume."
+                },
+                "activity": {
+                  "status": "ok",
+                  "text": "Yesterday you logged 6,150 steps and 2,140 active calories, 2,139 kcal of which came from your bike ride. Today, by 19:16, you have 3,475 steps and 1,345 active calories, most of it from cycling and strength training. You are on a 3-day activity streak, with no day off since your last workout, which shows how consistent you have been.\n\nActivity outside training stays low, which is understandable given how demanding your sessions are. Focusing only on training lets you hit your energy goals, but remember that having no days off lately limits full muscle recovery. The next days should include easy walks to raise your overall step count without adding training load, which will help clear the by-products of long rides."
+                }
               },
-              for_date: new Date().toISOString().slice(0, 10),
-              generated_at: nowIso(-25 * 60 * 1000),
-              sleep_night: new Date(Date.now() - 36 * 3600 * 1000).toISOString().slice(0, 10),
-              sleep_stale: false,
-              generating: false,
-              error: null,
+              "for_date": "2026-10-04",
+              "generated_at": "2026-10-04T17:16:43Z",
+              "sleep_night": "2026-10-03",
+              "sleep_stale": false,
+              "generating": false,
+              "error": null
             },
           },
           bmr: { state: 1732, attributes: { goal_weekly_training_hours: 5, goal_sleep_hours: 7.5 } },
