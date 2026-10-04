@@ -64,6 +64,7 @@ import "./suunto-commute-card";
 import "./suunto-gear-card";
 import "./suunto-form-forecast-card";
 import "./suunto-daily-brief-card";
+import "./suunto-ai-insight-card";
 import "./suunto-daily-goals-card";
 
 interface CustomCardEntry {
@@ -447,6 +448,12 @@ window.customCards.push(
     type: "suunto-daily-brief-card",
     name: "Suunto - Daily Brief",
     description: "One sentence for today: sleep, HRV, readiness, form and what kind of session fits.",
+    preview: true,
+  },
+  {
+    type: "suunto-ai-insight-card",
+    name: "Suunto - AI Insight",
+    description: "The daily AI review of your sleep, recovery, training and activity, one tab per section with its own status.",
     preview: true,
   },
   {

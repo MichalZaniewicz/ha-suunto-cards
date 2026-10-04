@@ -85,6 +85,7 @@ into <ha-alert> and drops every child whose textContent is empty, which silently
 | Form Forecast | `custom:suunto-form-forecast-card` | Your form over the next four weeks if you rest from today, with the day it would peak |
 | Daily Brief | `custom:suunto-daily-brief-card` | One sentence for today: sleep, HRV, readiness, form and what kind of session fits |
 | Daily Goals | `custom:suunto-daily-goals-card` | Today's steps, active calories and last night's sleep as three rings against your goals |
+| AI Insight | `custom:suunto-ai-insight-card` | The daily AI review (ha-suunto 1.0.30+, AI insight turned on): headline, overall status, warning, one tab per section (sleep, recovery, training, activity) with its own status, and the advice. Options: `section` (first tab) and `single_section: true` (just that section, no tabs) |
 
 Each card auto-detects your Suunto device - **zero YAML required** for the common case of one
 Suunto account. If you ever have more than one, the card's visual editor shows a device picker.

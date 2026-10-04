@@ -7,6 +7,7 @@ import { t } from "./utils/localize";
 import { suuntoFuelFigures, type GoalKind } from "./utils/suunto-goals";
 import { goalSourceField } from "./utils/goal-field";
 import { DEFAULT_FUEL_L_PER_100KM, DEFAULT_FUEL_PRICE } from "./suunto-commute-card";
+import { AI_SECTIONS } from "./suunto-ai-insight-card";
 
 /**
  * Cards whose stats include distance/pace/speed and so support `units:
@@ -84,6 +85,7 @@ export class SuuntoDeviceEditor extends LitElement {
     const daysDefault = DAYS_CARDS[type];
     const goals = GOAL_CARDS[type];
     const config = this._config;
+    const showAi = type === "custom:suunto-ai-insight-card";
 
     return html`
       ${devices.length > 1
@@ -189,6 +191,22 @@ export class SuuntoDeviceEditor extends LitElement {
             </label>
           `
         : nothing}
+      ${showAi
+        ? html`
+            <label class="field">
+              <span>${t(this.hass, "editor.ai_section_label")}</span>
+              <select .value=${String(config.section ?? "sleep")} @change=${this._aiSectionChanged}>
+                ${AI_SECTIONS.map(
+                  (key) => html`<option value=${key}>${t(this.hass, `ai_insight.section_full.${key}`)}</option>`
+                )}
+              </select>
+            </label>
+            <label class="field checkbox">
+              <span>${t(this.hass, "editor.ai_single_label")}</span>
+              <input type="checkbox" .checked=${config.single_section === true} @change=${this._aiSingleChanged} />
+            </label>
+          `
+        : nothing}
       ${showCompact
         ? html`
             <label class="field checkbox">
@@ -261,6 +279,19 @@ export class SuuntoDeviceEditor extends LitElement {
     if (!this._config) return;
     const checked = (ev.target as HTMLInputElement).checked;
     this._emit({ ...this._config, compact: checked || undefined });
+  }
+
+  private _aiSectionChanged(ev: Event): void {
+    if (!this._config) return;
+    const value = (ev.target as HTMLSelectElement).value;
+    // "sleep" is the default, so it is stored as an absent key.
+    this._emit({ ...this._config, section: value === "sleep" ? undefined : value });
+  }
+
+  private _aiSingleChanged(ev: Event): void {
+    if (!this._config) return;
+    const checked = (ev.target as HTMLInputElement).checked;
+    this._emit({ ...this._config, single_section: checked || undefined });
   }
 
   private _showGoalsChanged(ev: Event): void {
