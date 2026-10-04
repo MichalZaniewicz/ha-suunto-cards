@@ -210,6 +210,12 @@ BMR, the Suunto app's "calories"). On older versions these cards simply look as 
 Assistant and the fuel consumption and price set in the integration's Configure menu. Gear lists
 whatever you add under Configure -> Add gear to track, with no card configuration.
 
+**AI Insight.** Shows the daily AI review from `ha-suunto` **1.0.30+**. Turn the review on in the
+integration first: add an AI provider (Gemini, OpenAI, Anthropic, Ollama...) in Home Assistant, then
+pick it under the Suunto integration's Configure -> AI daily insight ([how it works](https://github.com/MichalZaniewicz/ha-suunto/wiki/AI-Insight)).
+Until then the card says how to turn it on. In the editor, choose the tab it opens on, or
+"Show only this section" for a small card with a single section.
+
 **Suunto or your own value.** Step-goal cards (Steps Today, Steps Trend, Weekly Steps Goal, Goals
 Overview) follow the daily step goal set in the Suunto app unless you pick "Custom" in the card
 editor (`goal_steps` in YAML); weekly cards use 7x the daily goal. Commutes uses the integration's
