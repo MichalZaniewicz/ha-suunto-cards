@@ -1,5 +1,7 @@
 # Suunto Cards
 
+![Suunto Cards](https://raw.githubusercontent.com/MichalZaniewicz/ha-suunto-cards/master/docs/hero-banner.svg)
+
 Custom Lovelace cards for [`ha-suunto`](https://github.com/MichalZaniewicz/ha-suunto) (the
 `suunto_app` integration) - a purpose-built widget family instead of wiring generic entity/gauge
 cards to its 100 sensors by hand.
