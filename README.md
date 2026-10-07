@@ -239,7 +239,7 @@ goal line with `show_goals: false`, and show none when there is neither a Suunto
 one. Weekly distance has no Suunto goal, so `goal_km` is always your own.
 
 **Sleep Regularity**, **Aerobic Decoupling** and **What Works For You** read sensors new in
-`ha-suunto` **1.0.32b2** (`sleep_regularity`, `social_jetlag`, `aerobic_decoupling`,
+`ha-suunto` **1.0.32** (`sleep_regularity`, `social_jetlag`, `aerobic_decoupling`,
 `personal_insights`) and show their empty state on older versions. The same release adds a
 regularity and a social-jetlag chip to Sleep Rhythm and an "HR drift" stat to Last Workout (only
 when the decoupling value belongs to that same workout). Daily Brief can show your strongest
