@@ -66,6 +66,9 @@ import "./suunto-form-forecast-card";
 import "./suunto-daily-brief-card";
 import "./suunto-ai-insight-card";
 import "./suunto-daily-goals-card";
+import "./suunto-sleep-regularity-card";
+import "./suunto-aerobic-decoupling-card";
+import "./suunto-personal-insights-card";
 
 interface CustomCardEntry {
   type: string;
@@ -461,12 +464,30 @@ window.customCards.push(
     name: "Suunto - Daily Goals",
     description: "Today's steps, active calories and last night's sleep as three rings against your goals.",
     preview: true,
+  },
+  {
+    type: "suunto-sleep-regularity-card",
+    name: "Suunto - Sleep Regularity",
+    description: "How steady your sleep schedule is: Sleep Regularity Index, average bed and wake times, and social jetlag.",
+    preview: true,
+  },
+  {
+    type: "suunto-aerobic-decoupling-card",
+    name: "Suunto - Aerobic Decoupling",
+    description: "Heart-rate drift against speed between the halves of your latest long workout, with a trend of recent ones.",
+    preview: true,
+  },
+  {
+    type: "suunto-personal-insights-card",
+    name: "Suunto - What Works For You",
+    description: "The clearest patterns in your own data: what goes with better or worse HRV, resting HR and sleep.",
+    preview: true,
   }
 );
 
 // eslint-disable-next-line no-console
 console.info(
-  "%c SUUNTO-CARDS %c 62 cards loaded",
+  "%c SUUNTO-CARDS %c 66 cards loaded",
   "color: #fff; background: #d98a1d; font-weight: 700; border-radius: 3px 0 0 3px; padding: 2px 6px;",
   "color: #d98a1d; background: transparent; font-weight: 500;"
 );

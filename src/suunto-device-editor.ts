@@ -23,6 +23,7 @@ const UNITS_CARDS = new Set<string>([
   "custom:suunto-week-compare-card",
   "custom:suunto-commute-card",
   "custom:suunto-gear-card",
+  "custom:suunto-aerobic-decoupling-card",
 ]);
 
 /** Cards with a `period: "year" | "month"` option picking which window is the headline. */
@@ -86,6 +87,7 @@ export class SuuntoDeviceEditor extends LitElement {
     const goals = GOAL_CARDS[type];
     const config = this._config;
     const showAi = type === "custom:suunto-ai-insight-card";
+    const showInsightToggle = type === "custom:suunto-daily-brief-card";
 
     return html`
       ${devices.length > 1
@@ -207,6 +209,14 @@ export class SuuntoDeviceEditor extends LitElement {
             </label>
           `
         : nothing}
+      ${showInsightToggle
+        ? html`
+            <label class="field checkbox">
+              <span>${t(this.hass, "editor.show_insight_label")}</span>
+              <input type="checkbox" .checked=${config.show_insight === true} @change=${this._showInsightChanged} />
+            </label>
+          `
+        : nothing}
       ${showCompact
         ? html`
             <label class="field checkbox">
@@ -292,6 +302,13 @@ export class SuuntoDeviceEditor extends LitElement {
     if (!this._config) return;
     const checked = (ev.target as HTMLInputElement).checked;
     this._emit({ ...this._config, single_section: checked || undefined });
+  }
+
+  private _showInsightChanged(ev: Event): void {
+    if (!this._config) return;
+    const checked = (ev.target as HTMLInputElement).checked;
+    // Off is the default, so it is stored as an absent key.
+    this._emit({ ...this._config, show_insight: checked || undefined });
   }
 
   private _showGoalsChanged(ev: Event): void {

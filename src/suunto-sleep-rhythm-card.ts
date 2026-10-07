@@ -6,6 +6,7 @@ import { SuuntoBaseCard } from "./utils/base-card";
 import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
 import { fetchEntityHistory, formatTime, type HistoryPoint } from "./utils/format";
 import { t } from "./utils/localize";
+import { formatSignedMinutes, regularityBand } from "./utils/patterns";
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
 const HISTORY_DAYS = 9;
@@ -135,6 +136,17 @@ export class SuuntoSleepRhythmCard extends SuuntoBaseCard {
     const resolved = this._resolveEntities();
     if ("error" in resolved) return resolved.error;
     const hass = this.hass;
+    // ha-suunto 1.0.32+: regularity index and social jetlag as two extra chips.
+    const regularity = resolved.map["sleep_regularity"] ? hass.states[resolved.map["sleep_regularity"]] : undefined;
+    const regularityValue =
+      regularity && !UNAVAILABLE_STATES.has(regularity.state) && Number.isFinite(Number(regularity.state))
+        ? Math.round(Number(regularity.state))
+        : undefined;
+    const jetlag = resolved.map["social_jetlag"] ? hass.states[resolved.map["social_jetlag"]] : undefined;
+    const jetlagValue =
+      jetlag && !UNAVAILABLE_STATES.has(jetlag.state) && Number.isFinite(Number(jetlag.state))
+        ? Number(jetlag.state)
+        : undefined;
 
     if (this._nights.length < 2) {
       return this._message(
@@ -202,6 +214,14 @@ export class SuuntoSleepRhythmCard extends SuuntoBaseCard {
           <span class="chip">${t(hass, "sleep_rhythm.avg_bedtime", { time: formatTime(toClockDate(avgBedtimeMinOfDay), hass.language) })}</span>
           <span class="chip">${t(hass, "sleep_rhythm.avg_wake", { time: formatTime(toClockDate(avgWakeMinOfDay), hass.language) })}</span>
           <span class="chip accent">${t(hass, "sleep_rhythm.spread", { minutes: spreadMin })}</span>
+          ${regularityValue !== undefined
+            ? html`<span class="chip ${regularityBand(hass, regularityValue).cls}"
+                >${t(hass, "chip.regularity", { value: regularityValue })}</span
+              >`
+            : nothing}
+          ${jetlagValue !== undefined
+            ? html`<span class="chip accent">${t(hass, "chip.social_jetlag", { value: formatSignedMinutes(jetlagValue) })}</span>`
+            : nothing}
         </div>
 
         <div class="legend">

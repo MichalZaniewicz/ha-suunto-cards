@@ -5,6 +5,7 @@ import type { SuuntoCardConfig } from "./utils/types";
 import { SuuntoBaseCard } from "./utils/base-card";
 import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
 import { t } from "./utils/localize";
+import { insightLine, readInsights } from "./utils/patterns";
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
 
@@ -60,6 +61,11 @@ export class SuuntoDailyBriefCard extends SuuntoBaseCard {
     const split = brief.state.lastIndexOf(": ");
     const facts = split > 0 ? brief.state.slice(0, split + 1) : brief.state;
     const advice = split > 0 ? brief.state.slice(split + 2) : "";
+    // Optional (show_insight): the strongest personal_insights finding.
+    const insight =
+      this._config.show_insight && map["personal_insights"]
+        ? readInsights(hass.states[map["personal_insights"]]?.attributes.insights)[0]
+        : undefined;
 
     return html`
       <ha-card class="static">
@@ -78,6 +84,17 @@ export class SuuntoDailyBriefCard extends SuuntoBaseCard {
           ${facts}
           ${advice ? html`<span class="advice" style=${colorVar ? `color:${colorVar}` : ""}>${advice}</span>` : nothing}
         </div>
+        ${insight
+          ? html`
+              <div class="pattern">
+                <ha-icon icon="mdi:lightbulb-on-outline"></ha-icon>
+                <div>
+                  <div class="pattern-label">${t(hass, "daily_brief.your_pattern")}</div>
+                  <div>${insightLine(hass, insight)}</div>
+                </div>
+              </div>
+            `
+          : nothing}
       </ha-card>
     `;
   }
@@ -94,6 +111,26 @@ export class SuuntoDailyBriefCard extends SuuntoBaseCard {
       }
       .advice {
         font-weight: 700;
+      }
+      .pattern {
+        display: flex;
+        gap: 8px;
+        align-items: flex-start;
+        font-size: 0.82rem;
+        line-height: 1.4;
+        color: var(--secondary-text-color);
+        border-top: 1px solid var(--divider-color);
+        padding-top: 10px;
+      }
+      .pattern ha-icon {
+        --mdc-icon-size: 18px;
+        color: var(--sc-amber);
+        flex: none;
+      }
+      .pattern-label {
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: var(--sc-amber);
       }
     `,
   ];

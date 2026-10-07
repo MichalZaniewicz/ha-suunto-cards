@@ -7,6 +7,7 @@ import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
 import { activityIcon, weatherIcon } from "./utils/icons";
 import { formatDuration, formatDistance, formatPaceUnits, formatSpeed, formatRelative, formatTime } from "./utils/format";
 import { t, tPlural } from "./utils/localize";
+import { decouplingBand } from "./utils/patterns";
 import type { SuuntoHass } from "./utils/types";
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
@@ -119,6 +120,18 @@ export class SuuntoLastWorkoutCard extends SuuntoBaseCard {
       calPerKm && !UNAVAILABLE_STATES.has(calPerKm.state) ? Number(calPerKm.state) : undefined;
     const cadenceValue =
       cadence && !UNAVAILABLE_STATES.has(cadence.state) ? Number(cadence.state) : undefined;
+    // ha-suunto 1.0.32+: HR drift, only when the sensor describes THIS workout
+    // (a short commute keeps the value of the last longer ride).
+    const decoupling = get("aerobic_decoupling");
+    const decouplingValue =
+      decoupling &&
+      start &&
+      !UNAVAILABLE_STATES.has(decoupling.state) &&
+      Number.isFinite(Number(decoupling.state)) &&
+      typeof decoupling.attributes.start_time === "string" &&
+      new Date(decoupling.attributes.start_time).getTime() === new Date(start.state).getTime()
+        ? Number(decoupling.state)
+        : undefined;
     const pctHrmaxValue =
       !noHr && pctHrmax && !UNAVAILABLE_STATES.has(pctHrmax.state) ? Number(pctHrmax.state) : undefined;
 
@@ -188,7 +201,8 @@ export class SuuntoLastWorkoutCard extends SuuntoBaseCard {
           calPerKmValue !== undefined ||
           cadenceValue !== undefined ||
           pctHrmaxValue !== undefined ||
-          strideValue !== undefined)
+          strideValue !== undefined ||
+          decouplingValue !== undefined)
           ? html`
               <hr />
               <div class="secondary">
@@ -222,6 +236,16 @@ export class SuuntoLastWorkoutCard extends SuuntoBaseCard {
                   : nothing}
                 ${strideValue !== undefined
                   ? this._secondary(strideValue.toFixed(2), t(hass, "stat.stride_length"), "m")
+                  : nothing}
+                ${decouplingValue !== undefined
+                  ? html`
+                      <div class="sec-item">
+                        <div class="sec-value" style="color:${decouplingBand(hass, decouplingValue).colorVar}">
+                          ${decouplingValue.toFixed(1)} <span class="sec-unit">%</span>
+                        </div>
+                        <div class="sec-label">${t(hass, "stat.decoupling")}</div>
+                      </div>
+                    `
                   : nothing}
               </div>
             `

@@ -4,7 +4,7 @@
 
 Custom Lovelace cards for [`ha-suunto`](https://github.com/MichalZaniewicz/ha-suunto) (the
 `suunto_app` integration) - a purpose-built widget family instead of wiring generic entity/gauge
-cards to its 100 sensors by hand.
+cards to its 104 sensors by hand.
 
 > [!TIP]
 > ⭐ **Enjoying these cards?** Every star is real motivation to keep building new features :)
@@ -87,6 +87,9 @@ into <ha-alert> and drops every child whose textContent is empty, which silently
 | Form Forecast | `custom:suunto-form-forecast-card` | Your form over the next four weeks if you rest from today, with the day it would peak |
 | Daily Brief | `custom:suunto-daily-brief-card` | One sentence for today: sleep, HRV, readiness, form and what kind of session fits |
 | Daily Goals | `custom:suunto-daily-goals-card` | Today's steps, active calories and last night's sleep as three rings against your goals |
+| Sleep Regularity | `custom:suunto-sleep-regularity-card` | How steady your sleep schedule is: the Sleep Regularity Index (four weeks), average bed and wake times with their spread, and social jetlag (later mid-sleep on Friday/Saturday nights) |
+| Aerobic Decoupling | `custom:suunto-aerobic-decoupling-card` | Heart-rate drift against speed between the halves of your latest workout of 40+ minutes, with the last 10 analysed workouts against the 5 % line |
+| What Works For You | `custom:suunto-personal-insights-card` | The clearest patterns in your own data: what goes with better or worse HRV, resting HR and sleep (late workouts, hard days, early bedtimes, weekends) |
 | AI Insight | `custom:suunto-ai-insight-card` | The daily AI review (ha-suunto 1.0.30+, AI insight turned on): headline, overall status, warning, one tab per section (sleep, recovery, training, activity) with its own status, and the advice. Options: `section` (first tab) and `single_section: true` (just that section, no tabs) |
 
 Each card auto-detects your Suunto device - **zero YAML required** for the common case of one
@@ -234,6 +237,15 @@ app, or "Custom" with your own number (`goal_steps`, `goal_energy_kcal`, `goal_s
 `daily_energy`, not the day's total. Today, Sleep & Readiness and Week & Lifetime can hide their
 goal line with `show_goals: false`, and show none when there is neither a Suunto goal nor a custom
 one. Weekly distance has no Suunto goal, so `goal_km` is always your own.
+
+**Sleep Regularity**, **Aerobic Decoupling** and **What Works For You** read sensors new in
+`ha-suunto` **1.0.32b2** (`sleep_regularity`, `social_jetlag`, `aerobic_decoupling`,
+`personal_insights`) and show their empty state on older versions. The same release adds a
+regularity and a social-jetlag chip to Sleep Rhythm and an "HR drift" stat to Last Workout (only
+when the decoupling value belongs to that same workout). Daily Brief can show your strongest
+pattern under the sentence: "Show your strongest pattern" in the editor, or `show_insight: true`.
+The regularity bands (80+ regular, 60-80 fairly regular) are this card's own reading, not a Suunto
+scale. What Works For You shows correlations in your own data, not causes.
 
 **Sleep Detail**'s "time awake in bed" and "sleep efficiency" aren't sensors `ha-suunto` sends
 directly - they're computed here from `wake_time` minus `sleep_time` against `sleep_duration`. If

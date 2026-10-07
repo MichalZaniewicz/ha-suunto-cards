@@ -45,6 +45,8 @@ export interface SuuntoCardConfig extends LovelaceCardConfig {
   goal_training_hours?: number;
   /** Cards that gained goal progress later (Today, Sleep & Readiness, Week & Lifetime): false hides it. Default: true. */
   show_goals?: boolean;
+  /** Daily Brief: add the strongest personal_insights finding under the brief. Default: false. */
+  show_insight?: boolean;
 }
 
 /** suunto-weekly-goal-card's config: same device selection, plus a user-set target. */
