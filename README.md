@@ -19,6 +19,19 @@ into <ha-alert> and drops every child whose textContent is empty, which silently
 
 [![Open your Home Assistant instance and open this repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=MichalZaniewicz&repository=ha-suunto-cards&category=plugin)
 
+## Your training, on your dashboard
+
+<p align="center">
+  <img src="docs/trailer.webp" alt="Suunto Cards trailer: 66 cards, light and dark, 8 languages, the visual editor">
+</p>
+
+66 cards built for one job: showing your Suunto data on a Home Assistant dashboard. Today's
+activity, sleep and readiness, recovery, training load and form, every workout with its route and
+heart rate zones, personal bests, goals and yearly totals. Every card follows your light or dark
+theme, speaks 8 languages, and is set up in the visual editor, without YAML.
+
+## Meet the cards
+
 ![Preview of the Suunto cards](docs/screenshots/cards-overview-dark.png)
 
 ## Cards
