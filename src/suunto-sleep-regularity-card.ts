@@ -125,19 +125,20 @@ export class SuuntoSleepRegularityCard extends SuuntoBaseCard {
               <div>
                 <div class="timeline">
                   <div class="track"></div>
+                  <!-- Spread (1 SD) is drawn only outside the sleep bar, so it never shows through it. -->
+                  <div class="sleep" style="left:${bed}%;width:${wake - bed}%"></div>
                   ${bedSd !== undefined
                     ? html`<div
                         class="whisker"
-                        style="left:${clampPct(bed - sdPct(bedSd))}%;width:${sdPct(bedSd) * 2}%"
+                        style="left:${clampPct(bed - sdPct(bedSd))}%;width:${bed - clampPct(bed - sdPct(bedSd))}%"
                       ></div>`
                     : nothing}
                   ${wakeSd !== undefined
                     ? html`<div
                         class="whisker"
-                        style="left:${clampPct(wake - sdPct(wakeSd))}%;width:${sdPct(wakeSd) * 2}%"
+                        style="left:${wake}%;width:${clampPct(wake + sdPct(wakeSd)) - wake}%"
                       ></div>`
                     : nothing}
-                  <div class="sleep" style="left:${bed}%;width:${wake - bed}%"></div>
                   ${workMid !== undefined && freeMid !== undefined
                     ? html`
                         <div
@@ -281,7 +282,6 @@ export class SuuntoSleepRegularityCard extends SuuntoBaseCard {
       }
       .sleep {
         background: var(--sc-sleep-light);
-        opacity: 0.85;
       }
       .whisker {
         position: absolute;
@@ -289,7 +289,7 @@ export class SuuntoSleepRegularityCard extends SuuntoBaseCard {
         height: 4px;
         border-radius: 2px;
         background: var(--sc-sleep-light);
-        opacity: 0.35;
+        opacity: 0.45;
       }
       .mid {
         position: absolute;

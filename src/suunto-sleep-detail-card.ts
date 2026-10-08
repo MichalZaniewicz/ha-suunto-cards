@@ -7,6 +7,7 @@ import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
 import { segmentedBar, progressRing } from "./utils/render-helpers";
 import { formatDuration, formatTime, formatDelta, formatShortDate, isToday } from "./utils/format";
 import { t } from "./utils/localize";
+import { sleepNight } from "./utils/sleep-stages";
 import type { SuuntoHass } from "./utils/types";
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
@@ -36,7 +37,8 @@ function deepSleepInsight(hass: SuuntoHass | undefined, pct: number): string {
 /**
  * A single-night deep-dive, complementing the compact suunto-sleep-readiness-card:
  * time actually awake in bed (derived from wake_time - sleep_time vs. sleep_duration,
- * not a field Suunto sends directly), sleep efficiency, and every sleep vital at once.
+ * not a field Suunto sends directly; see utils/sleep-stages), sleep efficiency, and
+ * every sleep vital at once.
  */
 @customElement("suunto-sleep-detail-card")
 export class SuuntoSleepDetailCard extends SuuntoBaseCard {
@@ -78,11 +80,7 @@ export class SuuntoSleepDetailCard extends SuuntoBaseCard {
       );
     }
 
-    const bedtime = get("sleep_time");
-    const wake = get("wake_time");
     const deep = get("sleep_deep");
-    const light = get("sleep_light");
-    const rem = get("sleep_rem");
     const quality = get("sleep_quality");
     const spo2 = get("sleep_spo2");
     const avgHr = get("sleep_avg_hr");
@@ -95,15 +93,13 @@ export class SuuntoSleepDetailCard extends SuuntoBaseCard {
     const nap = get("nap_duration");
     const unusualRecovery = get("unusual_recovery");
 
-    const durationMin = Number(duration.state) * 60;
+    const night = sleepNight(hass, get);
+    const durationMin = night?.sleepMin ?? 0;
     const durationParts = formatDuration(durationMin);
-
-    const bedMs =
-      bedtime && !UNAVAILABLE_STATES.has(bedtime.state) ? new Date(bedtime.state).getTime() : undefined;
-    const wakeMs = wake && !UNAVAILABLE_STATES.has(wake.state) ? new Date(wake.state).getTime() : undefined;
-    const timeInBedMin =
-      bedMs !== undefined && wakeMs !== undefined && wakeMs > bedMs ? (wakeMs - bedMs) / 60000 : undefined;
-    const awakeMin = timeInBedMin !== undefined ? Math.max(0, timeInBedMin - durationMin) : undefined;
+    const bedMs = night?.bedMs;
+    const wakeMs = night?.wakeMs;
+    const timeInBedMin = night?.inBedMin;
+    const stageSegments = night?.stages ?? [];
     const efficiencyPct =
       timeInBedMin !== undefined && timeInBedMin > 0
         ? Math.min(100, Math.max(0, (durationMin / timeInBedMin) * 100))
@@ -121,22 +117,6 @@ export class SuuntoSleepDetailCard extends SuuntoBaseCard {
       restingHr && restingHrBaseline && !UNAVAILABLE_STATES.has(restingHrBaseline.state)
         ? Number(restingHr.state) - Number(restingHrBaseline.state)
         : undefined;
-
-    const stageSegments = [
-      deep && !UNAVAILABLE_STATES.has(deep.state)
-        ? { flexGrow: Number(deep.state), colorVar: "var(--sc-sleep-deep)", title: t(hass, "label.deep") }
-        : undefined,
-      light && !UNAVAILABLE_STATES.has(light.state)
-        ? { flexGrow: Number(light.state), colorVar: "var(--sc-sleep-light)", title: t(hass, "label.light") }
-        : undefined,
-      rem && !UNAVAILABLE_STATES.has(rem.state)
-        ? { flexGrow: Number(rem.state), colorVar: "var(--sc-sleep-rem)", title: t(hass, "label.rem") }
-        : undefined,
-      awakeMin !== undefined
-        ? { flexGrow: awakeMin, colorVar: "var(--sc-sleep-awake)", title: t(hass, "label.awake") }
-        : undefined,
-    ].filter((s): s is NonNullable<typeof s> => s !== undefined && s.flexGrow > 0);
-    const stageTotal = stageSegments.reduce((sum, s) => sum + s.flexGrow, 0) || 1;
 
     const deepPct = deep && !UNAVAILABLE_STATES.has(deep.state) && durationMin > 0
       ? (Number(deep.state) / durationMin) * 100
@@ -211,15 +191,14 @@ export class SuuntoSleepDetailCard extends SuuntoBaseCard {
           ? html`
               <div class="stages">
                 <span class="section-label">${t(hass, "sleep_detail.stages")}</span>
-                ${segmentedBar(stageSegments)}
+                ${segmentedBar(stageSegments.map((s) => ({ flexGrow: s.minutes, colorVar: s.colorVar, title: s.title })))}
                 <div class="stage-legend">
                   ${stageSegments.map((s) => {
-                    const d = formatDuration(s.flexGrow);
-                    const pct = Math.round((s.flexGrow / stageTotal) * 100);
+                    const d = formatDuration(s.minutes);
                     return html`
                       <span class="legend-item">
-                        <i class="dot" style="background:${s.colorVar}"></i>${s.title}
-                        ${d.value}${d.unit === "h" ? "h" : "m"} &middot; ${pct}%
+                        <i class="dot" style="background:${s.colorVar}"></i>${s.title} &middot;
+                        ${d.value}${d.unit === "h" ? "h" : "m"}
                       </span>
                     `;
                   })}

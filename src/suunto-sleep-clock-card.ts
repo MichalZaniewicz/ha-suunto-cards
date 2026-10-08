@@ -6,6 +6,7 @@ import { SuuntoBaseCard } from "./utils/base-card";
 import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
 import { formatDuration, formatShortDate, formatTime } from "./utils/format";
 import { t } from "./utils/localize";
+import { sleepNight } from "./utils/sleep-stages";
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
 const SIZE = 208;
@@ -28,20 +29,17 @@ function arcPath(startAngle: number, endAngle: number): string {
   return `M ${x1.toFixed(2)} ${y1.toFixed(2)} A ${RADIUS} ${RADIUS} 0 ${largeArc} 1 ${x2.toFixed(2)} ${y2.toFixed(2)}`;
 }
 
-interface StageSegment {
-  colorVar: string;
-  minutes: number;
-}
+/** Hour labels on the dial closer than this (degrees) to a time tag are hidden under it. */
+const LABEL_CLEARANCE_DEG = 14;
 
 /**
- * Last night's sleep as a 24h clock dial: an arc from bedtime to wake angle,
- * split into deep/light/REM proportions - the same data
- * suunto-sleep-readiness-card already shows as a linear segmented bar, but
- * anchored to the actual clock times instead of just proportions.
+ * Last night's sleep as a 24h clock dial: an arc from bedtime to wake time,
+ * split into the same stages as the other sleep cards (utils/sleep-stages):
+ * deep/light/REM, other sleep and time awake in bed.
  *
- * The stage ORDER along the arc (deep, then light, then REM) is illustrative,
- * not measured: Suunto only reports each stage's total minutes for the
- * night, never a real timeline of when each occurred.
+ * The stage ORDER along the arc is illustrative, not measured: Suunto only
+ * reports each stage's total minutes for the night, never a real timeline of
+ * when each occurred.
  */
 @customElement("suunto-sleep-clock-card")
 export class SuuntoSleepClockCard extends SuuntoBaseCard {
@@ -74,41 +72,21 @@ export class SuuntoSleepClockCard extends SuuntoBaseCard {
     const hass = this.hass;
     const get = (key: string) => (map[key] ? hass.states[map[key]] : undefined);
 
-    const wake = get("wake_time");
-    const duration = get("sleep_duration");
-    if (!wake || UNAVAILABLE_STATES.has(wake.state) || !duration || UNAVAILABLE_STATES.has(duration.state)) {
+    const night = sleepNight(hass, get);
+    if (!night || night.wakeMs === undefined) {
       return this._message("mdi:sleep", t(hass, "empty.sleep_clock.title"), t(hass, "empty.sleep_clock.subtitle"));
     }
+    const wakeDate = new Date(night.wakeMs);
+    // Real bedtime from sleep_time; without it, assume one unbroken sleep before waking.
+    const spanMin = night.inBedMin ?? night.sleepMin;
+    const bedtime = new Date(night.wakeMs - spanMin * 60000);
 
-    const wakeDate = new Date(wake.state);
-    const durationHours = Number(duration.state);
-    if (Number.isNaN(wakeDate.getTime()) || !Number.isFinite(durationHours) || durationHours <= 0) {
-      return this._message("mdi:sleep", t(hass, "empty.sleep_clock.title"), t(hass, "empty.sleep_clock.subtitle"));
-    }
-    const bedtime = new Date(wakeDate.getTime() - durationHours * 3600000);
-
-    const deep = get("sleep_deep");
-    const light = get("sleep_light");
-    const rem = get("sleep_rem");
-    const deepMin = deep && !UNAVAILABLE_STATES.has(deep.state) ? Number(deep.state) : 0;
-    const lightMin = light && !UNAVAILABLE_STATES.has(light.state) ? Number(light.state) : 0;
-    const remMin = rem && !UNAVAILABLE_STATES.has(rem.state) ? Number(rem.state) : 0;
-    const stageTotal = deepMin + lightMin + remMin;
-
-    const segments: StageSegment[] = stageTotal > 0
-      ? [
-          { colorVar: "var(--sc-sleep-deep)", minutes: deepMin },
-          { colorVar: "var(--sc-sleep-light)", minutes: lightMin },
-          { colorVar: "var(--sc-sleep-rem)", minutes: remMin },
-        ].filter((s) => s.minutes > 0)
-      : [{ colorVar: "var(--sc-sleep-light)", minutes: durationHours * 60 }];
-
-    const startAngle = (bedtime.getHours() * 60 + bedtime.getMinutes()) / 1440 * 360;
-    const spanAngle = (durationHours * 60) / 1440 * 360;
-    const totalMinForShare = segments.reduce((sum, s) => sum + s.minutes, 0);
+    const startAngle = ((bedtime.getHours() * 60 + bedtime.getMinutes()) / 1440) * 360;
+    const spanAngle = (spanMin / 1440) * 360;
+    const totalMinForShare = night.stages.reduce((sum, s) => sum + s.minutes, 0);
 
     let cursor = startAngle;
-    const arcs = segments.map((seg) => {
+    const arcs = night.stages.map((seg) => {
       const segAngle = (seg.minutes / totalMinForShare) * spanAngle;
       const d = arcPath(cursor, cursor + segAngle);
       cursor += segAngle;
@@ -117,10 +95,14 @@ export class SuuntoSleepClockCard extends SuuntoBaseCard {
 
     const quality = get("sleep_quality");
     const qualityPct = quality && !UNAVAILABLE_STATES.has(quality.state) ? Math.round(Number(quality.state)) : undefined;
-    const durationParts = formatDuration(durationHours * 60);
+    const durationParts = formatDuration(night.sleepMin);
+    const duration = get("sleep_duration");
 
     const bedTag = polar(startAngle, LABEL_R);
     const wakeTag = polar(startAngle + spanAngle, LABEL_R);
+    const tagAngles = [startAngle, startAngle + spanAngle];
+    const clearOfTags = (angle: number) =>
+      tagAngles.every((tag) => Math.abs(((((tag - angle) % 360) + 540) % 360) - 180) >= LABEL_CLEARANCE_DEG);
 
     return html`
       <ha-card class="static">
@@ -132,7 +114,7 @@ export class SuuntoSleepClockCard extends SuuntoBaseCard {
           </div>
         </div>
 
-        ${duration.attributes.stale === true && typeof duration.attributes.night === "string"
+        ${duration?.attributes.stale === true && typeof duration.attributes.night === "string"
           ? html`<div style="display:flex;flex-wrap:wrap">
               <span class="chip warn"
                 ><ha-icon icon="mdi:alert-outline"></ha-icon>${t(hass, "chip.sleep_stale", {
@@ -158,7 +140,9 @@ export class SuuntoSleepClockCard extends SuuntoBaseCard {
               { angle: 90, label: "6" },
               { angle: 180, label: "12" },
               { angle: 270, label: "18" },
-            ].map(({ angle, label }) => {
+            ]
+              .filter(({ angle }) => clearOfTags(angle))
+              .map(({ angle, label }) => {
               const [x, y] = polar(angle, LABEL_R + 4);
               return svg`<text x=${x.toFixed(1)} y=${y.toFixed(1)} text-anchor="middle" dominant-baseline="middle" font-size="10" fill="var(--secondary-text-color)">${label}</text>`;
             })}
@@ -176,9 +160,12 @@ export class SuuntoSleepClockCard extends SuuntoBaseCard {
         </div>
 
         <div class="legend">
-          ${deepMin > 0 ? html`<span class="legend-item"><i class="dot" style="background:var(--sc-sleep-deep)"></i>${t(hass, "label.deep")} &middot; ${formatDuration(deepMin).value}${formatDuration(deepMin).unit}</span>` : nothing}
-          ${lightMin > 0 ? html`<span class="legend-item"><i class="dot" style="background:var(--sc-sleep-light)"></i>${t(hass, "label.light")} &middot; ${formatDuration(lightMin).value}${formatDuration(lightMin).unit}</span>` : nothing}
-          ${remMin > 0 ? html`<span class="legend-item"><i class="dot" style="background:var(--sc-sleep-rem)"></i>${t(hass, "label.rem")} &middot; ${formatDuration(remMin).value}${formatDuration(remMin).unit}</span>` : nothing}
+          ${night.stages.map((stage) => {
+            const d = formatDuration(stage.minutes);
+            return html`<span class="legend-item"
+              ><i class="dot" style="background:${stage.colorVar}"></i>${stage.title} &middot; ${d.value}${d.unit === "h" ? "h" : "m"}</span
+            >`;
+          })}
         </div>
       </ha-card>
     `;

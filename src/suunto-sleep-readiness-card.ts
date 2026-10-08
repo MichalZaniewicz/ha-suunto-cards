@@ -8,6 +8,7 @@ import { segmentedBar, progressRing, goalBar } from "./utils/render-helpers";
 import { knownGoal, formatHours } from "./utils/suunto-goals";
 import { formatDuration, formatTime, formatDelta, formatShortDate, isToday } from "./utils/format";
 import { t } from "./utils/localize";
+import { sleepNight } from "./utils/sleep-stages";
 import type { SuuntoHass } from "./utils/types";
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
@@ -72,9 +73,6 @@ export class SuuntoSleepReadinessCard extends SuuntoBaseCard {
     }
 
     const wake = get("wake_time");
-    const deep = get("sleep_deep");
-    const light = get("sleep_light");
-    const rem = get("sleep_rem");
     const quality = get("sleep_quality");
     const spo2 = get("sleep_spo2");
     const hrv = get("sleep_hrv");
@@ -102,17 +100,7 @@ export class SuuntoSleepReadinessCard extends SuuntoBaseCard {
         ? Number(restingHr.state) - Number(restingHrBaseline.state)
         : undefined;
 
-    const stageSegments = [
-      deep && !UNAVAILABLE_STATES.has(deep.state)
-        ? { flexGrow: Number(deep.state), colorVar: "var(--sc-sleep-deep)", title: t(hass, "label.deep") }
-        : undefined,
-      light && !UNAVAILABLE_STATES.has(light.state)
-        ? { flexGrow: Number(light.state), colorVar: "var(--sc-sleep-light)", title: t(hass, "label.light") }
-        : undefined,
-      rem && !UNAVAILABLE_STATES.has(rem.state)
-        ? { flexGrow: Number(rem.state), colorVar: "var(--sc-sleep-rem)", title: t(hass, "label.rem") }
-        : undefined,
-    ].filter((s): s is NonNullable<typeof s> => s !== undefined);
+    const stageSegments = sleepNight(hass, get)?.stages ?? [];
 
     const durationParts = formatDuration(Number(duration.state) * 60);
     const napMinutes = nap && !UNAVAILABLE_STATES.has(nap.state) ? Number(nap.state) : undefined;
@@ -226,23 +214,24 @@ export class SuuntoSleepReadinessCard extends SuuntoBaseCard {
             ? this._stat(String(Math.round(Number(spo2.state))), "%", t(hass, "stat.spo2"))
             : nothing}
           ${!compact && sleepAvgHr
-            ? this._stat(String(Math.round(Number(sleepAvgHr.state))), "bpm", t(hass, "stat.sleep_avg_hr"))
+            ? this._stat(String(Math.round(Number(sleepAvgHr.state))), "bpm", t(hass, "stat.sleep_avg_hr"), "hr")
             : nothing}
           ${!compact && sleepMinHr
-            ? this._stat(String(Math.round(Number(sleepMinHr.state))), "bpm", t(hass, "stat.sleep_min_hr"))
+            ? this._stat(String(Math.round(Number(sleepMinHr.state))), "bpm", t(hass, "stat.sleep_min_hr"), "hr")
             : nothing}
         </div>
 
         ${!compact && stageSegments.length
           ? html`
               <div class="stages ${staleNight ? "stale" : ""}">
-                ${segmentedBar(stageSegments)}
+                ${segmentedBar(stageSegments.map((s) => ({ flexGrow: s.minutes, colorVar: s.colorVar, title: s.title })))}
                 <div class="stage-legend">
                   ${stageSegments.map((s) => {
-                    const d = formatDuration(s.flexGrow);
+                    const d = formatDuration(s.minutes);
                     return html`
                       <span class="legend-item">
-                        <i class="dot" style="background:${s.colorVar}"></i>${s.title} ${d.value}${d.unit === "h" ? "h" : "m"}
+                        <i class="dot" style="background:${s.colorVar}"></i>${s.title} &middot;
+                        ${d.value}${d.unit === "h" ? "h" : "m"}
                       </span>
                     `;
                   })}
@@ -290,7 +279,7 @@ export class SuuntoSleepReadinessCard extends SuuntoBaseCard {
     `;
   }
 
-  private _stat(value: string, unit: string, label: string, tone?: "good" | "bad") {
+  private _stat(value: string, unit: string, label: string, tone?: "good" | "bad" | "hr") {
     return html`
       <div class="stat ${tone ?? ""}">
         <div class="stat-value">${value}<span class="unit">${unit}</span></div>
