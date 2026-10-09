@@ -115,9 +115,9 @@ export class SuuntoAerobicDecouplingCard extends SuuntoBaseCard {
     return html`
       <ha-card class="static">
         <div class="header">
-          <div class="icon-badge"><ha-icon icon="mdi:heart-flash"></ha-icon></div>
+          <div class="icon-badge"><ha-icon .icon=${this._icon("mdi:heart-flash")}></ha-icon></div>
           <div class="title-block">
-            <div class="title">${t(hass, "card.aerobic_decoupling.title")}</div>
+            <div class="title">${this._title(t(hass, "card.aerobic_decoupling.title"))}</div>
             <div class="subtitle">${subtitle}</div>
           </div>
         </div>

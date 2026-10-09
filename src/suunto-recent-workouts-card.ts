@@ -49,7 +49,7 @@ export class SuuntoRecentWorkoutsCard extends SuuntoBaseCard {
     const hass = this.hass;
     const entityId = map["workouts_recent"];
     const entity = entityId ? hass.states[entityId] : undefined;
-    const workouts: RecentWorkout[] = entity?.attributes.workouts ?? [];
+    const workouts: RecentWorkout[] = this._cap(entity?.attributes.workouts ?? []);
 
     if (!entity || workouts.length === 0) {
       return this._message("mdi:format-list-bulleted", t(hass, "empty.recent_workouts.title"));
@@ -58,9 +58,9 @@ export class SuuntoRecentWorkoutsCard extends SuuntoBaseCard {
     return html`
       <ha-card class="static">
         <div class="header">
-          <div class="icon-badge"><ha-icon icon="mdi:format-list-bulleted"></ha-icon></div>
+          <div class="icon-badge"><ha-icon .icon=${this._icon("mdi:format-list-bulleted")}></ha-icon></div>
           <div class="title-block">
-            <div class="title">${t(hass, "card.recent_workouts.title")}</div>
+            <div class="title">${this._title(t(hass, "card.recent_workouts.title"))}</div>
           </div>
         </div>
 

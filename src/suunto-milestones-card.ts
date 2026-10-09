@@ -63,9 +63,9 @@ export class SuuntoMilestonesCard extends SuuntoBaseCard {
     return html`
       <ha-card class="static">
         <div class="header">
-          <div class="icon-badge"><ha-icon icon="mdi:earth"></ha-icon></div>
+          <div class="icon-badge"><ha-icon .icon=${this._icon("mdi:earth")}></ha-icon></div>
           <div class="title-block">
-            <div class="title">${t(hass, "card.milestones.title")}</div>
+            <div class="title">${this._title(t(hass, "card.milestones.title"))}</div>
             <div class="subtitle">${t(hass, "card.milestones.subtitle")}</div>
           </div>
         </div>

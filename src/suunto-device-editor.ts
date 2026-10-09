@@ -1,13 +1,14 @@
-import { LitElement, html, css, nothing } from "lit";
+import { LitElement, html, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { fireEvent } from "custom-card-helpers";
 import type { SuuntoHass, SuuntoCardConfig } from "./utils/types";
-import { findSuuntoDeviceIds } from "./utils/entities";
 import { t } from "./utils/localize";
 import { suuntoFuelFigures, type GoalKind } from "./utils/suunto-goals";
 import { goalSourceField } from "./utils/goal-field";
 import { DEFAULT_FUEL_L_PER_100KM, DEFAULT_FUEL_PRICE } from "./suunto-commute-card";
 import { AI_SECTIONS } from "./suunto-ai-insight-card";
+import { editorStyles, haInput, haSelect, haSwitch } from "./utils/editor-controls";
+import { cardOptionFields, deviceField, lookFields, patchConfig, titleField, unitsField } from "./utils/editor-common";
 
 /**
  * Cards whose stats include distance/pace/speed and so support `units:
@@ -29,16 +30,6 @@ const UNITS_CARDS = new Set<string>([
 /** Cards with a `period: "year" | "month"` option picking which window is the headline. */
 const PERIOD_CARDS = new Set<string>(["custom:suunto-commute-card"]);
 
-/** Cards with a `compact: boolean` option that collapses secondary stats. */
-const COMPACT_CARDS = new Set<string>(["custom:suunto-last-workout-card", "custom:suunto-sleep-readiness-card"]);
-
-/** Cards with a configurable `days` trend window, and each one's default. */
-const DAYS_CARDS: Record<string, number> = {
-  "custom:suunto-recovery-trends-card": 30,
-  "custom:suunto-sleep-trends-card": 30,
-};
-const DAYS_OPTIONS = [14, 30, 60, 90];
-
 /**
  * Cards that show progress toward a goal, and which goals. `fallback`: the
  * card draws a goal even when the Suunto app has none (so the editor names
@@ -54,12 +45,11 @@ const GOAL_CARDS: Record<string, { kinds: GoalKind[]; fallback?: boolean; toggle
 };
 
 /**
- * One generic visual editor shared by every Suunto card. Most cards' config
- * is just an optional `device_id`; a growing minority also opt into
- * `units`/`compact`/`days` (see the capability sets above) - rather than
- * giving each of those its own near-duplicate editor class, this one stays
- * the single shared element and looks up which extra fields apply by the
- * card's own `config.type`.
+ * One generic visual editor shared by every Suunto card except the goal
+ * cards with their own small editors. The device picker, then the title,
+ * the card's own fields (looked up by `config.type` in the capability sets
+ * above), the shared legend/list/trend-window options, and the
+ * "Appearance" section - see utils/editor-common.ts.
  */
 @customElement("suunto-device-editor")
 export class SuuntoDeviceEditor extends LitElement {
@@ -73,249 +63,125 @@ export class SuuntoDeviceEditor extends LitElement {
 
   protected render() {
     if (!this.hass || !this._config) return nothing;
-
-    const devices = findSuuntoDeviceIds(this.hass);
-    const type = this._config.type;
-    const showUnits = UNITS_CARDS.has(type);
-    const showCompact = COMPACT_CARDS.has(type);
-    const showPeriod = PERIOD_CARDS.has(type);
-    // Commutes: fuel figures come from the integration unless typed in here.
-    const showFuel = PERIOD_CARDS.has(type);
-    const fuelBase = showFuel ? suuntoFuelFigures(this.hass, this._config.device_id) : undefined;
-    const ownFuel = this._config.fuel_l_per_100km !== undefined || this._config.fuel_price !== undefined;
-    const daysDefault = DAYS_CARDS[type];
-    const goals = GOAL_CARDS[type];
+    const hass = this.hass;
     const config = this._config;
-    const showAi = type === "custom:suunto-ai-insight-card";
-    const showInsightToggle = type === "custom:suunto-daily-brief-card";
+    const type = config.type;
+    const emit = (next: SuuntoCardConfig): void => this._emit(next);
+    const patch = (p: Partial<SuuntoCardConfig>): void => this._emit(patchConfig(config, p));
+    const goals = GOAL_CARDS[type];
 
     return html`
-      ${devices.length > 1
-        ? html`
-            <ha-device-picker
-              .hass=${this.hass}
-              .value=${this._config.device_id ?? ""}
-              .label=${t(this.hass, "editor.device_label")}
-              .includeDeviceClasses=${undefined}
-              @value-changed=${this._deviceChanged}
-            ></ha-device-picker>
-            <div class="hint">${t(this.hass, "editor.pick_device")}</div>
-          `
-        : html`<div class="hint">${t(this.hass, "editor.auto_detect")}</div>`}
-      ${showPeriod
-        ? html`
-            <label class="field">
-              <span>${t(this.hass, "editor.period_label")}</span>
-              <select .value=${this._config.period === "month" ? "month" : "year"} @change=${this._periodChanged}>
-                <option value="year">${t(this.hass, "editor.period_year")}</option>
-                <option value="month">${t(this.hass, "editor.period_month")}</option>
-              </select>
-            </label>
-          `
-        : nothing}
-      ${showFuel
-        ? html`
-            <label class="field">
-              <span>${t(this.hass, "editor.fuel_source_label")}</span>
-              <select .value=${ownFuel ? "custom" : "suunto"} @change=${this._fuelSourceChanged}>
-                <option value="suunto" ?selected=${!ownFuel}>
-                  ${fuelBase
-                    ? t(this.hass, "editor.source_integration", {
-                        litres: fuelBase.litres.toLocaleString(this.hass.language),
-                        price: fuelBase.price.toLocaleString(this.hass.language),
-                      })
-                    : t(this.hass, "editor.source_integration_unknown")}
-                </option>
-                <option value="custom" ?selected=${ownFuel}>${t(this.hass, "editor.source_custom")}</option>
-              </select>
-            </label>
-            ${ownFuel
-              ? html`
-                  <label class="field">
-                    <span>${t(this.hass, "editor.fuel_consumption_label")}</span>
-                    <input
-                      type="number"
-                      min="0.1"
-                      step="0.1"
-                      .value=${String(this._config.fuel_l_per_100km ?? fuelBase?.litres ?? DEFAULT_FUEL_L_PER_100KM)}
-                      @change=${this._fuelLitresChanged}
-                    />
-                  </label>
-                  <label class="field">
-                    <span>${t(this.hass, "editor.fuel_price_label")}</span>
-                    <input
-                      type="number"
-                      min="0"
-                      step="0.01"
-                      .value=${String(this._config.fuel_price ?? fuelBase?.price ?? DEFAULT_FUEL_PRICE)}
-                      @change=${this._fuelPriceChanged}
-                    />
-                  </label>
-                `
-              : html`<div class="hint">${t(this.hass, "editor.fuel_hint")}</div>`}
-          `
-        : nothing}
-      ${goals
-        ? html`
-            ${goals.toggle
-              ? html`
-                  <label class="field checkbox">
-                    <span>${t(this.hass, "editor.show_goals_label")}</span>
-                    <input type="checkbox" .checked=${config.show_goals !== false} @change=${this._showGoalsChanged} />
-                  </label>
-                `
-              : nothing}
-            ${config.show_goals !== false || !goals.toggle
-              ? goals.kinds.map((kind) =>
-                  goalSourceField(this.hass!, config, kind, goals.fallback ?? false, (c) => this._emit(c))
-                )
-              : nothing}
-          `
-        : nothing}
-      ${showUnits
-        ? html`
-            <label class="field">
-              <span>${t(this.hass, "editor.units_label")}</span>
-              <select .value=${this._config.units ?? "metric"} @change=${this._unitsChanged}>
-                <option value="metric">${t(this.hass, "editor.units_metric")}</option>
-                <option value="imperial">${t(this.hass, "editor.units_imperial")}</option>
-              </select>
-            </label>
-          `
-        : nothing}
-      ${daysDefault !== undefined
-        ? html`
-            <label class="field">
-              <span>${t(this.hass, "editor.days_label")}</span>
-              <select .value=${String(this._config.days ?? daysDefault)} @change=${this._daysChanged}>
-                ${DAYS_OPTIONS.map((d) => html`<option value=${d}>${d}</option>`)}
-              </select>
-            </label>
-          `
-        : nothing}
-      ${showAi
-        ? html`
-            <label class="field">
-              <span>${t(this.hass, "editor.ai_section_label")}</span>
-              <select .value=${String(config.section ?? "sleep")} @change=${this._aiSectionChanged}>
-                ${AI_SECTIONS.map(
-                  (key) => html`<option value=${key}>${t(this.hass, `ai_insight.section_full.${key}`)}</option>`
-                )}
-              </select>
-            </label>
-            <label class="field checkbox">
-              <span>${t(this.hass, "editor.ai_single_label")}</span>
-              <input type="checkbox" .checked=${config.single_section === true} @change=${this._aiSingleChanged} />
-            </label>
-          `
-        : nothing}
-      ${showInsightToggle
-        ? html`
-            <label class="field checkbox">
-              <span>${t(this.hass, "editor.show_insight_label")}</span>
-              <input type="checkbox" .checked=${config.show_insight === true} @change=${this._showInsightChanged} />
-            </label>
-          `
-        : nothing}
-      ${showCompact
-        ? html`
-            <label class="field checkbox">
-              <span>${t(this.hass, "editor.compact_label")}</span>
-              <input
-                type="checkbox"
-                .checked=${this._config.compact ?? false}
-                @change=${this._compactChanged}
-              />
-            </label>
-          `
-        : nothing}
+      <div class="form">
+        ${deviceField(hass, config, emit)}
+        ${titleField(hass, config, emit)}
+        ${PERIOD_CARDS.has(type)
+          ? haSelect(
+              t(hass, "editor.period_label"),
+              config.period === "month" ? "month" : "year",
+              [
+                { value: "year", label: t(hass, "editor.period_year") },
+                { value: "month", label: t(hass, "editor.period_month") },
+              ],
+              // "year" is the default, so it is stored as an absent key.
+              (value) => patch({ period: value === "month" ? "month" : undefined })
+            )
+          : nothing}
+        ${PERIOD_CARDS.has(type) ? this._fuelFields(hass, config) : nothing}
+        ${goals
+          ? html`
+              ${goals.toggle
+                ? haSwitch(t(hass, "editor.show_goals_label"), config.show_goals !== false, (on) =>
+                    // Shown is the default, so it is stored as an absent key.
+                    patch({ show_goals: on ? undefined : false })
+                  )
+                : nothing}
+              ${config.show_goals !== false || !goals.toggle
+                ? goals.kinds.map((kind) => goalSourceField(hass, config, kind, goals.fallback ?? false, emit))
+                : nothing}
+            `
+          : nothing}
+        ${UNITS_CARDS.has(type) ? unitsField(hass, config, emit) : nothing}
+        ${type === "custom:suunto-ai-insight-card"
+          ? html`
+              ${haSelect(
+                t(hass, "editor.ai_section_label"),
+                String(config.section ?? "sleep"),
+                AI_SECTIONS.map((key) => ({ value: key, label: t(hass, `ai_insight.section_full.${key}`) })),
+                // "sleep" is the default, so it is stored as an absent key.
+                (value) => patch({ section: value === "sleep" ? undefined : value })
+              )}
+              ${haSwitch(t(hass, "editor.ai_single_label"), config.single_section === true, (on) =>
+                patch({ single_section: on || undefined })
+              )}
+            `
+          : nothing}
+        ${type === "custom:suunto-daily-brief-card"
+          ? haSwitch(t(hass, "editor.show_insight_label"), config.show_insight === true, (on) =>
+              // Off is the default, so it is stored as an absent key.
+              patch({ show_insight: on || undefined })
+            )
+          : nothing}
+        ${cardOptionFields(hass, config, emit)}
+        ${lookFields(hass, config, emit)}
+      </div>
     `;
   }
 
-  private _deviceChanged(ev: CustomEvent<{ value: string }>): void {
-    if (!this._config) return;
-    const value = ev.detail.value;
-    this._emit({ ...this._config, device_id: value || undefined });
-  }
-
-  private _periodChanged(ev: Event): void {
-    if (!this._config) return;
-    const value = (ev.target as HTMLSelectElement).value;
-    // "year" is the default, so it is stored as an absent key.
-    this._emit({ ...this._config, period: value === "month" ? "month" : undefined });
-  }
-
-  private _fuelSourceChanged(ev: Event): void {
-    if (!this._config) return;
-    const value = (ev.target as HTMLSelectElement).value;
-    if (value !== "custom") {
-      this._emit({ ...this._config, fuel_l_per_100km: undefined, fuel_price: undefined });
-      return;
-    }
-    // Start the override from whatever the integration is using right now.
-    const base = suuntoFuelFigures(this.hass, this._config.device_id);
-    this._emit({
-      ...this._config,
-      fuel_l_per_100km: base?.litres ?? DEFAULT_FUEL_L_PER_100KM,
-      fuel_price: base?.price ?? DEFAULT_FUEL_PRICE,
-    });
-  }
-
-  private _fuelLitresChanged(ev: Event): void {
-    if (!this._config) return;
-    const raw = Number((ev.target as HTMLInputElement).value);
-    if (Number.isFinite(raw) && raw > 0) this._emit({ ...this._config, fuel_l_per_100km: raw });
-  }
-
-  private _fuelPriceChanged(ev: Event): void {
-    if (!this._config) return;
-    const raw = Number((ev.target as HTMLInputElement).value);
-    if (Number.isFinite(raw) && raw >= 0) this._emit({ ...this._config, fuel_price: raw });
-  }
-
-  private _unitsChanged(ev: Event): void {
-    if (!this._config) return;
-    const value = (ev.target as HTMLSelectElement).value;
-    this._emit({ ...this._config, units: value === "imperial" ? "imperial" : "metric" });
-  }
-
-  private _daysChanged(ev: Event): void {
-    if (!this._config) return;
-    const raw = Number((ev.target as HTMLSelectElement).value);
-    this._emit({ ...this._config, days: Number.isFinite(raw) && raw > 0 ? raw : undefined });
-  }
-
-  private _compactChanged(ev: Event): void {
-    if (!this._config) return;
-    const checked = (ev.target as HTMLInputElement).checked;
-    this._emit({ ...this._config, compact: checked || undefined });
-  }
-
-  private _aiSectionChanged(ev: Event): void {
-    if (!this._config) return;
-    const value = (ev.target as HTMLSelectElement).value;
-    // "sleep" is the default, so it is stored as an absent key.
-    this._emit({ ...this._config, section: value === "sleep" ? undefined : value });
-  }
-
-  private _aiSingleChanged(ev: Event): void {
-    if (!this._config) return;
-    const checked = (ev.target as HTMLInputElement).checked;
-    this._emit({ ...this._config, single_section: checked || undefined });
-  }
-
-  private _showInsightChanged(ev: Event): void {
-    if (!this._config) return;
-    const checked = (ev.target as HTMLInputElement).checked;
-    // Off is the default, so it is stored as an absent key.
-    this._emit({ ...this._config, show_insight: checked || undefined });
-  }
-
-  private _showGoalsChanged(ev: Event): void {
-    if (!this._config) return;
-    const checked = (ev.target as HTMLInputElement).checked;
-    // Shown is the default, so it is stored as an absent key.
-    this._emit({ ...this._config, show_goals: checked ? undefined : false });
+  /** Commutes: fuel figures come from the integration unless typed in here. */
+  private _fuelFields(hass: SuuntoHass, config: SuuntoCardConfig) {
+    const base = suuntoFuelFigures(hass, config.device_id);
+    const own = config.fuel_l_per_100km !== undefined || config.fuel_price !== undefined;
+    return html`
+      ${haSelect(
+        t(hass, "editor.fuel_source_label"),
+        own ? "custom" : "suunto",
+        [
+          {
+            value: "suunto",
+            label: base
+              ? t(hass, "editor.source_integration", {
+                  litres: base.litres.toLocaleString(hass.language),
+                  price: base.price.toLocaleString(hass.language),
+                })
+              : t(hass, "editor.source_integration_unknown"),
+          },
+          { value: "custom", label: t(hass, "editor.source_custom") },
+        ],
+        (value) =>
+          this._emit(
+            value === "custom"
+              ? // Start the override from whatever the integration is using right now.
+                {
+                  ...config,
+                  fuel_l_per_100km: base?.litres ?? DEFAULT_FUEL_L_PER_100KM,
+                  fuel_price: base?.price ?? DEFAULT_FUEL_PRICE,
+                }
+              : patchConfig(config, { fuel_l_per_100km: undefined, fuel_price: undefined })
+          )
+      )}
+      ${own
+        ? html`
+            ${haInput(
+              t(hass, "editor.fuel_consumption_label"),
+              String(config.fuel_l_per_100km ?? base?.litres ?? DEFAULT_FUEL_L_PER_100KM),
+              (raw) => {
+                const value = Number(raw);
+                if (Number.isFinite(value) && value > 0) this._emit({ ...config, fuel_l_per_100km: value });
+              },
+              { type: "number", min: 0.1, step: 0.1 }
+            )}
+            ${haInput(
+              t(hass, "editor.fuel_price_label"),
+              String(config.fuel_price ?? base?.price ?? DEFAULT_FUEL_PRICE),
+              (raw) => {
+                const value = Number(raw);
+                if (Number.isFinite(value) && value >= 0) this._emit({ ...config, fuel_price: value });
+              },
+              { type: "number", min: 0, step: 0.01 }
+            )}
+          `
+        : html`<div class="hint">${t(hass, "editor.fuel_hint")}</div>`}
+    `;
   }
 
   private _emit(config: SuuntoCardConfig): void {
@@ -323,43 +189,7 @@ export class SuuntoDeviceEditor extends LitElement {
     fireEvent(this, "config-changed", { config });
   }
 
-  static styles = css`
-    .hint {
-      font-size: 0.85rem;
-      color: var(--secondary-text-color);
-      padding: 8px 2px 2px;
-    }
-    .field {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 12px 2px 2px;
-      font-size: 0.9rem;
-    }
-    .field.checkbox {
-      justify-content: flex-start;
-    }
-    .field select,
-    .field input[type="number"] {
-      padding: 6px 8px;
-      border-radius: 6px;
-      border: 1px solid var(--divider-color, #ccc);
-      background: var(--card-background-color, #fff);
-      color: inherit;
-      font: inherit;
-    }
-    .field select {
-      max-width: 60%;
-    }
-    .field input[type="number"] {
-      width: 90px;
-    }
-    .field.checkbox input {
-      order: -1;
-      margin-right: 8px;
-    }
-  `;
+  static styles = editorStyles;
 }
 
 declare global {

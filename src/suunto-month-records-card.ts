@@ -60,9 +60,9 @@ export class SuuntoMonthRecordsCard extends SuuntoBaseCard {
     return html`
       <ha-card class="static">
         <div class="header">
-          <div class="icon-badge"><ha-icon icon="mdi:medal-outline"></ha-icon></div>
+          <div class="icon-badge"><ha-icon .icon=${this._icon("mdi:medal-outline")}></ha-icon></div>
           <div class="title-block">
-            <div class="title">${t(hass, "card.month_records.title")}</div>
+            <div class="title">${this._title(t(hass, "card.month_records.title"))}</div>
             <div class="subtitle">
               ${t(hass, "card.month_records.subtitle", { count: rows.length, total: 6 })}
             </div>

@@ -10,7 +10,7 @@ import { t } from "./utils/localize";
 import type { SuuntoHass } from "./utils/types";
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
-const HISTORY_DAYS = 30;
+export const DEFAULT_HISTORY_DAYS = 30;
 const REFETCH_INTERVAL_MS = 10 * 60 * 1000;
 
 /** Presentation-only banding for Training Stress Balance (form). */
@@ -65,11 +65,13 @@ export class SuuntoTrainingLoadCard extends SuuntoBaseCard {
     const entityId = resolved.map["fitness_ctl"];
     if (!entityId) return;
 
+    const days = this._config?.days ?? DEFAULT_HISTORY_DAYS;
+    const key = `${entityId}:${days}`;
     const now = Date.now();
-    if (entityId === this._historyEntityId && now - this._historyFetchedAt < REFETCH_INTERVAL_MS) {
+    if (key === this._historyEntityId && now - this._historyFetchedAt < REFETCH_INTERVAL_MS) {
       return;
     }
-    this._historyEntityId = entityId;
+    this._historyEntityId = key;
     this._historyFetchedAt = now;
 
     try {
@@ -78,7 +80,7 @@ export class SuuntoTrainingLoadCard extends SuuntoBaseCard {
       // history/period fetch, which only reaches back ~10 days by default
       // and left most of this "30-day" sparkline empty on a live account
       // (confirmed live, not theoretical).
-      this._history = await fetchStatisticsSeries(this.hass as SuuntoHass, entityId, HISTORY_DAYS * 24, "mean");
+      this._history = await fetchStatisticsSeries(this.hass as SuuntoHass, entityId, days * 24, "mean");
     } catch {
       // Best-effort - the card still works from live state alone.
       this._history = [];
@@ -116,9 +118,9 @@ export class SuuntoTrainingLoadCard extends SuuntoBaseCard {
     return html`
       <ha-card class="static">
         <div class="header">
-          <div class="icon-badge"><ha-icon icon="mdi:arm-flex"></ha-icon></div>
+          <div class="icon-badge"><ha-icon .icon=${this._icon("mdi:arm-flex")}></ha-icon></div>
           <div class="title-block">
-            <div class="title">${t(hass, "card.training_load.title")}</div>
+            <div class="title">${this._title(t(hass, "card.training_load.title"))}</div>
             <div class="subtitle">${band ? band.label : t(hass, "card.training_load.subtitle_fallback")}</div>
           </div>
         </div>

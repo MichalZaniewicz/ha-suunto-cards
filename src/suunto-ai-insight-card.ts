@@ -104,12 +104,14 @@ export class SuuntoAiInsightCard extends SuuntoBaseCard {
     return html`
       <ha-card class="static">
         <div class="header">
-          <div class="icon-badge"><ha-icon icon=${single ? SECTION_ICON[tab] : "mdi:creation"}></ha-icon></div>
+          <div class="icon-badge"><ha-icon .icon=${this._icon(single ? SECTION_ICON[tab] : "mdi:creation")}></ha-icon></div>
           <div class="title-block">
             <div class="title">
-              ${single
-                ? t(hass, `ai_insight.section_full.${tab}` as TranslationKey)
-                : t(hass, "card.ai_insight.title")}
+              ${this._title(
+                single
+                  ? t(hass, `ai_insight.section_full.${tab}` as TranslationKey)
+                  : t(hass, "card.ai_insight.title")
+              )}
             </div>
             <div class="subtitle">${this._subtitle(attrs)}</div>
           </div>

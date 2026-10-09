@@ -115,10 +115,10 @@ export class SuuntoHeartRateCard extends SuuntoBaseCard {
       <ha-card class="static">
         <div class="header">
           <div class="icon-badge hr-icon-badge">
-            <ha-icon class="hr-beat" style="animation-duration:${beatSeconds}s" icon="mdi:heart"></ha-icon>
+            <ha-icon class="hr-beat" style="animation-duration:${beatSeconds}s" .icon=${this._icon("mdi:heart")}></ha-icon>
           </div>
           <div class="title-block">
-            <div class="title">${t(hass, "card.heart_rate.title")}</div>
+            <div class="title">${this._title(t(hass, "card.heart_rate.title"))}</div>
             ${measuredLabel ? html`<div class="subtitle">${measuredLabel}</div>` : nothing}
           </div>
         </div>

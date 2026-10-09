@@ -82,9 +82,9 @@ export class SuuntoBestEffortsCard extends SuuntoBaseCard {
     return html`
       <ha-card class="static">
         <div class="header">
-          <div class="icon-badge"><ha-icon icon="mdi:speedometer"></ha-icon></div>
+          <div class="icon-badge"><ha-icon .icon=${this._icon("mdi:speedometer")}></ha-icon></div>
           <div class="title-block">
-            <div class="title">${t(hass, "card.best_efforts.title")}</div>
+            <div class="title">${this._title(t(hass, "card.best_efforts.title"))}</div>
             <div class="subtitle">
               ${t(hass, "card.best_efforts.subtitle", { count: recorded, total: DISTANCES.length })}
             </div>

@@ -52,7 +52,7 @@ export class SuuntoPersonalInsightsCard extends SuuntoBaseCard {
 
     const entity = map["personal_insights"] ? hass.states[map["personal_insights"]] : undefined;
     // The state is unknown when nothing clears the bar, so read the attribute.
-    const insights = readInsights(entity?.attributes.insights);
+    const insights = this._cap(readInsights(entity?.attributes.insights));
     if (!insights.length) {
       return this._message(
         "mdi:lightbulb-on-outline",
@@ -65,9 +65,9 @@ export class SuuntoPersonalInsightsCard extends SuuntoBaseCard {
     return html`
       <ha-card class="static">
         <div class="header">
-          <div class="icon-badge"><ha-icon icon="mdi:lightbulb-on-outline"></ha-icon></div>
+          <div class="icon-badge"><ha-icon .icon=${this._icon("mdi:lightbulb-on-outline")}></ha-icon></div>
           <div class="title-block">
-            <div class="title">${t(hass, "card.personal_insights.title")}</div>
+            <div class="title">${this._title(t(hass, "card.personal_insights.title"))}</div>
             <div class="subtitle">${t(hass, "personal_insights.subtitle", { nights })}</div>
           </div>
         </div>

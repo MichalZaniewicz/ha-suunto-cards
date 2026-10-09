@@ -1,15 +1,15 @@
-import { LitElement, html, css, nothing } from "lit";
+import { LitElement, html, nothing } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import { fireEvent } from "custom-card-helpers";
 import type { SuuntoHass, SuuntoGoalCardConfig } from "./utils/types";
-import { findSuuntoDeviceIds } from "./utils/entities";
 import { t } from "./utils/localize";
 import { DEFAULT_WEEKLY_GOAL_KM } from "./suunto-weekly-goal-card";
+import { editorStyles, haInput } from "./utils/editor-controls";
+import { cardOptionFields, deviceField, lookFields, titleField } from "./utils/editor-common";
 
 /**
- * Editor for suunto-weekly-goal-card - the first card in this family whose
- * config is more than just device_id, so it gets its own small editor
- * rather than reusing suunto-device-editor.
+ * Editor for suunto-weekly-goal-card: a weekly distance goal (the Suunto app
+ * has none, so it is always the card's own number).
  */
 @customElement("suunto-goal-editor")
 export class SuuntoGoalEditor extends LitElement {
@@ -23,45 +23,27 @@ export class SuuntoGoalEditor extends LitElement {
 
   protected render() {
     if (!this.hass || !this._config) return nothing;
-
-    const devices = findSuuntoDeviceIds(this.hass);
+    const hass = this.hass;
+    const config = this._config;
+    const emit = (next: SuuntoGoalCardConfig): void => this._emit(next);
 
     return html`
-      ${devices.length > 1
-        ? html`
-            <ha-device-picker
-              .hass=${this.hass}
-              .value=${this._config.device_id ?? ""}
-              .label=${t(this.hass, "editor.device_label")}
-              @value-changed=${this._deviceChanged}
-            ></ha-device-picker>
-          `
-        : html`<div class="hint">${t(this.hass, "editor.auto_detect")}</div>`}
-
-      <label class="goal-field">
-        <span>${t(this.hass, "editor.goal_label")}</span>
-        <input
-          type="number"
-          min="1"
-          step="1"
-          .value=${String(this._config.goal_km ?? DEFAULT_WEEKLY_GOAL_KM)}
-          @change=${this._goalChanged}
-        />
-      </label>
+      <div class="form">
+        ${deviceField(hass, config, emit)}
+        ${titleField(hass, config, emit)}
+        ${haInput(
+          t(hass, "editor.goal_label"),
+          String(config.goal_km ?? DEFAULT_WEEKLY_GOAL_KM),
+          (raw) => {
+            const value = Number(raw);
+            emit({ ...config, goal_km: Number.isFinite(value) && value > 0 ? value : undefined });
+          },
+          { type: "number", min: 1, step: 1 }
+        )}
+        ${cardOptionFields(hass, config, emit)}
+        ${lookFields(hass, config, emit)}
+      </div>
     `;
-  }
-
-  private _deviceChanged(ev: CustomEvent<{ value: string }>): void {
-    if (!this._config) return;
-    const value = ev.detail.value;
-    this._emit({ ...this._config, device_id: value || undefined });
-  }
-
-  private _goalChanged(ev: Event): void {
-    if (!this._config) return;
-    const raw = Number((ev.target as HTMLInputElement).value);
-    const goal_km = Number.isFinite(raw) && raw > 0 ? raw : undefined;
-    this._emit({ ...this._config, goal_km });
   }
 
   private _emit(config: SuuntoGoalCardConfig): void {
@@ -69,30 +51,7 @@ export class SuuntoGoalEditor extends LitElement {
     fireEvent(this, "config-changed", { config });
   }
 
-  static styles = css`
-    .hint {
-      font-size: 0.85rem;
-      color: var(--secondary-text-color);
-      padding: 8px 2px 2px;
-    }
-    .goal-field {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 12px 2px 2px;
-      font-size: 0.9rem;
-    }
-    .goal-field input {
-      width: 90px;
-      padding: 6px 8px;
-      border-radius: 6px;
-      border: 1px solid var(--divider-color, #ccc);
-      background: var(--card-background-color, #fff);
-      color: inherit;
-      font: inherit;
-    }
-  `;
+  static styles = editorStyles;
 }
 
 declare global {

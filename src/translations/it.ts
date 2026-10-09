@@ -217,7 +217,7 @@ export const it: Record<keyof typeof en, string> = {
   "empty.fitness_trend.subtitle": "Suunto calcola questo solo dagli allenamenti di corsa o camminata.",
 
   "card.pmc.title": "Gestione delle Prestazioni",
-  "card.pmc.subtitle": "Andamento di 90 giorni",
+  "card.pmc.subtitle": "Andamento di {days} giorni",
 
   "card.recovery_trends.title": "Tendenze di Recupero",
   "card.recovery_trends.subtitle": "Riferimento di {days} giorni",
@@ -261,15 +261,15 @@ export const it: Record<keyof typeof en, string> = {
   "empty.just_finished.title": "Nessun allenamento recente",
 
   "card.activity_trends.title": "Andamento dell'Attività",
-  "card.activity_trends.subtitle": "Ultimi 14 giorni",
+  "card.activity_trends.subtitle": "Ultimi {days} giorni",
   "empty.activity_trends.title": "Ancora nessun dato sull'andamento dell'attività",
 
   "card.recovery_balance_trend.title": "Andamento dell'Equilibrio di Recupero",
-  "card.recovery_balance_trend.subtitle": "Ultimi 14 giorni",
+  "card.recovery_balance_trend.subtitle": "Ultimi {days} giorni",
   "empty.recovery_balance_trend.title": "Ancora nessun dato sull'andamento del recupero",
 
   "card.readiness_trend.title": "Andamento della Prontezza",
-  "card.readiness_trend.subtitle": "Ultimi 30 giorni",
+  "card.readiness_trend.subtitle": "Ultimi {days} giorni",
   "empty.readiness_trend.title": "Ancora nessun dato sull'andamento della prontezza",
 
   "stat.cadence": "Cadenza",
@@ -502,7 +502,7 @@ export const it: Record<keyof typeof en, string> = {
 
   // -- card 49: steps trend --
   "card.steps_trend.title": "Andamento Passi",
-  "card.steps_trend.subtitle": "Ultimi 14 giorni",
+  "card.steps_trend.subtitle": "Ultimi {days} giorni",
   "empty.steps_trend.title": "Ancora nessuno storico dei passi",
   "steps_trend.legend_met": "Obiettivo raggiunto",
   "steps_trend.legend_below": "Sotto l'obiettivo",
@@ -651,4 +651,15 @@ export const it: Record<keyof typeof en, string> = {
   "insights.metric.sleep": "Sonno",
   "daily_brief.your_pattern": "Il tuo schema",
   "editor.show_insight_label": "Mostra il tuo schema più forte",
+  "editor.look_section": "Aspetto",
+  "editor.title": "Titolo",
+  "editor.icon": "Icona (es. mdi:star)",
+  "editor.accent_color": "Colore di accento (es. #e91e63 o teal)",
+  "editor.accent_hint": "Lo stesso colore in modalità chiara e scura. Un colore non valido viene ignorato.",
+  "editor.hide_header": "Nascondi intestazione",
+  "editor.hide_icon": "Nascondi icona",
+  "editor.hide_subtitle": "Nascondi sottotitolo",
+  "editor.hide_legend": "Nascondi legenda",
+  "editor.max_items": "Numero di elementi",
+  "editor.list_height": "Altezza dell'elenco (px)",
 };

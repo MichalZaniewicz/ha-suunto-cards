@@ -161,8 +161,38 @@ export const suuntoSharedStyles = css`
     display: flex;
     flex-direction: column;
     gap: 8px;
-    max-height: 320px;
+    max-height: var(--sc-list-height, 320px);
     overflow-y: auto;
+  }
+
+  /* Universal options (SuuntoBaseCard._syncTheme toggles these host classes). */
+  :host(.hide-header) .header {
+    display: none;
+  }
+  :host(.hide-icon) .header .icon-badge {
+    display: none;
+  }
+  :host(.hide-subtitle) .header .subtitle {
+    display: none;
+  }
+  :host(.hide-legend) .legend,
+  :host(.hide-legend) .chart-legend,
+  :host(.hide-legend) .stage-legend,
+  :host(.hide-legend) .pace-legend {
+    display: none;
+  }
+  :host(.compact) ha-card {
+    padding: 10px 12px;
+    gap: 8px;
+  }
+  :host(.compact) .header {
+    gap: 10px;
+  }
+  :host(.compact) .header .icon-badge {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    --mdc-icon-size: 18px;
   }
 
   .dot {

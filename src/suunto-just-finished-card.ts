@@ -82,9 +82,9 @@ export class SuuntoJustFinishedCard extends SuuntoBaseCard {
     return html`
       <ha-card class="static celebrate">
         <div class="header">
-          <div class="icon-badge accent"><ha-icon icon="mdi:party-popper"></ha-icon></div>
+          <div class="icon-badge accent"><ha-icon .icon=${this._icon("mdi:party-popper")}></ha-icon></div>
           <div class="title-block">
-            <div class="title">${t(hass, "just_finished.title")}</div>
+            <div class="title">${this._title(t(hass, "just_finished.title"))}</div>
             <div class="subtitle">
               <span class="activity">${activity.state}</span> · ${formatRelative(ingestedAt, hass.language)}
             </div>

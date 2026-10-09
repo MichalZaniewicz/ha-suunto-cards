@@ -240,7 +240,7 @@ export const en = {
 
   // -- card 14: performance management chart --
   "card.pmc.title": "Performance Management",
-  "card.pmc.subtitle": "90-day trend",
+  "card.pmc.subtitle": "{days}-day trend",
 
   // -- card 15: recovery trends --
   "card.recovery_trends.title": "Recovery Trends",
@@ -292,17 +292,17 @@ export const en = {
 
   // -- card 22: activity trends --
   "card.activity_trends.title": "Activity Trends",
-  "card.activity_trends.subtitle": "Last 14 days",
+  "card.activity_trends.subtitle": "Last {days} days",
   "empty.activity_trends.title": "No activity trend data yet",
 
   // -- card 23: recovery balance trend --
   "card.recovery_balance_trend.title": "Recovery Balance Trend",
-  "card.recovery_balance_trend.subtitle": "Last 14 days",
+  "card.recovery_balance_trend.subtitle": "Last {days} days",
   "empty.recovery_balance_trend.title": "No recovery trend data yet",
 
   // -- card 24: readiness trend --
   "card.readiness_trend.title": "Readiness Trend",
-  "card.readiness_trend.subtitle": "Last 30 days",
+  "card.readiness_trend.subtitle": "Last {days} days",
   "empty.readiness_trend.title": "No readiness trend data yet",
 
   // -- last-workout / sleep-readiness enrichments --
@@ -547,7 +547,7 @@ export const en = {
 
   // -- card 49: steps trend --
   "card.steps_trend.title": "Steps Trend",
-  "card.steps_trend.subtitle": "Last 14 days",
+  "card.steps_trend.subtitle": "Last {days} days",
   "empty.steps_trend.title": "No step history yet",
   "steps_trend.legend_met": "Goal met",
   "steps_trend.legend_below": "Below goal",
@@ -698,4 +698,15 @@ export const en = {
   "insights.metric.sleep": "Sleep",
   "daily_brief.your_pattern": "Your pattern",
   "editor.show_insight_label": "Show your strongest pattern",
+  "editor.look_section": "Appearance",
+  "editor.title": "Title",
+  "editor.icon": "Icon (e.g. mdi:star)",
+  "editor.accent_color": "Accent color (e.g. #e91e63 or teal)",
+  "editor.accent_hint": "The same color in light and dark mode. An invalid color is ignored.",
+  "editor.hide_header": "Hide header",
+  "editor.hide_icon": "Hide icon",
+  "editor.hide_subtitle": "Hide subtitle",
+  "editor.hide_legend": "Hide legend",
+  "editor.max_items": "Number of items",
+  "editor.list_height": "List height (px)",
 } as const;

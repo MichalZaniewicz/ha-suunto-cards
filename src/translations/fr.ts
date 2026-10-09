@@ -217,7 +217,7 @@ export const fr: Record<keyof typeof en, string> = {
   "empty.fitness_trend.subtitle": "Suunto calcule ceci uniquement à partir des séances de course ou de marche.",
 
   "card.pmc.title": "Gestion de la Performance",
-  "card.pmc.subtitle": "Tendance sur 90 jours",
+  "card.pmc.subtitle": "Tendance sur {days} jours",
 
   "card.recovery_trends.title": "Tendances de Récupération",
   "card.recovery_trends.subtitle": "Référence sur {days} jours",
@@ -261,15 +261,15 @@ export const fr: Record<keyof typeof en, string> = {
   "empty.just_finished.title": "Aucune séance récente",
 
   "card.activity_trends.title": "Tendances d'Activité",
-  "card.activity_trends.subtitle": "14 derniers jours",
+  "card.activity_trends.subtitle": "{days} derniers jours",
   "empty.activity_trends.title": "Pas encore de données de tendances d'activité",
 
   "card.recovery_balance_trend.title": "Tendance de l'Équilibre de Récupération",
-  "card.recovery_balance_trend.subtitle": "14 derniers jours",
+  "card.recovery_balance_trend.subtitle": "{days} derniers jours",
   "empty.recovery_balance_trend.title": "Pas encore de données de tendances de récupération",
 
   "card.readiness_trend.title": "Tendance de Préparation",
-  "card.readiness_trend.subtitle": "30 derniers jours",
+  "card.readiness_trend.subtitle": "{days} derniers jours",
   "empty.readiness_trend.title": "Pas encore de données de tendances de préparation",
 
   "stat.cadence": "Cadence",
@@ -502,7 +502,7 @@ export const fr: Record<keyof typeof en, string> = {
 
   // -- card 49: steps trend --
   "card.steps_trend.title": "Tendance des Pas",
-  "card.steps_trend.subtitle": "Les 14 derniers jours",
+  "card.steps_trend.subtitle": "Les {days} derniers jours",
   "empty.steps_trend.title": "Pas encore d'historique de pas",
   "steps_trend.legend_met": "Objectif atteint",
   "steps_trend.legend_below": "En dessous de l'objectif",
@@ -651,4 +651,15 @@ export const fr: Record<keyof typeof en, string> = {
   "insights.metric.sleep": "Sommeil",
   "daily_brief.your_pattern": "Votre tendance",
   "editor.show_insight_label": "Afficher votre tendance la plus nette",
+  "editor.look_section": "Apparence",
+  "editor.title": "Titre",
+  "editor.icon": "Icône (ex. mdi:star)",
+  "editor.accent_color": "Couleur d'accent (ex. #e91e63 ou teal)",
+  "editor.accent_hint": "La même couleur en mode clair et sombre. Une couleur invalide est ignorée.",
+  "editor.hide_header": "Masquer l'en-tête",
+  "editor.hide_icon": "Masquer l'icône",
+  "editor.hide_subtitle": "Masquer le sous-titre",
+  "editor.hide_legend": "Masquer la légende",
+  "editor.max_items": "Nombre d'éléments",
+  "editor.list_height": "Hauteur de la liste (px)",
 };

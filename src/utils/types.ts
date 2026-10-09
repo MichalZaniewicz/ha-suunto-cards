@@ -21,7 +21,8 @@ export interface SuuntoCardConfig extends LovelaceCardConfig {
   device_id?: string;
   /** Display unit system for distance/pace/speed/altitude stats. Default: "metric". */
   units?: UnitSystem;
-  /** Collapses secondary/detail stats to keep the card short. Default: false. */
+  /** Tighter padding and a smaller icon badge on every card; on Last Workout and
+   * Sleep & Readiness it also collapses secondary stats. Default: false. */
   compact?: boolean;
   /** Trend window length in days, for cards with a rolling chart. Each such card defines its own default and offered choices. */
   days?: number;
@@ -47,6 +48,24 @@ export interface SuuntoCardConfig extends LovelaceCardConfig {
   show_goals?: boolean;
   /** Daily Brief: add the strongest personal_insights finding under the brief. Default: false. */
   show_insight?: boolean;
+  /** Header title override. Universal - see `SuuntoBaseCard._title`. */
+  title?: string;
+  /** Header icon override, e.g. "mdi:star". Universal - see `SuuntoBaseCard._icon`. */
+  icon?: string;
+  /** Any CSS color ("#e91e63", "teal") replacing the amber/blue accent. Universal. */
+  accent_color?: string;
+  /** Hides the header row entirely. Universal. */
+  hide_header?: boolean;
+  /** Hides the header's icon badge. Universal. */
+  hide_icon?: boolean;
+  /** Hides the line under the title. Universal. */
+  hide_subtitle?: boolean;
+  /** Hides the colour legend under a chart. */
+  hide_legend?: boolean;
+  /** Row cap for the list cards (Recent workouts, Personal insights, Gear). */
+  max_items?: number;
+  /** Height limit of a scrolling list, in px (each card has its own default). */
+  list_height?: number;
 }
 
 /** suunto-weekly-goal-card's config: same device selection, plus a user-set target. */

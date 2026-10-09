@@ -9,7 +9,7 @@ import { fetchStatisticsSeries } from "./utils/format";
 import { t } from "./utils/localize";
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
-const HISTORY_DAYS = 90;
+export const DEFAULT_HISTORY_DAYS = 90;
 const REFETCH_INTERVAL_MS = 10 * 60 * 1000;
 
 /**
@@ -56,7 +56,8 @@ export class SuuntoFitnessTrendCard extends SuuntoBaseCard {
 
   private async _maybeFetchHistory(): Promise<void> {
     if (!this.hass) return;
-    const key = this._configuredDeviceId ?? "auto";
+    const days = this._config?.days ?? DEFAULT_HISTORY_DAYS;
+    const key = `${this._configuredDeviceId ?? "auto"}:${days}`;
     const now = Date.now();
     if (key === this._historyKey && now - this._historyFetchedAt < REFETCH_INTERVAL_MS) {
       return;
@@ -64,7 +65,7 @@ export class SuuntoFitnessTrendCard extends SuuntoBaseCard {
     this._historyKey = key;
     this._historyFetchedAt = now;
 
-    const hours = HISTORY_DAYS * 24;
+    const hours = days * 24;
     try {
       const [vo2max, estimated] = await Promise.all([
         fetchStatisticsSeries(this.hass, "suunto_app:vo2max", hours, "mean"),
@@ -107,10 +108,10 @@ export class SuuntoFitnessTrendCard extends SuuntoBaseCard {
     return html`
       <ha-card class="static">
         <div class="header">
-          <div class="icon-badge"><ha-icon icon="mdi:lungs"></ha-icon></div>
+          <div class="icon-badge"><ha-icon .icon=${this._icon("mdi:lungs")}></ha-icon></div>
           <div class="title-block">
-            <div class="title">${t(hass, "card.fitness_trend.title")}</div>
-            <div class="subtitle">${t(hass, "card.pmc.subtitle")}</div>
+            <div class="title">${this._title(t(hass, "card.fitness_trend.title"))}</div>
+            <div class="subtitle">${t(hass, "card.pmc.subtitle", { days: this._config?.days ?? DEFAULT_HISTORY_DAYS })}</div>
           </div>
         </div>
 

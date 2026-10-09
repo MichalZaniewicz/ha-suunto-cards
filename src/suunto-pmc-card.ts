@@ -9,7 +9,7 @@ import { formatDelta, fetchStatisticsSeries } from "./utils/format";
 import { t } from "./utils/localize";
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
-const HISTORY_DAYS = 90;
+export const DEFAULT_HISTORY_DAYS = 90;
 const REFETCH_INTERVAL_MS = 10 * 60 * 1000;
 
 /**
@@ -60,7 +60,8 @@ export class SuuntoPmcCard extends SuuntoBaseCard {
     const tsbId = map["form_tsb"];
 
     const ids = [ctlId, atlId, tsbId].filter((id): id is string => Boolean(id));
-    const key = ids.join(",");
+    const days = this._config?.days ?? DEFAULT_HISTORY_DAYS;
+    const key = `${ids.join(",")}:${days}`;
     const now = Date.now();
     if (key === this._historyKey && now - this._historyFetchedAt < REFETCH_INTERVAL_MS) {
       return;
@@ -76,9 +77,9 @@ export class SuuntoPmcCard extends SuuntoBaseCard {
       // account (confirmed live, not theoretical).
       const hass = this.hass as SuuntoHass;
       const [ctlSeries, atlSeries, tsbSeries] = await Promise.all([
-        fetchStatisticsSeries(hass, ctlId, HISTORY_DAYS * 24, "mean"),
-        atlId ? fetchStatisticsSeries(hass, atlId, HISTORY_DAYS * 24, "mean") : Promise.resolve([]),
-        tsbId ? fetchStatisticsSeries(hass, tsbId, HISTORY_DAYS * 24, "mean") : Promise.resolve([]),
+        fetchStatisticsSeries(hass, ctlId, days * 24, "mean"),
+        atlId ? fetchStatisticsSeries(hass, atlId, days * 24, "mean") : Promise.resolve([]),
+        tsbId ? fetchStatisticsSeries(hass, tsbId, days * 24, "mean") : Promise.resolve([]),
       ]);
       this._ctlHistory = ctlSeries;
       this._atlHistory = atlSeries;
@@ -120,10 +121,10 @@ export class SuuntoPmcCard extends SuuntoBaseCard {
     return html`
       <ha-card class="static">
         <div class="header">
-          <div class="icon-badge"><ha-icon icon="mdi:chart-timeline-variant"></ha-icon></div>
+          <div class="icon-badge"><ha-icon .icon=${this._icon("mdi:chart-timeline-variant")}></ha-icon></div>
           <div class="title-block">
-            <div class="title">${t(hass, "card.pmc.title")}</div>
-            <div class="subtitle">${t(hass, "card.pmc.subtitle")}</div>
+            <div class="title">${this._title(t(hass, "card.pmc.title"))}</div>
+            <div class="subtitle">${t(hass, "card.pmc.subtitle", { days: this._config?.days ?? DEFAULT_HISTORY_DAYS })}</div>
           </div>
         </div>
 

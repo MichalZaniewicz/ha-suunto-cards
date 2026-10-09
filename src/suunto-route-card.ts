@@ -67,9 +67,9 @@ export class SuuntoRouteCard extends SuuntoBaseCard {
     return html`
       <ha-card class="static">
         <div class="header">
-          <div class="icon-badge"><ha-icon icon="mdi:map-marker-path"></ha-icon></div>
+          <div class="icon-badge"><ha-icon .icon=${this._icon("mdi:map-marker-path")}></ha-icon></div>
           <div class="title-block">
-            <div class="title">${t(hass, "card.route.title")}</div>
+            <div class="title">${this._title(t(hass, "card.route.title"))}</div>
             <div class="subtitle">
               ${activity ? html`${activity.state}` : nothing}
               ${activity && start ? html`<span class="sep">·</span>` : nothing}

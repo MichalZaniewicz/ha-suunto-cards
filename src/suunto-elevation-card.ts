@@ -63,9 +63,9 @@ export class SuuntoElevationCard extends SuuntoBaseCard {
     return html`
       <ha-card class="static">
         <div class="header">
-          <div class="icon-badge"><ha-icon icon="mdi:image-filter-hdr"></ha-icon></div>
+          <div class="icon-badge"><ha-icon .icon=${this._icon("mdi:image-filter-hdr")}></ha-icon></div>
           <div class="title-block">
-            <div class="title">${t(hass, "card.elevation.title")}</div>
+            <div class="title">${this._title(t(hass, "card.elevation.title"))}</div>
             <div class="subtitle">
               ${start
                 ? `${t(hass, "card.hr_zones.last_workout")} · ${formatRelative(new Date(start.state), hass.language)}`

@@ -70,9 +70,9 @@ export class SuuntoDailyBriefCard extends SuuntoBaseCard {
     return html`
       <ha-card class="static">
         <div class="header">
-          <div class="icon-badge pulse"><ha-icon icon="mdi:text-box-check-outline"></ha-icon></div>
+          <div class="icon-badge pulse"><ha-icon .icon=${this._icon("mdi:text-box-check-outline")}></ha-icon></div>
           <div class="title-block">
-            <div class="title">${t(hass, "card.daily_brief.title")}</div>
+            <div class="title">${this._title(t(hass, "card.daily_brief.title"))}</div>
             <div class="subtitle">
               ${new Intl.DateTimeFormat(hass.language, { weekday: "long", day: "numeric", month: "long" }).format(
                 new Date()

@@ -217,7 +217,7 @@ export const pl: Record<keyof typeof en, string> = {
   "empty.fitness_trend.subtitle": "Suunto oblicza to tylko na podstawie biegania lub marszu.",
 
   "card.pmc.title": "Zarządzanie formą",
-  "card.pmc.subtitle": "Trend 90-dniowy",
+  "card.pmc.subtitle": "Trend {days}-dniowy",
 
   "card.recovery_trends.title": "Trendy regeneracji",
   "card.recovery_trends.subtitle": "Poziom bazowy {days} dni",
@@ -261,15 +261,15 @@ export const pl: Record<keyof typeof en, string> = {
   "empty.just_finished.title": "Brak ostatniego treningu",
 
   "card.activity_trends.title": "Trendy aktywności",
-  "card.activity_trends.subtitle": "Ostatnie 14 dni",
+  "card.activity_trends.subtitle": "Ostatnie {days} dni",
   "empty.activity_trends.title": "Brak jeszcze danych o trendach aktywności",
 
   "card.recovery_balance_trend.title": "Trend bilansu regeneracji",
-  "card.recovery_balance_trend.subtitle": "Ostatnie 14 dni",
+  "card.recovery_balance_trend.subtitle": "Ostatnie {days} dni",
   "empty.recovery_balance_trend.title": "Brak jeszcze danych o trendzie regeneracji",
 
   "card.readiness_trend.title": "Trend gotowości",
-  "card.readiness_trend.subtitle": "Ostatnie 30 dni",
+  "card.readiness_trend.subtitle": "Ostatnie {days} dni",
   "empty.readiness_trend.title": "Brak jeszcze danych o trendzie gotowości",
 
   "stat.cadence": "Kadencja",
@@ -502,7 +502,7 @@ export const pl: Record<keyof typeof en, string> = {
 
   // -- card 49: steps trend --
   "card.steps_trend.title": "Trend kroków",
-  "card.steps_trend.subtitle": "Ostatnie 14 dni",
+  "card.steps_trend.subtitle": "Ostatnie {days} dni",
   "empty.steps_trend.title": "Brak jeszcze historii kroków",
   "steps_trend.legend_met": "Cel osiągnięty",
   "steps_trend.legend_below": "Poniżej celu",
@@ -651,4 +651,15 @@ export const pl: Record<keyof typeof en, string> = {
   "insights.metric.sleep": "Sen",
   "daily_brief.your_pattern": "Twój wzorzec",
   "editor.show_insight_label": "Pokaż najmocniejszy wzorzec",
+  "editor.look_section": "Wygląd",
+  "editor.title": "Tytuł",
+  "editor.icon": "Ikona (np. mdi:star)",
+  "editor.accent_color": "Kolor akcentu (np. #e91e63 lub teal)",
+  "editor.accent_hint": "Ten sam kolor w trybie jasnym i ciemnym. Niepoprawny kolor jest pomijany.",
+  "editor.hide_header": "Ukryj nagłówek",
+  "editor.hide_icon": "Ukryj ikonę",
+  "editor.hide_subtitle": "Ukryj podtytuł",
+  "editor.hide_legend": "Ukryj legendę",
+  "editor.max_items": "Liczba pozycji",
+  "editor.list_height": "Wysokość listy (px)",
 };

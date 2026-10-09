@@ -1,6 +1,6 @@
 import { LitElement, html, nothing, type TemplateResult } from "lit";
 import { property } from "lit/decorators.js";
-import type { SuuntoHass } from "./types";
+import type { SuuntoCardConfig, SuuntoHass } from "./types";
 import { resolveSuuntoDevice, mapByTranslationKey, SuuntoConfigError } from "./entities";
 import { t } from "./localize";
 
@@ -14,9 +14,63 @@ export abstract class SuuntoBaseCard extends LitElement {
 
   protected _configuredDeviceId?: string;
 
-  /** Call at the top of render(): toggles the `.dark` host class used by style-tokens.ts. */
+  /** Every card keeps its config in `_config`; read it here for the universal options. */
+  protected get _cardConfig(): SuuntoCardConfig | undefined {
+    return (this as unknown as { _config?: SuuntoCardConfig })._config;
+  }
+
+  /** Call at the top of render(): toggles the `.dark`/`.compact`/`.hide-*` host classes used by
+   * style-tokens.ts, and sets the accent color / list height custom properties. */
   protected _syncTheme(): void {
-    this.classList.toggle("dark", Boolean(this.hass?.themes?.darkMode));
+    const dark = Boolean(this.hass?.themes?.darkMode);
+    this.classList.toggle("dark", dark);
+    const config = this._cardConfig;
+    this.classList.toggle("compact", Boolean(config?.compact));
+    this.classList.toggle("hide-header", Boolean(config?.hide_header));
+    this.classList.toggle("hide-icon", Boolean(config?.hide_icon));
+    this.classList.toggle("hide-subtitle", Boolean(config?.hide_subtitle));
+    this.classList.toggle("hide-legend", Boolean(config?.hide_legend));
+    this._syncAccent(config?.accent_color, dark);
+    const height = config?.list_height;
+    if (height && height > 0) this.style.setProperty("--sc-list-height", `${height}px`);
+    else this.style.removeProperty("--sc-list-height");
+  }
+
+  /**
+   * `accent_color`: inline custom properties on the host win over the
+   * `:host`/`:host(.dark)` token rules, so the amber and blue accents (and
+   * their tinted backgrounds) follow the chosen color in both themes. The
+   * semantic colors (zones, sleep stages, good/bad) stay. An invalid color
+   * is ignored.
+   */
+  private _syncAccent(color: string | undefined, dark: boolean): void {
+    const props = ["--sc-amber", "--sc-amber-bg", "--sc-pulse", "--sc-pulse-bg"];
+    const value = color?.trim();
+    if (!value || (typeof CSS !== "undefined" && !CSS.supports("color", value))) {
+      for (const prop of props) this.style.removeProperty(prop);
+      return;
+    }
+    const bg = `color-mix(in srgb, ${value} ${dark ? 18 : 14}%, transparent)`;
+    this.style.setProperty("--sc-amber", value);
+    this.style.setProperty("--sc-pulse", value);
+    this.style.setProperty("--sc-amber-bg", bg);
+    this.style.setProperty("--sc-pulse-bg", bg);
+  }
+
+  /** The header title: the `title` option when set, else the card's own. */
+  protected _title(fallback: string): string {
+    return this._cardConfig?.title?.trim() || fallback;
+  }
+
+  /** A list cut to the `max_items` option (no cap when unset). */
+  protected _cap<T>(items: readonly T[]): T[] {
+    const max = this._cardConfig?.max_items;
+    return max !== undefined && max > 0 ? items.slice(0, max) : [...items];
+  }
+
+  /** The header icon: the `icon` option when set, else the card's own. */
+  protected _icon(fallback: string): string {
+    return this._cardConfig?.icon?.trim() || fallback;
   }
 
   /** Resolves the device + translation_key map, or a ready-to-return error template. */

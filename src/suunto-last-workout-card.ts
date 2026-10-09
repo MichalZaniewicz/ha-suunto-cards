@@ -138,9 +138,9 @@ export class SuuntoLastWorkoutCard extends SuuntoBaseCard {
     return html`
       <ha-card @click=${() => this._openMoreInfo(map["last_activity"])}>
         <div class="header">
-          <div class="icon-badge"><ha-icon .icon=${activityIcon(activity.state)}></ha-icon></div>
+          <div class="icon-badge"><ha-icon .icon=${this._icon(activityIcon(activity.state))}></ha-icon></div>
           <div class="title-block">
-            <div class="title activity">${activity.state}</div>
+            <div class="title activity">${this._title(activity.state)}</div>
             <div class="subtitle">
               ${start
                 ? html`${formatRelative(new Date(start.state), hass.language)} ·

@@ -105,9 +105,9 @@ export class SuuntoPaceTrendCard extends SuuntoBaseCard {
     return html`
       <ha-card class="static">
         <div class="header">
-          <div class="icon-badge"><ha-icon .icon=${activityIcon(trend.activity)}></ha-icon></div>
+          <div class="icon-badge"><ha-icon .icon=${this._icon(activityIcon(trend.activity))}></ha-icon></div>
           <div class="title-block">
-            <div class="title">${t(hass, "card.pace_trend.title")}</div>
+            <div class="title">${this._title(t(hass, "card.pace_trend.title"))}</div>
             <div class="subtitle">
               ${t(hass, "card.pace_trend.subtitle", { activity: trend.activity, count: trend.points.length })}
             </div>

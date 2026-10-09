@@ -103,9 +103,9 @@ export class SuuntoWorkoutComparisonCard extends SuuntoBaseCard {
     return html`
       <ha-card class="static">
         <div class="header">
-          <div class="icon-badge"><ha-icon .icon=${activityIcon(current.activity)}></ha-icon></div>
+          <div class="icon-badge"><ha-icon .icon=${this._icon(activityIcon(current.activity))}></ha-icon></div>
           <div class="title-block">
-            <div class="title">${t(hass, "card.workout_comparison.title")}</div>
+            <div class="title">${this._title(t(hass, "card.workout_comparison.title"))}</div>
             <div class="subtitle">
               <span class="activity">${current.activity}</span> ·
               ${t(hass, "card.workout_comparison.vs", {

@@ -123,9 +123,9 @@ export class SuuntoWeeklyVolumeCard extends SuuntoBaseCard {
     return html`
       <ha-card class="static">
         <div class="header">
-          <div class="icon-badge"><ha-icon icon="mdi:chart-bar"></ha-icon></div>
+          <div class="icon-badge"><ha-icon .icon=${this._icon("mdi:chart-bar")}></ha-icon></div>
           <div class="title-block">
-            <div class="title">${t(hass, "card.weekly_volume.title")}</div>
+            <div class="title">${this._title(t(hass, "card.weekly_volume.title"))}</div>
             <div class="subtitle">${t(hass, "card.weekly_volume.subtitle")}</div>
           </div>
         </div>

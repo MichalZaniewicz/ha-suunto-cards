@@ -84,7 +84,7 @@ export class SuuntoGearCard extends SuuntoBaseCard {
     if ("error" in resolved) return resolved.error;
     const hass = this.hass;
     const units = this._config.units ?? "metric";
-    const rows = this._rows(resolveSuuntoDevice(hass, this._configuredDeviceId));
+    const rows = this._cap(this._rows(resolveSuuntoDevice(hass, this._configuredDeviceId)));
 
     if (rows.length === 0) {
       return this._message("mdi:wrench-clock", t(hass, "empty.gear.title"), t(hass, "empty.gear.subtitle"));
@@ -98,9 +98,9 @@ export class SuuntoGearCard extends SuuntoBaseCard {
     return html`
       <ha-card class="static">
         <div class="header">
-          <div class="icon-badge"><ha-icon icon="mdi:wrench-clock"></ha-icon></div>
+          <div class="icon-badge"><ha-icon .icon=${this._icon("mdi:wrench-clock")}></ha-icon></div>
           <div class="title-block">
-            <div class="title">${t(hass, "card.gear.title")}</div>
+            <div class="title">${this._title(t(hass, "card.gear.title"))}</div>
             <div class="subtitle">${t(hass, "card.gear.subtitle")}</div>
           </div>
         </div>

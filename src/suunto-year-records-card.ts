@@ -55,9 +55,9 @@ export class SuuntoYearRecordsCard extends SuuntoBaseCard {
     return html`
       <ha-card class="static">
         <div class="header">
-          <div class="icon-badge"><ha-icon icon="mdi:trophy-award"></ha-icon></div>
+          <div class="icon-badge"><ha-icon .icon=${this._icon("mdi:trophy-award")}></ha-icon></div>
           <div class="title-block">
-            <div class="title">${t(hass, "card.year_records.title")}</div>
+            <div class="title">${this._title(t(hass, "card.year_records.title"))}</div>
             <div class="subtitle">
               ${t(hass, "card.year_records.subtitle", { count: rows.length, total: 6 })}
             </div>

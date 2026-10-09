@@ -217,7 +217,7 @@ export const pt: Record<keyof typeof en, string> = {
   "empty.fitness_trend.subtitle": "A Suunto calcula isto apenas a partir de treinos de corrida ou caminhada.",
 
   "card.pmc.title": "Gestão de Desempenho",
-  "card.pmc.subtitle": "Tendência de 90 dias",
+  "card.pmc.subtitle": "Tendência de {days} dias",
 
   "card.recovery_trends.title": "Tendências de Recuperação",
   "card.recovery_trends.subtitle": "Referência de {days} dias",
@@ -261,15 +261,15 @@ export const pt: Record<keyof typeof en, string> = {
   "empty.just_finished.title": "Sem treino recente",
 
   "card.activity_trends.title": "Tendências de Atividade",
-  "card.activity_trends.subtitle": "Últimos 14 dias",
+  "card.activity_trends.subtitle": "Últimos {days} dias",
   "empty.activity_trends.title": "Ainda sem dados de tendências de atividade",
 
   "card.recovery_balance_trend.title": "Tendência do Equilíbrio de Recuperação",
-  "card.recovery_balance_trend.subtitle": "Últimos 14 dias",
+  "card.recovery_balance_trend.subtitle": "Últimos {days} dias",
   "empty.recovery_balance_trend.title": "Ainda sem dados de tendências de recuperação",
 
   "card.readiness_trend.title": "Tendência de Prontidão",
-  "card.readiness_trend.subtitle": "Últimos 30 dias",
+  "card.readiness_trend.subtitle": "Últimos {days} dias",
   "empty.readiness_trend.title": "Ainda sem dados de tendências de prontidão",
 
   "stat.cadence": "Cadência",
@@ -502,7 +502,7 @@ export const pt: Record<keyof typeof en, string> = {
 
   // -- card 49: steps trend --
   "card.steps_trend.title": "Tendência de Passos",
-  "card.steps_trend.subtitle": "Últimos 14 dias",
+  "card.steps_trend.subtitle": "Últimos {days} dias",
   "empty.steps_trend.title": "Ainda sem histórico de passos",
   "steps_trend.legend_met": "Meta atingida",
   "steps_trend.legend_below": "Abaixo da meta",
@@ -651,4 +651,15 @@ export const pt: Record<keyof typeof en, string> = {
   "insights.metric.sleep": "Sono",
   "daily_brief.your_pattern": "O seu padrão",
   "editor.show_insight_label": "Mostrar o seu padrão mais forte",
+  "editor.look_section": "Aparência",
+  "editor.title": "Título",
+  "editor.icon": "Ícone (ex. mdi:star)",
+  "editor.accent_color": "Cor de destaque (ex. #e91e63 ou teal)",
+  "editor.accent_hint": "A mesma cor no modo claro e escuro. Uma cor inválida é ignorada.",
+  "editor.hide_header": "Ocultar cabeçalho",
+  "editor.hide_icon": "Ocultar ícone",
+  "editor.hide_subtitle": "Ocultar subtítulo",
+  "editor.hide_legend": "Ocultar legenda",
+  "editor.max_items": "Número de itens",
+  "editor.list_height": "Altura da lista (px)",
 };

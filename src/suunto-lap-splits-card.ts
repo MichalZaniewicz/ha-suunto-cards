@@ -97,9 +97,9 @@ export class SuuntoLapSplitsCard extends SuuntoBaseCard {
     return html`
       <ha-card class="static">
         <div class="header">
-          <div class="icon-badge"><ha-icon icon="mdi:flag-checkered"></ha-icon></div>
+          <div class="icon-badge"><ha-icon .icon=${this._icon("mdi:flag-checkered")}></ha-icon></div>
           <div class="title-block">
-            <div class="title">${t(hass, "card.lap_splits.title")}</div>
+            <div class="title">${this._title(t(hass, "card.lap_splits.title"))}</div>
             <div class="subtitle">
               ${start ? `${lastWorkout} · ${formatRelative(new Date(start.state), hass.language)}` : lastWorkout}
             </div>

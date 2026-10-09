@@ -11,7 +11,7 @@ import { suuntoDailyStepsGoal } from "./utils/suunto-goals";
 import { DEFAULT_STEPS_GOAL } from "./suunto-steps-today-card";
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
-const HISTORY_DAYS = 14;
+export const DEFAULT_HISTORY_DAYS = 14;
 const REFETCH_INTERVAL_MS = 10 * 60 * 1000;
 
 /**
@@ -53,7 +53,8 @@ export class SuuntoStepsTrendCard extends SuuntoBaseCard {
 
   private async _maybeFetchHistory(): Promise<void> {
     if (!this.hass) return;
-    const key = this._configuredDeviceId ?? "auto";
+    const days = this._config?.days ?? DEFAULT_HISTORY_DAYS;
+    const key = `${this._configuredDeviceId ?? "auto"}:${days}`;
     const now = Date.now();
     if (key === this._historyKey && now - this._historyFetchedAt < REFETCH_INTERVAL_MS) {
       return;
@@ -63,7 +64,7 @@ export class SuuntoStepsTrendCard extends SuuntoBaseCard {
 
     try {
       this._history = dailyTotalsFromCumulative(
-        await fetchStatisticsSeries(this.hass as SuuntoHass, "suunto_app:steps", HISTORY_DAYS * 24, "sum")
+        await fetchStatisticsSeries(this.hass as SuuntoHass, "suunto_app:steps", days * 24, "sum")
       );
     } catch {
       // Statistics are best-effort - the card still works, just without the chart.
@@ -101,10 +102,10 @@ export class SuuntoStepsTrendCard extends SuuntoBaseCard {
     return html`
       <ha-card class="static">
         <div class="header">
-          <div class="icon-badge"><ha-icon icon="mdi:chart-bar"></ha-icon></div>
+          <div class="icon-badge"><ha-icon .icon=${this._icon("mdi:chart-bar")}></ha-icon></div>
           <div class="title-block">
-            <div class="title">${t(hass, "card.steps_trend.title")}</div>
-            <div class="subtitle">${t(hass, "card.steps_trend.subtitle")}</div>
+            <div class="title">${this._title(t(hass, "card.steps_trend.title"))}</div>
+            <div class="subtitle">${t(hass, "card.steps_trend.subtitle", { days: this._config?.days ?? DEFAULT_HISTORY_DAYS })}</div>
           </div>
         </div>
 

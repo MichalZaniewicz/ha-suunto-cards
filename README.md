@@ -150,22 +150,37 @@ type: custom:suunto-last-workout-card
 units: imperial
 ```
 
-**Compact mode.** Last Workout and Sleep & Readiness take a `compact: true` field that collapses
-secondary stats (training load details, weather, tags for Last Workout; SpO2/sleep HR, sleep
-stages, footer chips for Sleep & Readiness) down to the essentials - useful on a denser dashboard
-section:
-
-```yaml
-type: custom:suunto-last-workout-card
-compact: true
-```
-
-**Trend window.** Recovery Trends and Sleep Trends take a `days` field (14/30/60/90, default 30)
-controlling how far back their chart and baseline reach:
+**Trend window.** The trend cards take a `days` field (7/14/30/60/90/180) controlling how far
+back their chart reaches: Activity Trends, Recovery Balance Trend and Steps Trend (default 14),
+Readiness Trend, Training Effect Trend, Training Load, Recovery Trends and Sleep Trends (default
+30), Performance Management and Fitness Trend (default 90):
 
 ```yaml
 type: custom:suunto-recovery-trends-card
 days: 60
+```
+
+**Options every card has.** All of these are in the visual editor (the "Appearance" section at
+the bottom), and a card without them looks exactly as before:
+
+| Option | Cards | What it does |
+| --- | --- | --- |
+| `title` | every card with a header | Header title override |
+| `icon` | every card with a header | Header icon override, e.g. `mdi:star` |
+| `accent_color` | every card | Any CSS color (`#e91e63`, `teal`, `rgb(0 150 136)`) instead of the amber/blue accent: the icon badge, goal bars and accent chips follow it. Colors that mean something (HR zones, sleep stages, good/bad) stay. The same color is used in both themes, so pick one that reads on a dark background too. An invalid value is ignored |
+| `hide_header` | every card with a header | Hide the header row entirely |
+| `hide_icon` / `hide_subtitle` | every card with a header | Hide just the icon badge, or just the line under the title |
+| `compact` | every card with a header | Tighter padding and a smaller icon badge. On Last Workout and Sleep & Readiness it also collapses the secondary stats (training load details, weather, tags; SpO2/sleep HR, sleep stages, footer chips) |
+| `hide_legend` | the charts with a legend (the trend cards, sleep cards, Route, Running Dynamics, Week Compare) | Hide the colour legend |
+| `max_items` | Recent Workouts, What Works For You, Gear | How many rows to show (default: all) |
+| `list_height` | Recent Workouts, Lap Splits, Achievements | Height limit of the scrolling list in px (default 320; Achievements 480) |
+
+```yaml
+type: custom:suunto-recent-workouts-card
+title: Training log
+accent_color: teal
+max_items: 5
+compact: true
 ```
 
 **Goals Overview** takes the same `goal_km`/`goal_steps` fields as Weekly Goal / Weekly Steps
@@ -321,11 +336,16 @@ real shadow-DOM custom elements reading the same theme variables Home Assistant 
    render invisibly even though their attributes look correct in the DOM.
 3. Register it in [`src/suunto-cards.ts`](src/suunto-cards.ts) (one `import` + one
    `window.customCards.push(...)` entry). `getConfigElement()` can almost always just return
-   `document.createElement("suunto-device-editor")`. If the new card should support `units`,
-   `compact`, or a configurable `days` trend window, add its type string to the matching capability
-   set (`UNITS_CARDS`/`COMPACT_CARDS`/`DAYS_CARDS`) at the top of
-   [`src/suunto-device-editor.ts`](src/suunto-device-editor.ts) - the editor's fields adapt by card
-   type, so this is a one-line addition, not a new editor class.
+   `document.createElement("suunto-device-editor")`. The editor always adds the device picker, a
+   `title` field and the "Appearance" section (`icon`, `accent_color`, `hide_header`, `hide_icon`,
+   `hide_subtitle`, `compact`) - those are honored generically by `SuuntoBaseCard`, so a new card
+   gets them for free as long as its header reads `${this._title(t(hass, "..."))}` and its icon
+   `.icon=${this._icon("mdi:...")}`. For `units` or `period` add the type to the set at the top of
+   [`src/suunto-device-editor.ts`](src/suunto-device-editor.ts); for a legend, a list
+   (`max_items` through `this._cap(...)`, `list_height` through `.scroll-list`) or a `days`
+   trend window, to the sets in [`src/utils/editor-common.ts`](src/utils/editor-common.ts).
+   Editor controls come from [`src/utils/editor-controls.ts`](src/utils/editor-controls.ts)
+   (Home Assistant's own input/select/switch, with fallbacks), never plain `<input>`s.
 4. Every user-facing string goes through `t(hass, key)` from
    [`src/utils/localize.ts`](src/utils/localize.ts) - add the key to
    [`src/translations/en.ts`](src/translations/en.ts) first (the canonical key list) and

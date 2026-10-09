@@ -9,7 +9,7 @@ import { fetchStatisticsSeries } from "./utils/format";
 import { t } from "./utils/localize";
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
-const HISTORY_DAYS = 30;
+export const DEFAULT_HISTORY_DAYS = 30;
 const REFETCH_INTERVAL_MS = 10 * 60 * 1000;
 
 /**
@@ -54,7 +54,8 @@ export class SuuntoTrainingEffectTrendCard extends SuuntoBaseCard {
 
   private async _maybeFetchHistory(): Promise<void> {
     if (!this.hass) return;
-    const key = this._configuredDeviceId ?? "auto";
+    const days = this._config?.days ?? DEFAULT_HISTORY_DAYS;
+    const key = `${this._configuredDeviceId ?? "auto"}:${days}`;
     const now = Date.now();
     if (key === this._historyKey && now - this._historyFetchedAt < REFETCH_INTERVAL_MS) {
       return;
@@ -62,7 +63,7 @@ export class SuuntoTrainingEffectTrendCard extends SuuntoBaseCard {
     this._historyKey = key;
     this._historyFetchedAt = now;
 
-    const hours = HISTORY_DAYS * 24;
+    const hours = days * 24;
     try {
       const [pte, epoc] = await Promise.all([
         fetchStatisticsSeries(this.hass, "suunto_app:pte", hours, "mean"),
@@ -100,10 +101,10 @@ export class SuuntoTrainingEffectTrendCard extends SuuntoBaseCard {
     return html`
       <ha-card class="static">
         <div class="header">
-          <div class="icon-badge"><ha-icon icon="mdi:lightning-bolt"></ha-icon></div>
+          <div class="icon-badge"><ha-icon .icon=${this._icon("mdi:lightning-bolt")}></ha-icon></div>
           <div class="title-block">
-            <div class="title">${t(hass, "card.training_effect_trend.title")}</div>
-            <div class="subtitle">${t(hass, "card.readiness_trend.subtitle")}</div>
+            <div class="title">${this._title(t(hass, "card.training_effect_trend.title"))}</div>
+            <div class="subtitle">${t(hass, "card.readiness_trend.subtitle", { days: this._config?.days ?? DEFAULT_HISTORY_DAYS })}</div>
           </div>
         </div>
 

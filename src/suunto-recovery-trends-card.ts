@@ -123,9 +123,9 @@ export class SuuntoRecoveryTrendsCard extends SuuntoBaseCard {
     return html`
       <ha-card class="static">
         <div class="header">
-          <div class="icon-badge pulse"><ha-icon icon="mdi:heart-pulse"></ha-icon></div>
+          <div class="icon-badge pulse"><ha-icon .icon=${this._icon("mdi:heart-pulse")}></ha-icon></div>
           <div class="title-block">
-            <div class="title">${t(hass, "card.recovery_trends.title")}</div>
+            <div class="title">${this._title(t(hass, "card.recovery_trends.title"))}</div>
             <div class="subtitle">${t(hass, "card.recovery_trends.subtitle", { days: this._config?.days ?? DEFAULT_HISTORY_DAYS })}</div>
           </div>
         </div>

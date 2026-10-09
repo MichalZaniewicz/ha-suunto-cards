@@ -217,7 +217,7 @@ export const de: Record<keyof typeof en, string> = {
   "empty.fitness_trend.subtitle": "Suunto berechnet dies nur aus Lauf- oder Gehtrainings.",
 
   "card.pmc.title": "Leistungsmanagement",
-  "card.pmc.subtitle": "90-Tage-Trend",
+  "card.pmc.subtitle": "{days}-Tage-Trend",
 
   "card.recovery_trends.title": "Erholungstrends",
   "card.recovery_trends.subtitle": "{days}-Tage-Basiswert",
@@ -261,15 +261,15 @@ export const de: Record<keyof typeof en, string> = {
   "empty.just_finished.title": "Kein aktuelles Training",
 
   "card.activity_trends.title": "Aktivitätstrends",
-  "card.activity_trends.subtitle": "Letzte 14 Tage",
+  "card.activity_trends.subtitle": "Letzte {days} Tage",
   "empty.activity_trends.title": "Noch keine Aktivitätstrend-Daten",
 
   "card.recovery_balance_trend.title": "Erholungsbalance-Trend",
-  "card.recovery_balance_trend.subtitle": "Letzte 14 Tage",
+  "card.recovery_balance_trend.subtitle": "Letzte {days} Tage",
   "empty.recovery_balance_trend.title": "Noch keine Erholungstrend-Daten",
 
   "card.readiness_trend.title": "Bereitschaftstrend",
-  "card.readiness_trend.subtitle": "Letzte 30 Tage",
+  "card.readiness_trend.subtitle": "Letzte {days} Tage",
   "empty.readiness_trend.title": "Noch keine Bereitschaftstrend-Daten",
 
   "stat.cadence": "Trittfrequenz",
@@ -502,7 +502,7 @@ export const de: Record<keyof typeof en, string> = {
 
   // -- card 49: steps trend --
   "card.steps_trend.title": "Schritttrend",
-  "card.steps_trend.subtitle": "Letzte 14 Tage",
+  "card.steps_trend.subtitle": "Letzte {days} Tage",
   "empty.steps_trend.title": "Noch kein Schrittverlauf",
   "steps_trend.legend_met": "Ziel erreicht",
   "steps_trend.legend_below": "Unter Ziel",
@@ -651,4 +651,15 @@ export const de: Record<keyof typeof en, string> = {
   "insights.metric.sleep": "Schlaf",
   "daily_brief.your_pattern": "Dein Muster",
   "editor.show_insight_label": "Stärkstes Muster anzeigen",
+  "editor.look_section": "Darstellung",
+  "editor.title": "Titel",
+  "editor.icon": "Symbol (z. B. mdi:star)",
+  "editor.accent_color": "Akzentfarbe (z. B. #e91e63 oder teal)",
+  "editor.accent_hint": "Dieselbe Farbe im hellen und dunklen Modus. Eine ungültige Farbe wird ignoriert.",
+  "editor.hide_header": "Kopfzeile ausblenden",
+  "editor.hide_icon": "Symbol ausblenden",
+  "editor.hide_subtitle": "Untertitel ausblenden",
+  "editor.hide_legend": "Legende ausblenden",
+  "editor.max_items": "Anzahl der Einträge",
+  "editor.list_height": "Listenhöhe (px)",
 };

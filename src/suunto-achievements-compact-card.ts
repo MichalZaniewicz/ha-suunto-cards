@@ -98,9 +98,9 @@ export class SuuntoAchievementsCompactCard extends SuuntoBaseCard {
     return html`
       <ha-card class="static">
         <div class="header">
-          <div class="icon-badge"><ha-icon icon="mdi:trophy-outline"></ha-icon></div>
+          <div class="icon-badge"><ha-icon .icon=${this._icon("mdi:trophy-outline")}></ha-icon></div>
           <div class="title-block">
-            <div class="title">${t(hass, "card.achievements.title")}</div>
+            <div class="title">${this._title(t(hass, "card.achievements.title"))}</div>
             <div class="subtitle">${t(hass, "card.achievements.subtitle", { unlocked: unlockedCount, total: allBadges.length })}</div>
           </div>
           <div class="ring-wrap">

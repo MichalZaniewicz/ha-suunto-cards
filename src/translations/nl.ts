@@ -217,7 +217,7 @@ export const nl: Record<keyof typeof en, string> = {
   "empty.fitness_trend.subtitle": "Suunto berekent dit alleen op basis van hardloop- of wandeltrainingen.",
 
   "card.pmc.title": "Prestatiebeheer",
-  "card.pmc.subtitle": "90-dagen trend",
+  "card.pmc.subtitle": "{days}-dagen trend",
 
   "card.recovery_trends.title": "Hersteltrends",
   "card.recovery_trends.subtitle": "{days}-dagen basiswaarde",
@@ -261,15 +261,15 @@ export const nl: Record<keyof typeof en, string> = {
   "empty.just_finished.title": "Geen recente training",
 
   "card.activity_trends.title": "Activiteitstrends",
-  "card.activity_trends.subtitle": "Laatste 14 dagen",
+  "card.activity_trends.subtitle": "Laatste {days} dagen",
   "empty.activity_trends.title": "Nog geen activiteitstrendgegevens",
 
   "card.recovery_balance_trend.title": "Herstelbalanstrend",
-  "card.recovery_balance_trend.subtitle": "Laatste 14 dagen",
+  "card.recovery_balance_trend.subtitle": "Laatste {days} dagen",
   "empty.recovery_balance_trend.title": "Nog geen hersteltrendgegevens",
 
   "card.readiness_trend.title": "Gereedheidstrend",
-  "card.readiness_trend.subtitle": "Laatste 30 dagen",
+  "card.readiness_trend.subtitle": "Laatste {days} dagen",
   "empty.readiness_trend.title": "Nog geen gereedheidstrendgegevens",
 
   "stat.cadence": "Cadans",
@@ -502,7 +502,7 @@ export const nl: Record<keyof typeof en, string> = {
 
   // -- card 49: steps trend --
   "card.steps_trend.title": "Stappentrend",
-  "card.steps_trend.subtitle": "Laatste 14 dagen",
+  "card.steps_trend.subtitle": "Laatste {days} dagen",
   "empty.steps_trend.title": "Nog geen stappengeschiedenis",
   "steps_trend.legend_met": "Doel behaald",
   "steps_trend.legend_below": "Onder doel",
@@ -651,4 +651,15 @@ export const nl: Record<keyof typeof en, string> = {
   "insights.metric.sleep": "Slaap",
   "daily_brief.your_pattern": "Jouw patroon",
   "editor.show_insight_label": "Sterkste patroon tonen",
+  "editor.look_section": "Weergave",
+  "editor.title": "Titel",
+  "editor.icon": "Pictogram (bijv. mdi:star)",
+  "editor.accent_color": "Accentkleur (bijv. #e91e63 of teal)",
+  "editor.accent_hint": "Dezelfde kleur in lichte en donkere modus. Een ongeldige kleur wordt genegeerd.",
+  "editor.hide_header": "Koptekst verbergen",
+  "editor.hide_icon": "Pictogram verbergen",
+  "editor.hide_subtitle": "Ondertitel verbergen",
+  "editor.hide_legend": "Legenda verbergen",
+  "editor.max_items": "Aantal items",
+  "editor.list_height": "Lijsthoogte (px)",
 };

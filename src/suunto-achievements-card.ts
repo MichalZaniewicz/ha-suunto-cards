@@ -56,9 +56,9 @@ export class SuuntoAchievementsCard extends SuuntoBaseCard {
     return html`
       <ha-card class="static">
         <div class="header">
-          <div class="icon-badge"><ha-icon icon="mdi:trophy-outline"></ha-icon></div>
+          <div class="icon-badge"><ha-icon .icon=${this._icon("mdi:trophy-outline")}></ha-icon></div>
           <div class="title-block">
-            <div class="title">${t(hass, "card.achievements.title")}</div>
+            <div class="title">${this._title(t(hass, "card.achievements.title"))}</div>
             <div class="subtitle">${t(hass, "card.achievements.subtitle", { unlocked: unlockedCount, total: allBadges.length })}</div>
           </div>
         </div>
@@ -131,7 +131,7 @@ export class SuuntoAchievementsCard extends SuuntoBaseCard {
     suuntoSharedStyles,
     css`
       .ach-list {
-        max-height: 480px;
+        max-height: var(--sc-list-height, 480px);
         overflow-y: auto;
         display: flex;
         flex-direction: column;

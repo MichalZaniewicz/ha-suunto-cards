@@ -112,9 +112,9 @@ export class SuuntoCommuteCard extends SuuntoBaseCard {
     return html`
       <ha-card class="static">
         <div class="header">
-          <div class="icon-badge"><ha-icon icon="mdi:bike-fast"></ha-icon></div>
+          <div class="icon-badge"><ha-icon .icon=${this._icon("mdi:bike-fast")}></ha-icon></div>
           <div class="title-block">
-            <div class="title">${t(hass, "card.commute.title")}</div>
+            <div class="title">${this._title(t(hass, "card.commute.title"))}</div>
             <div class="subtitle">${t(hass, `card.commute.subtitle_${main}`)}</div>
           </div>
         </div>

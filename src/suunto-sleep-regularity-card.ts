@@ -91,9 +91,9 @@ export class SuuntoSleepRegularityCard extends SuuntoBaseCard {
     return html`
       <ha-card class="static">
         <div class="header">
-          <div class="icon-badge pulse"><ha-icon icon="mdi:bed-clock"></ha-icon></div>
+          <div class="icon-badge pulse"><ha-icon .icon=${this._icon("mdi:bed-clock")}></ha-icon></div>
           <div class="title-block">
-            <div class="title">${t(hass, "card.sleep_regularity.title")}</div>
+            <div class="title">${this._title(t(hass, "card.sleep_regularity.title"))}</div>
             <div class="subtitle">
               ${t(hass, "sleep_regularity.subtitle", { nights: Number(attrs.nights) || 0 })}
             </div>
