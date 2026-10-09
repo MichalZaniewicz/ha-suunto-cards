@@ -1,6 +1,6 @@
 import { html, nothing, type TemplateResult } from "lit";
 import type { SuuntoCardConfig, SuuntoHass } from "./types";
-import { t } from "./localize";
+import { t, type TranslationKey } from "./localize";
 import { findSuuntoDeviceIds } from "./entities";
 import { haInput, haSelect, haSwitch } from "./editor-controls";
 
@@ -151,6 +151,48 @@ export function cardOptionFields<C extends SuuntoCardConfig>(hass: SuuntoHass, c
   `;
 }
 
+/** Ready-made accent colors under the color field. The first one is the
+ * cards' own amber - picking it clears `accent_color`. */
+const ACCENT_SWATCHES: { color: string; label: TranslationKey }[] = [
+  { color: "#d98a1d", label: "editor.accent_default" },
+  { color: "#e91e63", label: "editor.accent_pink" },
+  { color: "#7e57c2", label: "editor.accent_purple" },
+  { color: "#009688", label: "editor.accent_teal" },
+  { color: "#43a047", label: "editor.accent_green" },
+  { color: "#1e88e5", label: "editor.accent_blue" },
+];
+
+/** The accent color: a text field with a preview dot, and the swatches under it. */
+function accentField<C extends SuuntoCardConfig>(hass: SuuntoHass, config: C, emit: Emit<C>): TemplateResult {
+  const current = config.accent_color ?? "";
+  const valid = current !== "" && typeof CSS !== "undefined" && CSS.supports("color", current);
+  return html`
+    <div class="color-field">
+      ${haInput(
+        t(hass, "editor.accent_color"),
+        current,
+        (value) => emit(patchConfig(config, { accent_color: value.trim() || undefined })),
+        {},
+        html`<span class="preview ${valid ? "" : "none"}" style=${valid ? `background:${current}` : ""}></span>`
+      )}
+      <div class="swatches">
+        ${ACCENT_SWATCHES.map((swatch, i) => {
+          const selected = i === 0 ? !current : current.toLowerCase() === swatch.color;
+          return html`<button
+            type="button"
+            class="swatch ${selected ? "selected" : ""}"
+            style="background:${swatch.color}"
+            title=${t(hass, swatch.label)}
+            aria-label=${t(hass, swatch.label)}
+            @click=${() => emit(patchConfig(config, { accent_color: i === 0 ? undefined : swatch.color }))}
+          ></button>`;
+        })}
+      </div>
+      <div class="hint">${t(hass, "editor.accent_hint")}</div>
+    </div>
+  `;
+}
+
 /** The "Appearance" section, appended at the end of every editor. */
 export function lookFields<C extends SuuntoCardConfig>(hass: SuuntoHass, config: C, emit: Emit<C>): TemplateResult {
   const type = config.type;
@@ -165,10 +207,7 @@ export function lookFields<C extends SuuntoCardConfig>(hass: SuuntoHass, config:
           emit(patchConfig(config, { icon: value.trim() || undefined }))
         )
       : nothing}
-    ${haInput(t(hass, "editor.accent_color"), config.accent_color ?? "", (value) =>
-      emit(patchConfig(config, { accent_color: value.trim() || undefined }))
-    )}
-    <div class="hint">${t(hass, "editor.accent_hint")}</div>
+    ${accentField(hass, config, emit)}
     ${header ? toggle("hide_header", t(hass, "editor.hide_header")) : nothing}
     ${header ? toggle("hide_icon", t(hass, "editor.hide_icon")) : nothing}
     ${header && !NO_SUBTITLE_CARDS.has(type) ? toggle("hide_subtitle", t(hass, "editor.hide_subtitle")) : nothing}

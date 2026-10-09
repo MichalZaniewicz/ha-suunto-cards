@@ -1,4 +1,4 @@
-import { css, html, type TemplateResult } from "lit";
+import { css, html, nothing, type TemplateResult } from "lit";
 
 /**
  * Home Assistant's own form controls for the card editors, each with a
@@ -23,7 +23,8 @@ export function haInput(
   label: string,
   value: string,
   commit: (value: string) => void,
-  opts: { type?: "number"; min?: number; max?: number; step?: number } = {}
+  opts: { type?: "number"; min?: number; max?: number; step?: number } = {},
+  end?: TemplateResult
 ): TemplateResult {
   let last = value;
   const done = (ev: Event): void => {
@@ -48,7 +49,8 @@ export function haInput(
         @change=${done}
         @focusout=${done}
         @keydown=${onKey}
-      ></ha-input>
+        >${end ? html`<span slot="end">${end}</span>` : nothing}</ha-input
+      >
     `;
   }
   if (customElements.get("ha-textfield")) {
@@ -65,6 +67,7 @@ export function haInput(
         @focusout=${done}
         @keydown=${onKey}
       ></ha-textfield>
+      ${end ? html`<span class="end-outside">${end}</span>` : nothing}
     `;
   }
   return html`
@@ -79,6 +82,7 @@ export function haInput(
         @change=${done}
         @keydown=${onKey}
       />
+      ${end ? html`<span class="end-outside">${end}</span>` : nothing}
     </label>
   `;
 }
@@ -204,6 +208,48 @@ export const editorStyles = css`
     align-items: center;
     gap: 8px;
     color: var(--primary-text-color);
+  }
+  .color-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .preview {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    margin-inline-end: 4px;
+    vertical-align: middle;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
+  }
+  .preview.none {
+    background: repeating-conic-gradient(var(--divider-color) 0 25%, transparent 0 50%) 50% / 8px 8px;
+  }
+  .end-outside {
+    align-self: flex-end;
+  }
+  .swatches {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .swatch {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
+  }
+  .swatch.selected {
+    outline: 2px solid var(--primary-text-color);
+    outline-offset: 2px;
+  }
+  .swatch:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
   }
   label.plain input:not([type="checkbox"]),
   label.plain select {
