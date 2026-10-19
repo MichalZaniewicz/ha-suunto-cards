@@ -9,6 +9,7 @@ import { knownGoal, formatHours } from "./utils/suunto-goals";
 import { formatDuration, formatTime, formatDelta, formatShortDate, isToday } from "./utils/format";
 import { t } from "./utils/localize";
 import { sleepNight } from "./utils/sleep-stages";
+import { readSync, syncChip } from "./utils/sync";
 import type { SuuntoHass } from "./utils/types";
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
@@ -113,6 +114,8 @@ export class SuuntoSleepReadinessCard extends SuuntoBaseCard {
         ? (duration.attributes.night as string)
         : undefined;
     const readinessBalanceOnly = readiness?.attributes.sleep_stale === true;
+    // ha-suunto 1.0.37+: the watch itself has not synced for over 24 h.
+    const sync = readSync(get("last_sync"));
     // Last night against the sleep goal: the card's own value or the Suunto
     // app's (ha-suunto 1.0.29+). Hidden in compact mode and when no goal exists.
     const sleepHours = Number(duration.state);
@@ -138,13 +141,16 @@ export class SuuntoSleepReadinessCard extends SuuntoBaseCard {
           </div>
         </div>
 
-        ${staleNight
+        ${staleNight || sync?.stale
           ? html`<div class="footer">
-              <span class="chip warn"
-                ><ha-icon icon="mdi:alert-outline"></ha-icon>${t(hass, "chip.sleep_stale", {
-                  date: formatShortDate(staleNight, hass.language),
-                })}</span
-              >
+              ${staleNight
+                ? html`<span class="chip warn"
+                    ><ha-icon icon="mdi:alert-outline"></ha-icon>${t(hass, "chip.sleep_stale", {
+                      date: formatShortDate(staleNight, hass.language),
+                    })}</span
+                  >`
+                : nothing}
+              ${syncChip(hass, sync)}
             </div>`
           : nothing}
 

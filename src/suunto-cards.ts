@@ -69,6 +69,7 @@ import "./suunto-daily-goals-card";
 import "./suunto-sleep-regularity-card";
 import "./suunto-aerobic-decoupling-card";
 import "./suunto-personal-insights-card";
+import "./suunto-stress-today-card";
 
 interface CustomCardEntry {
   type: string;
@@ -480,14 +481,20 @@ window.customCards.push(
   {
     type: "suunto-personal-insights-card",
     name: "Suunto - What Works For You",
-    description: "The clearest patterns in your own data: what goes with better or worse HRV, resting HR and sleep.",
+    description: "The clearest patterns in your own data: what goes with better or worse HRV, resting HR and sleep, and how heat and cold change your efficiency.",
+    preview: true,
+  },
+  {
+    type: "suunto-stress-today-card",
+    name: "Suunto - Stress & Recovery",
+    description: "Minutes recovering, active, inactive and stressed today and yesterday, like the Resources chart in the Suunto app.",
     preview: true,
   }
 );
 
 // eslint-disable-next-line no-console
 console.info(
-  "%c SUUNTO-CARDS %c 66 cards loaded",
+  "%c SUUNTO-CARDS %c 67 cards loaded",
   "color: #fff; background: #d98a1d; font-weight: 700; border-radius: 3px 0 0 3px; padding: 2px 6px;",
   "color: #d98a1d; background: transparent; font-weight: 500;"
 );

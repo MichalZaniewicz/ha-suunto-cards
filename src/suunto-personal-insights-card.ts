@@ -6,9 +6,10 @@ import { SuuntoBaseCard } from "./utils/base-card";
 import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
 import { t } from "./utils/localize";
 import {
-  insightCondition,
+  insightConditionFull,
   insightDelta,
   insightIcon,
+  insightIsWorkouts,
   insightValue,
   readInsights,
 } from "./utils/patterns";
@@ -61,6 +62,7 @@ export class SuuntoPersonalInsightsCard extends SuuntoBaseCard {
       );
     }
     const nights = Number(entity?.attributes.nights) || 0;
+    const trainingDays = Number(entity?.attributes.training_days) || 0;
 
     return html`
       <ha-card class="static">
@@ -68,7 +70,11 @@ export class SuuntoPersonalInsightsCard extends SuuntoBaseCard {
           <div class="icon-badge"><ha-icon .icon=${this._icon("mdi:lightbulb-on-outline")}></ha-icon></div>
           <div class="title-block">
             <div class="title">${this._title(t(hass, "card.personal_insights.title"))}</div>
-            <div class="subtitle">${t(hass, "personal_insights.subtitle", { nights })}</div>
+            <div class="subtitle">
+              ${trainingDays
+                ? t(hass, "personal_insights.subtitle_days", { nights, days: trainingDays })
+                : t(hass, "personal_insights.subtitle", { nights })}
+            </div>
           </div>
         </div>
 
@@ -76,24 +82,38 @@ export class SuuntoPersonalInsightsCard extends SuuntoBaseCard {
           ${insights.map((insight) => {
             const max = Math.max(insight.with, insight.without) || 1;
             const tone = insight.favorable ? "good" : "bad";
+            const workouts = insightIsWorkouts(insight);
             return html`
               <div class="row">
                 <div class="icon-badge tiny pulse"><ha-icon .icon=${insightIcon(insight)}></ha-icon></div>
-                <div class="cond">${insightCondition(hass, insight)}</div>
+                <div class="cond">${insightConditionFull(hass, insight)}</div>
                 <span class="chip ${tone}">${insightDelta(hass, insight)}</span>
-                <div class="vals">
+                <div class="vals ${workouts ? "wide" : ""}">
                   <div class="cmp">
-                    <em>${t(hass, "personal_insights.these_nights")}</em>
+                    <em>${t(hass, workouts ? "personal_insights.these_workouts" : "personal_insights.these_nights")}</em>
                     <div class="track"><b style="width:${(insight.with / max) * 100}%;background:var(--sc-${tone})"></b></div>
-                    <span>${insightValue(insight, insight.with)}</span>
+                    <span>${insightValue(hass, insight, insight.with)}</span>
                   </div>
                   <div class="cmp">
                     <em>${t(hass, "personal_insights.the_rest")}</em>
                     <div class="track"><b class="rest" style="width:${(insight.without / max) * 100}%"></b></div>
-                    <span>${insightValue(insight, insight.without)}</span>
+                    <span>${insightValue(hass, insight, insight.without)}</span>
                   </div>
+                  ${workouts && insight.with_speed_kmh !== undefined && insight.without_speed_kmh !== undefined
+                    ? html`<div class="count">
+                        ${t(hass, "personal_insights.speed_at_hr", {
+                          with_speed: insight.with_speed_kmh,
+                          with_hr: insight.with_hr ?? "-",
+                          without_speed: insight.without_speed_kmh,
+                          without_hr: insight.without_hr ?? "-",
+                        })}
+                      </div>`
+                    : nothing}
                   <div class="count">
-                    ${t(hass, "personal_insights.nights_count", { with: insight.n_with, without: insight.n_without })}
+                    ${t(hass, workouts ? "personal_insights.workouts_count" : "personal_insights.nights_count", {
+                      with: insight.n_with,
+                      without: insight.n_without,
+                    })}
                   </div>
                 </div>
               </div>
@@ -140,6 +160,10 @@ export class SuuntoPersonalInsightsCard extends SuuntoBaseCard {
         gap: 8px;
         font-size: 0.7rem;
         color: var(--secondary-text-color);
+      }
+      /* "2.82 m/beat" needs a wider value column than "7.6 h". */
+      .vals.wide .cmp {
+        grid-template-columns: 90px 1fr 92px;
       }
       .cmp em {
         font-style: normal;

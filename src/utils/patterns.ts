@@ -67,10 +67,19 @@ export interface Insight {
   n_with: number;
   n_without: number;
   threshold?: string;
+  /** Weather findings (ha-suunto 1.0.37+): the sport compared, with its own workouts. */
+  activity?: string;
+  threshold_c?: number;
+  with_speed_kmh?: number;
+  with_hr?: number;
+  without_speed_kmh?: number;
+  without_hr?: number;
 }
 
-export const INSIGHT_CONDITIONS = ["late_workout", "training_day", "hard_day", "early_bed", "free_night"] as const;
-export const INSIGHT_METRICS = ["hrv", "resting_hr", "sleep"] as const;
+export const INSIGHT_CONDITIONS = [
+  "late_workout", "training_day", "hard_day", "early_bed", "free_night", "hot_weather", "cold_weather",
+] as const;
+export const INSIGHT_METRICS = ["hrv", "resting_hr", "sleep", "efficiency"] as const;
 
 const CONDITION_ICON: Record<string, string> = {
   late_workout: "mdi:weather-night",
@@ -78,6 +87,8 @@ const CONDITION_ICON: Record<string, string> = {
   hard_day: "mdi:fire",
   early_bed: "mdi:bed-clock",
   free_night: "mdi:calendar-weekend",
+  hot_weather: "mdi:weather-sunny",
+  cold_weather: "mdi:snowflake",
 };
 
 /** The integration's late-workout cut-off (patterns.LATE_WORKOUT_HOUR). */
@@ -107,16 +118,29 @@ export function insightCondition(hass: SuuntoHass | undefined, insight: Insight)
   return t(hass, `insights.cond.${insight.condition}` as TranslationKey, {
     time: late ? formatTime(late, hass?.language) : `${LATE_WORKOUT_HOUR}:00`,
     bedtime: formatClock(insight.threshold, hass?.language) ?? insight.threshold ?? "",
+    temp: insight.threshold_c ?? "",
   });
+}
+
+/** The condition, plus the sport for a weather finding: "In heat (25°C and above) · Cycling". */
+export function insightConditionFull(hass: SuuntoHass | undefined, insight: Insight): string {
+  const condition = insightCondition(hass, insight);
+  return insight.activity ? `${condition} · ${insight.activity}` : condition;
+}
+
+/** Weather findings compare one sport's workouts; the rest compare nights. */
+export function insightIsWorkouts(insight: Insight): boolean {
+  return insight.metric === "efficiency";
 }
 
 export function insightMetric(hass: SuuntoHass | undefined, insight: Insight): string {
   return t(hass, `insights.metric.${insight.metric}` as TranslationKey);
 }
 
-/** A metric value with its unit: "7.6 h", "39 ms", "52 bpm". */
-export function insightValue(insight: Insight, value: number): string {
+/** A metric value with its unit: "7.6 h", "39 ms", "52 bpm", "2.82 m/beat". */
+export function insightValue(hass: SuuntoHass | undefined, insight: Insight, value: number): string {
   if (insight.metric === "sleep") return `${value.toFixed(1)} h`;
+  if (insight.metric === "efficiency") return `${value.toFixed(2)} ${t(hass, "insights.unit.per_beat")}`;
   return `${Math.round(value)} ${insight.metric === "hrv" ? "ms" : "bpm"}`;
 }
 
@@ -128,5 +152,5 @@ export function insightDelta(hass: SuuntoHass | undefined, insight: Insight): st
 
 /** One-line summary for the Daily Brief card: "<condition>: HRV -21% (39 ms vs 50 ms)". */
 export function insightLine(hass: SuuntoHass | undefined, insight: Insight): string {
-  return `${insightCondition(hass, insight)}: ${insightDelta(hass, insight)} (${insightValue(insight, insight.with)} vs ${insightValue(insight, insight.without)})`;
+  return `${insightConditionFull(hass, insight)}: ${insightDelta(hass, insight)} (${insightValue(hass, insight, insight.with)} vs ${insightValue(hass, insight, insight.without)})`;
 }

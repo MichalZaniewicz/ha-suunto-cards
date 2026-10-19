@@ -34,6 +34,11 @@ export const suuntoTokens = css`
     --sc-sleep-rem: #a682c9;
     --sc-sleep-awake: #c9a35a;
     --sc-sleep-other: #aab4bc;
+    /* The watch's four stress states (Suunto app "Resources"). */
+    --sc-stress-recovering: #4c9a6a;
+    --sc-stress-active: #e0a63e;
+    --sc-stress-inactive: #b9c4cc;
+    --sc-stress-stressed: #c73e3e;
   }
   :host(.dark) {
     --sc-amber: #f5b44e;
@@ -63,6 +68,10 @@ export const suuntoTokens = css`
     --sc-sleep-rem: #b89ce0;
     --sc-sleep-awake: #d9b876;
     --sc-sleep-other: #56636e;
+    --sc-stress-recovering: #5db47f;
+    --sc-stress-active: #f0954f;
+    --sc-stress-inactive: #56636e;
+    --sc-stress-stressed: #e05a5a;
   }
 `;
 

@@ -543,7 +543,16 @@
           is_recovering: { domain: "binary_sensor", state: "on" },
           recovery_until: { state: nowIso(3 * 3600 * 1000 + 20 * 60 * 1000) },
           recovery_time: { state: 8.5 },
-          stress_state: { state: 2 },
+          stress_state: { state: 2, attributes: { state_name: "active" } },
+          stress_today: {
+            state: 30,
+            attributes: {
+              date: new Date().toISOString().slice(0, 10), samples: 23,
+              recovering_minutes: 390, active_minutes: 150, inactive_minutes: 120, stressed_minutes: 30,
+              yesterday: { date: new Date(Date.now() - 86400000).toISOString().slice(0, 10), samples: 48, recovering_minutes: 390, active_minutes: 450, inactive_minutes: 600, stressed_minutes: 0 },
+            },
+          },
+          last_sync: { state: nowIso(-35 * 60 * 1000), attributes: { hours_ago: 0.6, stale: false } },
           workout_today: { domain: "binary_sensor", state: "on" },
           fitness_ctl: { state: 48 },
           fatigue_atl: { state: 41 },
@@ -665,6 +674,7 @@
                 { condition: "early_bed", metric: "sleep", with: 7.6, without: 6.7, diff_pct: 13.4, effect_size: 1.1, n_with: 29, n_without: 29, favorable: true, threshold: "23:05" },
                 { condition: "hard_day", metric: "resting_hr", with: 52.1, without: 49.2, diff_pct: 5.9, effect_size: 0.8, n_with: 14, n_without: 29, favorable: false },
                 { condition: "free_night", metric: "sleep", with: 8.0, without: 6.9, diff_pct: 15.9, effect_size: 0.7, n_with: 16, n_without: 42, favorable: true },
+                { condition: "hot_weather", metric: "efficiency", with: 2.82, without: 3.03, diff_pct: -7.2, effect_size: -0.48, n_with: 10, n_without: 41, favorable: false, activity: "Cycling", activity_id: 2, threshold_c: 25, with_speed_kmh: 18.3, with_hr: 109, without_speed_kmh: 18.9, without_hr: 104 },
               ],
             },
           },
@@ -796,6 +806,13 @@
       patch("last_pct_hrmax", 0);
       patch("last_tss", 364.5, { tss_met: 364.5, has_hr: false });
       patch("current_hr", 62, { measured_at: nowIso(-40 * 60 * 1000) });
+      // The watch has not synced for 26 h: today's stress not in yet, sync chips on.
+      patch("last_sync", nowIso(-26 * 3600 * 1000), { hours_ago: 26, stale: true });
+      patch("stress_today", "unknown", {
+        recovering_minutes: 0, active_minutes: 0, inactive_minutes: 0, stressed_minutes: 0, samples: 0,
+        yesterday: { date: new Date(Date.now() - 86400000).toISOString().slice(0, 10), samples: 48, recovering_minutes: 390, active_minutes: 450, inactive_minutes: 600, stressed_minutes: 0 },
+      });
+      patch("stress_state", 1, { state_name: "recovering" });
       return hass;
     }
 
@@ -892,6 +909,7 @@
       "suunto-sleep-regularity-card",
       "suunto-aerobic-decoupling-card",
       "suunto-personal-insights-card",
+      "suunto-stress-today-card",
     ];
 
     function setup() {

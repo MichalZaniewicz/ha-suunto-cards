@@ -25,7 +25,7 @@ into <ha-alert> and drops every child whose textContent is empty, which silently
   <img src="docs/trailer.webp" alt="Suunto Cards trailer: 66 cards, light and dark, 8 languages, the visual editor">
 </p>
 
-66 cards built for one job: showing your Suunto data on a Home Assistant dashboard. Today's
+67 cards built for one job: showing your Suunto data on a Home Assistant dashboard. Today's
 activity, sleep and readiness, recovery, training load and form, every workout with its route and
 heart rate zones, personal bests, goals and yearly totals. Every card follows your light or dark
 theme, speaks 8 languages, and is set up in the visual editor, without YAML.
@@ -41,7 +41,7 @@ theme, speaks 8 languages, and is set up in the visual editor, without YAML.
 | Last Workout | `custom:suunto-last-workout-card` | Activity, distance/duration, avg &amp; max HR, pace or speed, training effect, EPOC, feeling, TSS, weather, tags and route achievements |
 | Heart Rate Zones | `custom:suunto-hr-zones-card` | Time in each of the 6 HR zones (0-5) from your last workout, with the bpm thresholds |
 | Sleep &amp; Readiness | `custom:suunto-sleep-readiness-card` | Sleep stages (deep/light/REM), quality, SpO2, HRV &amp; resting HR vs. your baseline, today's readiness score, naps |
-| Recovery | `custom:suunto-recovery-card` | Recovery balance ring, countdown until fully recovered, stress level |
+| Recovery | `custom:suunto-recovery-card` | Recovery balance ring, countdown until fully recovered, stress state (recovering, active, inactive or stressed) |
 | Training Load | `custom:suunto-training-load-card` | Fitness/Fatigue/Form (CTL/ATL/TSB) with a 30-day trend line, plus ACWR and its safe-zone banding |
 | Week &amp; Lifetime | `custom:suunto-week-stats-card` | This week's distance/time/workout count, and a lifetime breakdown by activity |
 | Today | `custom:suunto-today-card` | Live steps, energy and heart rate for today |
@@ -102,7 +102,8 @@ theme, speaks 8 languages, and is set up in the visual editor, without YAML.
 | Daily Goals | `custom:suunto-daily-goals-card` | Today's steps, active calories and last night's sleep as three rings against your goals |
 | Sleep Regularity | `custom:suunto-sleep-regularity-card` | How steady your sleep schedule is: the Sleep Regularity Index (four weeks), average bed and wake times with their spread, and social jetlag (later mid-sleep on Friday/Saturday nights) |
 | Aerobic Decoupling | `custom:suunto-aerobic-decoupling-card` | Heart-rate drift against speed between the halves of your latest workout of 40+ minutes, with the last 10 analysed workouts against the 5 % line |
-| What Works For You | `custom:suunto-personal-insights-card` | The clearest patterns in your own data: what goes with better or worse HRV, resting HR and sleep (late workouts, hard days, early bedtimes, weekends) |
+| What Works For You | `custom:suunto-personal-insights-card` | The clearest patterns in your own data: what goes with better or worse HRV, resting HR and sleep (late workouts, hard days, early bedtimes, weekends), and how heat or cold changes your speed per heartbeat in a sport |
+| Stress &amp; Recovery | `custom:suunto-stress-today-card` | Minutes recovering, active, inactive and stressed today on a 24-hour bar, like the Resources chart in the Suunto app, plus yesterday's complete day |
 | AI Insight | `custom:suunto-ai-insight-card` | The daily AI review (ha-suunto 1.0.30+, AI insight turned on): headline, overall status, warning, one tab per section (sleep, recovery, training, activity) with its own status, and the advice. Options: `section` (first tab) and `single_section: true` (just that section, no tabs) |
 
 Each card auto-detects your Suunto device - **zero YAML required** for the common case of one
@@ -274,6 +275,13 @@ when the decoupling value belongs to that same workout). Daily Brief can show yo
 pattern under the sentence: "Show your strongest pattern" in the editor, or `show_insight: true`.
 The regularity bands (80+ regular, 60-80 fairly regular) are this card's own reading, not a Suunto
 scale. What Works For You shows correlations in your own data, not causes.
+
+**Stress &amp; Recovery** reads `stress_today`, new in `ha-suunto` **1.0.37**, and shows its empty
+state on older versions. The same release lets What Works For You show the heat and cold findings
+(speed per heartbeat in one sport, with the km/h and bpm behind it), Recovery and Recovery Balance
+Trend name the stress state instead of showing its number, and Today and Sleep &amp; Readiness show
+when the watch last synced, with an amber chip once it has been quiet for more than 24 hours
+(`last_sync`).
 
 **Sleep Detail**'s "time awake in bed" and "sleep efficiency" aren't sensors `ha-suunto` sends
 directly - they're computed here from `wake_time` minus `sleep_time` against `sleep_duration`. If

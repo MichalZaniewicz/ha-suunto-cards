@@ -7,6 +7,7 @@ import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
 import { progressRing } from "./utils/render-helpers";
 import { formatDuration } from "./utils/format";
 import { t } from "./utils/localize";
+import { readStressState, stressColor, stressLabel } from "./utils/stress";
 import type { SuuntoHass } from "./utils/types";
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
@@ -57,7 +58,7 @@ export class SuuntoRecoveryCard extends SuuntoBaseCard {
     const isRecovering = get("is_recovering");
     const recoveryUntil = get("recovery_until");
     const recoveryTime = get("recovery_time");
-    const stressState = get("stress_state");
+    const stressState = readStressState(get("stress_state"));
     const workoutToday = get("workout_today");
     const unusualRecovery = get("unusual_recovery");
 
@@ -98,8 +99,15 @@ export class SuuntoRecoveryCard extends SuuntoBaseCard {
         ${stressState || recoveryTime
           ? html`
               <div class="stats">
-                ${stressState && !UNAVAILABLE_STATES.has(stressState.state)
-                  ? this._stat(stressState.state, "", t(hass, "stat.stress_level"))
+                ${stressState
+                  ? html`
+                      <div class="stat">
+                        <div class="stat-value stress">
+                          <span class="dot" style="background:${stressColor(stressState)}"></span>${stressLabel(hass, stressState)}
+                        </div>
+                        <div class="stat-label">${t(hass, "stat.stress_level")}</div>
+                      </div>
+                    `
                   : nothing}
                 ${recoveryTime && !UNAVAILABLE_STATES.has(recoveryTime.state)
                   ? this._stat(Number(recoveryTime.state).toFixed(1), "h", t(hass, "stat.recovery_window"))
@@ -168,6 +176,10 @@ export class SuuntoRecoveryCard extends SuuntoBaseCard {
       .footer {
         display: flex;
         gap: 8px;
+      }
+      .stat-value.stress {
+        align-items: center;
+        gap: 6px;
       }
     `,
   ];

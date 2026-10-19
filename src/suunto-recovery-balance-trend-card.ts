@@ -7,6 +7,7 @@ import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
 import { multiLineChart, type ChartSeries, type SparklinePoint } from "./utils/render-helpers";
 import { fetchStatisticsSeries, dailyMeanFromHourly } from "./utils/format";
 import { t } from "./utils/localize";
+import { readStressState, stressLabel } from "./utils/stress";
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
 export const DEFAULT_HISTORY_DAYS = 14;
@@ -94,7 +95,7 @@ export class SuuntoRecoveryBalanceTrendCard extends SuuntoBaseCard {
     if (!balance || UNAVAILABLE_STATES.has(balance.state)) {
       return this._message("mdi:heart-flash", t(hass, "empty.recovery_balance_trend.title"));
     }
-    const stress = get("stress_state");
+    const stressState = readStressState(get("stress_state"));
 
     const series: ChartSeries[] = [];
     if (this._balanceHistory.length) series.push({ points: this._balanceHistory, colorVar: "var(--sc-pulse)" });
@@ -119,9 +120,7 @@ export class SuuntoRecoveryBalanceTrendCard extends SuuntoBaseCard {
 
         <div class="stats">
           ${this._stat(`${Math.round(Number(balance.state))}%`, t(hass, "stat.recovery_balance"))}
-          ${stress && !UNAVAILABLE_STATES.has(stress.state)
-            ? this._stat(stress.state, t(hass, "stat.stress_level"))
-            : nothing}
+          ${stressState ? this._stat(stressLabel(hass, stressState), t(hass, "stat.stress_level")) : nothing}
         </div>
       </ha-card>
     `;

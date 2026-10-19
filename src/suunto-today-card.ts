@@ -8,6 +8,7 @@ import { t, tPlural } from "./utils/localize";
 import type { SuuntoHass } from "./utils/types";
 import { goalBar } from "./utils/render-helpers";
 import { knownGoal, formatGoal } from "./utils/suunto-goals";
+import { readSync, syncChip, syncLabel } from "./utils/sync";
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
 
@@ -67,6 +68,8 @@ export class SuuntoTodayCard extends SuuntoBaseCard {
     const isRecovering = get("is_recovering");
     const suggestion = get("training_suggestion");
     const daysSince = get("days_since_last_workout");
+    // ha-suunto 1.0.37+: when the newest data from the watch arrived.
+    const sync = readSync(get("last_sync"));
 
     if (!steps && !energy && !currentHr) {
       return this._message("mdi:pulse", t(hass, "empty.today.title"));
@@ -95,7 +98,9 @@ export class SuuntoTodayCard extends SuuntoBaseCard {
           <div class="icon-badge pulse"><ha-icon .icon=${this._icon("mdi:pulse")}></ha-icon></div>
           <div class="title-block">
             <div class="title">${this._title(t(hass, "card.today.title"))}</div>
-            <div class="subtitle">${t(hass, "card.today.subtitle")}</div>
+            <div class="subtitle">
+              ${t(hass, "card.today.subtitle")}${sync ? ` · ${syncLabel(hass, sync)}` : ""}
+            </div>
           </div>
         </div>
 
@@ -164,12 +169,14 @@ export class SuuntoTodayCard extends SuuntoBaseCard {
             : nothing}
         </div>
 
-        ${workoutToday?.state === "on" ||
+        ${sync?.stale ||
+        workoutToday?.state === "on" ||
         isRecovering?.state === "on" ||
         suggestionBandValue ||
         (daysSinceValue !== undefined && daysSinceValue > 0)
           ? html`
               <div class="footer">
+                ${syncChip(hass, sync)}
                 ${workoutToday?.state === "on"
                   ? html`<span class="chip accent"><ha-icon icon="mdi:calendar-check"></ha-icon>${t(hass, "chip.workout_today")}</span>`
                   : nothing}
