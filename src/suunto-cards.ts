@@ -1,4 +1,5 @@
 import "./suunto-device-editor";
+import "./suunto-dashboard-strategy";
 import "./suunto-goal-editor";
 import "./suunto-steps-goal-editor";
 import "./suunto-weekly-steps-goal-editor";

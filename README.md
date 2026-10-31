@@ -291,6 +291,25 @@ directly - they're computed here from `wake_time` minus `sleep_time` against `sl
 your watch model doesn't report `sleep_time`/`wake_time` for a given night, the card just omits the
 bedtime/wake row and the efficiency ring rather than guessing.
 
+## Ready-made dashboard
+
+Don't want to place 67 cards by hand? **Settings > Dashboards > Add dashboard > Suunto** builds a
+whole training dashboard for you: one view in sections - Today, AI analysis, Sleep, Recovery,
+Training and Progress - with every card in it. It is rebuilt from the integration each time it
+opens, so cards for data that turns up later appear by themselves: the AI cards once the AI is on
+(the weekly summary with ha-suunto 1.0.38+), Running Dynamics after a run, Gear once you add gear,
+Commutes once you have commutes. With two Suunto accounts you get a view for each. Want to move
+cards around? **Take control** in the dashboard's menu turns it into an ordinary dashboard.
+
+```yaml
+strategy:
+  type: custom:suunto
+  devices: [abc123]       # optional: these accounts only, in this order
+  hide: [player, class]   # optional: cards to leave out
+  text_size: large        # optional: for every card
+  language: pl            # optional: for every card
+```
+
 ## Languages
 
 Every label follows your Home Assistant language automatically - English, Polish, German,
