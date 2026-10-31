@@ -301,6 +301,8 @@ opens, so cards for data that turns up later appear by themselves: the AI cards 
 Commutes once you have commutes. With two Suunto accounts you get a view for each. Want to move
 cards around? **Take control** in the dashboard's menu turns it into an ordinary dashboard.
 
+![The ready-made Suunto dashboard](https://raw.githubusercontent.com/MichalZaniewicz/ha-suunto-cards/master/docs/screenshots/dashboard-strategy-dark.png)
+
 ```yaml
 strategy:
   type: custom:suunto
