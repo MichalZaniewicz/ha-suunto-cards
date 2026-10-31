@@ -77,7 +77,16 @@ export const suuntoTokens = css`
 
 /** Layout/component classes shared by every card - keeps the family visually consistent. */
 export const suuntoSharedStyles = css`
+  /* Text size: the universal \`text_size\` option sets --sc-scale inline on
+     the host (SuuntoBaseCard._syncTheme); otherwise a theme variable
+     \`suunto-cards-scale\` sets it for every card at once. \`zoom\` scales
+     text, icons, charts and spacing together, and the content reflows into
+     the card's width. */
+  :host {
+    --sc-scale: var(--suunto-cards-scale, 1);
+  }
   ha-card {
+    zoom: var(--sc-scale);
     cursor: pointer;
     padding: 16px;
     display: flex;
@@ -339,6 +348,28 @@ export const suuntoSharedStyles = css`
   .chip.good {
     background: var(--sc-good-bg);
     color: var(--sc-good);
+  }
+  .sc-stale {
+    display: block;
+    background: var(--sc-warn-bg);
+    color: var(--sc-warn);
+    border: 1px solid color-mix(in srgb, var(--sc-warn) 35%, transparent);
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-size: 0.78rem;
+    line-height: 1.3;
+  }
+  .sc-stale b {
+    font-weight: 500;
+  }
+  .sc-stale span {
+    color: var(--primary-text-color);
+    opacity: 0.8;
+  }
+  .sc-stale ha-icon {
+    --mdc-icon-size: 15px;
+    vertical-align: -3px;
+    margin-right: 5px;
   }
   .chip.warn {
     background: var(--sc-warn-bg);

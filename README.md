@@ -104,7 +104,7 @@ theme, speaks 8 languages, and is set up in the visual editor, without YAML.
 | Aerobic Decoupling | `custom:suunto-aerobic-decoupling-card` | Heart-rate drift against speed between the halves of your latest workout of 40+ minutes, with the last 10 analysed workouts against the 5 % line |
 | What Works For You | `custom:suunto-personal-insights-card` | The clearest patterns in your own data: what goes with better or worse HRV, resting HR and sleep (late workouts, hard days, early bedtimes, weekends), and how heat or cold changes your speed per heartbeat in a sport |
 | Stress &amp; Recovery | `custom:suunto-stress-today-card` | Minutes recovering, active, inactive and stressed today on a 24-hour bar, like the Resources chart in the Suunto app, plus yesterday's complete day |
-| AI Insight | `custom:suunto-ai-insight-card` | The daily AI review (ha-suunto 1.0.30+, AI insight turned on): headline, overall status, warning, one tab per section (sleep, recovery, training, activity) with its own status, and the advice. Options: `section` (first tab) and `single_section: true` (just that section, no tabs) |
+| AI Insight | `custom:suunto-ai-insight-card` | The daily AI review (ha-suunto 1.0.30+, AI insight turned on): headline, overall status, warning, one tab per section (sleep, recovery, training, activity) with its own status, and the advice. Options: `report: weekly` (the weekly AI summary instead, ha-suunto 1.0.38+: the week it covers and the plan for the next one), `section` (first tab) and `single_section: true` (just that section, no tabs) |
 
 Each card auto-detects your Suunto device - **zero YAML required** for the common case of one
 Suunto account. If you ever have more than one, the card's visual editor shows a device picker.
@@ -175,6 +175,9 @@ the bottom), and a card without them looks exactly as before:
 | `hide_legend` | the charts with a legend (the trend cards, sleep cards, Route, Running Dynamics, Week Compare) | Hide the colour legend |
 | `max_items` | Recent Workouts, What Works For You, Gear | How many rows to show (default: all) |
 | `list_height` | Recent Workouts, Lap Splits, Achievements | Height limit of the scrolling list in px (default 320; Achievements 480) |
+| `text_size` | every card | `normal`, `large` (115%), `larger` (130%) or `largest` (150%), or a factor such as `1.2` in YAML (0.75-2). Text, icons, charts and spacing grow together and the card reflows to its width. A theme variable `suunto-cards-scale: 1.2` enlarges every card at once |
+| `language` | every card | The card's own language (`en`, `pl`, `de`, `fr`, `es`, `it`, `nl`, `pt`) for its labels, dates and numbers, whatever Home Assistant uses (default: Home Assistant's) |
+| `hide_sync_warning` | every card with a header | Hide the "Watch not synced for 26 h" strip that shows under the header when the watch has not synced for over a day (ha-suunto 1.0.37+ `last_sync`). Today and Sleep & Readiness show it as a chip instead |
 
 ```yaml
 type: custom:suunto-recent-workouts-card
@@ -292,7 +295,8 @@ bedtime/wake row and the efficiency ring rather than guessing.
 
 Every label follows your Home Assistant language automatically - English, Polish, German,
 Portuguese, French, Spanish, Italian and Dutch are built in (`src/translations/`). Anything else
-falls back to English. Adding a language is one new typed file - see
+falls back to English. A single card can use another language with the `language` option.
+Adding a language is one new typed file - see
 [Adding a language](#adding-a-language) below.
 
 ## Installation

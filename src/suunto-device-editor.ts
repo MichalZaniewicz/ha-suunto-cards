@@ -104,11 +104,22 @@ export class SuuntoDeviceEditor extends LitElement {
         ${type === "custom:suunto-ai-insight-card"
           ? html`
               ${haSelect(
+                t(hass, "editor.ai_report_label"),
+                String(config.report ?? "daily"),
+                [
+                  { value: "daily", label: t(hass, "editor.ai_report_daily") },
+                  { value: "weekly", label: t(hass, "editor.ai_report_weekly") },
+                ],
+                // "daily" is the default; switching drops a first tab set for the other one.
+                (value) => patch({ report: value === "weekly" ? "weekly" : undefined, section: undefined })
+              )}
+              ${haSelect(
                 t(hass, "editor.ai_section_label"),
-                String(config.section ?? "sleep"),
+                String(config.section ?? (config.report === "weekly" ? "training" : "sleep")),
                 AI_SECTIONS.map((key) => ({ value: key, label: t(hass, `ai_insight.section_full.${key}`) })),
-                // "sleep" is the default, so it is stored as an absent key.
-                (value) => patch({ section: value === "sleep" ? undefined : value })
+                // The report's own first tab is stored as an absent key.
+                (value) =>
+                  patch({ section: value === (config.report === "weekly" ? "training" : "sleep") ? undefined : value })
               )}
               ${haSwitch(t(hass, "editor.ai_single_label"), config.single_section === true, (on) =>
                 patch({ single_section: on || undefined })

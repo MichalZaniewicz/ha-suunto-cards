@@ -66,6 +66,13 @@ export interface SuuntoCardConfig extends LovelaceCardConfig {
   max_items?: number;
   /** Height limit of a scrolling list, in px (each card has its own default). */
   list_height?: number;
+  /** Text size: "normal" / "large" / "larger" / "largest", or a factor in YAML
+   * (0.75-2). Scales the whole card. Universal - see `SuuntoBaseCard._syncTheme`. */
+  text_size?: string | number;
+  /** The card's own language ("pl", "en", ...); absent = Home Assistant's. Universal. */
+  language?: string;
+  /** Hides the "watch not synced" strip under the header. Universal. */
+  hide_sync_warning?: boolean;
 }
 
 /** suunto-weekly-goal-card's config: same device selection, plus a user-set target. */

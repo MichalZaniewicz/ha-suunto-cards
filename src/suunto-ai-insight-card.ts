@@ -33,7 +33,10 @@ interface AiSectionData {
 }
 
 export interface SuuntoAiInsightCardConfig extends SuuntoCardConfig {
-  /** Tab shown first. Default: "sleep". */
+  /** Which review: the daily insight (`ai_insight`) or the weekly summary
+   * (`ai_weekly_summary`, ha-suunto 1.0.38+). Same shape. Default: "daily". */
+  report?: "daily" | "weekly";
+  /** Tab shown first. Default: "sleep" (daily), "training" (weekly). */
   section?: AiSection;
   /** Show only `section`, without the tab bar. Default: false. */
   single_section?: boolean;
@@ -44,7 +47,9 @@ export interface SuuntoAiInsightCardConfig extends SuuntoCardConfig {
  * and overall status on top, then one tab per section (sleep, recovery,
  * training, activity), each with its own status dot, then the advice. Tabs
  * keep the card at a predictable height in a sections grid while every
- * section's status stays visible at a glance.
+ * section's status stays visible at a glance. With `report: weekly` it shows
+ * the weekly AI summary (ha-suunto 1.0.38+) the same way, with the week it
+ * covers and the plan for the next one.
  */
 @customElement("suunto-ai-insight-card")
 export class SuuntoAiInsightCard extends SuuntoBaseCard {
@@ -62,7 +67,15 @@ export class SuuntoAiInsightCard extends SuuntoBaseCard {
   public setConfig(config: SuuntoAiInsightCardConfig): void {
     this._config = config;
     this._configuredDeviceId = config.device_id;
-    this._tab = AI_SECTIONS.includes(config.section as AiSection) ? config.section : "sleep";
+    this._tab = AI_SECTIONS.includes(config.section as AiSection)
+      ? config.section
+      : config.report === "weekly"
+        ? "training"
+        : "sleep";
+  }
+
+  private get _weekly(): boolean {
+    return this._config?.report === "weekly";
   }
 
   public getCardSize(): number {
@@ -76,17 +89,23 @@ export class SuuntoAiInsightCard extends SuuntoBaseCard {
     const resolved = this._resolveEntities();
     if ("error" in resolved) return resolved.error;
     const hass = this.hass;
-    const entityId = resolved.map["ai_insight"];
+    const weekly = this._weekly;
+    const baseIcon = weekly ? "mdi:calendar-star" : "mdi:creation";
+    const entityId = resolved.map[weekly ? "ai_weekly_summary" : "ai_insight"];
     const entity = entityId ? hass.states[entityId] : undefined;
     if (!entity) {
-      return this._message("mdi:creation", t(hass, "empty.ai_insight.title"), t(hass, "empty.ai_insight.subtitle"));
+      return this._message(
+        baseIcon,
+        t(hass, "empty.ai_insight.title"),
+        t(hass, weekly ? "empty.ai_weekly.subtitle" : "empty.ai_insight.subtitle")
+      );
     }
     const attrs = entity.attributes as Record<string, unknown>;
     const headline = UNAVAILABLE_STATES.has(entity.state) ? undefined : entity.state;
     if (!headline) {
       return this._message(
-        "mdi:creation",
-        t(hass, attrs.generating ? "ai_insight.generating" : "empty.ai_insight.waiting"),
+        baseIcon,
+        t(hass, attrs.generating ? "ai_insight.generating" : weekly ? "empty.ai_weekly.waiting" : "empty.ai_insight.waiting"),
         attrs.error ? String(attrs.error) : undefined
       );
     }
@@ -98,19 +117,19 @@ export class SuuntoAiInsightCard extends SuuntoBaseCard {
     const summary = typeof attrs.summary === "string" && attrs.summary ? attrs.summary : undefined;
     const hasSections = Object.keys(sections).length > 0;
     const single = this._config.single_section === true;
-    const tab = this._tab ?? "sleep";
+    const tab = this._tab ?? (weekly ? "training" : "sleep");
     const overall = (status && STATUS_COLOR[status]) || undefined;
 
     return html`
       <ha-card class="static">
         <div class="header">
-          <div class="icon-badge"><ha-icon .icon=${this._icon(single ? SECTION_ICON[tab] : "mdi:creation")}></ha-icon></div>
+          <div class="icon-badge"><ha-icon .icon=${this._icon(single ? SECTION_ICON[tab] : baseIcon)}></ha-icon></div>
           <div class="title-block">
             <div class="title">
               ${this._title(
                 single
                   ? t(hass, `ai_insight.section_full.${tab}` as TranslationKey)
-                  : t(hass, "card.ai_insight.title")
+                  : t(hass, weekly ? "card.ai_weekly.title" : "card.ai_insight.title")
               )}
             </div>
             <div class="subtitle">${this._subtitle(attrs)}</div>
@@ -136,7 +155,7 @@ export class SuuntoAiInsightCard extends SuuntoBaseCard {
         ${advice.length && !single
           ? html`
               <div class="advice">
-                <div class="label">${t(hass, "ai_insight.advice")}</div>
+                <div class="label">${t(hass, weekly ? "ai_weekly.advice" : "ai_insight.advice")}</div>
                 <ol>
                   ${advice.map((item) => html`<li>${item}</li>`)}
                 </ol>
@@ -165,7 +184,14 @@ export class SuuntoAiInsightCard extends SuuntoBaseCard {
         }).format(generated)
       );
     }
-    if (typeof attrs.sleep_night === "string" && !attrs.sleep_stale) {
+    if (this._weekly) {
+      const start = typeof attrs.week_start === "string" ? new Date(`${attrs.week_start}T12:00:00`) : undefined;
+      const end = typeof attrs.for_date === "string" ? new Date(`${attrs.for_date}T12:00:00`) : undefined;
+      if (start && end && !Number.isNaN(start.getTime()) && !Number.isNaN(end.getTime())) {
+        const fmt = new Intl.DateTimeFormat(hass.language, { day: "numeric", month: "numeric" });
+        parts.push(t(hass, "ai_weekly.week", { range: `${fmt.format(start)}-${fmt.format(end)}` }));
+      }
+    } else if (typeof attrs.sleep_night === "string" && !attrs.sleep_stale) {
       const night = new Date(`${attrs.sleep_night}T12:00:00`);
       if (!Number.isNaN(night.getTime())) {
         const next = new Date(night.getTime() + 86_400_000);

@@ -193,11 +193,33 @@ function accentField<C extends SuuntoCardConfig>(hass: SuuntoHass, config: C, em
   `;
 }
 
+/** The card's own language: Home Assistant's (no key) or one of these. */
+const CARD_LANGUAGES: { value: string; label: string }[] = [
+  { value: "en", label: "English" },
+  { value: "pl", label: "Polski" },
+  { value: "de", label: "Deutsch" },
+  { value: "fr", label: "Français" },
+  { value: "es", label: "Español" },
+  { value: "it", label: "Italiano" },
+  { value: "nl", label: "Nederlands" },
+  { value: "pt", label: "Português" },
+];
+
+const TEXT_SIZE_OPTIONS: { value: string; label: TranslationKey }[] = [
+  { value: "normal", label: "text_size.normal" },
+  { value: "large", label: "text_size.large" },
+  { value: "larger", label: "text_size.larger" },
+  { value: "largest", label: "text_size.largest" },
+];
+
 /** The "Appearance" section, appended at the end of every editor. */
 export function lookFields<C extends SuuntoCardConfig>(hass: SuuntoHass, config: C, emit: Emit<C>): TemplateResult {
   const type = config.type;
   const header = !NO_HEADER_CARDS.has(type);
-  const toggle = (key: "hide_header" | "hide_icon" | "hide_subtitle" | "compact", label: string) =>
+  const toggle = (
+    key: "hide_header" | "hide_icon" | "hide_subtitle" | "compact" | "hide_sync_warning",
+    label: string
+  ) =>
     haSwitch(label, Boolean(config[key]), (on) => emit(patchConfig(config, { [key]: on || undefined })));
   return html`
     <hr class="sep" />
@@ -208,9 +230,23 @@ export function lookFields<C extends SuuntoCardConfig>(hass: SuuntoHass, config:
         )
       : nothing}
     ${accentField(hass, config, emit)}
+    ${haSelect(
+      t(hass, "editor.text_size"),
+      typeof config.text_size === "string" ? config.text_size : "normal",
+      TEXT_SIZE_OPTIONS.map((o) => ({ value: o.value, label: t(hass, o.label) })),
+      // Normal is stored as an absent key.
+      (value) => emit(patchConfig(config, { text_size: value === "normal" ? undefined : value }))
+    )}
+    ${haSelect(
+      t(hass, "editor.language"),
+      config.language ?? "auto",
+      [{ value: "auto", label: t(hass, "editor.language_auto") }, ...CARD_LANGUAGES],
+      (value) => emit(patchConfig(config, { language: value === "auto" ? undefined : value }))
+    )}
     ${header ? toggle("hide_header", t(hass, "editor.hide_header")) : nothing}
     ${header ? toggle("hide_icon", t(hass, "editor.hide_icon")) : nothing}
     ${header && !NO_SUBTITLE_CARDS.has(type) ? toggle("hide_subtitle", t(hass, "editor.hide_subtitle")) : nothing}
     ${header ? toggle("compact", t(hass, "editor.compact_label")) : nothing}
+    ${header ? toggle("hide_sync_warning", t(hass, "editor.hide_sync_warning")) : nothing}
   `;
 }
