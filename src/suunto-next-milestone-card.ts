@@ -198,7 +198,7 @@ export class SuuntoNextMilestoneCard extends SuuntoBaseCard {
         align-items: center;
         gap: 8px;
         padding: 8px 10px;
-        background: var(--divider-color);
+        background: var(--sc-track, var(--divider-color));
         border-radius: 9px;
       }
       .sub-milestone ha-icon {

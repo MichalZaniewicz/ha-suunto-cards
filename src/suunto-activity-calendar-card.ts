@@ -1,6 +1,7 @@
 import { html, css, nothing, type TemplateResult } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import type { LovelaceCardEditor } from "custom-card-helpers";
+import { readSportColors, sportColor } from "./utils/sports";
 import type { SuuntoCardConfig } from "./utils/types";
 import { SuuntoBaseCard } from "./utils/base-card";
 import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
@@ -8,6 +9,8 @@ import { tPlural, t } from "./utils/localize";
 
 interface RecentWorkout {
   start: string | null;
+  activity?: string | null;
+  duration_min?: number | null;
 }
 
 const WEEKS = 6;
@@ -22,6 +25,19 @@ const DAYS = WEEKS * 7;
  * Intensity buckets by workout COUNT per day, not duration/TSS, to keep the
  * scale simple and comparable across very different activity types.
  */
+/** Per local day, the sport of that day's longest workout. */
+function mainSportByDay(workouts: RecentWorkout[]): Map<string, string> {
+  const best = new Map<string, { sport: string; minutes: number }>();
+  for (const w of workouts) {
+    if (!w.start || !w.activity) continue;
+    const day = new Date(w.start).toDateString();
+    const minutes = w.duration_min ?? 0;
+    const current = best.get(day);
+    if (!current || minutes > current.minutes) best.set(day, { sport: w.activity, minutes });
+  }
+  return new Map([...best].map(([day, item]) => [day, item.sport]));
+}
+
 function dayCounts(workouts: RecentWorkout[]): Map<string, number> {
   const counts = new Map<string, number>();
   for (const w of workouts) {
@@ -77,6 +93,8 @@ export class SuuntoActivityCalendarCard extends SuuntoBaseCard {
     }
 
     const counts = dayCounts(workouts);
+    const sports = readSportColors(hass, map);
+    const mainSport = mainSportByDay(workouts);
 
     // Grid starts on the Monday that begins the current week, minus 5 more
     // weeks - always a whole number of Monday-to-Sunday rows.
@@ -92,11 +110,15 @@ export class SuuntoActivityCalendarCard extends SuuntoBaseCard {
       const count = counts.get(cursor.toDateString()) ?? 0;
       if (count > 0) activeDays++;
       const level = intensityLevel(count);
+      const sport = mainSport.get(cursor.toDateString());
       cells.push(
         html`<span
           class="cell level-${level}"
-          title=${cursor.toLocaleDateString(hass.language)}
-        ></span>`
+          title=${sport ? `${cursor.toLocaleDateString(hass.language)}, ${sport}` : cursor.toLocaleDateString(hass.language)}
+          >${sport
+            ? html`<i class="sport-dot" style="background:${sportColor(sports, sport)}"></i>`
+            : nothing}</span
+        >`
       );
       cursor.setDate(cursor.getDate() + 1);
     }
@@ -133,16 +155,35 @@ export class SuuntoActivityCalendarCard extends SuuntoBaseCard {
         gap: 4px;
       }
       .cell {
+        position: relative;
         aspect-ratio: 1;
         border-radius: 3px;
-        background: var(--divider-color);
+        background: var(--sc-track, var(--divider-color));
         display: block;
       }
+      /* The day's main sport (its longest workout), in the sport's own colour. */
+      .sport-dot {
+        position: absolute;
+        left: 50%;
+        bottom: 18%;
+        width: 26%;
+        aspect-ratio: 1;
+        transform: translateX(-50%);
+        border-radius: 50%;
+        box-shadow: 0 0 0 1.5px var(--card-background-color, #fff);
+      }
+      :host(.eink) .sport-dot {
+        display: none;
+      }
+      :host(.eink) .cell.level-0 {
+        outline: 1px solid #000;
+        outline-offset: -1px;
+      }
       .cell.level-1 {
-        background: color-mix(in srgb, var(--sc-amber) 35%, var(--divider-color));
+        background: color-mix(in srgb, var(--sc-amber) 35%, var(--sc-track, var(--divider-color)));
       }
       .cell.level-2 {
-        background: color-mix(in srgb, var(--sc-amber) 65%, var(--divider-color));
+        background: color-mix(in srgb, var(--sc-amber) 65%, var(--sc-track, var(--divider-color)));
       }
       .cell.level-3 {
         background: var(--sc-amber);

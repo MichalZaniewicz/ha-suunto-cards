@@ -71,6 +71,7 @@ import "./suunto-sleep-regularity-card";
 import "./suunto-aerobic-decoupling-card";
 import "./suunto-personal-insights-card";
 import "./suunto-stress-today-card";
+import "./suunto-whats-new-card";
 
 interface CustomCardEntry {
   type: string;
@@ -490,12 +491,18 @@ window.customCards.push(
     name: "Suunto - Stress & Recovery",
     description: "Minutes recovering, active, inactive and stressed today and yesterday, like the Resources chart in the Suunto app.",
     preview: true,
+  },
+  {
+    type: "suunto-whats-new-card",
+    name: "Suunto - What's New",
+    description: "One timeline of what happened lately: workouts, records, best efforts, route achievements, AI reports and gear due for a service.",
+    preview: true,
   }
 );
 
 // eslint-disable-next-line no-console
 console.info(
-  "%c SUUNTO-CARDS %c 67 cards loaded",
+  "%c SUUNTO-CARDS %c 68 cards loaded",
   "color: #fff; background: #d98a1d; font-weight: 700; border-radius: 3px 0 0 3px; padding: 2px 6px;",
   "color: #d98a1d; background: transparent; font-weight: 500;"
 );

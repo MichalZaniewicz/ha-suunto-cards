@@ -80,7 +80,7 @@ export class SuuntoDailyBriefCard extends SuuntoBaseCard {
             </div>
           </div>
         </div>
-        <div class="brief">
+        <div class="brief sc-clamp">
           ${facts}
           ${advice ? html`<span class="advice" style=${colorVar ? `color:${colorVar}` : ""}>${advice}</span>` : nothing}
         </div>

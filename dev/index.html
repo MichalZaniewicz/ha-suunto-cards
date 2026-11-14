@@ -92,6 +92,21 @@
     <option value="es">Español</option>
     <option value="it">Italiano</option>
     <option value="nl">Nederlands</option>
+    <option value="uk">Українська</option>
+    <option value="ru">Русский</option>
+    <option value="fi">Suomi</option>
+    <option value="sv">Svenska</option>
+    <option value="da">Dansk</option>
+    <option value="nb">Norsk bokmål</option>
+    <option value="cs">Čeština</option>
+  </select>
+  <select id="eink" aria-label="E-ink mode">
+    <option value="">E-ink: off</option>
+    <option value="bw">E-ink: bw</option>
+    <option value="gray">E-ink: gray</option>
+    <option value="red">E-ink: red</option>
+    <option value="yellow">E-ink: yellow</option>
+    <option value="color">E-ink: color</option>
   </select>
 
   <div class="section">Happy path (full device)</div>
@@ -633,6 +648,10 @@
                 { activity: "Walking", workouts: 30, distance_km: 145, time_hours: 38 },
                 { activity: "Running", workouts: 3, distance_km: 24, time_hours: 3 },
               ],
+              // ha-suunto 1.0.40: each sport's slot, plus one own colour.
+              sport_palette: { Cycling: 1, Gym: 2, Trekking: 3, Walking: 4, Running: 5 },
+              sport_colors: { Trekking: "#8e44ad" },
+              sport_colors_unmatched: [],
             },
           },
           daily_steps: { state: 8412, attributes: { goal: 8000 } },
@@ -734,8 +753,8 @@
               // (day -9, two workouts) so suunto-activity-calendar-card shows
               // more than one intensity level.
               workouts: [
-                { start: nowIso(-2 * 3600 * 1000), activity: "Cycling", distance_km: 42.3, duration_min: 98, avg_hr: 142, max_hr: 168, tss: 132 },
-                { start: nowIso(-(24 + 3) * 3600 * 1000), activity: "Gym", distance_km: null, duration_min: 52, avg_hr: 118, max_hr: 145, tss: 61 },
+                { start: nowIso(-2 * 3600 * 1000), activity: "Cycling", distance_km: 42.3, duration_min: 98, avg_hr: 142, max_hr: 168, tss: 132, pte: 3.1, achievements: ["Fastest time on this route"], route_ranking: 1 },
+                { start: nowIso(-(24 + 3) * 3600 * 1000), activity: "Gym", distance_km: null, duration_min: 52, avg_hr: 118, max_hr: 145, tss: 61, pte: 2.2 },
                 { start: nowIso(-(3 * 24 + 6) * 3600 * 1000), activity: "Trekking", distance_km: 12.8, duration_min: 165, avg_hr: 126, max_hr: 158, tss: 110 },
                 { start: nowIso(-(9 * 24 + 4) * 3600 * 1000), activity: "Cycling", distance_km: 40.1, duration_min: 104, avg_hr: 138, max_hr: 165, tss: 121 },
                 { start: nowIso(-(9 * 24 + 8) * 3600 * 1000), activity: "Gym", distance_km: null, duration_min: 45, avg_hr: 115, max_hr: 140, tss: 55 },
@@ -912,6 +931,7 @@
       "suunto-aerobic-decoupling-card",
       "suunto-personal-insights-card",
       "suunto-stress-today-card",
+      "suunto-whats-new-card",
     ];
 
     function setup() {
@@ -987,6 +1007,13 @@
         const dark = document.body.classList.contains("dark");
         for (const el of document.querySelectorAll("[id] > div > *:last-child")) {
           if (el.hass) el.hass = { ...el.hass, themes: { darkMode: dark } };
+        }
+      });
+
+      document.getElementById("eink").addEventListener("change", (ev) => {
+        const eink = ev.target.value || undefined;
+        for (const el of document.querySelectorAll("[id] > div > *:last-child")) {
+          if (el.setConfig && el._config) el.setConfig({ ...el._config, eink });
         }
       });
 

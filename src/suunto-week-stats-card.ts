@@ -6,6 +6,7 @@ import { SuuntoBaseCard } from "./utils/base-card";
 import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
 import { segmentedBar, goalBar } from "./utils/render-helpers";
 import { knownGoal, formatGoal } from "./utils/suunto-goals";
+import { readSportColors, sportBadgeStyle, sportColor } from "./utils/sports";
 import { activityIcon } from "./utils/icons";
 import { formatDistance } from "./utils/format";
 import { t, tPlural } from "./utils/localize";
@@ -13,14 +14,6 @@ import { t, tPlural } from "./utils/localize";
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
 const TOP_N = 5;
 
-const CATEGORY_COLORS = [
-  "var(--sc-amber)",
-  "var(--sc-pulse)",
-  "var(--sc-good)",
-  "var(--sc-sleep-rem)",
-  "var(--sc-zone-4)",
-  "var(--sc-sleep-deep)",
-];
 
 interface LifetimeActivity {
   activity: string;
@@ -57,6 +50,7 @@ export class SuuntoWeekStatsCard extends SuuntoBaseCard {
     const resolved = this._resolveEntities();
     if ("error" in resolved) return resolved.error;
     const { map } = resolved;
+    const sports = readSportColors(this.hass, map);
     const hass = this.hass;
     const get = (key: string) => (map[key] ? hass.states[map[key]] : undefined);
 
@@ -131,20 +125,20 @@ export class SuuntoWeekStatsCard extends SuuntoBaseCard {
               <div class="lifetime">
                 <div class="lifetime-title">${t(hass, "card.week_stats.lifetime_title")}</div>
                 ${segmentedBar(
-                  top.map((a, i) => ({
+                  top.map((a) => ({
                     flexGrow: a.distance_km,
-                    colorVar: CATEGORY_COLORS[i % CATEGORY_COLORS.length],
+                    colorVar: sportColor(sports, a.activity),
                     title: a.activity,
                   }))
                 )}
                 <div class="rows">
-                  ${top.map((a, i) => {
-                    const color = CATEGORY_COLORS[i % CATEGORY_COLORS.length];
+                  ${top.map((a) => {
+                    const color = sportColor(sports, a.activity);
                     return html`
                       <div class="row">
                         <div
                           class="icon-badge tiny"
-                          style="background:color-mix(in srgb, ${color} 18%, transparent);color:${color}"
+                          style=${sportBadgeStyle(color)}
                         >
                           <ha-icon .icon=${activityIcon(a.activity)}></ha-icon>
                         </div>

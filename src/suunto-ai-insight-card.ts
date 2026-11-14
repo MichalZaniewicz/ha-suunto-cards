@@ -140,9 +140,9 @@ export class SuuntoAiInsightCard extends SuuntoBaseCard {
               >`
             : nothing}
         </div>
-        ${single ? nothing : html`<div class="headline">${headline}</div>`}
+        ${single ? nothing : html`<div class="headline sc-clamp">${headline}</div>`}
         ${warning && !single
-          ? html`<div class="warning"><ha-icon icon="mdi:alert"></ha-icon><div>${warning}</div></div>`
+          ? html`<div class="warning"><ha-icon icon="mdi:alert"></ha-icon><div class="sc-clamp">${warning}</div></div>`
           : nothing}
         ${hasSections
           ? html`
@@ -157,7 +157,7 @@ export class SuuntoAiInsightCard extends SuuntoBaseCard {
               <div class="advice">
                 <div class="label">${t(hass, weekly ? "ai_weekly.advice" : "ai_insight.advice")}</div>
                 <ol>
-                  ${advice.map((item) => html`<li>${item}</li>`)}
+                  ${advice.map((item) => html`<li><span class="sc-clamp">${item}</span></li>`)}
                 </ol>
               </div>
             `
@@ -258,7 +258,7 @@ export class SuuntoAiInsightCard extends SuuntoBaseCard {
       .split(/\n\s*\n/)
       .map((p) => p.trim())
       .filter(Boolean)
-      .map((p) => html`<p>${p}</p>`);
+      .map((p) => html`<p class="sc-clamp">${p}</p>`);
   }
 
   static styles = [

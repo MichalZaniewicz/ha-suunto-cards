@@ -1,4 +1,5 @@
 import { html, nothing, type TemplateResult } from "lit";
+import { einkMode } from "./eink";
 import type { SuuntoCardConfig, SuuntoHass } from "./types";
 import { t, type TranslationKey } from "./localize";
 import { findSuuntoDeviceIds } from "./entities";
@@ -31,10 +32,13 @@ const LEGEND_CARDS = new Set(
 );
 
 /** Lists the `max_items` option cuts (no cap by default). */
-const MAX_ITEMS_CARDS = new Set(["recent-workouts", "personal-insights", "gear"].map(card));
+const MAX_ITEMS_CARDS = new Set(["recent-workouts", "personal-insights", "gear", "whats-new"].map(card));
+
+/** Cards with long text the `max_lines` option cuts. */
+const MAX_LINES_CARDS = new Set(["ai-insight", "personal-insights", "daily-brief"].map(card));
 
 /** Scrolling lists (default height 320 px; Achievements 480 px). */
-const LIST_HEIGHT_CARDS = new Set(["recent-workouts", "lap-splits", "achievements"].map(card));
+const LIST_HEIGHT_CARDS = new Set(["recent-workouts", "lap-splits", "achievements", "whats-new"].map(card));
 
 /** Trend cards with a `days` window, and each one's default. */
 export const DAYS_CARDS: Record<string, number> = {
@@ -48,6 +52,7 @@ export const DAYS_CARDS: Record<string, number> = {
   [card("steps-trend")]: 14,
   [card("training-effect-trend")]: 30,
   [card("training-load")]: 30,
+  [card("whats-new")]: 14,
 };
 const DAYS_OPTIONS = [7, 14, 30, 60, 90, 180];
 
@@ -64,7 +69,7 @@ function numberField<C extends SuuntoCardConfig>(
   hass: SuuntoHass,
   config: C,
   emit: Emit<C>,
-  key: "max_items" | "list_height",
+  key: "max_items" | "list_height" | "max_lines",
   label: string,
   min: number,
   max: number
@@ -140,14 +145,34 @@ export function cardOptionFields<C extends SuuntoCardConfig>(hass: SuuntoHass, c
     ${MAX_ITEMS_CARDS.has(type)
       ? numberField(hass, config, emit, "max_items", t(hass, "editor.max_items"), 1, 50)
       : nothing}
+    ${MAX_LINES_CARDS.has(type)
+      ? numberField(hass, config, emit, "max_lines", t(hass, "editor.max_lines"), 1, 20)
+      : nothing}
     ${LIST_HEIGHT_CARDS.has(type)
       ? numberField(hass, config, emit, "list_height", t(hass, "editor.list_height"), 120, 1200)
       : nothing}
+    ${type === card("whats-new") ? whatsNewShowFields(hass, config, emit) : nothing}
     ${LEGEND_CARDS.has(type)
       ? haSwitch(t(hass, "editor.hide_legend"), Boolean(config.hide_legend), (on) =>
           emit(patchConfig(config, { hide_legend: on || undefined }))
         )
       : nothing}
+  `;
+}
+
+/** What's New: one switch per kind of entry; all on is stored as no `show` key. */
+const WHATS_NEW_KINDS = ["workouts", "records", "achievements", "ai", "gear"] as const;
+
+function whatsNewShowFields<C extends SuuntoCardConfig>(hass: SuuntoHass, config: C, emit: Emit<C>): TemplateResult {
+  const current = Array.isArray(config.show) && config.show.length ? config.show : [...WHATS_NEW_KINDS];
+  return html`
+    <div class="group-label">${t(hass, "editor.whats_new_show")}</div>
+    ${WHATS_NEW_KINDS.map((kind) =>
+      haSwitch(t(hass, `whats_new.kind.${kind}` as TranslationKey), current.includes(kind), (on) => {
+        const next = WHATS_NEW_KINDS.filter((k) => (k === kind ? on : current.includes(k)));
+        emit(patchConfig(config, { show: next.length === WHATS_NEW_KINDS.length || !next.length ? undefined : next }));
+      })
+    )}
   `;
 }
 
@@ -203,6 +228,23 @@ const CARD_LANGUAGES: { value: string; label: string }[] = [
   { value: "it", label: "Italiano" },
   { value: "nl", label: "Nederlands" },
   { value: "pt", label: "Português" },
+  { value: "uk", label: "Українська" },
+  { value: "ru", label: "Русский" },
+  { value: "fi", label: "Suomi" },
+  { value: "sv", label: "Svenska" },
+  { value: "da", label: "Dansk" },
+  { value: "nb", label: "Norsk bokmål" },
+  { value: "cs", label: "Čeština" },
+];
+
+/** E-ink palettes in the editor; "off" is stored as an absent key. */
+const EINK_OPTIONS: { value: string; label: TranslationKey }[] = [
+  { value: "off", label: "eink.off" },
+  { value: "bw", label: "eink.bw" },
+  { value: "gray", label: "eink.gray" },
+  { value: "red", label: "eink.red" },
+  { value: "yellow", label: "eink.yellow" },
+  { value: "color", label: "eink.color" },
 ];
 
 const TEXT_SIZE_OPTIONS: { value: string; label: TranslationKey }[] = [
@@ -242,6 +284,12 @@ export function lookFields<C extends SuuntoCardConfig>(hass: SuuntoHass, config:
       config.language ?? "auto",
       [{ value: "auto", label: t(hass, "editor.language_auto") }, ...CARD_LANGUAGES],
       (value) => emit(patchConfig(config, { language: value === "auto" ? undefined : value }))
+    )}
+    ${haSelect(
+      t(hass, "editor.eink"),
+      einkMode(config.eink) ?? "off",
+      EINK_OPTIONS.map((o) => ({ value: o.value, label: t(hass, o.label) })),
+      (value) => emit(patchConfig(config, { eink: value === "off" ? undefined : value }))
     )}
     ${header ? toggle("hide_header", t(hass, "editor.hide_header")) : nothing}
     ${header ? toggle("hide_icon", t(hass, "editor.hide_icon")) : nothing}

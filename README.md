@@ -25,10 +25,10 @@ into <ha-alert> and drops every child whose textContent is empty, which silently
   <img src="docs/trailer.webp" alt="Suunto Cards trailer: 66 cards, light and dark, 8 languages, the visual editor">
 </p>
 
-67 cards built for one job: showing your Suunto data on a Home Assistant dashboard. Today's
+68 cards built for one job: showing your Suunto data on a Home Assistant dashboard. Today's
 activity, sleep and readiness, recovery, training load and form, every workout with its route and
 heart rate zones, personal bests, goals and yearly totals. Every card follows your light or dark
-theme, speaks 8 languages, and is set up in the visual editor, without YAML.
+theme, speaks 15 languages, and is set up in the visual editor, without YAML.
 
 ## Meet the cards
 
@@ -104,6 +104,7 @@ theme, speaks 8 languages, and is set up in the visual editor, without YAML.
 | Aerobic Decoupling | `custom:suunto-aerobic-decoupling-card` | Heart-rate drift against speed between the halves of your latest workout of 40+ minutes, with the last 10 analysed workouts against the 5 % line |
 | What Works For You | `custom:suunto-personal-insights-card` | The clearest patterns in your own data: what goes with better or worse HRV, resting HR and sleep (late workouts, hard days, early bedtimes, weekends), and how heat or cold changes your speed per heartbeat in a sport |
 | Stress &amp; Recovery | `custom:suunto-stress-today-card` | Minutes recovering, active, inactive and stressed today on a 24-hour bar, like the Resources chart in the Suunto app, plus yesterday's complete day |
+| What's New | `custom:suunto-whats-new-card` | One timeline of what happened lately, by day: workouts, records (month, year, all time), best efforts, route achievements, the AI reports and gear due for a service. Options `days` (default 14), `show` (any of `workouts`, `records`, `achievements`, `ai`, `gear`), `max_items`, `list_height`. Tap an entry for its details. PTE and route achievements need ha-suunto 1.0.40+ |
 | AI Insight | `custom:suunto-ai-insight-card` | The daily AI review (ha-suunto 1.0.30+, AI insight turned on): headline, overall status, warning, one tab per section (sleep, recovery, training, activity) with its own status, and the advice. Options: `report: weekly` (the weekly AI summary instead, ha-suunto 1.0.38+: the week it covers and the plan for the next one), `section` (first tab) and `single_section: true` (just that section, no tabs) |
 
 Each card auto-detects your Suunto device - **zero YAML required** for the common case of one
@@ -173,11 +174,13 @@ the bottom), and a card without them looks exactly as before:
 | `hide_icon` / `hide_subtitle` | every card with a header | Hide just the icon badge, or just the line under the title |
 | `compact` | every card with a header | Tighter padding and a smaller icon badge. On Last Workout and Sleep & Readiness it also collapses the secondary stats (training load details, weather, tags; SpO2/sleep HR, sleep stages, footer chips) |
 | `hide_legend` | the charts with a legend (the trend cards, sleep cards, Route, Running Dynamics, Week Compare) | Hide the colour legend |
-| `max_items` | Recent Workouts, What Works For You, Gear | How many rows to show (default: all) |
-| `list_height` | Recent Workouts, Lap Splits, Achievements | Height limit of the scrolling list in px (default 320; Achievements 480) |
+| `max_items` | Recent Workouts, What Works For You, Gear, What's New | How many rows to show (default: all) |
+| `list_height` | Recent Workouts, Lap Splits, Achievements, What's New | Height limit of the scrolling list in px (default 320; Achievements 480) |
+| `max_lines` | AI Insight, What Works For You, Daily Brief | Cut long text to this many lines, e.g. `3` for an e-paper screen (the whole text stays in the entity's attributes) |
 | `text_size` | every card | `normal`, `large` (115%), `larger` (130%) or `largest` (150%), or a factor such as `1.2` in YAML (0.75-2). Text, icons, charts and spacing grow together and the card reflows to its width. A theme variable `suunto-cards-scale: 1.2` enlarges every card at once |
-| `language` | every card | The card's own language (`en`, `pl`, `de`, `fr`, `es`, `it`, `nl`, `pt`) for its labels, dates and numbers, whatever Home Assistant uses (default: Home Assistant's) |
+| `language` | every card | The card's own language (`en`, `pl`, `de`, `fr`, `es`, `it`, `nl`, `pt`, `uk`, `ru`, `fi`, `sv`, `da`, `nb`, `cs`) for its labels, dates and numbers, whatever Home Assistant uses (default: Home Assistant's) |
 | `hide_sync_warning` | every card with a header | Hide the "Watch not synced for 26 h" strip that shows under the header when the watch has not synced for over a day (ha-suunto 1.0.37+ `last_sync`). Today and Sleep & Readiness show it as a chip instead |
+| `eink` | every card | For e-paper screens: `bw` (or `true`) for pure black and white, `gray` for 4 greys, `red` or `yellow` for three-colour panels, `color` for six-colour ones. No tints, shadows or animation; a white fill gets a black frame, lists grow instead of scrolling, red marks only what needs attention and yellow is only ever a fill behind black text. The card redraws only when its data changes. A theme variable `suunto-cards-eink: bw` turns it on for every card |
 
 ```yaml
 type: custom:suunto-recent-workouts-card
@@ -291,11 +294,22 @@ directly - they're computed here from `wake_time` minus `sleep_time` against `sl
 your watch model doesn't report `sleep_time`/`wake_time` for a given night, the card just omits the
 bedtime/wake row and the efficiency ring rather than guessing.
 
+## Sport colours
+
+Every sport has its own colour, the same in every card: Week &amp; Lifetime, Recent Workouts,
+the Activity Calendar (a dot for each day's main sport), What's New and the header icon of Last
+Workout and Workout Comparison. The integration (ha-suunto 1.0.40+) gives each sport a colour
+once, most workouts first, and keeps it, so a sport never changes colour when another one
+overtakes it. Want your own? **Settings > Devices & services > Suunto App > Configure > General
+settings > Sport colours**, one line per sport: `Cycling: #2e7e9e`. With an older integration
+the cards pick a stable colour from the sport's name.
+
 ## Ready-made dashboard
 
-Don't want to place 67 cards by hand? **Settings > Dashboards > Add dashboard > Suunto** builds a
-whole training dashboard for you: one view in sections - Today, AI analysis, Sleep, Recovery,
-Training and Progress - with every card in it. It is rebuilt from the integration each time it
+Don't want to place 68 cards by hand? **Settings > Dashboards > Add dashboard > Suunto** builds a
+whole training dashboard for you: one view in ten sections, the most important first - Today,
+AI analysis, Sleep, Recovery, Last workout, Load and form, This week, Records, History and
+profile, Gear and commutes - with every card in it. It is rebuilt from the integration each time it
 opens, so cards for data that turns up later appear by themselves: the AI cards once the AI is on
 (the weekly summary with ha-suunto 1.0.38+), Running Dynamics after a run, Gear once you add gear,
 Commutes once you have commutes. With two Suunto accounts you get a view for each. Want to move
@@ -310,12 +324,14 @@ strategy:
   hide: [player, class]   # optional: cards to leave out
   text_size: large        # optional: for every card
   language: pl            # optional: for every card
+  eink: bw                # optional: e-paper mode for every card
 ```
 
 ## Languages
 
 Every label follows your Home Assistant language automatically - English, Polish, German,
-Portuguese, French, Spanish, Italian and Dutch are built in (`src/translations/`). Anything else
+Portuguese, French, Spanish, Italian, Dutch, Ukrainian, Russian, Finnish, Swedish, Danish,
+Norwegian and Czech are built in (`src/translations/`). Anything else
 falls back to English. A single card can use another language with the `language` option.
 Adding a language is one new typed file - see
 [Adding a language](#adding-a-language) below.

@@ -77,7 +77,7 @@ export class SuuntoStreakCard extends SuuntoBaseCard {
       dots.push(
         html`<span
           class="dot"
-          style="background:${active ? "var(--sc-amber)" : "var(--divider-color)"}"
+          style="background:${active ? "var(--sc-amber)" : "var(--sc-track, var(--divider-color))"}"
         ></span>`
       );
       cursor.setDate(cursor.getDate() + 1);

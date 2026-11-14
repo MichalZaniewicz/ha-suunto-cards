@@ -166,7 +166,7 @@ export class SuuntoMonthStoryCard extends SuuntoBaseCard {
         grid-column: 1 / -1;
       }
       .story-tile {
-        background: var(--divider-color);
+        background: var(--sc-track, var(--divider-color));
         border-radius: 10px;
         padding: 12px 14px;
         display: flex;
@@ -198,7 +198,7 @@ export class SuuntoMonthStoryCard extends SuuntoBaseCard {
         align-items: center;
         gap: 10px;
         padding: 10px 12px;
-        background: var(--divider-color);
+        background: var(--sc-track, var(--divider-color));
         border-radius: 9px;
       }
       .story-block ha-icon {

@@ -6,6 +6,13 @@ import { fr } from "../translations/fr";
 import { es } from "../translations/es";
 import { it } from "../translations/it";
 import { nl } from "../translations/nl";
+import { uk } from "../translations/uk";
+import { ru } from "../translations/ru";
+import { fi } from "../translations/fi";
+import { sv } from "../translations/sv";
+import { da } from "../translations/da";
+import { nb } from "../translations/nb";
+import { cs } from "../translations/cs";
 import type { SuuntoHass } from "./types";
 
 export type TranslationKey = keyof typeof en;
@@ -19,6 +26,13 @@ const LANGUAGES: Record<string, Record<TranslationKey, string>> = {
   es,
   it,
   nl,
+  uk,
+  ru,
+  fi,
+  sv,
+  da,
+  nb,
+  cs,
 };
 
 function dictFor(hass: SuuntoHass | undefined): Record<TranslationKey, string> {

@@ -192,7 +192,7 @@ export class SuuntoClassCard extends SuuntoBaseCard {
         flex: 1;
         height: 6px;
         border-radius: 3px;
-        background: var(--divider-color);
+        background: var(--sc-track, var(--divider-color));
         overflow: hidden;
       }
       .cb-row .cf {

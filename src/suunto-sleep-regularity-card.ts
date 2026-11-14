@@ -278,7 +278,7 @@ export class SuuntoSleepRegularityCard extends SuuntoBaseCard {
       .track {
         left: 0;
         right: 0;
-        background: var(--divider-color);
+        background: var(--sc-track, var(--divider-color));
       }
       .sleep {
         background: var(--sc-sleep-light);

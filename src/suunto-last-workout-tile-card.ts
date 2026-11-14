@@ -1,6 +1,7 @@
 import { html, css, nothing, type TemplateResult } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import { fireEvent, type LovelaceCardEditor } from "custom-card-helpers";
+import { readSportColors, sportBadgeStyle, sportColor } from "./utils/sports";
 import type { SuuntoCardConfig } from "./utils/types";
 import { SuuntoBaseCard } from "./utils/base-card";
 import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
@@ -39,6 +40,7 @@ export class SuuntoLastWorkoutTileCard extends SuuntoBaseCard {
     const resolved = this._resolveEntities();
     if ("error" in resolved) return resolved.error;
     const { map } = resolved;
+    const sports = readSportColors(this.hass, map);
     const hass = this.hass;
     const get = (key: string) => (map[key] ? hass.states[map[key]] : undefined);
 
@@ -78,7 +80,9 @@ export class SuuntoLastWorkoutTileCard extends SuuntoBaseCard {
     return html`
       <ha-card @click=${() => this._openMoreInfo(map["last_activity"])}>
         <div class="header">
-          <div class="icon-badge"><ha-icon .icon=${this._icon(activityIcon(activity.state))}></ha-icon></div>
+          <div class="icon-badge" style=${this._cardConfig?.accent_color ? "" : sportBadgeStyle(sportColor(sports, activity.state))}>
+            <ha-icon .icon=${this._icon(activityIcon(activity.state))}></ha-icon>
+          </div>
           <div class="title-block">
             <div class="title activity">${this._title(activity.state)}</div>
             <div class="subtitle">${start ? formatRelative(new Date(start.state), hass.language) : ""}</div>

@@ -173,7 +173,7 @@ export class SuuntoLevelCard extends SuuntoBaseCard {
         width: 100%;
         height: 10px;
         border-radius: 5px;
-        background: var(--divider-color);
+        background: var(--sc-track, var(--divider-color));
         overflow: hidden;
       }
       .xp-bar-fill {

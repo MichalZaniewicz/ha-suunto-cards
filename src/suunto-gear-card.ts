@@ -1,6 +1,7 @@
 import { html, css, nothing, type TemplateResult } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import type { LovelaceCardEditor } from "custom-card-helpers";
+import { gearName } from "./utils/gear";
 import type { SuuntoCardConfig } from "./utils/types";
 import { SuuntoBaseCard } from "./utils/base-card";
 import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
@@ -59,13 +60,8 @@ export class SuuntoGearCard extends SuuntoBaseCard {
         typeof entity.attributes.interval_km === "number" && entity.attributes.interval_km > 0
           ? entity.attributes.interval_km
           : undefined;
-      // friendly_name is "<device name> <gear name>"; the registry has no
-      // plain entity name here, so strip the device prefix when it is there.
-      const device = hass.devices?.[deviceId];
-      const deviceName = device?.name_by_user || device?.name || "";
-      const friendly = String(entity.attributes.friendly_name ?? entry.entity_id);
       rows.push({
-        name: deviceName && friendly.startsWith(`${deviceName} `) ? friendly.slice(deviceName.length + 1) : friendly,
+        name: gearName(hass, entry.entity_id),
         activity: typeof entity.attributes.activity === "string" ? entity.attributes.activity : undefined,
         km,
         interval,
@@ -202,7 +198,7 @@ export class SuuntoGearCard extends SuuntoBaseCard {
       .gbar {
         height: 8px;
         border-radius: 4px;
-        background: var(--divider-color);
+        background: var(--sc-track, var(--divider-color));
         overflow: hidden;
       }
       .gbar span {

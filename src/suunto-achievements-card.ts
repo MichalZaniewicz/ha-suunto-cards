@@ -190,7 +190,7 @@ export class SuuntoAchievementsCard extends SuuntoBaseCard {
       .arow .prog-track {
         height: 4px;
         border-radius: 2px;
-        background: var(--divider-color);
+        background: var(--sc-track, var(--divider-color));
         margin-top: 4px;
         overflow: hidden;
       }

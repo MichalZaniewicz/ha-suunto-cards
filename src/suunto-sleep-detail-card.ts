@@ -400,7 +400,7 @@ export class SuuntoSleepDetailCard extends SuuntoBaseCard {
       .timing-line {
         position: relative;
         height: 2px;
-        background: var(--divider-color);
+        background: var(--sc-track, var(--divider-color));
         border-radius: 2px;
       }
       .tl-chip {

@@ -231,7 +231,7 @@ export class SuuntoAerobicDecouplingCard extends SuuntoBaseCard {
       .hbar .track {
         height: 8px;
         border-radius: 4px;
-        background: var(--divider-color);
+        background: var(--sc-track, var(--divider-color));
         overflow: hidden;
       }
       .hbar b {

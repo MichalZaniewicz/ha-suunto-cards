@@ -414,7 +414,7 @@ export class SuuntoPlayerCard extends SuuntoBaseCard {
         flex: 1;
         height: 4px;
         border-radius: 2px;
-        background: var(--divider-color);
+        background: var(--sc-track, var(--divider-color));
         overflow: hidden;
       }
       .pc-stat .bar-fill {

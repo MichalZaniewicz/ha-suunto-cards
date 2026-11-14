@@ -4,6 +4,7 @@ import type { LovelaceCardEditor } from "custom-card-helpers";
 import type { SuuntoCardConfig } from "./utils/types";
 import { SuuntoBaseCard } from "./utils/base-card";
 import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
+import { readSportColors, sportBadgeStyle, sportColor } from "./utils/sports";
 import { activityIcon } from "./utils/icons";
 import { formatDuration, formatRelative } from "./utils/format";
 import { t } from "./utils/localize";
@@ -46,6 +47,7 @@ export class SuuntoRecentWorkoutsCard extends SuuntoBaseCard {
     const resolved = this._resolveEntities();
     if ("error" in resolved) return resolved.error;
     const { map } = resolved;
+    const sports = readSportColors(this.hass, map);
     const hass = this.hass;
     const entityId = map["workouts_recent"];
     const entity = entityId ? hass.states[entityId] : undefined;
@@ -69,7 +71,9 @@ export class SuuntoRecentWorkoutsCard extends SuuntoBaseCard {
             const duration = w.duration_min !== null ? formatDuration(w.duration_min) : undefined;
             return html`
               <div class="workout-row">
-                <div class="icon-badge tiny"><ha-icon .icon=${activityIcon(w.activity)}></ha-icon></div>
+                <div class="icon-badge tiny" style=${sportBadgeStyle(sportColor(sports, w.activity))}>
+                  <ha-icon .icon=${activityIcon(w.activity)}></ha-icon>
+                </div>
                 <div class="name-block">
                   <div class="name">${w.activity ?? "-"}</div>
                   <div class="date">

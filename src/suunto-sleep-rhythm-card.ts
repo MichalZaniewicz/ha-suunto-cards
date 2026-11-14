@@ -256,7 +256,7 @@ export class SuuntoSleepRhythmCard extends SuuntoBaseCard {
         position: relative;
         flex: 1;
         height: 14px;
-        background: var(--divider-color);
+        background: var(--sc-track, var(--divider-color));
         border-radius: 4px;
       }
       .rhythm-bar {

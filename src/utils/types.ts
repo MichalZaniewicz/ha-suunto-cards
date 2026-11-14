@@ -73,6 +73,13 @@ export interface SuuntoCardConfig extends LovelaceCardConfig {
   language?: string;
   /** Hides the "watch not synced" strip under the header. Universal. */
   hide_sync_warning?: boolean;
+  /** E-paper screens: "bw" (or true), "gray", "red", "yellow", "color". Universal;
+   * the `suunto-cards-eink` theme variable sets it for every card. */
+  eink?: string | boolean;
+  /** Cuts long text (AI insight, personal insights, daily brief) to this many lines. */
+  max_lines?: number;
+  /** What's New: which kinds of entries to show (all when absent). */
+  show?: string[];
 }
 
 /** suunto-weekly-goal-card's config: same device selection, plus a user-set target. */

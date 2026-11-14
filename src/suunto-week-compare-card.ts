@@ -249,7 +249,7 @@ export class SuuntoWeekCompareCard extends SuuntoBaseCard {
       .track {
         height: 6px;
         border-radius: 4px;
-        background: var(--divider-color);
+        background: var(--sc-track, var(--divider-color));
         overflow: hidden;
       }
       .fill {

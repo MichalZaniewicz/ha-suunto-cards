@@ -40,7 +40,7 @@ export function progressRing(pct: number, colorVar: string, size = 64, stroke = 
         cy=${center}
         r=${r}
         fill="none"
-        stroke="var(--divider-color)"
+        stroke="var(--sc-track, var(--divider-color))"
         stroke-width=${stroke}
       ></circle>
       <circle

@@ -146,7 +146,7 @@ export class SuuntoBestEffortsCard extends SuuntoBaseCard {
         align-items: center;
         gap: 12px;
         padding: 10px 12px;
-        background: var(--divider-color);
+        background: var(--sc-track, var(--divider-color));
         border-radius: 9px;
       }
       .effort-row.empty {

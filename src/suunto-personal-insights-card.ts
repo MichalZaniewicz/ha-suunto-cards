@@ -86,7 +86,7 @@ export class SuuntoPersonalInsightsCard extends SuuntoBaseCard {
             return html`
               <div class="row">
                 <div class="icon-badge tiny pulse"><ha-icon .icon=${insightIcon(insight)}></ha-icon></div>
-                <div class="cond">${insightConditionFull(hass, insight)}</div>
+                <div class="cond sc-clamp">${insightConditionFull(hass, insight)}</div>
                 <span class="chip ${tone}">${insightDelta(hass, insight)}</span>
                 <div class="vals ${workouts ? "wide" : ""}">
                   <div class="cmp">

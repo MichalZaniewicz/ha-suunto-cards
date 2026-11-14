@@ -1,6 +1,8 @@
 import { html, css, nothing, type TemplateResult } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import { fireEvent, type LovelaceCardEditor } from "custom-card-helpers";
+import { achievementLabel } from "./utils/route-achievements";
+import { readSportColors, sportBadgeStyle, sportColor } from "./utils/sports";
 import type { SuuntoCardConfig } from "./utils/types";
 import { SuuntoBaseCard } from "./utils/base-card";
 import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
@@ -11,19 +13,6 @@ import { decouplingBand } from "./utils/patterns";
 import type { SuuntoHass } from "./utils/types";
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
-
-function achievementLabel(hass: SuuntoHass | undefined, raw: unknown, count: number): string {
-  if (Array.isArray(raw) && raw.length) {
-    const first = raw[0];
-    if (typeof first === "string") return first;
-    if (first && typeof first === "object") {
-      const obj = first as Record<string, unknown>;
-      const label = obj.name ?? obj.title ?? obj.type;
-      if (typeof label === "string") return label;
-    }
-  }
-  return tPlural(hass, count, "achievement.count_one", "achievement.count_other");
-}
 
 @customElement("suunto-last-workout-card")
 export class SuuntoLastWorkoutCard extends SuuntoBaseCard {
@@ -53,6 +42,7 @@ export class SuuntoLastWorkoutCard extends SuuntoBaseCard {
     const resolved = this._resolveEntities();
     if ("error" in resolved) return resolved.error;
     const { map } = resolved;
+    const sports = readSportColors(this.hass, map);
 
     const hass = this.hass;
     const get = (key: string) => (map[key] ? hass.states[map[key]] : undefined);
@@ -138,7 +128,9 @@ export class SuuntoLastWorkoutCard extends SuuntoBaseCard {
     return html`
       <ha-card @click=${() => this._openMoreInfo(map["last_activity"])}>
         <div class="header">
-          <div class="icon-badge"><ha-icon .icon=${this._icon(activityIcon(activity.state))}></ha-icon></div>
+          <div class="icon-badge" style=${this._cardConfig?.accent_color ? "" : sportBadgeStyle(sportColor(sports, activity.state))}>
+            <ha-icon .icon=${this._icon(activityIcon(activity.state))}></ha-icon>
+          </div>
           <div class="title-block">
             <div class="title activity">${this._title(activity.state)}</div>
             <div class="subtitle">
@@ -342,7 +334,7 @@ export class SuuntoLastWorkoutCard extends SuuntoBaseCard {
         width: 13px;
         height: 5px;
         border-radius: 2px;
-        background: var(--divider-color);
+        background: var(--sc-track, var(--divider-color));
       }
       .severity i.s1 {
         background: var(--sc-sev-1);
@@ -370,7 +362,7 @@ export class SuuntoLastWorkoutCard extends SuuntoBaseCard {
         width: 7px;
         height: 7px;
         border-radius: 50%;
-        background: var(--divider-color);
+        background: var(--sc-track, var(--divider-color));
         display: block;
       }
       .feeling i.on {

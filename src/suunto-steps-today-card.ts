@@ -254,7 +254,7 @@ export class SuuntoStepsTodayCard extends SuuntoBaseCard {
         height: 6px;
         border-radius: 3px;
         overflow: hidden;
-        background: var(--divider-color);
+        background: var(--sc-track, var(--divider-color));
       }
       .split-bar .bmr {
         background: var(--secondary-text-color);
@@ -264,7 +264,7 @@ export class SuuntoStepsTodayCard extends SuuntoBaseCard {
         display: flex;
         align-items: center;
         gap: 6px;
-        background: var(--divider-color);
+        background: var(--sc-track, var(--divider-color));
         border-radius: 9px;
         padding: 9px 12px;
         font-size: 0.78rem;

@@ -1,4 +1,5 @@
 import { css } from "lit";
+import { suuntoEinkStyles } from "./eink";
 
 /**
  * Brand accent (amber/pulse) pulled from the suunto_app brand icon so the
@@ -39,6 +40,19 @@ export const suuntoTokens = css`
     --sc-stress-active: #e0a63e;
     --sc-stress-inactive: #b9c4cc;
     --sc-stress-stressed: #c73e3e;
+    /* One colour per sport, the same in every card (utils/sports.ts). */
+    --sc-sport-1: #2e7e9e;
+    --sc-sport-2: #d98a1d;
+    --sc-sport-3: #4c9a6a;
+    --sc-sport-4: #8e6cc4;
+    --sc-sport-5: #c75b8e;
+    --sc-sport-6: #3d5a80;
+    --sc-sport-7: #c0623a;
+    --sc-sport-8: #7a8f2e;
+    --sc-sport-9: #a8505a;
+    --sc-sport-10: #2f9c95;
+    --sc-sport-11: #9c7a3c;
+    --sc-sport-12: #6b7785;
   }
   :host(.dark) {
     --sc-amber: #f5b44e;
@@ -72,6 +86,18 @@ export const suuntoTokens = css`
     --sc-stress-active: #f0954f;
     --sc-stress-inactive: #56636e;
     --sc-stress-stressed: #e05a5a;
+    --sc-sport-1: #6fc3e8;
+    --sc-sport-2: #f5b44e;
+    --sc-sport-3: #5db47f;
+    --sc-sport-4: #b89ce0;
+    --sc-sport-5: #e88bb7;
+    --sc-sport-6: #7fa3d4;
+    --sc-sport-7: #ec8a5e;
+    --sc-sport-8: #b3c45a;
+    --sc-sport-9: #e07c86;
+    --sc-sport-10: #5fcfc6;
+    --sc-sport-11: #d6b26a;
+    --sc-sport-12: #9aa7b4;
   }
 `;
 
@@ -159,7 +185,7 @@ export const suuntoSharedStyles = css`
     height: 10px;
     border-radius: 5px;
     overflow: hidden;
-    background: var(--divider-color);
+    background: var(--sc-track, var(--divider-color));
   }
   .seg {
     min-width: 2px;
@@ -282,7 +308,7 @@ export const suuntoSharedStyles = css`
   .goal-bar {
     height: 4px;
     border-radius: 2px;
-    background: var(--divider-color);
+    background: var(--sc-track, var(--divider-color));
     overflow: hidden;
     margin-top: 3px;
   }
@@ -403,4 +429,6 @@ export const suuntoSharedStyles = css`
     font-size: 0.78rem;
     max-width: 26ch;
   }
+
+  ${suuntoEinkStyles}
 `;

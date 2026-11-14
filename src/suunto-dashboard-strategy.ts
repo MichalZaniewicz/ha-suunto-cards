@@ -13,9 +13,12 @@ import { t, type TranslationKey } from "./utils/localize";
  *     hide: [player, class]    # optional: cards to leave out (the name in custom:suunto-<name>-card)
  *     text_size: large         # optional: passed to every card
  *     language: pl             # optional: passed to every card
+ *     eink: bw                 # optional: e-paper mode for every card (bw, gray, red, yellow, color)
  *
- * One "sections" view per Suunto account: Today, AI analysis, Sleep,
- * Recovery, Training and Progress. Built from the integration's entities
+ * One "sections" view per Suunto account, the most important first: Today,
+ * AI analysis, Sleep, Recovery, Last workout, Load and form, This week,
+ * Records, History and profile, Gear and commutes. Sections of 3-9 cards,
+ * so the three columns fill evenly. Built from the integration's entities
  * every time the dashboard loads, so a card for data that turns up later
  * (the AI turned on, a first run, gear added) appears by itself, and so
  * does a card added in a later version. "Take control" in the dashboard's
@@ -28,6 +31,7 @@ export interface SuuntoStrategyConfig {
   hide?: string[];
   text_size?: string | number;
   language?: string;
+  eink?: string | boolean;
 }
 
 interface CardConfig {
@@ -44,7 +48,7 @@ const SECTIONS: { key: string; icon: string; cards: Entry[] }[] = [
   {
     key: "today",
     icon: "mdi:calendar-today",
-    cards: ["daily-brief", "sleep-readiness", "recovery", "today", "daily-goals", "last-workout"],
+    cards: ["daily-brief", "sleep-readiness", "recovery", "today", "whats-new", "daily-goals", "last-workout"],
   },
   {
     key: "ai",
@@ -73,33 +77,37 @@ const SECTIONS: { key: string; icon: string; cards: Entry[] }[] = [
     ],
   },
   {
-    key: "training",
+    key: "last_workout",
     icon: "mdi:run-fast",
     cards: [
-      "training-load",
-      "pmc",
-      "form-forecast",
-      "training-status",
-      "recent-workouts",
+      "just-finished",
       "route",
       "elevation",
       "lap-splits",
       "hr-zones",
       "aerobic-decoupling",
-      "training-effect-trend",
-      "pace-trend",
-      ["running-dynamics", "running"],
       "workout-comparison",
-      "training-profile",
-      "athlete-profile",
-      "fitness",
-      "fitness-trend",
-      "just-finished",
+      "recent-workouts",
     ],
   },
   {
-    key: "progress",
-    icon: "mdi:trophy-outline",
+    key: "load",
+    icon: "mdi:chart-bell-curve-cumulative",
+    cards: [
+      "training-load",
+      "pmc",
+      "form-forecast",
+      "training-status",
+      "training-effect-trend",
+      "pace-trend",
+      ["running-dynamics", "running"],
+      "fitness",
+      "fitness-trend",
+    ],
+  },
+  {
+    key: "week",
+    icon: "mdi:calendar-week",
     cards: [
       "week-compare",
       "weekly-volume",
@@ -110,25 +118,33 @@ const SECTIONS: { key: string; icon: string; cards: Entry[] }[] = [
       "steps-trend",
       "weekly-steps-goal",
       "activity-trends",
-      "best-efforts",
-      "month-records",
-      "year-records",
+    ],
+  },
+  {
+    key: "records",
+    icon: "mdi:trophy-outline",
+    cards: ["best-efforts", "month-records", "year-records", "achievements", "streak", "milestones", "next-milestone"],
+  },
+  {
+    key: "history",
+    icon: "mdi:book-open-variant",
+    cards: [
       "month-story",
       "year-story",
       "story",
       "lifetime",
-      "milestones",
-      "next-milestone",
-      "streak",
       "activity-calendar",
-      "achievements",
+      "training-profile",
+      "athlete-profile",
       "level",
       "class",
       "player",
-      ["gear", "gear"],
-      ["commute", "commute"],
-      "location",
     ],
+  },
+  {
+    key: "gear",
+    icon: "mdi:bicycle",
+    cards: [["gear", "gear"], ["commute", "commute"], "location"],
   },
 ];
 
@@ -216,6 +232,7 @@ export class SuuntoDashboardStrategy extends HTMLElement {
     const common: Record<string, unknown> = {};
     if (config.text_size !== undefined) common.text_size = config.text_size;
     if (config.language) common.language = config.language;
+    if (config.eink !== undefined) common.eink = config.eink;
 
     const used = new Set<string>();
     const views = ids.map((id) => {

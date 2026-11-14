@@ -1,6 +1,7 @@
 import { html, css, nothing, type TemplateResult } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import type { LovelaceCardEditor } from "custom-card-helpers";
+import { readSportColors, sportBadgeStyle, sportColor } from "./utils/sports";
 import type { SuuntoCardConfig } from "./utils/types";
 import { SuuntoBaseCard } from "./utils/base-card";
 import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
@@ -66,6 +67,7 @@ export class SuuntoWorkoutComparisonCard extends SuuntoBaseCard {
     const resolved = this._resolveEntities();
     if ("error" in resolved) return resolved.error;
     const { map } = resolved;
+    const sports = readSportColors(this.hass, map);
     const hass = this.hass;
     const entityId = map["workouts_recent"];
     const entity = entityId ? hass.states[entityId] : undefined;
@@ -103,7 +105,9 @@ export class SuuntoWorkoutComparisonCard extends SuuntoBaseCard {
     return html`
       <ha-card class="static">
         <div class="header">
-          <div class="icon-badge"><ha-icon .icon=${this._icon(activityIcon(current.activity))}></ha-icon></div>
+          <div class="icon-badge" style=${this._cardConfig?.accent_color ? "" : sportBadgeStyle(sportColor(sports, current.activity))}>
+            <ha-icon .icon=${this._icon(activityIcon(current.activity))}></ha-icon>
+          </div>
           <div class="title-block">
             <div class="title">${this._title(t(hass, "card.workout_comparison.title"))}</div>
             <div class="subtitle">
