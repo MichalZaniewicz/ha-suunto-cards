@@ -283,6 +283,22 @@ export const suuntoSharedStyles = css`
     font-weight: 500;
     color: var(--secondary-text-color);
   }
+  /* A goal inline after the value (suunto-goals.ts goalInline). */
+  .stat-value .goal-in {
+    font-size: 0.68rem;
+    font-weight: 500;
+    color: var(--secondary-text-color);
+    white-space: nowrap;
+    margin-left: 3px;
+  }
+  .stat-value .goal-in.done {
+    color: var(--sc-good);
+  }
+  .stat-value .goal-in ha-icon {
+    --mdc-icon-size: 12px;
+    margin-left: 2px;
+    vertical-align: -1px;
+  }
   .stat-label {
     font-size: 0.68rem;
     color: var(--secondary-text-color);

@@ -6,8 +6,7 @@ import { SuuntoBaseCard } from "./utils/base-card";
 import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
 import { t, tPlural } from "./utils/localize";
 import type { SuuntoHass } from "./utils/types";
-import { goalBar } from "./utils/render-helpers";
-import { knownGoal, formatGoal } from "./utils/suunto-goals";
+import { knownGoal, goalInline } from "./utils/suunto-goals";
 import { readSync, syncChip, syncLabel } from "./utils/sync";
 
 const UNAVAILABLE_STATES = new Set(["unknown", "unavailable", ""]);
@@ -108,14 +107,12 @@ export class SuuntoTodayCard extends SuuntoBaseCard {
           ${stepsValue !== undefined
             ? html`
                 <div class="stat">
-                  <div class="stat-value">${stepsValue.toLocaleString(hass.language)}</div>
+                  <div class="stat-value">
+                    ${stepsValue.toLocaleString(hass.language)}${stepsGoal !== undefined
+                      ? goalInline(hass, "steps", stepsValue, stepsGoal)
+                      : nothing}
+                  </div>
                   <div class="stat-label">${t(hass, "stat.steps")}</div>
-                  ${stepsGoal !== undefined
-                    ? html`
-                        <div class="goal-sub">${t(hass, "goal.of", { goal: formatGoal(hass, "steps", stepsGoal) })}</div>
-                        ${goalBar(stepsValue, stepsGoal)}
-                      `
-                    : nothing}
                 </div>
               `
             : nothing}
@@ -138,22 +135,17 @@ export class SuuntoTodayCard extends SuuntoBaseCard {
                             })}
                       </div>`
                     : nothing}
-                  ${activeValue !== undefined && energyGoal !== undefined ? goalBar(activeValue, energyGoal) : nothing}
                 </div>
               `
             : activeValue !== undefined
             ? html`
                 <div class="stat">
                   <div class="stat-value">
-                    ${Math.round(activeValue).toLocaleString(hass.language)}<span class="unit">kcal</span>
+                    ${Math.round(activeValue).toLocaleString(hass.language)}${energyGoal !== undefined
+                      ? goalInline(hass, "energy", activeValue, energyGoal)
+                      : html`<span class="unit">kcal</span>`}
                   </div>
                   <div class="stat-label">${t(hass, "stat.energy")}</div>
-                  ${energyGoal !== undefined
-                    ? html`
-                        <div class="goal-sub">${t(hass, "goal.of", { goal: formatGoal(hass, "energy", energyGoal) })}</div>
-                        ${goalBar(activeValue, energyGoal)}
-                      `
-                    : nothing}
                 </div>
               `
             : nothing}

@@ -4,8 +4,8 @@ import type { LovelaceCardEditor } from "custom-card-helpers";
 import type { SuuntoCardConfig } from "./utils/types";
 import { SuuntoBaseCard } from "./utils/base-card";
 import { suuntoTokens, suuntoSharedStyles } from "./utils/style-tokens";
-import { segmentedBar, goalBar } from "./utils/render-helpers";
-import { knownGoal, formatGoal } from "./utils/suunto-goals";
+import { segmentedBar } from "./utils/render-helpers";
+import { knownGoal, goalInline } from "./utils/suunto-goals";
 import { readSportColors, sportBadgeStyle, sportColor } from "./utils/sports";
 import { activityIcon } from "./utils/icons";
 import { formatDistance } from "./utils/format";
@@ -99,16 +99,12 @@ export class SuuntoWeekStatsCard extends SuuntoBaseCard {
                 ${weeklyTime && !UNAVAILABLE_STATES.has(weeklyTime.state)
                   ? html`
                       <div class="stat">
-                        <div class="stat-value">${Number(weeklyTime.state).toFixed(1)}<span class="unit">h</span></div>
+                        <div class="stat-value">
+                          ${Number(weeklyTime.state).toFixed(1)}${trainingGoal !== undefined
+                            ? goalInline(hass, "training", Number(weeklyTime.state), trainingGoal)
+                            : html`<span class="unit">h</span>`}
+                        </div>
                         <div class="stat-label">${t(hass, "stat.time")}</div>
-                        ${trainingGoal !== undefined
-                          ? html`
-                              <div class="goal-sub">
-                                ${t(hass, "goal.of", { goal: formatGoal(hass, "training", trainingGoal) })}
-                              </div>
-                              ${goalBar(Number(weeklyTime.state), trainingGoal)}
-                            `
-                          : nothing}
                       </div>
                     `
                   : nothing}

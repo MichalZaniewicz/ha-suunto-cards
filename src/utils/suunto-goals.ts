@@ -1,3 +1,4 @@
+import { html, nothing, type TemplateResult } from "lit";
 import type { SuuntoCardConfig, SuuntoHass } from "./types";
 import { mapByTranslationKey, resolveSuuntoDevice } from "./entities";
 import type { TranslationKey } from "./localize";
@@ -113,6 +114,19 @@ export function formatGoal(hass: SuuntoHass, kind: GoalKind, value: number): str
   const unit = GOAL_SPECS[kind].unit;
   const num = value.toLocaleString(hass.language, { maximumFractionDigits: 1 });
   return unit ? `${num} ${unit}` : num;
+}
+
+/**
+ * A goal on the same line as the stat's value: "8,412 / 8,000", "5.2 / 5 h",
+ * with a check once it is reached. No extra line and no bar under one stat
+ * of a row (Today, Week & Lifetime). The value's own unit is left out by the
+ * caller, as the goal carries it.
+ */
+export function goalInline(hass: SuuntoHass, kind: GoalKind, value: number, goal: number): TemplateResult {
+  const done = value >= goal;
+  return html`<span class="goal-in ${done ? "done" : ""}"
+    >/ ${formatGoal(hass, kind, goal)}${done ? html`<ha-icon icon="mdi:check"></ha-icon>` : nothing}</span
+  >`;
 }
 
 /** Decimal hours -> "5:23 h" / "8 h" - a whole-hour goal reads without ":00". */
